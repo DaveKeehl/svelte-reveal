@@ -10,17 +10,17 @@ Using svelte-reveal is dead simple:
 
 1. Install the library:
 
-   `npm install svelte-reveal --save-dev`
+   ```$ npm install svelte-reveal --save-dev```
 
    or
 
-   `yarn add svelte-reveal -D`
+   ```$ yarn add svelte-reveal -D```
 
 2. Import the library within your Svelte component:
 
    ```html
    <script>
-   	import {reveal} from 'svelte-reveal';
+     import {reveal} from 'svelte-reveal';
    </script>
    
    <h1 use:reveal>Your title</h1>
@@ -165,10 +165,10 @@ interface IConfig {
 
 ## Changelog
 
-CHANGELOG
+[CHANGELOG](https://github.com/DaveKeehl/svelte-reveal/blob/develop/CHANGELOG.md)
 
 
 
 ## License
 
-MIT
+[MIT](https://github.com/DaveKeehl/svelte-reveal/blob/develop/LICENSE)
