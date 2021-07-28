@@ -1,4 +1,4 @@
-import type { Transitions, IOptions } from './index.d';
+import type { Transitions, IOptions, Easing, CustomEase } from './index.d';
 
 export const printRef = (ref: string): void => {
 	console.log(`--- ${ref} ---`);
@@ -36,4 +36,14 @@ export const getCssProperties = (transition: Transitions, init: IOptions, option
 			transform: translateX(${x}px);
 		`;
 	}
+};
+
+export const getEasing = (easing: Easing, customEase: CustomEase): string => {
+	let easingText: string = easing;
+
+	if (easing === 'cubic-bezier') {
+		easingText = `cubic-bezier(${customEase.join(', ')})`;
+	}
+
+	return easingText;
 };

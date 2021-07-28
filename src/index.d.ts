@@ -2,18 +2,19 @@ export interface IOptions {
 	disable?: boolean;
 	debug?: boolean;
 	ref?: string;
-	threshold?: number;
+	root?: ObserverRoot;
 	marginTop?: number;
 	marginBottom?: number;
 	marginLeft?: number;
 	marginRight?: number;
+	threshold?: number;
 	transition?: Transitions;
 	delay?: number;
 	duration?: number;
 	easing?: Easing;
+	customEase?: CustomEase;
 	x?: number;
 	y?: number;
-	root?: ObserverRoot;
 }
 
 export type ObserverRoot = HTMLElement | null | undefined;
@@ -37,10 +38,6 @@ export interface IReturnAction {
 
 export type Transitions = 'fly' | 'fade' | 'blur' | 'scale' | 'slide';
 
-export type Easing =
-	| 'ease'
-	| 'linear'
-	| 'ease-in'
-	| 'ease-out'
-	| 'ease-in-out'
-	| ['cubic-bezier', number, number, number, number];
+export type Easing = 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out' | 'cubic-bezier';
+
+export type CustomEase = [number, number, number, number];

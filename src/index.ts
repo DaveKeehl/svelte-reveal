@@ -1,6 +1,6 @@
 import type { IConfig, IOptions, IReturnAction, IObserverOptions, ObserverRoot } from './index.d';
 import { createdStyleTag, reloadStore } from './stores';
-import { getCssProperties, printRef } from './utils';
+import { getCssProperties, printRef, getEasing } from './utils';
 
 const init: IOptions = {
 	disable: false,
@@ -16,6 +16,7 @@ const init: IOptions = {
 	delay: 500,
 	duration: 800,
 	easing: 'ease',
+	customEase: [0.8, 0, 0.2, 1],
 	x: -20,
 	y: -20
 };
@@ -24,7 +25,7 @@ let config: IConfig = {
 	disableDebug: false,
 	once: false,
 	observer: {
-		root: null,
+		root: init.root,
 		rootMargin: `${init.marginTop}px ${init.marginRight}px ${init.marginBottom}px ${init.marginLeft}px`,
 		threshold: init.threshold
 	}
@@ -71,7 +72,8 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 		transition = init.transition,
 		delay = init.delay,
 		duration = init.duration,
-		easing = init.easing
+		easing = init.easing,
+		customEase = init.customEase
 	} = options;
 
 	// Logging initial options and configurations info
@@ -128,7 +130,7 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 	}
 
 	node.classList.add(`${transition}--hidden`);
-	node.style.transition = `all ${duration / 1000}s ${delay / 1000}s ${easing}`;
+	node.style.transition = `all ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEase)}`;
 
 	const observer = new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
 		if (!config.disableDebug) {
