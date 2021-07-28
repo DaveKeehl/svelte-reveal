@@ -2,12 +2,13 @@
 	"name": "svelte-reveal",
 	"version": "0.1.0",
 	"description": "Svelte action that leverages the Intersection Observer API to trigger reveal on scroll transitions",
-	"main": "index.js",
+	"main": "dist/index.js",
 	"scripts": {
-		"build": "node esbuild.js",
+		"build": "rm -rf dist/ && node esbuild.js",
 		"build:watch": "npm run build -- --watch",
 		"lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
-		"format": "prettier --write --plugin-search-dir=. ."
+		"format": "prettier --write --plugin-search-dir=. .",
+		"pack": "npm run format && npm run build && npm pack"
 	},
 	"types": "dist/index.d.ts",
 	"files": [
