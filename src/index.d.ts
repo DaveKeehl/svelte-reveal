@@ -3,22 +3,23 @@ export interface IOptions {
 	debug?: boolean;
 	ref?: string;
 	threshold?: number;
-	offset?: {
-		top?: number;
-		bottom?: number;
-	};
+	marginTop?: number;
+	marginBottom?: number;
+	marginLeft?: number;
+	marginRight?: number;
 	transition?: Transitions;
 	delay?: number;
 	duration?: number;
 	easing?: Easing;
 	x?: number;
 	y?: number;
+	root?: ObserverRoot;
 }
 
 export type ObserverRoot = HTMLElement | null | undefined;
 
-export interface ObserverOptions {
-	root: ObserverRoot;
+export interface IObserverOptions {
+	root: HTMLElement | null | undefined;
 	rootMargin: string;
 	threshold: number;
 }

@@ -1,4 +1,4 @@
-import type { IConfig, IOptions, IReturnAction, ObserverOptions, ObserverRoot } from './index.d';
+import type { IConfig, IOptions, IReturnAction, IObserverOptions, ObserverRoot } from './index.d';
 import { createdStyleTag, reloadStore } from './stores';
 import { getCssProperties, printRef } from './utils';
 
@@ -6,11 +6,12 @@ const init: IOptions = {
 	disable: false,
 	debug: false,
 	ref: '',
+	root: null,
+	marginTop: 0,
+	marginBottom: 0,
+	marginLeft: 0,
+	marginRight: 0,
 	threshold: 0.6,
-	offset: {
-		top: 0,
-		bottom: 0
-	},
 	transition: 'fly',
 	delay: 500,
 	duration: 800,
@@ -24,7 +25,7 @@ let config: IConfig = {
 	once: false,
 	observer: {
 		root: null,
-		rootMargin: `${init.offset.top}px 0px ${init.offset.bottom}px 0px`,
+		rootMargin: `${init.marginTop}px ${init.marginRight}px ${init.marginBottom}px ${init.marginLeft}px`,
 		threshold: init.threshold
 	}
 };
@@ -33,7 +34,7 @@ export const setDisableDebug = (debug: boolean): void => {
 	config.disableDebug = debug;
 };
 
-export const setObserverConfig = (observerConfig: ObserverOptions): void => {
+export const setObserverConfig = (observerConfig: IObserverOptions): void => {
 	config.observer = observerConfig;
 };
 
