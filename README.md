@@ -10,11 +10,15 @@ Using svelte-reveal is dead simple:
 
 1. Install the library:
 
-   ```$ npm install svelte-reveal --save-dev```
+   ```bash
+   $ npm install svelte-reveal --save-dev
+   ```
 
    or
 
-   ```$ yarn add svelte-reveal -D```
+   ```````bash
+   $ yarn add svelte-reveal -D
+   ```````
 
 2. Import the library within your Svelte component:
 
@@ -24,7 +28,7 @@ Using svelte-reveal is dead simple:
    </script>
    
    <h1 use:reveal>Your title</h1>
-   <p use:reveal={{transition: 'fade'}}>A paragraph</p>
+   <p use:reveal={{transition: "fade"}}>A paragraph</p>
    ```
 
 
