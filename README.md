@@ -47,23 +47,24 @@ You can pass to this action an object containing additional options.
 
 
 
-| Option       | Type               | Default      | Other values                                                 | Description                                                  |
-| ------------ | ------------------ | ------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| disable      | ```boolean```      | ```false```  |                                                              | You can disable the transition.                              |
-| debug        | ```boolean```      | ```false```  |                                                              | You can enable debugging mode for a specific targeted DOM element by setting this option to``` true```. This will log all options and configurations to the console.<br />In order to be able to use this mode, you are required to also set the ```ref``` property. |
-| ref          | ```string```       | ```""```     |                                                              | When ```debug``` is set to ```true```, you are required to specificy a ```ref``` string. When multiple DOM nodes have ```debug``` mode enabled, ```ref``` strings allow you to know to which DOM node a console log statement belongs to. |
-| threshold    | ```number```       | ```0.6```    |                                                              | The ```threshold``` (in percentage from 0 to 1) used by the Intersection Observer to know when its target is considered visible or not. |
-| marginTop    | ```number```       | ```0```      |                                                              | The top margin of the rootMargin property of the Intersection Observer. |
-| marginBottom | ```number```       | ```0```      |                                                              | The bottom margin of the rootMargin property of the Intersection Observer. |
-| marginLeft   | ```number```       | ```0```      |                                                              | The left margin of the rootMargin property of the Intersection Observer. |
-| marginRight  | ```number```       | ```0```      |                                                              | The right margin of the rootMargin property of the Intersection Observer. |
-| transition   | ```string```       | ```"fly"```  | ```"fade"```, ```"blur"```, ```"scale"```, ```"slide"```     | How you want your target node to transition when visible.    |
-| delay        | ```number```       | ```500```    |                                                              | Amount of milliseconds (ms) you want to delay a given transition. |
-| duration     | ```number```       | ```800```    |                                                              | Amount of milliseconds (ms) you want a given transition to last. |
-| easing       | ```string```       | ```"ease"``` | ```"linear"```, ```"ease-in"```, ```"ease-out"```, ```"ease-in-out"```, ["cubic-bezier"] | The type of easing function you want to apply to a given DOM node. |
-| x            | ```number```       | ```-20```    |                                                              | The starting position on the x-axis of a given transition (only the "slide" animation supports this property). |
-| y            | ```number```       | ```-20```    |                                                              | The starting position on the y-axis of a given transition (only the "fly" animation supports this property). |
-| root         | ```ObserverRoot``` | ```null```   |                                                              |                                                              |
+| Option       | Type               | Default                | Other values                                                 | Description                                                  |
+| ------------ | ------------------ | ---------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| disable      | ```boolean```      | ```false```            |                                                              | You can disable the transition.                              |
+| debug        | ```boolean```      | ```false```            |                                                              | You can enable debugging mode for a specific targeted DOM element by setting this option to``` true```. This will log all options and configurations to the console.<br />In order to be able to use this mode, you are required to also set the ```ref``` property. |
+| ref          | ```string```       | ```""```               |                                                              | When ```debug``` is set to ```true```, you are required to specificy a ```ref``` string. When multiple DOM nodes have ```debug``` mode enabled, ```ref``` strings allow you to know to which DOM node a console log statement belongs to. |
+| root         | ```ObserverRoot``` | ```null```             |                                                              |                                                              |
+| marginTop    | ```number```       | ```0```                |                                                              | The top margin of the rootMargin property of the Intersection Observer. |
+| marginBottom | ```number```       | ```0```                |                                                              | The bottom margin of the rootMargin property of the Intersection Observer. |
+| marginLeft   | ```number```       | ```0```                |                                                              | The left margin of the rootMargin property of the Intersection Observer. |
+| marginRight  | ```number```       | ```0```                |                                                              | The right margin of the rootMargin property of the Intersection Observer. |
+| threshold    | ```number```       | ```0.6```              |                                                              | The ```threshold``` (in percentage from 0 to 1) used by the Intersection Observer to know when its target is considered visible or not. |
+| transition   | ```string```       | ```"fly"```            | ```"fade"```, ```"blur"```, ```"scale"```, ```"slide"```     | How you want your target node to transition when visible.    |
+| delay        | ```number```       | ```500```              |                                                              | Amount of milliseconds (ms) you want to delay a given transition. |
+| duration     | ```number```       | ```800```              |                                                              | Amount of milliseconds (ms) you want a given transition to last. |
+| easing       | ```string```       | ```"ease"```           | ```"linear"```, ```"ease-in"```, ```"ease-out"```, ```"ease-in-out"```, ```"cubic-bezier"``` | The type of easing function you want to apply to a given DOM node. |
+| customEase   | ```CustomEase```   | ```[0.8, 0, 0.2, 1]``` |                                                              | The individual weights of a custom cubic-bezier curve.       |
+| x            | ```number```       | ```-20```              |                                                              | The starting position on the x-axis of a given transition (only the "slide" animation supports this property). |
+| y            | ```number```       | ```-20```              |                                                              | The starting position on the y-axis of a given transition (only the "fly" animation supports this property). |
 
 
 
