@@ -4,11 +4,10 @@
 	"description": "Svelte action that leverages the Intersection Observer API to trigger reveal on scroll transitions",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
 		"lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
 		"format": "prettier --write --plugin-search-dir=. ."
 	},
-	"types": "src/index.d.ts",
+	"types": "dist/index.d.ts",
 	"files": [
 		"dist/"
 	],
