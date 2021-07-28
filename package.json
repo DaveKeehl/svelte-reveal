@@ -5,6 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"build": "node esbuild.js",
+		"build:watch": "npm run build -- --watch",
 		"lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
 		"format": "prettier --write --plugin-search-dir=. ."
 	},
