@@ -24,7 +24,7 @@ Using svelte-reveal is dead simple:
 
    ```html
    <script>
-     import {reveal} from 'svelte-reveal';
+     import { reveal } from 'svelte-reveal';
    </script>
    
    <h1 use:reveal>Your title</h1>
@@ -35,11 +35,11 @@ Using svelte-reveal is dead simple:
 
 ## Why svelte-reveal
 
-If you happened to scout the internet for other similar libraries, you would have for sure noticed that other authors decided to use Svelte [slots](https://svelte.dev/docs#slot) (similar to [React children](https://reactjs.org/docs/composition-vs-inheritance.html)). There is nothing wrong with that approach, but in my opinion it goes against one of Svelte's core purpose: write less code.
+If you happened to scout the internet for other similar libraries, you would have noticed that other authors decided to create their own library using Svelte [slots](https://svelte.dev/docs#slot) (similar to [React children](https://reactjs.org/docs/composition-vs-inheritance.html)). There is nothing wrong with that approach, but in my opinion it goes against one of Svelte's core purpose: writing less code.
 
-Having to wrap every to-be-transitioned component adds 2 extra lines of code each time, making your files unnecessary bloated for such a simple add-on.
+Having to wrap every to-be-transitioned component adds 2 extra lines of code each time, making your files unnecessarily bloated for such a simple add-on.
 
-I decided to use Svelte [actions](https://svelte.dev/docs#use_action) instead, which are essentially functions you attach to a DOM element and that allow you to get access to that element and to its lifecycle.
+I decided to use Svelte [actions](https://svelte.dev/docs#use_action) instead, which are essentially functions you attach to a DOM element and that allow you to get access to that element and to its lifecycle. They take up considerably less space and so far I haven't encounted any obstacles or performance drawbacks.
 
 
 
