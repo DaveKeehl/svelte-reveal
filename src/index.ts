@@ -89,7 +89,7 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 		}
 	}
 
-	let reloaded: boolean;
+	let reloaded = false;
 	const unsubscribeReloaded = reloadStore.subscribe((value: boolean) => (reloaded = value));
 
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -99,7 +99,7 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 
 	if (disable || (config.once && reloaded)) return;
 
-	let styleTagExists: boolean;
+	let styleTagExists = false;
 	const unsubscribeStyleTag = createdStyleTag.subscribe((value: boolean) => (styleTagExists = value));
 
 	// Creating stylesheet
@@ -125,7 +125,7 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 		}
 		`;
 		const head = document.querySelector('head');
-		head.appendChild(style);
+		if (head !== null) head.appendChild(style);
 		createdStyleTag.set(true);
 	}
 
