@@ -13,7 +13,7 @@ const init: Required<IOptions> = {
 	marginRight: 0,
 	threshold: 0.6,
 	transition: 'fly',
-	delay: 500,
+	delay: 0,
 	duration: 800,
 	easing: 'ease',
 	customEase: [0.8, 0, 0.2, 1],
@@ -65,8 +65,8 @@ export const setConfig = (userConfig: IConfig): void => {
 
 export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction | void => {
 	const { disable, debug, ref, threshold, transition, delay, duration, easing, customEase } = Object.assign(
-		options,
-		init
+		init,
+		options
 	);
 
 	const canDebug = !config.disableDebug && debug && ref !== '';
