@@ -20,7 +20,7 @@ export interface IOptions {
 export type ObserverRoot = HTMLElement | null | undefined;
 
 export interface IObserverOptions {
-	root: HTMLElement | null | undefined;
+	root?: HTMLElement | null;
 	rootMargin: string;
 	threshold: number;
 }
