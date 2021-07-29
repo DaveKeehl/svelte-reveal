@@ -77,7 +77,7 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 		console.log(`ONCE: ${config.once}`);
 		printRef(ref);
 		console.log(node);
-		console.log(options);
+		console.log(init);
 		printRef(ref);
 		console.log(config);
 	}
