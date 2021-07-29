@@ -2,7 +2,7 @@ import type { IConfig, IOptions, IReturnAction, IObserverOptions, ObserverRoot }
 import { createdStyleTag, reloadStore } from './stores';
 import { getCssProperties, printRef, getEasing } from './utils';
 
-const init: IOptions = {
+const init: Required<IOptions> = {
 	disable: false,
 	debug: false,
 	ref: '',
@@ -63,18 +63,12 @@ export const setConfig = (userConfig: IConfig): void => {
 	config = userConfig;
 };
 
-export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction | void => {
-	const {
-		disable = init.disable,
-		debug = init.debug,
-		ref = init.ref,
-		threshold = init.threshold,
-		transition = init.transition,
-		delay = init.delay,
-		duration = init.duration,
-		easing = init.easing,
-		customEase = init.customEase
-	} = options;
+export const reveal = (node: HTMLElement, options: IOptions): IReturnAction | void => {
+	const { disable, debug, ref, threshold, transition, delay, duration, easing, customEase } = Object.assign(
+		{},
+		options,
+		init
+	);
 
 	// Logging initial options and configurations info
 	if (!config.disableDebug) {
