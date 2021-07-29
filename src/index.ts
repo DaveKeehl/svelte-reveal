@@ -63,24 +63,23 @@ export const setConfig = (userConfig: IConfig): void => {
 	config = userConfig;
 };
 
-export const reveal = (node: HTMLElement, options: IOptions): IReturnAction | void => {
+export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction | void => {
 	const { disable, debug, ref, threshold, transition, delay, duration, easing, customEase } = Object.assign(
-		{},
 		options,
 		init
 	);
 
+	const canDebug = !config.disableDebug && debug && ref !== '';
+
 	// Logging initial options and configurations info
-	if (!config.disableDebug) {
-		if (debug && ref !== '') {
-			console.log(`DISABLE_DEBUG: ${config.disableDebug}`);
-			console.log(`ONCE: ${config.once}`);
-			printRef(ref);
-			console.log(node);
-			console.log(options);
-			printRef(ref);
-			console.log(config);
-		}
+	if (canDebug) {
+		console.log(`DISABLE_DEBUG: ${config.disableDebug}`);
+		console.log(`ONCE: ${config.once}`);
+		printRef(ref);
+		console.log(node);
+		console.log(options);
+		printRef(ref);
+		console.log(config);
 	}
 
 	let reloaded = false;
@@ -127,15 +126,13 @@ export const reveal = (node: HTMLElement, options: IOptions): IReturnAction | vo
 	node.style.transition = `all ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEase)}`;
 
 	const observer = new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
-		if (!config.disableDebug) {
-			if (debug && ref !== '') {
-				const entry = entries[0];
-				const entryTarget = entry.target;
+		if (canDebug) {
+			const entry = entries[0];
+			const entryTarget = entry.target;
 
-				if (entryTarget === node) {
-					printRef(ref);
-					console.log(entry);
-				}
+			if (entryTarget === node) {
+				printRef(ref);
+				console.log(entry);
 			}
 		}
 
