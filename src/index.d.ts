@@ -28,7 +28,7 @@ export interface IObserverOptions {
 export interface IConfig {
 	disableDebug: boolean;
 	once: boolean;
-	observer: ObserverOptions;
+	observer: IObserverOptions;
 }
 
 export interface IReturnAction {
