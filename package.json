@@ -4,7 +4,7 @@
 	"description": "Svelte action that leverages the Intersection Observer API to trigger reveal on scroll transitions",
 	"main": "dist/index.js",
 	"scripts": {
-		"build": "rm -rf dist/ && node esbuild.js",
+		"build": "rm -rf dist/ && node esbuild.config.js",
 		"build:watch": "npm run build -- --watch",
 		"lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
 		"format": "prettier --write --plugin-search-dir=. .",
