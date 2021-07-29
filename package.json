@@ -8,7 +8,8 @@
 		"build:watch": "npm run build -- --watch",
 		"lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
 		"format": "prettier --write --plugin-search-dir=. .",
-		"pack": "npm run format && npm run build && npm pack"
+		"prepack": "npm run format && npm run build",
+		"pack": "npm pack"
 	},
 	"types": "dist/index.d.ts",
 	"files": [
