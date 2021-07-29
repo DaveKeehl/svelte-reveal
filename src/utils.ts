@@ -6,36 +6,35 @@ export const printRef = (ref: string): void => {
 
 export const getCssProperties = (transition: Transitions, init: IOptions, options: IOptions): string => {
 	const { x = init.x, y = init.y } = options;
+	let style = '';
 
 	if (transition === 'fly') {
-		return `
+		style = `
 			opacity: 0;
 			transform: translateY(${y}px);
 		`;
-	}
-	if (transition === 'fade') {
-		return `
+	} else if (transition === 'fade') {
+		style = `
 			opacity: 0;
 		`;
-	}
-	if (transition === 'blur') {
-		return `
+	} else if (transition === 'blur') {
+		style = `
 			opacity: 0;
 			filter: blur(16px);
 		`;
-	}
-	if (transition === 'scale') {
-		return `
+	} else if (transition === 'scale') {
+		style = `
 			opacity: 0;
 			transform: scale(0);
 		`;
-	}
-	if (transition === 'slide') {
-		return `
+	} else if (transition === 'slide') {
+		style = `
 			opacity: 0;
 			transform: translateX(${x}px);
 		`;
 	}
+
+	return style;
 };
 
 export const getEasing = (easing: Easing, customEase: CustomEase): string => {
