@@ -1,4 +1,4 @@
-import type { CustomEase } from '../src/index.d';
+import type { CustomEase } from '../src/types';
 import { getEasing } from '../src/utils';
 
 const customEase: CustomEase = [0.2, 0.8, 1, 0.2];

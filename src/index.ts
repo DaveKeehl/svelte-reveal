@@ -1,4 +1,4 @@
-import type { IConfig, IOptions, IReturnAction, IObserverOptions, ObserverRoot } from './index.d';
+import type { IConfig, IOptions, IReturnAction, IObserverOptions, ObserverRoot } from './types';
 import { createdStyleTag, reloadStore } from './stores';
 import { getCssProperties, printRef, getEasing } from './utils';
 
