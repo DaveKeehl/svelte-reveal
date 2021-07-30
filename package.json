@@ -12,7 +12,9 @@
 		"build:watch": "npm run clean && npm run build -- --watch",
 		"lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
 		"format": "prettier --write --plugin-search-dir=. .",
-		"prepack": "npm run format && npm run build"
+		"prepack": "npm run format && npm run build",
+		"test": "jest",
+		"test:watch": "jest --watch"
 	},
 	"files": [
 		"dist/"
@@ -40,6 +42,7 @@
 		"animation"
 	],
 	"devDependencies": {
+		"@types/jest": "^26.0.24",
 		"@typescript-eslint/eslint-plugin": "^4.28.5",
 		"@typescript-eslint/parser": "^4.28.5",
 		"esbuild": "^0.12.16",
@@ -49,6 +52,7 @@
 		"jest": "^27.0.6",
 		"prettier": "^2.3.2",
 		"svelte": "^3.41.0",
+		"ts-jest": "^27.0.4",
 		"typescript": "^4.3.5"
 	},
 	"type": "module"
