@@ -8,14 +8,15 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
 
 ## Table of Content
 
-1. [Usage](#Usage)
-2. [Demo](#Demo)
-3. [Why svelte-reveal](#Why-svelte-reveal)
-4. [Options](#Options)
-5. [API](#API)
-6. [Troubleshooting](#Troubleshooting)
-7. [Changelog](#Changelog)
-8. [License](#License)
+- [Usage](#Usage)
+- [Demo](#Demo)
+- [Why svelte-reveal](#Why-svelte-reveal)
+- [Options](#Options)
+- [API](#API)
+- [Troubleshooting](#Troubleshooting)
+- [Funding](#Funding)
+- [Changelog](#Changelog)
+- [License](#License)
 
 
 
@@ -189,9 +190,17 @@ interface IConfig {
 
 ## Troubleshooting
 
-Behind the scenese, in order to work svelte-reveal adds inline styles to the targeted elements. If you have already applied some inline styled (in particular ```transition``` and ```transform``` css properties), they might get overridden by this library.
+Behind the scenes, in order to work svelte-reveal adds inline styles to the targeted elements. If you have already applied some inline styles (in particular ```transition``` and ```transform``` css properties), they might get overridden by this library.
 
-In order to avoid this, wrap your element in a ```<div>``` and add the  ```use:reveal``` action to that wrapper element.
+To avoid this situation, wrap your element in a ```<div>``` or a ```<span>``` and add the  ```use:reveal``` action to that wrapper element.
+
+
+
+## Funding
+
+Want to buy me a coffee? ☕️
+
+[https://ko-fi.com/davekeehl](https://ko-fi.com/davekeehl)
 
 
 
