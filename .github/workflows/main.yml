@@ -45,7 +45,7 @@ jobs:
         run: npm run test
 
   CD:
-    needs: [QA]
+    needs: [CI]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
