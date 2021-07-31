@@ -11,7 +11,7 @@
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"baseUrl": ".",
-		"rootDir": "./src",
+		"rootDir": ".",
 		"outDir": "dist",
 		"allowJs": true,
 		"checkJs": true,
