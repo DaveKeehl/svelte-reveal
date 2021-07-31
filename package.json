@@ -15,7 +15,7 @@
 		"prepack": "npm run build",
 		"test": "jest",
 		"test:watch": "jest --watch",
-		"prepublishOnly": "npm pack "
+		"prepublishOnly": "npm pack"
 	},
 	"files": [
 		"dist/"
@@ -34,6 +34,7 @@
 	},
 	"homepage": "https://github.com/DaveKeehl/svelte-reveal#readme",
 	"keywords": [
+		"svelte-reveal",
 		"svelte",
 		"reveal",
 		"scroll",
