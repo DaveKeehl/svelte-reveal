@@ -26,7 +26,7 @@ export interface IObserverOptions {
 }
 
 export interface IConfig {
-	disableDebug: boolean;
+	dev: boolean;
 	once: boolean;
 	observer: IObserverOptions;
 }

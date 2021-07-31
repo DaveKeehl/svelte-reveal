@@ -22,7 +22,7 @@ const init: Required<IOptions> = {
 };
 
 let config: IConfig = {
-	disableDebug: false,
+	dev: true,
 	once: false,
 	observer: {
 		root: init.root,
@@ -31,8 +31,8 @@ let config: IConfig = {
 	}
 };
 
-export const setDisableDebug = (debug: boolean): void => {
-	config.disableDebug = debug;
+export const setDev = (dev: boolean): void => {
+	config.dev = dev;
 };
 
 export const setObserverConfig = (observerConfig: IObserverOptions): void => {
@@ -69,12 +69,12 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 		options
 	);
 
-	const canDebug = !config.disableDebug && debug && ref !== '';
+	const canDebug = config.dev && debug && ref !== '';
 
 	// Logging initial options and configurations info
 	if (canDebug) {
-		console.log(`DISABLE_DEBUG: ${config.disableDebug}`);
-		console.log(`ONCE: ${config.once}`);
+		console.log(`Dev: ${config.dev}`);
+		console.log(`Once: ${config.once}`);
 		printRef(ref);
 		console.log(node);
 		console.log(init);

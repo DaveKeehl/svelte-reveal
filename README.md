@@ -102,11 +102,11 @@ If you want to customise the behavior of a single DOM node, you are supposed to 
 
 
 
-### setDisableDebug (debug) => void
+### setDev (dev) => void
 
 | Parameter | Type          | Description                         |
 | --------- | ------------- | ----------------------------------- |
-| debug     | ```boolean``` | Globally enables/disables all logs. |
+| dev       | ```boolean``` | Globally enables/disables all logs. |
 
 
 
