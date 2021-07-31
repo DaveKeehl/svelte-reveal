@@ -6,8 +6,12 @@ on:
       - develop
       - main
 
+  pull_request:
+    branches:
+      - develop
+
 jobs:
-  QA:
+  CI:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -40,11 +44,38 @@ jobs:
       - name: Testing
         run: npm run test
 
-  Deploy:
+  CD:
     needs: [QA]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-dependencies
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+
+      - name: Installing dependencies
+        run: npm install -g prettier && npm install
+
+      - name: Formatting
+        run: npm run format
+
+      - name: Building
+        run: npm run build
+
       - name: Upload code coverage
         run: echo "upload code coverage"
 
@@ -55,4 +86,4 @@ jobs:
         run: echo "upload docker image"
 
       - name: Publish package on NPM
-        run: echo "publish on NPM"
+        run: npm publish
