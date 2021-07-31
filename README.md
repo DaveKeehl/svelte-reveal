@@ -6,9 +6,11 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
 
 
 
+## Table of Content
+
 1. [Usage](#Usage)
 2. [Demo](#Demo)
-3. [Why svelte-reveal](#Why svelte-reveal)
+3. [Why svelte-reveal](#Why-svelte-reveal)
 4. [Options](#Options)
 5. [API](#API)
 6. [Troubleshooting](#Troubleshooting)
