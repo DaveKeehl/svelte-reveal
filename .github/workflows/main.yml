@@ -39,3 +39,11 @@ jobs:
 
       - name: Testing
         run: npm run test
+
+  publish:
+    needs: [QA]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+    steps:
+      - name: Release new GitHub package
+        run: echo "releasing new package"
