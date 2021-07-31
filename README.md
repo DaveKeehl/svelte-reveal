@@ -198,9 +198,7 @@ To avoid this situation, wrap your element in a ```<div>``` or a ```<span>``` an
 
 ## Funding
 
-Want to buy me a coffee? ☕️
-
-[https://ko-fi.com/davekeehl](https://ko-fi.com/davekeehl)
+[Want to buy me a coffee?](https://ko-fi.com/davekeehl) ☕️
 
 
 
