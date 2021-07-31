@@ -1,4 +1,4 @@
-name: CI
+name: Main
 
 on:
   push:
@@ -40,10 +40,19 @@ jobs:
       - name: Testing
         run: npm run test
 
-  publish:
+  Deploy:
     needs: [QA]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/develop'
     steps:
+      - name: Upload code coverage
+        run: echo "upload code coverage"
+
       - name: Release new GitHub package
         run: echo "releasing new package"
+
+      - name: Upload docker image
+        run: echo "upload docker image"
+
+      - name: Publish package on NPM
+        run: echo "publish on NPM"
