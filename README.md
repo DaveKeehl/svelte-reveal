@@ -6,6 +6,17 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
 
 
 
+1. [Usage](#Usage)
+2. [Demo](#Demo)
+3. [Why svelte-reveal](#Why svelte-reveal)
+4. [Options](#Options)
+5. [API](#API)
+6. [Troubleshooting](#Troubleshooting)
+7. [Changelog](#Changelog)
+8. [License](#License)
+
+
+
 ## Usage
 
 Using svelte-reveal is dead simple:
@@ -13,13 +24,13 @@ Using svelte-reveal is dead simple:
 1. Install the library:
 
    ```bash
-   $ npm install svelte-reveal --save-dev
+   npm install svelte-reveal --save-dev
    ```
 
    or
 
    ```````bash
-   $ yarn add svelte-reveal -D
+   yarn add svelte-reveal -D
    ```````
 
 2. Import the library within your Svelte component:
@@ -171,6 +182,14 @@ interface IConfig {
   observer: IObserverOptions;
 }
 ``````
+
+
+
+## Troubleshooting
+
+Behind the scenese, in order to work svelte-reveal adds inline styles to the targeted elements. If you have already applied some inline styled (in particular ```transition``` and ```transform``` css properties), they might get overridden by this library.
+
+In order to avoid this, wrap your element in a ```<div>``` and add the  ```use:reveal``` action to that wrapper element.
 
 
 
