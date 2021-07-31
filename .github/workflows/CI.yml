@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  Setup:
+  QA:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -18,9 +18,6 @@ jobs:
         with:
           node-version: "14"
 
-      - name: Install dependencies
-        run: npm install
-
       - name: Cache dependencies
         uses: actions/cache@v2
         env:
@@ -30,13 +27,6 @@ jobs:
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
-
-  QA:
-    needs: [setup]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
 
       - name: Installing dependencies
         run: npm install -g prettier eslint && npm install
