@@ -5,16 +5,17 @@
 	"main": "dist/index.js",
 	"types": "dist/types/index.d.ts",
 	"scripts": {
-		"clean": "rm -rf dist/",
+		"clean": "rm -rf dist/ && npm run format",
 		"prebuild": "npm run clean && npm run build:types",
 		"build": "node esbuild.config.js",
 		"build:types": "tsc --emitDeclarationOnly",
 		"build:watch": "npm run clean && npm run build -- --watch",
 		"lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
 		"format": "prettier --write --plugin-search-dir=. .",
-		"prepack": "npm run format && npm run build",
+		"prepack": "npm run build",
 		"test": "jest",
-		"test:watch": "jest --watch"
+		"test:watch": "jest --watch",
+		"prepublishOnly": "npm pack "
 	},
 	"files": [
 		"dist/"
