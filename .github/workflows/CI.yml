@@ -7,15 +7,12 @@ on:
       - main
 
 jobs:
-  checkout:
+  setup:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-  setup:
-    runs-on: ubuntu-latest
-    steps:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -35,13 +32,21 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
 
   lint:
-    needs: [checkout, setup]
+    needs: [setup]
     runs-on: ubuntu-latest
     steps:
-      - run: npm run lint
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Lint
+        run: npm run lint
 
   test:
-    needs: [checkout, lint]
+    needs: [lint]
     runs-on: ubuntu-latest
     steps:
-      - run: npm run test
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run tests
+        run: npm run test
