@@ -43,7 +43,7 @@ jobs:
   Deploy:
     needs: [QA]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Upload code coverage
         run: echo "upload code coverage"
@@ -51,7 +51,7 @@ jobs:
       - name: Release new GitHub package
         run: echo "releasing new package"
 
-      - name: Upload docker image
+      - name: Upload Docker image
         run: echo "upload docker image"
 
       - name: Publish package on NPM
