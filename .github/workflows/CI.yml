@@ -35,14 +35,11 @@ jobs:
     needs: [setup]
     runs-on: ubuntu-latest
     steps:
-      - name: Install global dependencies
-        run: npm install -g prettier eslint
-
-      - name: Installing dependencies
-        run: npm install
-
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Installing dependencies
+        run: npm install -g prettier eslint && npm install
 
       - name: Formatting
         run: npm run format
