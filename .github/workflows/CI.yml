@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  setup:
+  Setup:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -31,12 +31,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
 
-  lint:
+  QA:
     needs: [setup]
     runs-on: ubuntu-latest
     steps:
       - name: Install dependencies
-        run: npm install -g prettier eslint
+        run: npm install -g prettier eslint && npm install
 
       - name: Checkout code
         uses: actions/checkout@v2
@@ -44,15 +44,8 @@ jobs:
       - name: Formatting
         run: npm run format
 
-      - name: Lint
+      - name: Linting
         run: npm run lint
 
-  test:
-    needs: [lint]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Run tests
+      - name: Testing
         run: npm run test
