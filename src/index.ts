@@ -1,6 +1,6 @@
 import type { IConfig, IOptions, IReturnAction, IObserverOptions, ObserverRoot } from './types';
 import { createdStyleTag, reloadStore } from './stores';
-import { getCssProperties, printRef, getEasing } from './utils';
+import { getCssProperties, getEasing } from './utils';
 
 const init: Required<IOptions> = {
 	disable: false,
@@ -35,6 +35,10 @@ export const setDev = (dev: boolean): void => {
 	config.dev = dev;
 };
 
+export const setOnce = (once: boolean): void => {
+	config.once = once;
+};
+
 export const setObserverConfig = (observerConfig: IObserverOptions): void => {
 	config.observer = observerConfig;
 };
@@ -55,10 +59,6 @@ export const setObserverThreshold = (threshold: number): void => {
 	}
 };
 
-export const setOnce = (once: boolean): void => {
-	config.once = once;
-};
-
 export const setConfig = (userConfig: IConfig): void => {
 	config = userConfig;
 };
@@ -73,13 +73,19 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 
 	// Logging initial options and configurations info
 	if (canDebug) {
-		console.log(`Dev: ${config.dev}`);
-		console.log(`Once: ${config.once}`);
-		printRef(ref);
+		console.groupCollapsed(`Ref: ${ref}`);
+
+		console.groupCollapsed('Node');
 		console.log(node);
-		console.log(init);
-		printRef(ref);
+		console.groupEnd();
+
+		console.groupCollapsed('Config');
 		console.log(config);
+		console.groupEnd();
+
+		console.groupCollapsed('Options');
+		console.log(init);
+		console.groupEnd();
 	}
 
 	let reloaded = false;
@@ -131,8 +137,9 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 			const entryTarget = entry.target;
 
 			if (entryTarget === node) {
-				printRef(ref);
+				console.groupCollapsed(`Ref: ${ref} (Intersection Observer Callback)`);
 				console.log(entry);
+				console.groupEnd();
 			}
 		}
 
@@ -145,6 +152,7 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 	}, config.observer);
 
 	observer.observe(node);
+	console.groupEnd();
 
 	return {
 		destroy() {

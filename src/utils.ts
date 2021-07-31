@@ -1,9 +1,5 @@
 import type { Transitions, IOptions, Easing, CustomEase } from './types';
 
-export const printRef = (ref: string): void => {
-	console.log(`--- ${ref} ---`);
-};
-
 export const getCssProperties = (transition: Transitions, init: IOptions, options: IOptions): string => {
 	const { x = init.x, y = init.y } = options;
 
