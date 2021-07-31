@@ -96,11 +96,25 @@ Keep in mind that these options are applied to the single DOM element you add sv
 
 svelte-reveal also exposes several functions you can call to change the internal behavior of this library.
 
-Since these functions operate on a global level for all instances of svelte-reveal, you are supposed to call them only from a single file, otherwise you'll keep overriding the global options from multiple points. If you need/want to change considerably the behavior of this library, I suggest you to create a dedicated file (e.g. reveal.config.js) where you call the API to set global settings or shared transition properties.
+Since these functions operate on a global level for all instances of svelte-reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the global options from multiple points. If you need/want to considerably customize the behavior of this library, I suggest you to create a dedicated file (e.g. reveal.config.js) and from there call the API to set global settings or shared transition properties.
 
 If you want to customise the behavior of a single DOM node, you are supposed to use the [options](#Options) mentioned in the previous section (they override the global ones set by the API).
 
 
+
+This library is globally configured as follows right of out the box:
+
+| Parameter           | Type               | Default                 | Description                                                  |
+| ------------------- | ------------------ | ----------------------- | ------------------------------------------------------------ |
+| dev                 | ```boolean```      | ```true```              | Globally enables/disables all logs.                          |
+| once                | ```boolean```      | ```false```             | Runs the scroll animations only once when set to ```true```. When set to ```true```, refreshing the page doesn't re-run them. |
+| observer.root       | ```ObserverRoot``` | ```null```              | The Intersection Observer API root element.                  |
+| observer.rootMargin | ```string```       | ```"0px 0px 0px 0px"``` | The Intersection Observer API rootMargin property.           |
+| observer.threshold  | ```number```       | ```0.6```               | The Intersection Observer API threshold property.            |
+
+
+
+This config parameters can be manipulated with the following functions:
 
 ### setDev (dev) => void
 
@@ -110,21 +124,11 @@ If you want to customise the behavior of a single DOM node, you are supposed to 
 
 
 
-### setObserverConfig (observerConfig) => void
+### setOnce (once) => void
 
-| Parameter      | Type                  | Description                                      |
-| -------------- | --------------------- | ------------------------------------------------ |
-| observerConfig | ```ObserverOptions``` | Globally sets the Intersection Observer options. |
-
-```typescript
-type ObserverRoot = HTMLElement | null | undefined;
-
-interface IObserverOptions {
-  root: ObserverRoot;
-  rootMargin: string;
-  threshold: number;
-}
-```
+| Parameter | Type          | Description                                                  |
+| --------- | ------------- | ------------------------------------------------------------ |
+| once      | ```boolean``` | Runs the scroll animations only once when set to true. Refreshing the page doesn't re-run them. |
 
 
 
@@ -156,11 +160,21 @@ type ObserverRoot = HTMLElement | null | undefined;
 
 
 
-### setOnce (once) => void
+### setObserverConfig (observerConfig) => void
 
-| Parameter | Type          | Description                                                  |
-| --------- | ------------- | ------------------------------------------------------------ |
-| once      | ```boolean``` | Runs the scroll animations only once when set to true. Refreshing the page doesn't re-run them. |
+| Parameter      | Type                  | Description                                      |
+| -------------- | --------------------- | ------------------------------------------------ |
+| observerConfig | ```ObserverOptions``` | Globally sets the Intersection Observer options. |
+
+```typescript
+type ObserverRoot = HTMLElement | null | undefined;
+
+interface IObserverOptions {
+  root: ObserverRoot;
+  rootMargin: string;
+  threshold: number;
+}
+```
 
 
 
@@ -185,6 +199,16 @@ interface IConfig {
   observer: IObserverOptions;
 }
 ``````
+
+
+
+## Suggestions
+
+In order to take full advantage of this library, I suggest you to create some environment variables to keep track of the environment you are currently in (e.g. development, staging, production) and to leverage npm scripts to update those variables. [This article](https://www.twilio.com/blog/working-with-environment-variables-in-node-js-html) explains well this concept.
+
+That way you can for example set the config ```dev``` property to ```false``` when in production and avoid exposing console logs to the end users.
+
+If you use [svelte-kit](https://kit.svelte.dev/), this feature is available right out of the box with the [$app/env](https://kit.svelte.dev/docs#modules-$app-env) module.
 
 
 
