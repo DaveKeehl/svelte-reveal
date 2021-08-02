@@ -114,6 +114,8 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 		customEase = init.customEase
 	} = options;
 
+	node.dispatchEvent(new CustomEvent('mount'));
+
 	const canDebug = config.dev && debug && ref !== '';
 	const highlightText = `color: ${highlightLogs ? highlightColor : '#B4BEC8'}`;
 
@@ -175,12 +177,16 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 		.slide--hidden {
 			${getCssRules('slide', init, options)}
 		}
+		.spin--hidden {
+			${getCssRules('spin', init, options)}
+		}
 		`;
 		const head = document.querySelector('head');
 		if (head !== null) head.appendChild(style);
 		createdStyleTag.set(true);
 	}
 
+	node.dispatchEvent(new CustomEvent('revealStart'));
 	node.classList.add(`${transition}--hidden`);
 	node.style.transition = `all ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEase)}`;
 
@@ -198,6 +204,7 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 
 		entries.forEach((entry) => {
 			if (entry.intersectionRatio >= threshold) {
+				node.dispatchEvent(new CustomEvent('revealEnd'));
 				node.classList.remove(`${transition}--hidden`);
 				observer.unobserve(node);
 			}
@@ -208,7 +215,12 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 	console.groupEnd();
 
 	return {
+		update() {
+			node.dispatchEvent(new CustomEvent('update'));
+		},
+
 		destroy() {
+			node.dispatchEvent(new CustomEvent('destroy'));
 			unsubscribeStyleTag();
 			unsubscribeReloaded();
 		}
