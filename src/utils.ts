@@ -1,39 +1,57 @@
 import type { Transitions, IOptions, Easing, CustomEase } from './types';
 
+const addVendors = (unprefixedStyles: string): string => {
+	const rules = unprefixedStyles
+		.trim()
+		.replace(/(\n|\t)/g, '')
+		.split(';')
+		.slice(0, -1);
+	let prefixedStyles = '';
+
+	rules.forEach((rule) => {
+		const [property, value] = rule.trim().split(': ');
+		const decorated = `
+            -webkit-${property}: ${value};
+            -ms-${property}: ${value}; 
+            ${property}: ${value};`;
+		prefixedStyles += decorated;
+	});
+
+	return prefixedStyles;
+};
+
 export const getCssProperties = (transition: Transitions, init: IOptions, options: IOptions): string => {
 	const { x = init.x, y = init.y } = options;
 
+	let styles = '';
+
 	if (transition === 'fly') {
-		return `
+		styles = `
 			opacity: 0;
 			transform: translateY(${y}px);
 		`;
-	}
-	if (transition === 'fade') {
-		return `
+	} else if (transition === 'fade') {
+		styles = `
 			opacity: 0;
 		`;
-	}
-	if (transition === 'blur') {
-		return `
+	} else if (transition === 'blur') {
+		styles = `
 			opacity: 0;
 			filter: blur(16px);
 		`;
-	}
-	if (transition === 'scale') {
-		return `
+	} else if (transition === 'scale') {
+		styles = `
 			opacity: 0;
 			transform: scale(0);
 		`;
-	}
-	if (transition === 'slide') {
-		return `
+	} else if (transition === 'slide') {
+		styles = `
 			opacity: 0;
 			transform: translateX(${x}px);
 		`;
 	}
 
-	return '';
+	return addVendors(styles);
 };
 
 export const getEasing = (easing: Easing, customEase: CustomEase): string => {
