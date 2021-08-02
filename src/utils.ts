@@ -61,6 +61,11 @@ export const getCssRules = (transition: Transitions, init: IOptions, options: IO
 			opacity: 0;
 			transform: translateX(${x}px);
 		`;
+	} else if (transition === 'spin') {
+		styles = `
+			opacity: 0;
+			transform: rotate(-360deg);
+		`;
 	}
 
 	return addVendors(styles).trim();

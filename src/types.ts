@@ -137,7 +137,7 @@ export interface IReturnAction {
 /**
  * The animations that can be used by the library users.
  */
-export type Transitions = 'fly' | 'fade' | 'blur' | 'scale' | 'slide';
+export type Transitions = 'fly' | 'fade' | 'blur' | 'scale' | 'slide' | 'spin';
 
 /**
  * The easing functions that can be specified by the users to tweak the animation behavior.
