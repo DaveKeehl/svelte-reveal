@@ -26,6 +26,8 @@ export interface IOptions {
 	highlightLogs?: boolean;
 	/**
 	 * You can use this option to tweak the console logs when highlightLogs is set to true.
+	 *
+	 * Any valid CSS color can be used here.
 	 */
 	highlightColor?: string;
 	/**
