@@ -91,10 +91,17 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 	let reloaded = false;
 	const unsubscribeReloaded = reloadStore.subscribe((value: boolean) => (reloaded = value));
 
-	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// @ts-ignoreq
-	const navigationType = window.performance.getEntriesByType('navigation')[0].type;
-	if (navigationType === 'reload') reloadStore.set(true);
+	const navigation = window.performance.getEntriesByType('navigation');
+	let navigationType: string | number = '';
+	if (navigation.length > 0) {
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignoreq
+		navigationType = navigation[0].type;
+	} else {
+		// Using deprecated navigation object as a last resort to detect a page reload
+		navigationType = window.performance.navigation.type;
+	}
+	if (navigationType === 'reload' || navigationType === 1) reloadStore.set(true);
 
 	if (disable || (config.once && reloaded)) return;
 
