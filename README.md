@@ -211,8 +211,9 @@ In order to take full advantage of this library, I suggest you to create some en
 
 That way you can for example set the config ```dev``` property to ```false``` when in production and avoid exposing console logs to the end users.
 
-If you use [svelte-kit](https://kit.svelte.dev/), this feature is available right out of the box with the [$app/env](https://kit.svelte.dev/docs#modules-$app-env) module.
+If you use [SvelteKit](https://kit.svelte.dev/), this feature is available right out of the box with the [$app/env](https://kit.svelte.dev/docs#modules-$app-env) module.
 
+> ⚠️ Support for SvelteKit is currently experimental.
 
 
 ## Troubleshooting
