@@ -1,6 +1,6 @@
 import type { IConfig, IOptions, IReturnAction, IObserverOptions, ObserverRoot } from './types';
 import { createdStyleTag, reloadStore } from './stores';
-import { getCssProperties, getEasing } from './utils';
+import { getCssRules, getEasing } from './utils';
 
 const init: Required<IOptions> = {
 	disable: false,
@@ -33,26 +33,50 @@ let config: IConfig = {
 	}
 };
 
+/**
+ * Toggles on/off the development mode.
+ * @param dev - The development mode
+ */
 export const setDev = (dev: boolean): void => {
 	config.dev = dev;
 };
 
+/**
+ * Toggles on/off animations on page reload.
+ * @param once - Run on page reload status
+ */
 export const setOnce = (once: boolean): void => {
 	config.once = once;
 };
 
+/**
+ * Sets the Intersection Observer API configuration.
+ * @param observerConfig - Your custom observer config
+ */
 export const setObserverConfig = (observerConfig: IObserverOptions): void => {
 	config.observer = observerConfig;
 };
 
+/**
+ * Sets the Intersection Observer API root element.
+ * @param root - The root element
+ */
 export const setObserverRoot = (root: ObserverRoot): void => {
 	config.observer.root = root;
 };
 
+/**
+ * Sets the rootMargin property of the Intersection Observer API.
+ * @param rootMargin - The margin used by the observer with respect to the root element
+ */
 export const setObserverRootMargin = (rootMargin: string): void => {
 	config.observer.rootMargin = rootMargin;
 };
 
+/**
+ * Sets the threshold used by the Intersection Observer API to detect when an element is considered visible.
+ * @param threshold - The observer threshold value
+ */
 export const setObserverThreshold = (threshold: number): void => {
 	if (threshold >= 0 && threshold <= 1) {
 		config.observer.threshold = threshold;
@@ -61,11 +85,21 @@ export const setObserverThreshold = (threshold: number): void => {
 	}
 };
 
+/**
+ * Sets all the global configurations (dev, once, observer) used by this library.
+ * @param userConfig - Your custom global configurations
+ */
 export const setConfig = (userConfig: IConfig): void => {
 	config = userConfig;
 };
 
-export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction | void => {
+/**
+ * Reveals a given node element on scroll
+ * @param node - The DOM node you want to reveal on scroll
+ * @param options - The custom options that will used to tweak the behavior of the animation of the node element
+ * @returns An object containing update and/or destroy functions
+ */
+export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction => {
 	const {
 		disable = init.disable,
 		debug = init.debug,
@@ -115,7 +149,7 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 	}
 	if (navigationType === 'reload' || navigationType === 1) reloadStore.set(true);
 
-	if (disable || (config.once && reloaded)) return;
+	if (disable || (config.once && reloaded)) return {};
 
 	let styleTagExists = false;
 	const unsubscribeStyleTag = createdStyleTag.subscribe((value: boolean) => (styleTagExists = value));
@@ -127,19 +161,19 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 		style.setAttribute('data-action', 'reveal');
 		style.innerHTML = `
 		.fly--hidden {
-			${getCssProperties('fly', init, options)}
+			${getCssRules('fly', init, options)}
 		}
 		.fade--hidden {
-			${getCssProperties('fade', init, options)}
+			${getCssRules('fade', init, options)}
 		}
 		.blur--hidden {
-			${getCssProperties('blur', init, options)}
+			${getCssRules('blur', init, options)}
 		}
 		.scale--hidden {
-			${getCssProperties('scale', init, options)}
+			${getCssRules('scale', init, options)}
 		}
 		.slide--hidden {
-			${getCssProperties('slide', init, options)}
+			${getCssRules('slide', init, options)}
 		}
 		`;
 		const head = document.querySelector('head');
