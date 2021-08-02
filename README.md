@@ -4,7 +4,7 @@
 
 svelte-reveal is a library created with the purpose of helping [Svelte](https://svelte.dev/) users add reveal on scroll transitions to their web applications. This library leverages the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) in order to know when to trigger the animations.
 
-
+> ⚠️ svelte-reveal is currently in beta and it needs people to use it and test it out in different situations. Support for SvelteKit is experimental.
 
 ## Table of Content
 
@@ -68,7 +68,7 @@ Instead, I decided to use Svelte [actions](https://svelte.dev/docs#use_action), 
 
 ## Options
 
-Depending on the use case, you can either use this library as-is (which applies some default styles I have chosen), or customize it to your liking. If you choose to do so, you can pass to this action an object containing additional options.
+Depending on the use case, you can either use this library as-is (which applies some [default styles](https://github.com/DaveKeehl/svelte-reveal/blob/04123ce58edda4450da7bf945d6d15eeea7006e9/src/index.ts#L5-L22) I have chosen), or customize it to your liking. If you choose to do so, you can pass to this action an object containing additional options.
 
 Keep in mind that these options are applied to the single DOM element you add svelte-reveal to. For global and more in-depth settings, go to the [API](#API) section.
 
