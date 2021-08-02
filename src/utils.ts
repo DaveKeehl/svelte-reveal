@@ -51,7 +51,7 @@ export const getCssProperties = (transition: Transitions, init: IOptions, option
 		`;
 	}
 
-	return addVendors(styles);
+	return addVendors(styles).trim();
 };
 
 export const getEasing = (easing: Easing, customEase: CustomEase): string => {

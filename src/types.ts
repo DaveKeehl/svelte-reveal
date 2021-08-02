@@ -2,6 +2,8 @@ export interface IOptions {
 	disable?: boolean;
 	debug?: boolean;
 	ref?: string;
+	highlightLogs?: boolean;
+	highlightColor?: string;
 	root?: ObserverRoot;
 	marginTop?: number;
 	marginBottom?: number;

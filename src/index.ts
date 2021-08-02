@@ -6,6 +6,8 @@ const init: Required<IOptions> = {
 	disable: false,
 	debug: false,
 	ref: '',
+	highlightLogs: false,
+	highlightColor: 'tomato',
 	root: null,
 	marginTop: 0,
 	marginBottom: 0,
@@ -64,26 +66,36 @@ export const setConfig = (userConfig: IConfig): void => {
 };
 
 export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction | void => {
-	const { disable, debug, ref, threshold, transition, delay, duration, easing, customEase } = Object.assign(
-		init,
-		options
-	);
+	const {
+		disable = init.disable,
+		debug = init.debug,
+		ref = init.ref,
+		highlightLogs = init.highlightLogs,
+		highlightColor = init.highlightColor,
+		threshold = init.threshold,
+		transition = init.transition,
+		delay = init.delay,
+		duration = init.duration,
+		easing = init.easing,
+		customEase = init.customEase
+	} = options;
 
 	const canDebug = config.dev && debug && ref !== '';
+	const highlightText = `color: ${highlightLogs ? highlightColor : '#B4BEC8'}`;
 
 	// Logging initial options and configurations info
 	if (canDebug) {
-		console.groupCollapsed(`Ref: ${ref}`);
+		console.groupCollapsed(`%cRef: ${ref}`, highlightText);
 
-		console.groupCollapsed('Node');
+		console.groupCollapsed('%cNode', highlightText);
 		console.log(node);
 		console.groupEnd();
 
-		console.groupCollapsed('Config');
+		console.groupCollapsed('%cConfig', highlightText);
 		console.log(config);
 		console.groupEnd();
 
-		console.groupCollapsed('Options');
+		console.groupCollapsed('%cOptions', highlightText);
 		console.log(init);
 		console.groupEnd();
 	}
@@ -115,19 +127,19 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 		style.setAttribute('data-action', 'reveal');
 		style.innerHTML = `
 		.fly--hidden {
-			${getCssProperties('fly', init, options).trim()}
+			${getCssProperties('fly', init, options)}
 		}
 		.fade--hidden {
-			${getCssProperties('fade', init, options).trim()}
+			${getCssProperties('fade', init, options)}
 		}
 		.blur--hidden {
-			${getCssProperties('blur', init, options).trim()}
+			${getCssProperties('blur', init, options)}
 		}
 		.scale--hidden {
-			${getCssProperties('scale', init, options).trim()}
+			${getCssProperties('scale', init, options)}
 		}
 		.slide--hidden {
-			${getCssProperties('slide', init, options).trim()}
+			${getCssProperties('slide', init, options)}
 		}
 		`;
 		const head = document.querySelector('head');
@@ -144,7 +156,7 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 			const entryTarget = entry.target;
 
 			if (entryTarget === node) {
-				console.groupCollapsed(`Ref: ${ref} (Intersection Observer Callback)`);
+				console.groupCollapsed(`%cRef: ${ref} (Intersection Observer Callback)`, highlightText);
 				console.log(entry);
 				console.groupEnd();
 			}
