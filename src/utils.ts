@@ -1,4 +1,4 @@
-import type { Transitions, IOptions, Easing, CustomEase } from './types';
+import type { Transitions, IOptions, Easing, CustomEasing } from './types';
 
 /**
  * Decorate a set of CSS rules with browser-vendors prefixes.
@@ -77,7 +77,7 @@ export const getCssRules = (transition: Transitions, init: IOptions, options: IO
  * @param customEase - Custom values of cubic-bezier easing function
  * @returns A CSS valid easing function value
  */
-export const getEasing = (easing: Easing, customEase: CustomEase): string => {
+export const getEasing = (easing: Easing, customEase: CustomEasing): string => {
 	let easingText: string = easing;
 
 	if (easing === 'cubic-bezier') {

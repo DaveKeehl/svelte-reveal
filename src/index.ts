@@ -1,5 +1,5 @@
 import type { IConfig, IOptions, IReturnAction, IObserverOptions, ObserverRoot } from './types';
-import { createdStyleTag, reloadStore } from './stores';
+import { styleTagStore, reloadStore } from './stores';
 import { getCssRules, getEasing } from './utils';
 
 const init: Required<IOptions> = {
@@ -18,7 +18,7 @@ const init: Required<IOptions> = {
 	delay: 0,
 	duration: 800,
 	easing: 'ease',
-	customEase: [0.8, 0, 0.2, 1],
+	customEasing: [0.8, 0, 0.2, 1],
 	x: -20,
 	y: -20
 };
@@ -111,7 +111,7 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 		delay = init.delay,
 		duration = init.duration,
 		easing = init.easing,
-		customEase = init.customEase
+		customEasing = init.customEasing
 	} = options;
 
 	node.dispatchEvent(new CustomEvent('mount'));
@@ -154,7 +154,7 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 	if (disable || (config.once && reloaded)) return {};
 
 	let styleTagExists = false;
-	const unsubscribeStyleTag = createdStyleTag.subscribe((value: boolean) => (styleTagExists = value));
+	const unsubscribeStyleTag = styleTagStore.subscribe((value: boolean) => (styleTagExists = value));
 
 	// Creating stylesheet
 	if (!styleTagExists) {
@@ -183,12 +183,12 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 		`;
 		const head = document.querySelector('head');
 		if (head !== null) head.appendChild(style);
-		createdStyleTag.set(true);
+		styleTagStore.set(true);
 	}
 
 	node.dispatchEvent(new CustomEvent('revealStart'));
 	node.classList.add(`${transition}--hidden`);
-	node.style.transition = `all ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEase)}`;
+	node.style.transition = `all ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEasing)}`;
 
 	const observer = new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
 		if (canDebug) {

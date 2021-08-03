@@ -74,7 +74,7 @@ export interface IOptions {
 	/**
 	 * The individual weights of a custom cubic-bezier curve.
 	 */
-	customEase?: CustomEase;
+	customEasing?: CustomEasing;
 	/**
 	 * The starting position on the x-axis of a given transition.
 	 */
@@ -140,11 +140,11 @@ export interface IReturnAction {
 export type Transitions = 'fly' | 'fade' | 'blur' | 'scale' | 'slide' | 'spin';
 
 /**
- * The easing functions that can be specified by the users to tweak the animation behavior.
+ * The easing functions that can be specified by the user to tweak the animation timing.
  */
-export type Easing = 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out' | 'cubic-bezier';
+export type Easing = 'linear' | 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out' | 'cubic-bezier';
 
 /**
  * The individual weights of a custom cubic-bezier curve.
  */
-export type CustomEase = [number, number, number, number];
+export type CustomEasing = [number, number, number, number];
