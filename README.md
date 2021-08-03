@@ -89,7 +89,7 @@ Keep in mind that these options are applied to the single DOM element you add sv
 | delay          | ```number```       | ```0```                |                                                              | The amount of milliseconds (ms) you want to delay a given transition. |
 | duration       | ```number```       | ```800```              |                                                              | The amount of milliseconds (ms) you want a given transition to last. |
 | easing         | ```string```       | ```"ease"```           | ```"linear"```, ```"ease-in"```, ```"ease-out"```, ```"ease-in-out"```, ```"cubic-bezier"``` | The type of easing function you want to apply to a given element. |
-| customEase     | ```CustomEase```   | ```[0.8, 0, 0.2, 1]``` |                                                              | The individual weights of a custom cubic-bezier curve.       |
+| customEasing   | ```CustomEasing``` | ```[0.8, 0, 0.2, 1]``` |                                                              | The individual weights of a custom cubic-bezier curve. [This website](https://cubic-bezier.com/) is great for previewing timing functions, while [this other website](https://easings.net/) shows many custom easing functions. |
 | x              | ```number```       | ```-20```              |                                                              | The starting position on the x-axis of a given transition (only the ```"slide"``` animation supports this property). |
 | y              | ```number```       | ```-20```              |                                                              | The starting position on the y-axis of a given transition (only the ```"fly"``` animation supports this property). |
 
