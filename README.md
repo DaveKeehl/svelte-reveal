@@ -25,13 +25,13 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
 
 Using svelte-reveal is dead simple:
 
-1. Install the library:
+1. Install the library. You can use either [npm](https://www.npmjs.com/):
 
    ```bash
    npm install svelte-reveal --save-dev
    ```
 
-   or
+   or [yarn](https://yarnpkg.com/):
 
    ```````bash
    yarn add svelte-reveal -D
@@ -72,26 +72,27 @@ Depending on the use case, you can either use this library as-is (which applies 
 
 Keep in mind that these options are applied to the single DOM element you add svelte-reveal to. For global and more in-depth settings, go to the [API](#API) section.
 
-| Option         | Type               | Default                | Other values                                                 | Description                                                  |
-| -------------- | ------------------ | ---------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| disable        | ```boolean```      | ```false```            |                                                              | It enables/disables the transition.                          |
-| debug          | ```boolean```      | ```false```            |                                                              | It enables/disables debugging mode for the targeted DOM element. This will log all options and configs to the console.<br />In order to be able to use this mode, you are required to also set the ```ref``` property. |
-| ref            | ```string```       | ```""```               |                                                              | When ```debug``` is set to ```true```, you are required to specificy a ```ref``` string. When multiple DOM nodes have ```debug``` mode enabled, ```ref``` strings allow you to know to which DOM node a console log statement belongs to. |
-| highlightLogs  | ```boolean```      | ```false```            |                                                              | When set to ```true``` the console logs of the target node get colored, making it easier to see them quicker among many other logs. |
-| highlightColor | ```string```       | ```"tomato"```         |                                                              | You can use this option to tweak the console logs when ```highlightLogs``` is set to ```true```. |
-| root           | ```ObserverRoot``` | ```null```             |                                                              | The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer API. |
-| marginTop      | ```number```       | ```0```                |                                                              | Top margin of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
-| marginBottom   | ```number```       | ```0```                |                                                              | Bottom margin of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
-| marginLeft     | ```number```       | ```0```                |                                                              | Left margin of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
-| marginRight    | ```number```       | ```0```                |                                                              | Right margin of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
-| threshold      | ```number```       | ```0.6```              |                                                              | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver) (in percentage from 0 to 1) property used by the Intersection Observer API to know when its target element is considered visible or not. |
-| transition     | ```string```       | ```"fly"```            | ```"fade"```, ```"blur"```, ```"scale"```, ```"slide"```, ```"spin"``` | The animation that will be triggered when your target node becomes visible. |
-| delay          | ```number```       | ```0```                |                                                              | The amount of milliseconds (ms) you want to delay a given transition. |
-| duration       | ```number```       | ```800```              |                                                              | The amount of milliseconds (ms) you want a given transition to last. |
-| easing         | ```string```       | ```"ease"```           | ```"linear"```, ```"ease-in"```, ```"ease-out"```, ```"ease-in-out"```, ```"cubic-bezier"``` | The type of easing function you want to apply to a given element. |
-| customEasing   | ```CustomEasing``` | ```[0.8, 0, 0.2, 1]``` |                                                              | The individual weights of a custom cubic-bezier curve. [This website](https://cubic-bezier.com/) is great for previewing timing functions, while [this other website](https://easings.net/) shows many custom easing functions. |
-| x              | ```number```       | ```-20```              |                                                              | The starting position on the x-axis of a given transition (only the ```"slide"``` animation supports this property). |
-| y              | ```number```       | ```-20```              |                                                              | The starting position on the y-axis of a given transition (only the ```"fly"``` animation supports this property). |
+| Option         | Type               | Default                | Description                                                  |
+| -------------- | ------------------ | ---------------------- | ------------------------------------------------------------ |
+| disable        | ```boolean```      | ```false```            | It enables/disables the transition.                          |
+| debug          | ```boolean```      | ```false```            | It enables/disables debugging mode for the targeted DOM element. This will log all options and configs to the console.<br />In order to be able to use this mode, you are required to also set the ```ref``` property. |
+| ref            | ```string```       | ```""```               | When ```debug``` is set to ```true```, you are required to specificy a ```ref``` string. When multiple DOM nodes have ```debug``` mode enabled, ```ref``` strings allow you to know to which DOM node a console log statement belongs to. |
+| highlightLogs  | ```boolean```      | ```false```            | When set to ```true``` the console logs of the target node get colored, making it easier to see them quicker among many other logs. |
+| highlightColor | ```string```       | ```"tomato"```         | You can use this option to tweak the console logs when ```highlightLogs``` is set to ```true```. |
+| root           | ```ObserverRoot``` | ```null```             | The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer API. |
+| marginTop      | ```number```       | ```0```                | Top margin of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
+| marginBottom   | ```number```       | ```0```                | Bottom margin of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
+| marginLeft     | ```number```       | ```0```                | Left margin of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
+| marginRight    | ```number```       | ```0```                | Right margin of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
+| threshold      | ```number```       | ```0.6```              | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver) (in percentage from 0 to 1) property used by the Intersection Observer API to know when its target element is considered visible or not. |
+| transition     | ```string```       | ```"fly"```            | The animation that will be triggered when your target node becomes visible.<br /><br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L140) the full list of available transitions. |
+| delay          | ```number```       | ```0```                | The amount of milliseconds (ms) you want to delay a given transition. |
+| duration       | ```number```       | ```800```              | The amount of milliseconds (ms) you want a given transition to last. |
+| easing         | ```string```       | ```"ease"```           | The type of easing function you want to apply to a given element.<br /><br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L145-L171) the full list of available easing functions. |
+| customEasing   | ```CustomEasing``` | ```[0.8, 0, 0.2, 1]``` | The individual weights of a custom cubic-bezier curve. [This website](https://cubic-bezier.com/) is great for previewing timing functions. |
+| x              | ```number```       | ```-20```              | The starting position on the x-axis of a given transition (only the ```"slide"``` animation supports this property). |
+| y              | ```number```       | ```-20```              | The starting position on the y-axis of a given transition (only the ```"fly"``` animation supports this property). |
+| deg            | ```number```       | ```-360```             | The number of degrees you want your node to rotate when being revealed with. |
 
 
 
@@ -117,9 +118,11 @@ This library is globally configured as follows right of out the box:
 
 
 
-This config parameters can be manipulated with the following functions:
+This config parameters can be manipulated with the following functions. **All API functions return the global config object with the updated properties.**
 
-### setDev (dev) => void
+
+
+### setDev (dev) => IConfig
 
 | Parameter | Type          | Description                         |
 | --------- | ------------- | ----------------------------------- |
@@ -127,7 +130,7 @@ This config parameters can be manipulated with the following functions:
 
 
 
-### setOnce (once) => void
+### setOnce (once) => IConfig
 
 | Parameter | Type          | Description                                                  |
 | --------- | ------------- | ------------------------------------------------------------ |
@@ -135,7 +138,7 @@ This config parameters can be manipulated with the following functions:
 
 
 
-### setObserverRoot (root) => void
+### setObserverRoot (root) => IConfig
 
 | Parameter | Type               | Description                                               |
 | --------- | ------------------ | --------------------------------------------------------- |
@@ -147,7 +150,7 @@ type ObserverRoot = HTMLElement | null | undefined;
 
 
 
-### setObserverRootMargin (rootMargin) => void
+### setObserverRootMargin (rootMargin) => IConfig
 
 | Parameter  | Type         | Description                                                  |
 | ---------- | ------------ | ------------------------------------------------------------ |
@@ -155,7 +158,7 @@ type ObserverRoot = HTMLElement | null | undefined;
 
 
 
-### setObserverThreshold (threshold) => void
+### setObserverThreshold (threshold) => IConfig
 
 | Parameter | Type         | Description                                                  |
 | --------- | ------------ | ------------------------------------------------------------ |
@@ -163,7 +166,7 @@ type ObserverRoot = HTMLElement | null | undefined;
 
 
 
-### setObserverConfig (observerConfig) => void
+### setObserverConfig (observerConfig) => IConfig
 
 | Parameter      | Type                  | Description                                      |
 | -------------- | --------------------- | ------------------------------------------------ |
@@ -181,7 +184,7 @@ interface IObserverOptions {
 
 
 
-### setConfig (userConfig) => void
+### setConfig (userConfig) => IConfig
 
 | Parameter  | Type          | Description                                                  |
 | ---------- | ------------- | ------------------------------------------------------------ |
