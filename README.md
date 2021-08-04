@@ -92,7 +92,7 @@ Keep in mind that these options are applied to the single DOM element you add sv
 | customEasing   | ```CustomEasing``` | ```[0.8, 0, 0.2, 1]``` | The individual weights of a custom cubic-bezier curve. [This website](https://cubic-bezier.com/) is great for previewing timing functions. |
 | x              | ```number```       | ```-20```              | The starting position on the x-axis of a given transition (only the ```"slide"``` animation supports this property). |
 | y              | ```number```       | ```-20```              | The starting position on the y-axis of a given transition (only the ```"fly"``` animation supports this property). |
-| deg            | ```number```       | ```-360```             | The number of degrees you want your node to rotate when being revealed with. |
+| deg            | ```number```       | ```-360```             | The number of degrees you want your node to rotate when being revealed with (only the ```"spin"``` animation supports this property). |
 
 
 
