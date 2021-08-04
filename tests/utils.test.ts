@@ -92,12 +92,23 @@ describe('CSS rules', () => {
 			});
 		});
 
-		test('spin', () => {
-			const styles = `
-				opacity: 0;
-				transform: rotate(-360deg);
-			`;
-			expect(getCssRules('spin')).toBe(addVendors(styles));
+		describe('spin', () => {
+			test('With default styles', () => {
+				const styles = `
+					opacity: 0;
+					transform: rotate(-360deg);
+				`;
+				expect(getCssRules('spin')).toBe(addVendors(styles));
+			});
+
+			test('With custom styles', () => {
+				options = { deg: -180 };
+				const styles = `
+					opacity: 0;
+					transform: rotate(${options.deg}deg);
+				`;
+				expect(getCssRules('spin', options)).toBe(addVendors(styles));
+			});
 		});
 	});
 
