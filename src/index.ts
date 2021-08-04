@@ -2,7 +2,7 @@ import type { IConfig, IOptions, IReturnAction, IObserverOptions, ObserverRoot }
 import { styleTagStore, reloadStore } from './stores';
 import { getCssRules, getEasing } from './utils';
 
-const init: Required<IOptions> = {
+export const init: Required<IOptions> = {
 	disable: false,
 	debug: false,
 	ref: '',
@@ -17,8 +17,8 @@ const init: Required<IOptions> = {
 	transition: 'fly',
 	delay: 0,
 	duration: 800,
-	easing: 'ease',
-	customEasing: [0.8, 0, 0.2, 1],
+	easing: 'custom',
+	customEasing: [0.25, 0.1, 0.25, 0.1],
 	x: -20,
 	y: -20
 };
@@ -163,22 +163,22 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 		style.setAttribute('data-action', 'reveal');
 		style.innerHTML = `
 		.fly--hidden {
-			${getCssRules('fly', init, options)}
+			${getCssRules('fly', options)}
 		}
 		.fade--hidden {
-			${getCssRules('fade', init, options)}
+			${getCssRules('fade')}
 		}
 		.blur--hidden {
-			${getCssRules('blur', init, options)}
+			${getCssRules('blur')}
 		}
 		.scale--hidden {
-			${getCssRules('scale', init, options)}
+			${getCssRules('scale')}
 		}
 		.slide--hidden {
-			${getCssRules('slide', init, options)}
+			${getCssRules('slide', options)}
 		}
 		.spin--hidden {
-			${getCssRules('spin', init, options)}
+			${getCssRules('spin')}
 		}
 		`;
 		const head = document.querySelector('head');
