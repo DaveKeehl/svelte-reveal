@@ -79,11 +79,14 @@ export interface IOptions {
 	 * The starting position on the x-axis of a given transition.
 	 */
 	x?: number;
-
 	/**
 	 * The starting position on the y-axis of a given transition.
 	 */
 	y?: number;
+	/**
+	 * The number of degrees you want your node to rotate when being revealed with the "spin" transition.
+	 */
+	deg?: number;
 }
 
 /**
