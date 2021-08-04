@@ -56,10 +56,12 @@ export const addVendors = (unprefixedStyles: string): string => {
 export const getCssRules = (transition: Transitions, options?: IOptions): string => {
 	let x: number = init.x;
 	let y: number = init.y;
+	let deg: number = init.deg;
 
 	if (options !== undefined) {
 		if (options.x !== undefined) x = options.x;
 		if (options.y !== undefined) y = options.y;
+		if (options.deg !== undefined) deg = options.deg;
 	}
 
 	let styles = '';
@@ -91,7 +93,7 @@ export const getCssRules = (transition: Transitions, options?: IOptions): string
 	} else if (transition === 'spin') {
 		styles = `
 			opacity: 0;
-			transform: rotate(-360deg);
+			transform: rotate(${deg}deg);
 		`;
 	} else {
 		throw new Error('Invalid CSS class name');
