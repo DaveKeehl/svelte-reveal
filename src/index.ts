@@ -20,10 +20,11 @@ export const init: Required<IOptions> = {
 	easing: 'custom',
 	customEasing: [0.25, 0.1, 0.25, 0.1],
 	x: -20,
-	y: -20
+	y: -20,
+	deg: -360
 };
 
-let config: IConfig = {
+export const config: IConfig = {
 	dev: true,
 	once: false,
 	observer: {
@@ -36,61 +37,98 @@ let config: IConfig = {
 /**
  * Toggles on/off the development mode.
  * @param dev - The development mode
+ * @returns The config object with the updated dev property
  */
-export const setDev = (dev: boolean): void => {
+export const setDev = (dev: boolean): IConfig => {
 	config.dev = dev;
+	return config;
 };
 
 /**
  * Toggles on/off animations on page reload.
  * @param once - Run on page reload status
+ * @returns The config object with the updated dev property
  */
-export const setOnce = (once: boolean): void => {
+export const setOnce = (once: boolean): IConfig => {
 	config.once = once;
+	return config;
 };
 
 /**
  * Sets the Intersection Observer API configuration.
  * @param observerConfig - Your custom observer config
+ * @returns The config object with the updated dev property
  */
-export const setObserverConfig = (observerConfig: IObserverOptions): void => {
-	config.observer = observerConfig;
+export const setObserverConfig = (observerConfig: IObserverOptions): IConfig => {
+	try {
+		setObserverRoot(observerConfig.root);
+		setObserverRootMargin(observerConfig.rootMargin);
+		setObserverThreshold(observerConfig.threshold);
+		return config;
+	} catch (error) {
+		throw new Error(error);
+	}
 };
 
 /**
  * Sets the Intersection Observer API root element.
  * @param root - The root element
+ * @returns The config object with the updated dev property
  */
-export const setObserverRoot = (root: ObserverRoot): void => {
+export const setObserverRoot = (root: ObserverRoot): IConfig => {
 	config.observer.root = root;
+	return config;
 };
 
 /**
  * Sets the rootMargin property of the Intersection Observer API.
  * @param rootMargin - The margin used by the observer with respect to the root element
+ * @returns The config object with the updated dev property
  */
-export const setObserverRootMargin = (rootMargin: string): void => {
-	config.observer.rootMargin = rootMargin;
+export const setObserverRootMargin = (rootMargin: string): IConfig => {
+	const margins = rootMargin
+		.trim()
+		.split(' ')
+		.map((margin) => margin.trim());
+	const regex = /^(0|([1-9][0-9]{0,}))(px|%)$/g;
+	const hasCorrectUnits = margins.every((margin) => margin.match(regex));
+
+	if (rootMargin !== '' && margins.length <= 4 && hasCorrectUnits) {
+		config.observer.rootMargin = margins.join(' ');
+		return config;
+	} else {
+		throw new SyntaxError('Invalid rootMargin syntax');
+	}
 };
 
 /**
  * Sets the threshold used by the Intersection Observer API to detect when an element is considered visible.
  * @param threshold - The observer threshold value
+ * @returns The config object with the updated dev property
  */
-export const setObserverThreshold = (threshold: number): void => {
+export const setObserverThreshold = (threshold: number): IConfig => {
 	if (threshold >= 0 && threshold <= 1) {
 		config.observer.threshold = threshold;
+		return config;
 	} else {
-		console.error('Threshold must be between 0 and 1');
+		throw new RangeError('Threshold must be between 0.0 and 1.0');
 	}
 };
 
 /**
  * Sets all the global configurations (dev, once, observer) used by this library.
  * @param userConfig - Your custom global configurations
+ * @returns The config object with the updated dev property
  */
-export const setConfig = (userConfig: IConfig): void => {
-	config = userConfig;
+export const setConfig = (userConfig: IConfig): IConfig => {
+	try {
+		setDev(userConfig.dev);
+		setOnce(userConfig.once);
+		setObserverConfig(userConfig.observer);
+		return config;
+	} catch (error) {
+		throw new Error(error);
+	}
 };
 
 /**
@@ -178,7 +216,7 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 			${getCssRules('slide', options)}
 		}
 		.spin--hidden {
-			${getCssRules('spin')}
+			${getCssRules('spin', options)}
 		}
 		`;
 		const head = document.querySelector('head');
