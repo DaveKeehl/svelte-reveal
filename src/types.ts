@@ -142,7 +142,33 @@ export type Transitions = 'fly' | 'fade' | 'blur' | 'scale' | 'slide' | 'spin';
 /**
  * The easing functions that can be specified by the user to tweak the animation timing.
  */
-export type Easing = 'linear' | 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out' | 'cubic-bezier';
+export type Easing =
+	| 'linear'
+	| 'easeInSine'
+	| 'easeOutSine'
+	| 'easeInOutSine'
+	| 'easeInQuad'
+	| 'easeOutQuad'
+	| 'easeInOutQuad'
+	| 'easeInCubic'
+	| 'easeOutCubic'
+	| 'easeInOutCubic'
+	| 'easeInQuart'
+	| 'easeOutQuart'
+	| 'easeInOutQuart'
+	| 'easeInQuint'
+	| 'easeOutQuint'
+	| 'easeInOutQuint'
+	| 'easeInExpo'
+	| 'easeOutExpo'
+	| 'easeInOutExpo'
+	| 'easeInCirc'
+	| 'easeOutCirc'
+	| 'easeInOutCirc'
+	| 'easeInBack'
+	| 'easeOutBack'
+	| 'easeInOutBack'
+	| 'custom';
 
 /**
  * The individual weights of a custom cubic-bezier curve.
