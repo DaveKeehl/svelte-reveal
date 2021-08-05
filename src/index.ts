@@ -60,14 +60,10 @@ export const setOnce = (once: boolean): IConfig => {
  * @returns The config object with the updated dev property
  */
 export const setObserverConfig = (observerConfig: IObserverOptions): IConfig => {
-	try {
-		setObserverRoot(observerConfig.root);
-		setObserverRootMargin(observerConfig.rootMargin);
-		setObserverThreshold(observerConfig.threshold);
-		return config;
-	} catch (error) {
-		throw new Error(error);
-	}
+	setObserverRoot(observerConfig.root);
+	setObserverRootMargin(observerConfig.rootMargin);
+	setObserverThreshold(observerConfig.threshold);
+	return config;
 };
 
 /**
@@ -90,8 +86,8 @@ export const setObserverRootMargin = (rootMargin: string): IConfig => {
 		.trim()
 		.split(' ')
 		.map((margin) => margin.trim());
-	const regex = /^(0|([1-9][0-9]{0,}))(px|%)$/g;
-	const hasCorrectUnits = margins.every((margin) => margin.match(regex));
+	const regex = /^(0|([1-9][0-9]*))(px|%)$/;
+	const hasCorrectUnits = margins.every((margin) => regex.test(margin));
 
 	if (rootMargin !== '' && margins.length <= 4 && hasCorrectUnits) {
 		config.observer.rootMargin = margins.join(' ');
@@ -121,14 +117,10 @@ export const setObserverThreshold = (threshold: number): IConfig => {
  * @returns The config object with the updated dev property
  */
 export const setConfig = (userConfig: IConfig): IConfig => {
-	try {
-		setDev(userConfig.dev);
-		setOnce(userConfig.once);
-		setObserverConfig(userConfig.observer);
-		return config;
-	} catch (error) {
-		throw new Error(error);
-	}
+	setDev(userConfig.dev);
+	setOnce(userConfig.once);
+	setObserverConfig(userConfig.observer);
+	return config;
 };
 
 /**
