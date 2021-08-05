@@ -49,6 +49,8 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
+      # Sonarcloud step
+
   CD:
     needs: [CI]
     runs-on: ubuntu-latest
@@ -81,11 +83,9 @@ jobs:
       - name: Building
         run: npm run build
 
-      - name: Release new GitHub package
-        run: echo "releasing new package"
-
       - name: Upload Docker image
         run: echo "upload docker image"
 
       - name: Publish package on NPM
         run: npm publish
+        # Create new GitHub release
