@@ -52,6 +52,14 @@ Using svelte-reveal is dead simple:
 
 
 
+A Docker image is also available on [DockerHub](https://hub.docker.com/):
+
+```bash
+docker pull davekeehl/svelte-reveal:latest
+```
+
+
+
 ## Demo
 
 I've put together a demo website where I showcase svelte-reveal in action. [Check it out](https://svelte-reveal.netlify.app).
