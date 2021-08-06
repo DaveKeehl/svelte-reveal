@@ -15,7 +15,7 @@
 		"format:staged": "pretty-quick --staged",
 		"prepack": "npm run build",
 		"test": "jest",
-		"test:watch": "jest --watch",
+		"test:watch": "jest --watchAll",
 		"prepublishOnly": "npm pack",
 		"postinstall": "husky install"
 	},
