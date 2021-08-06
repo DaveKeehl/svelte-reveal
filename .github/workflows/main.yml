@@ -59,7 +59,8 @@ jobs:
   CD:
     needs: [CI]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -90,6 +91,14 @@ jobs:
 
       # DOCKER
 
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -106,5 +115,10 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: user/app:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/svelte-reveal:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
