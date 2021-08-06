@@ -1,3 +1,5 @@
+![](assets/readme_cover_0.1.0.png)
+
 # svelte-reveal
 
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/DaveKeehl/svelte-reveal)  ![npm](https://img.shields.io/npm/v/svelte-reveal)  [![CI/CD](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml/badge.svg)](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml)  ![GitHub](https://img.shields.io/github/license/davekeehl/svelte-reveal)  [![codecov](https://codecov.io/gh/DaveKeehl/svelte-reveal/branch/develop/graph/badge.svg?token=AL1KI5XRDF)](https://codecov.io/gh/DaveKeehl/svelte-reveal)
