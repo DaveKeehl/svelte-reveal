@@ -82,27 +82,32 @@ Depending on the use case, you can either use this library as-is (which applies 
 
 Keep in mind that these options are applied to the single DOM element you add svelte-reveal to. For global and more in-depth settings, go to the [API](#API) section.
 
-| Option         | Type               | Default                | Description                                                  |
-| -------------- | ------------------ | ---------------------- | ------------------------------------------------------------ |
-| disable        | ```boolean```      | ```false```            | It enables/disables the transition.                          |
-| debug          | ```boolean```      | ```false```            | It enables/disables debugging mode for the targeted DOM element. This will log all options and configs to the console.<br />In order to be able to use this mode, you are required to also set the ```ref``` property. |
-| ref            | ```string```       | ```""```               | When ```debug``` is set to ```true```, you are required to specificy a ```ref``` string. When multiple DOM nodes have ```debug``` mode enabled, ```ref``` strings allow you to know to which DOM node a console log statement belongs to. |
-| highlightLogs  | ```boolean```      | ```false```            | When set to ```true``` the console logs of the target node get colored, making it easier to see them quicker among many other logs. |
-| highlightColor | ```string```       | ```"tomato"```         | You can use this option to tweak the console logs when ```highlightLogs``` is set to ```true```. |
-| root           | ```ObserverRoot``` | ```null```             | The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer API. |
-| marginTop      | ```number```       | ```0```                | Top margin of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
-| marginBottom   | ```number```       | ```0```                | Bottom margin of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
-| marginLeft     | ```number```       | ```0```                | Left margin of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
-| marginRight    | ```number```       | ```0```                | Right margin of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
-| threshold      | ```number```       | ```0.6```              | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver) (in percentage from 0 to 1) property used by the Intersection Observer API to know when its target element is considered visible or not. |
-| transition     | ```string```       | ```"fly"```            | The animation that will be triggered when your target node becomes visible.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L143) the full list of available transitions. |
-| delay          | ```number```       | ```0```                | The amount of milliseconds (ms) you want to delay a given transition. |
-| duration       | ```number```       | ```800```              | The amount of milliseconds (ms) you want a given transition to last. |
-| easing         | ```string```       | ```"ease"```           | The type of easing function you want to apply to a given element.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L148-L174) the full list of available easing functions. |
-| customEasing   | ```CustomEasing``` | ```[0.8, 0, 0.2, 1]``` | The individual weights of a custom cubic-bezier curve. [This website](https://cubic-bezier.com/) is great for previewing timing functions. |
-| x              | ```number```       | ```-20```              | The starting position on the x-axis of a given transition (only the ```"slide"``` animation supports this property). |
-| y              | ```number```       | ```-20```              | The starting position on the y-axis of a given transition (only the ```"fly"``` animation supports this property). |
-| deg            | ```number```       | ```-360```             | The number of degrees you want your node to rotate when being revealed with (only the ```"spin"``` animation supports this property). |
+| Option         | Type                              | Default                | Description                                                  |
+| -------------- | --------------------------------- | ---------------------- | ------------------------------------------------------------ |
+| disable        | ```boolean```                     | ```false```            | It enables/disables the transition.                          |
+| debug          | ```boolean```                     | ```false```            | It enables/disables debugging mode for the targeted DOM element. This will log all options and configs to the console.<br />In order to be able to use this mode, you are required to also set the ```ref``` property. |
+| ref            | ```string```                      | ```""```               | When ```debug``` is set to ```true```, you are required to specificy a ```ref``` string. When multiple DOM nodes have ```debug``` mode enabled, ```ref``` strings allow you to know to which DOM node a console log statement belongs to. |
+| highlightLogs  | ```boolean```                     | ```false```            | When set to ```true``` the console logs of the target node get colored, making it easier to see them quicker among many other logs. |
+| highlightColor | ```string```                      | ```"tomato"```         | You can use this option to tweak the console logs when ```highlightLogs``` is set to ```true```. |
+| root           | ```ObserverRoot```                | ```null```             | The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer API. |
+| marginTop      | ```number```                      | ```0```                | Top margin of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
+| marginBottom   | ```number```                      | ```0```                | Bottom margin of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
+| marginLeft     | ```number```                      | ```0```                | Left margin of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
+| marginRight    | ```number```                      | ```0```                | Right margin of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
+| threshold      | ```number```                      | ```0.6```              | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver) (in percentage from 0 to 1) property used by the Intersection Observer API to know when its target element is considered visible or not. |
+| transition     | ```string```                      | ```"fly"```            | The animation that will be triggered when your target node becomes visible.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L143) the full list of available transitions. |
+| delay          | ```number```                      | ```0```                | The amount of milliseconds (ms) you want to delay a given transition. |
+| duration       | ```number```                      | ```800```              | The amount of milliseconds (ms) you want a given transition to last. |
+| easing         | ```string```                      | ```"ease"```           | The type of easing function you want to apply to a given element.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L148-L174) the full list of available easing functions. |
+| customEasing   | ```CustomEasing```                | ```[0.8, 0, 0.2, 1]``` | The individual weights of a custom cubic-bezier curve. [This website](https://cubic-bezier.com/) is great for previewing timing functions. |
+| x              | ```number```                      | ```-20```              | The starting position on the x-axis of a given transition (only the ```"slide"``` animation supports this property). |
+| y              | ```number```                      | ```-20```              | The starting position on the y-axis of a given transition (only the ```"fly"``` animation supports this property). |
+| deg            | ```number```                      | ```-360```             | The number of degrees you want your node to rotate when being revealed with (only the ```"spin"``` animation supports this property). |
+| onRevealStart  | ```(node: HTMLElement) => void``` |                        | Function that gets fired when the node starts being revealed. It's similar to the ontransitionstart event. |
+| onRevealEnd    | ```(node: HTMLElement) => void``` |                        | Function that gets fired when the node is fully revealed. It's similar to the ontransitionend event. |
+| onMount        | ```(node: HTMLElement) => void``` |                        | Function that gets fired when the node is mounted on the DOM. |
+| onUpdate       | ```(node: HTMLElement) => void``` |                        | Function that gets fired when the action options are updated. |
+| onDestroy      | ```(node: HTMLElement) => void``` |                        | Function that gets fired when the node is unmounted from the DOM. |
 
 
 

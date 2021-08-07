@@ -21,7 +21,12 @@ export const init: Required<IOptions> = {
 	customEasing: [0.25, 0.1, 0.25, 0.1],
 	x: -20,
 	y: -20,
-	deg: -360
+	deg: -360,
+	onRevealStart: () => null,
+	onRevealEnd: () => null,
+	onMount: () => null,
+	onUpdate: () => null,
+	onDestroy: () => null
 };
 
 export const config: IConfig = {
@@ -141,10 +146,15 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 		delay = init.delay,
 		duration = init.duration,
 		easing = init.easing,
-		customEasing = init.customEasing
+		customEasing = init.customEasing,
+		onRevealStart = init.onRevealStart,
+		onRevealEnd = init.onRevealEnd,
+		onMount = init.onMount,
+		onUpdate = init.onUpdate,
+		onDestroy = init.onDestroy
 	} = options;
 
-	node.dispatchEvent(new CustomEvent('mount'));
+	onMount(node);
 
 	const canDebug = config.dev && debug && ref !== '';
 	const highlightText = `color: ${highlightLogs ? highlightColor : '#B4BEC8'}`;
@@ -216,9 +226,13 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 		styleTagStore.set(true);
 	}
 
-	node.dispatchEvent(new CustomEvent('revealStart'));
+	onRevealStart(node);
+
 	node.classList.add(`${transition}--hidden`);
-	node.style.transition = `all ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEasing)}`;
+	node.style.transition = `
+		opacity ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEasing)}, 
+		transform${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEasing)}
+	`;
 
 	const observer = new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
 		if (canDebug) {
@@ -234,7 +248,7 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 
 		entries.forEach((entry) => {
 			if (entry.intersectionRatio >= threshold) {
-				node.dispatchEvent(new CustomEvent('revealEnd'));
+				setTimeout(() => onRevealEnd(node), duration + delay);
 				node.classList.remove(`${transition}--hidden`);
 				observer.unobserve(node);
 			}
@@ -246,11 +260,11 @@ export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction
 
 	return {
 		update() {
-			node.dispatchEvent(new CustomEvent('update'));
+			onUpdate(node);
 		},
 
 		destroy() {
-			node.dispatchEvent(new CustomEvent('destroy'));
+			onDestroy(node);
 			unsubscribeStyleTag();
 			unsubscribeReloaded();
 		}

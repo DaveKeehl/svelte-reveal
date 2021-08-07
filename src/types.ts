@@ -87,6 +87,26 @@ export interface IOptions {
 	 * The number of degrees you want your node to rotate when being revealed with the "spin" transition.
 	 */
 	deg?: number;
+	/**
+	 * Function that gets fired when the node starts being revealed. It's similar to the ontransitionstart event.
+	 */
+	onRevealStart?: (node: HTMLElement) => void;
+	/**
+	 * Function that gets fired when the node is fully revealed. It's similar to the ontransitionend event.
+	 */
+	onRevealEnd?: (node: HTMLElement) => void;
+	/**
+	 * Function that gets fired when the node is mounted on the DOM.
+	 */
+	onMount?: (node: HTMLElement) => void;
+	/**
+	 * Function that gets fired when the action options are updated.
+	 */
+	onUpdate?: (node: HTMLElement) => void;
+	/**
+	 * Function that gets fired when the node is unmounted from the DOM.
+	 */
+	onDestroy?: (node: HTMLElement) => void;
 }
 
 /**
