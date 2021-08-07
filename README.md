@@ -80,7 +80,7 @@ Instead, I decided to use Svelte [actions](https://svelte.dev/docs#use_action), 
 
 Depending on the use case, you can either use this library as-is (which applies some [default styles](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/index.ts#L5-L30) I have chosen), or customize it to your liking. If you choose to do so, you can pass to this action an object containing additional options.
 
-Among the options you can set, there are also [some functions](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L90-L109) you can leverage to inject some code during specific moments of the components lifecycle.
+Among the available options you can set, there are also [some functions](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L90-L109) you can leverage to inject some code during specific moments of the lifecycle of the nodes attached to this action.
 
 Keep in mind that these options are applied to the single DOM element you add svelte-reveal to. For global and more in-depth settings, go to the [API](#API) section.
 
