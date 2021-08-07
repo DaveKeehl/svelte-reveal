@@ -78,7 +78,9 @@ Instead, I decided to use Svelte [actions](https://svelte.dev/docs#use_action), 
 
 ## Options
 
-Depending on the use case, you can either use this library as-is (which applies some [default styles](https://github.com/DaveKeehl/svelte-reveal/blob/04123ce58edda4450da7bf945d6d15eeea7006e9/src/index.ts#L5-L22) I have chosen), or customize it to your liking. If you choose to do so, you can pass to this action an object containing additional options.
+Depending on the use case, you can either use this library as-is (which applies some [default styles](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/index.ts#L5-L30) I have chosen), or customize it to your liking. If you choose to do so, you can pass to this action an object containing additional options.
+
+Among the options you can set, there are also [some functions](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L90-L109) you can leverage to inject some code during specific moments of the components lifecycle.
 
 Keep in mind that these options are applied to the single DOM element you add svelte-reveal to. For global and more in-depth settings, go to the [API](#API) section.
 
@@ -95,10 +97,10 @@ Keep in mind that these options are applied to the single DOM element you add sv
 | marginLeft     | ```number```                      | ```0```                | Left margin of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
 | marginRight    | ```number```                      | ```0```                | Right margin of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
 | threshold      | ```number```                      | ```0.6```              | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver) (in percentage from 0 to 1) property used by the Intersection Observer API to know when its target element is considered visible or not. |
-| transition     | ```string```                      | ```"fly"```            | The animation that will be triggered when your target node becomes visible.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L143) the full list of available transitions. |
+| transition     | ```string```                      | ```"fly"```            | The animation that will be triggered when your target node becomes visible.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L163) the full list of available transitions. |
 | delay          | ```number```                      | ```0```                | The amount of milliseconds (ms) you want to delay a given transition. |
 | duration       | ```number```                      | ```800```              | The amount of milliseconds (ms) you want a given transition to last. |
-| easing         | ```string```                      | ```"ease"```           | The type of easing function you want to apply to a given element.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L148-L174) the full list of available easing functions. |
+| easing         | ```string```                      | ```"ease"```           | The type of easing function you want to apply to a given element.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L168-L194) the full list of available easing functions. |
 | customEasing   | ```CustomEasing```                | ```[0.8, 0, 0.2, 1]``` | The individual weights of a custom cubic-bezier curve. [This website](https://cubic-bezier.com/) is great for previewing timing functions. |
 | x              | ```number```                      | ```-20```              | The starting position on the x-axis of a given transition (only the ```"slide"``` animation supports this property). |
 | y              | ```number```                      | ```-20```              | The starting position on the y-axis of a given transition (only the ```"fly"``` animation supports this property). |
