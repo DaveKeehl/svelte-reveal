@@ -1,4 +1,4 @@
 # Commands to start on workspace startup
 tasks:
   - init: npm install
-    command: npm run build:watch
+    command: npm run test:watch
