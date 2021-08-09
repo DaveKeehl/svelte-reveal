@@ -134,25 +134,25 @@ export const setConfig = (userConfig: IConfig): IConfig => {
  * @param options - The custom options that will used to tweak the behavior of the animation of the node element
  * @returns An object containing update and/or destroy functions
  */
-export const reveal = (node: HTMLElement, options: IOptions = {}): IReturnAction => {
+export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
 	const {
-		disable = init.disable,
-		debug = init.debug,
-		ref = init.ref,
-		highlightLogs = init.highlightLogs,
-		highlightColor = init.highlightColor,
-		threshold = init.threshold,
-		transition = init.transition,
-		delay = init.delay,
-		duration = init.duration,
-		easing = init.easing,
-		customEasing = init.customEasing,
-		onRevealStart = init.onRevealStart,
-		onRevealEnd = init.onRevealEnd,
-		onMount = init.onMount,
-		onUpdate = init.onUpdate,
-		onDestroy = init.onDestroy
-	} = options;
+		disable,
+		debug,
+		ref,
+		highlightLogs,
+		highlightColor,
+		threshold,
+		transition,
+		delay,
+		duration,
+		easing,
+		customEasing,
+		onRevealStart,
+		onRevealEnd,
+		onMount,
+		onUpdate,
+		onDestroy
+	} = Object.assign({}, init, options);
 
 	onMount(node);
 
