@@ -35,23 +35,23 @@ export interface IOptions {
 	 */
 	root?: ObserverRoot;
 	/**
-	 * Top margin of the rootMargin property of the Intersection Observer API.
+	 * Top margin (in px or %) of the rootMargin property of the Intersection Observer API.
 	 */
 	marginTop?: number;
 	/**
-	 * Bottom margin of the rootMargin property of the Intersection Observer API.
+	 * Bottom margin  (in px or %)of the rootMargin property of the Intersection Observer API.
 	 */
 	marginBottom?: number;
 	/**
-	 * Left margin of the rootMargin property of the Intersection Observer API.
+	 * Left margin (in px or %) of the rootMargin property of the Intersection Observer API.
 	 */
 	marginLeft?: number;
 	/**
-	 * Right margin of the rootMargin property of the Intersection Observer API.
+	 * Right margin (in px or %) of the rootMargin property of the Intersection Observer API.
 	 */
 	marginRight?: number;
 	/**
-	 * The threshold (in percentage from 0 to 1) property used by the Intersection
+	 * The threshold (in percentage from 0.0 to 1.0) property used by the Intersection
 	 * Observer API to know when its target element is considered visible or not.
 	 */
 	threshold?: number;
@@ -60,13 +60,18 @@ export interface IOptions {
 	 */
 	transition?: Transitions;
 	/**
-	 * The amount of milliseconds (ms) you want to delay a given transition.
+	 * When set to true, the node transitions out when it's out of view from the
+	 * Intersection Observer.
 	 */
-	delay?: number;
+	reset?: boolean;
 	/**
 	 * The amount of milliseconds (ms) you want a given transition to last.
 	 */
 	duration?: number;
+	/**
+	 * The amount of milliseconds (ms) you want to delay a given transition.
+	 */
+	delay?: number;
 	/**
 	 * The type of easing function you want to apply to a given element.
 	 */
@@ -76,25 +81,35 @@ export interface IOptions {
 	 */
 	customEasing?: CustomEasing;
 	/**
-	 * The starting position on the x-axis of a given transition.
+	 * The starting offset position in pixels (px) on the x-axis of a given transition.
 	 */
 	x?: number;
 	/**
-	 * The starting position on the y-axis of a given transition.
+	 * The starting offset position in pixels (px) on the y-axis of a given transition.
 	 */
 	y?: number;
 	/**
-	 * The number of degrees you want your node to rotate when being revealed with the "spin" transition.
+	 * The number of degrees (deg) you want your node to rotate when being revealed with the "spin" transition.
 	 */
 	deg?: number;
 	/**
-	 * Function that gets fired when the node starts being revealed. It's similar to the ontransitionstart event.
+	 * Function that gets fired when the node starts being revealed.
 	 */
 	onRevealStart?: (node: HTMLElement) => void;
 	/**
-	 * Function that gets fired when the node is fully revealed. It's similar to the ontransitionend event.
+	 * Function that gets fired when the node is fully revealed.
 	 */
 	onRevealEnd?: (node: HTMLElement) => void;
+	/**
+	 * Function that gets fired when the reset option is set to true
+	 * and the node starts transitioning out.
+	 */
+	onResetStart?: (node: HTMLElement) => void;
+	/**
+	 * Function that gets fired when the reset option is set to true
+	 * and the node has fully transitioned out.
+	 */
+	onResetEnd?: (node: HTMLElement) => void;
 	/**
 	 * Function that gets fired when the node is mounted on the DOM.
 	 */
