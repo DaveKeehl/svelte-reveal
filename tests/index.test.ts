@@ -158,7 +158,10 @@ test('Test initial option values', () => {
 	expect(init.customEasing).toStrictEqual([0.25, 0.1, 0.25, 0.1]);
 	expect(init.x).toBe(-20);
 	expect(init.y).toBe(-20);
-	expect(init.deg).toBe(-360);
+	expect(init.rotate).toBe(-360);
+	expect(init.opacity).toBe(0);
+	expect(init.blur).toBe(16);
+	expect(init.scale).toBe(0);
 
 	const node = document.createElement('p');
 	expect(init.onRevealStart(node)).toBe(null);
