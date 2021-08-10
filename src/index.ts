@@ -15,6 +15,7 @@ export const init: Required<IOptions> = {
 	marginRight: 0,
 	threshold: 0.6,
 	transition: 'fly',
+	reset: false,
 	delay: 0,
 	duration: 800,
 	easing: 'custom',
@@ -24,6 +25,8 @@ export const init: Required<IOptions> = {
 	deg: -360,
 	onRevealStart: () => null,
 	onRevealEnd: () => null,
+	onResetStart: () => null,
+	onResetEnd: () => null,
 	onMount: () => null,
 	onUpdate: () => null,
 	onDestroy: () => null
@@ -135,6 +138,7 @@ export const setConfig = (userConfig: IConfig): IConfig => {
  * @returns An object containing update and/or destroy functions
  */
 export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
+	const finalOptions = Object.assign({}, init, options);
 	const {
 		disable,
 		debug,
@@ -143,16 +147,19 @@ export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
 		highlightColor,
 		threshold,
 		transition,
+		reset,
 		delay,
 		duration,
 		easing,
 		customEasing,
 		onRevealStart,
 		onRevealEnd,
+		onResetStart,
+		onResetEnd,
 		onMount,
 		onUpdate,
 		onDestroy
-	} = Object.assign({}, init, options);
+	} = finalOptions;
 
 	onMount(node);
 
@@ -172,7 +179,7 @@ export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
 		console.groupEnd();
 
 		console.groupCollapsed('%cOptions', highlightText);
-		console.log(init);
+		console.log(finalOptions);
 		console.groupEnd();
 	}
 
@@ -229,10 +236,7 @@ export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
 	onRevealStart(node);
 
 	node.classList.add(`${transition}--hidden`);
-	node.style.transition = `
-		opacity ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEasing)}, 
-		transform${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEasing)}
-	`;
+	node.style.transition = `all ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEasing)}`;
 
 	const observer = new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
 		if (canDebug) {
@@ -247,10 +251,14 @@ export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
 		}
 
 		entries.forEach((entry) => {
-			if (entry.intersectionRatio >= threshold) {
+			if (reset && !entry.isIntersecting) {
+				onResetStart(node);
+				node.classList.add(`${transition}--hidden`);
+				setTimeout(() => onResetEnd(node), duration + delay);
+			} else if (entry.intersectionRatio >= threshold) {
 				setTimeout(() => onRevealEnd(node), duration + delay);
 				node.classList.remove(`${transition}--hidden`);
-				observer.unobserve(node);
+				if (!reset) observer.unobserve(node);
 			}
 		});
 	}, config.observer);
