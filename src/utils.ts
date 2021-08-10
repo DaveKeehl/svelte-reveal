@@ -53,46 +53,38 @@ export const addVendors = (unprefixedStyles: string): string => {
  * @param options - The options used by the transition
  * @returns The assembled rules of a given transition
  */
-export const getCssRules = (transition: Transitions, options?: IOptions): string => {
-	let x: number = init.x;
-	let y: number = init.y;
-	let deg: number = init.deg;
-
-	if (options !== undefined) {
-		if (options.x !== undefined) x = options.x;
-		if (options.y !== undefined) y = options.y;
-		if (options.deg !== undefined) deg = options.deg;
-	}
+export const getCssRules = (transition: Transitions, options: IOptions): string => {
+	const { x, y, deg, opacity, blur, scale } = Object.assign({}, init, options);
 
 	let styles = '';
 
 	if (transition === 'fly') {
 		styles = `
-			opacity: 0;
+			opacity: ${opacity};
 			transform: translateY(${y}px);
 		`;
 	} else if (transition === 'fade') {
 		styles = `
-			opacity: 0;
+			opacity: ${opacity};
 		`;
 	} else if (transition === 'blur') {
 		styles = `
-			opacity: 0;
-			filter: blur(16px);
+			opacity: ${opacity};
+			filter: blur(${blur}px);
 		`;
 	} else if (transition === 'scale') {
 		styles = `
-			opacity: 0;
-			transform: scale(0);
+			opacity: ${opacity};
+			transform: scale(${scale});
 		`;
 	} else if (transition === 'slide') {
 		styles = `
-			opacity: 0;
+			opacity: ${opacity};
 			transform: translateX(${x}px);
 		`;
 	} else if (transition === 'spin') {
 		styles = `
-			opacity: 0;
+			opacity: ${opacity};
 			transform: rotate(${deg}deg);
 		`;
 	} else {

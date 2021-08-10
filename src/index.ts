@@ -213,22 +213,22 @@ export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
 		style.setAttribute('data-action', 'reveal');
 		style.innerHTML = `
 		.fly--hidden {
-			${getCssRules('fly', options)}
+			${getCssRules('fly', finalOptions)}
 		}
 		.fade--hidden {
-			${getCssRules('fade')}
+			${getCssRules('fade', finalOptions)}
 		}
 		.blur--hidden {
-			${getCssRules('blur')}
+			${getCssRules('blur', finalOptions)}
 		}
 		.scale--hidden {
-			${getCssRules('scale')}
+			${getCssRules('scale', finalOptions)}
 		}
 		.slide--hidden {
-			${getCssRules('slide', options)}
+			${getCssRules('slide', finalOptions)}
 		}
 		.spin--hidden {
-			${getCssRules('spin', options)}
+			${getCssRules('spin', finalOptions)}
 		}
 		`;
 		const head = document.querySelector('head');

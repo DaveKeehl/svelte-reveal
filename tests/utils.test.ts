@@ -51,7 +51,7 @@ describe('CSS rules', () => {
 			const styles = `
 				opacity: 0;
 			`;
-			expect(getCssRules('fade')).toBe(addVendors(styles));
+			expect(getCssRules('fade', options)).toBe(addVendors(styles));
 		});
 
 		test('blur', () => {
@@ -59,7 +59,7 @@ describe('CSS rules', () => {
 				opacity: 0;
 				filter: blur(16px);
 			`;
-			expect(getCssRules('blur')).toBe(addVendors(styles));
+			expect(getCssRules('blur', options)).toBe(addVendors(styles));
 		});
 
 		test('scale', () => {
@@ -67,7 +67,7 @@ describe('CSS rules', () => {
 				opacity: 0;
 				transform: scale(0);
 			`;
-			expect(getCssRules('scale')).toBe(addVendors(styles));
+			expect(getCssRules('scale', options)).toBe(addVendors(styles));
 		});
 
 		describe('slide', () => {
@@ -98,7 +98,7 @@ describe('CSS rules', () => {
 					opacity: 0;
 					transform: rotate(-360deg);
 				`;
-				expect(getCssRules('spin')).toBe(addVendors(styles));
+				expect(getCssRules('spin', options)).toBe(addVendors(styles));
 			});
 
 			test('With custom styles', () => {
@@ -113,7 +113,9 @@ describe('CSS rules', () => {
 	});
 
 	test(`Catch errors`, () => {
-		expect(() => getCssRules('randomCssClass' as Transitions)).toThrow('Invalid CSS class name');
+		const options: IOptions = {};
+
+		expect(() => getCssRules('randomCssClass' as Transitions, options)).toThrow('Invalid CSS class name');
 	});
 });
 
