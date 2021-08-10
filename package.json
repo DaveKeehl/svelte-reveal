@@ -13,7 +13,7 @@
 		"lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
 		"format": "prettier --write --plugin-search-dir=. .",
 		"format:staged": "pretty-quick --staged",
-		"prepack": "npm run build",
+		"prepack": "npm run build && pinst --disable",
 		"test": "jest",
 		"test:watch": "jest --watchAll",
 		"prepublishOnly": "pinst --disable && npm pack",
