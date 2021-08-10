@@ -108,7 +108,7 @@ Keep in mind that these options are applied to the single DOM element you add sv
 
 
 
-Among the available options you can set, there are also [some functions](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L90-L109) you can leverage to inject some code during specific moments of the lifecycle of the nodes attached to this action.
+Among the available options you can set, there are also some callback functions you can leverage to inject some code during specific moments of the lifecycle of the nodes attached to this action:
 
 ### Callbacks
 
