@@ -81,17 +81,29 @@ export interface IOptions {
 	 */
 	customEasing?: CustomEasing;
 	/**
-	 * The starting offset position in pixels (px) on the x-axis of a given transition.
+	 * The starting offset position in pixels (px) on the x-axis of the "slide" transition.
 	 */
 	x?: number;
 	/**
-	 * The starting offset position in pixels (px) on the y-axis of a given transition.
+	 * The starting offset position in pixels (px) on the y-axis of the "fly" transition.
 	 */
 	y?: number;
 	/**
-	 * The number of degrees (deg) you want your node to rotate when being revealed with the "spin" transition.
+	 * The starting rotation offset in degrees (deg) you want your node to rotate from when being revealed with the "spin" transition.
 	 */
 	deg?: number;
+	/**
+	 * The starting opacity value in percentage (%) of any transition. It can be a number between 0.0 and 1.0.
+	 */
+	opacity?: number;
+	/**
+	 * The starting blur value in pixels (px) of the "blur" transition.
+	 */
+	blur?: number;
+	/**
+	 * The starting scale value in percentage (%) of the "scale" transition.
+	 */
+	scale?: number;
 	/**
 	 * Function that gets fired when the node starts being revealed.
 	 */

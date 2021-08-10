@@ -91,20 +91,23 @@ Keep in mind that these options are applied to the single DOM element you add sv
 | highlightLogs  | ```boolean```      | ```false```            | When set to ```true``` the console logs of the target node get colored, making it easier to see them quicker among many other logs. |
 | highlightColor | ```string```       | ```"tomato"```         | You can use this option to tweak the console logs when ```highlightLogs``` is set to ```true```. |
 | root           | ```ObserverRoot``` | ```null```             | The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer API. |
-| marginTop      | ```number```       | ```0```                | Top margin (in *px* or *%*) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
-| marginBottom   | ```number```       | ```0```                | Bottom margin (in *px* or *%*) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
-| marginLeft     | ```number```       | ```0```                | Left margin (in *px* or *%*) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
-| marginRight    | ```number```       | ```0```                | Right margin (in *px* or *%*) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
-| threshold      | ```number```       | ```0.6```              | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver) (in percentage from 0.0 to 1.0) property used by the Intersection Observer API to know when its target element is considered visible or not. |
+| marginTop      | ```number```       | ```0```                | Top margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
+| marginBottom   | ```number```       | ```0```                | Bottom margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
+| marginLeft     | ```number```       | ```0```                | Left margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
+| marginRight    | ```number```       | ```0```                | Right margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
+| threshold      | ```number```       | ```0.6```              | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver) (in percentage from ```0.0``` to ```1.0```) property used by the Intersection Observer API to know when its target element is considered visible or not. |
 | transition     | ```string```       | ```"fly"```            | The animation that will be triggered when your target node becomes visible.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L163) the full list of available transitions. |
 | reset          | ```boolean```      | ```false```            | When set to true, the node transitions out when it's out of view from the Intersection Observer. |
 | delay          | ```number```       | ```0```                | The amount of milliseconds (*ms*) you want to delay a given transition. |
 | duration       | ```number```       | ```800```              | The amount of milliseconds (*ms*) you want a given transition to last. |
 | easing         | ```string```       | ```"ease"```           | The type of easing function you want to apply to a given element.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L168-L194) the full list of available easing functions. |
 | customEasing   | ```CustomEasing``` | ```[0.8, 0, 0.2, 1]``` | The individual weights of a custom cubic-bezier curve. [This website](https://cubic-bezier.com/) is great for previewing timing functions. |
-| x              | ```number```       | ```-20```              | The starting offset position in pixels (*px*) on the x-axis of a given transition (only the ```"slide"``` animation supports this property). |
-| y              | ```number```       | ```-20```              | The starting offset position in pixels (*px*) on the y-axis of a given transition (only the ```"fly"``` animation supports this property). |
-| deg            | ```number```       | ```-360```             | The number of degrees (*deg*) you want your node to rotate when being revealed with (only the ```"spin"``` animation supports this property). |
+| x              | ```number```       | ```-20```              | The starting offset position in pixels (*px*) on the x-axis of the ```"slide"``` transition. |
+| y              | ```number```       | ```-20```              | The starting offset position in pixels (*px*) on the y-axis of the ```"fly"``` transition. |
+| deg            | ```number```       | ```-360```             | The starting rotation offset in degrees (*deg*) you want your node to rotate from when being revealed with the ```"spin"``` transition. |
+| opacity        | ```number```       | ```0```                | The starting opacity value in percentage (*%*) of any transition. It can be a number between ```0.0``` and ```1.0```. |
+| blur           | ```number```       | ```16```               | The starting blur value in pixels (*px*) of the ```"blur"``` transition. |
+| scale          | ```number```       | ```0```                | The starting scale value in percentage (*%*) of the ```"scale"``` transition. |
 
 
 
