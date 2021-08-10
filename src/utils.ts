@@ -54,7 +54,7 @@ export const addVendors = (unprefixedStyles: string): string => {
  * @returns The assembled rules of a given transition
  */
 export const getCssRules = (transition: Transitions, options: IOptions): string => {
-	const { x, y, deg, opacity, blur, scale } = Object.assign({}, init, options);
+	const { x, y, rotate, opacity, blur, scale } = Object.assign({}, init, options);
 
 	let styles = '';
 
@@ -85,7 +85,7 @@ export const getCssRules = (transition: Transitions, options: IOptions): string 
 	} else if (transition === 'spin') {
 		styles = `
 			opacity: ${opacity};
-			transform: rotate(${deg}deg);
+			transform: rotate(${rotate}deg);
 		`;
 	} else {
 		throw new Error('Invalid CSS class name');

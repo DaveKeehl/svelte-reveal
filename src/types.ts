@@ -91,7 +91,7 @@ export interface IOptions {
 	/**
 	 * The starting rotation offset in degrees (deg) you want your node to rotate from when being revealed with the "spin" transition.
 	 */
-	deg?: number;
+	rotate?: number;
 	/**
 	 * The starting opacity value in percentage (%) of any transition. It can be a number between 0.0 and 1.0.
 	 */

@@ -102,10 +102,10 @@ describe('CSS rules', () => {
 			});
 
 			test('With custom styles', () => {
-				options = { deg: -180 };
+				options = { rotate: -180 };
 				const styles = `
 					opacity: 0;
-					transform: rotate(${options.deg}deg);
+					transform: rotate(${options.rotate}deg);
 				`;
 				expect(getCssRules('spin', options)).toBe(addVendors(styles));
 			});

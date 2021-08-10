@@ -22,7 +22,7 @@ export const init: Required<IOptions> = {
 	customEasing: [0.25, 0.1, 0.25, 0.1],
 	x: -20,
 	y: -20,
-	deg: -360,
+	rotate: -360,
 	opacity: 0,
 	blur: 16,
 	scale: 0,
