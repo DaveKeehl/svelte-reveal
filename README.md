@@ -104,7 +104,7 @@ Keep in mind that these options are applied to the single DOM element you add sv
 | customEasing   | ```CustomEasing``` | ```[0.8, 0, 0.2, 1]``` | The individual weights of a custom cubic-bezier curve. [This website](https://cubic-bezier.com/) is great for previewing timing functions. |
 | x              | ```number```       | ```-20```              | The starting offset position in pixels (*px*) on the x-axis of the ```"slide"``` transition. |
 | y              | ```number```       | ```-20```              | The starting offset position in pixels (*px*) on the y-axis of the ```"fly"``` transition. |
-| rotate         | ```number```       | ```-360```             | The starting rotation offset in degrees (*deg*) you want your node to rotate from when being revealed with the ```"spin"``` transition. |
+| rotate         | ```number```       | ```-360```             | The starting rotation angle in degrees (*deg*) along the x-axis you want your node to rotate from when being revealed with the ```"spin"``` transition.<br />If the rotation angle is positive, then the element will spin clockwise. Otherwise, if it's negative it will spin counter-clockwise. |
 | opacity        | ```number```       | ```0```                | The starting opacity value in percentage (*%*) of any transition. It can be a number between ```0.0``` and ```1.0```. |
 | blur           | ```number```       | ```16```               | The starting blur value in pixels (*px*) of the ```"blur"``` transition. |
 | scale          | ```number```       | ```0```                | The starting scale value in percentage (*%*) of the ```"scale"``` transition. |
