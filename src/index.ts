@@ -108,13 +108,16 @@ export const setObserverRootMargin = (rootMargin: string): IConfig => {
 	}
 };
 
+const hasValidRange = (property: number, min: number, max: number): boolean => property >= min && property <= max;
+const isPositive = (property: number): boolean => property >= 0;
+
 /**
  * Sets the threshold used by the Intersection Observer API to detect when an element is considered visible.
  * @param threshold - The observer threshold value
  * @returns The config object with the updated dev property
  */
 export const setObserverThreshold = (threshold: number): IConfig => {
-	if (threshold >= 0 && threshold <= 1) {
+	if (hasValidRange(threshold, 0, 1)) {
 		config.observer.threshold = threshold;
 		return config;
 	} else {
@@ -134,6 +137,24 @@ export const setConfig = (userConfig: IConfig): IConfig => {
 	return config;
 };
 
+const checkOptions = (options: IOptions): Required<IOptions> => {
+	const finalOptions = Object.assign({}, init, options);
+	const { threshold, opacity, delay, duration, blur, scale } = finalOptions;
+
+	if (
+		hasValidRange(threshold, 0, 1) &&
+		hasValidRange(opacity, 0, 1) &&
+		isPositive(delay) &&
+		isPositive(duration) &&
+		isPositive(blur) &&
+		isPositive(scale)
+	) {
+		return finalOptions;
+	} else {
+		throw new Error('Invalid options');
+	}
+};
+
 /**
  * Reveals a given node element on scroll
  * @param node - The DOM node you want to reveal on scroll
@@ -141,7 +162,7 @@ export const setConfig = (userConfig: IConfig): IConfig => {
  * @returns An object containing update and/or destroy functions
  */
 export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
-	const finalOptions = Object.assign({}, init, options);
+	const finalOptions = checkOptions(options);
 	const {
 		disable,
 		debug,
