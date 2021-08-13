@@ -7,9 +7,11 @@ import {
 	setObserverRoot,
 	setObserverRootMargin,
 	setObserverThreshold,
-	setConfig
+	setConfig,
+	checkOptions,
+	reveal
 } from '../src/index';
-import type { IConfig, IObserverOptions } from '../src/types';
+import type { IConfig, IObserverOptions, IOptions } from '../src/types';
 
 describe('Testing API correctness', () => {
 	test('setDev', () => {
@@ -138,7 +140,7 @@ describe('Testing API correctness', () => {
 	});
 });
 
-test('Test initial option values', () => {
+test('Test initial options values', () => {
 	expect(init.disable).toBe(false);
 	expect(init.debug).toBe(false);
 	expect(init.ref).toBe('');
@@ -171,4 +173,42 @@ test('Test initial option values', () => {
 	expect(init.onMount(node)).toBe(null);
 	expect(init.onUpdate(node)).toBe(null);
 	expect(init.onDestroy(node)).toBe(null);
+});
+
+test('Validating the checkOptions function', () => {
+	const validOptions: IOptions = {
+		threshold: 0.6,
+		opacity: 0,
+		delay: 200,
+		duration: 2000,
+		blur: 16,
+		scale: 0
+	};
+	const finalOptions = Object.assign({}, init, validOptions);
+	expect(checkOptions(validOptions)).toStrictEqual(finalOptions);
+
+	const invalidOptions: IOptions = {
+		threshold: 1.2,
+		opacity: 0,
+		delay: -200,
+		duration: 2000,
+		blur: -5,
+		scale: 0
+	};
+	expect(() => checkOptions(invalidOptions)).toThrowError('Invalid options');
+});
+
+describe('Checking the reveal function', () => {
+	const node = document.createElement('p');
+	const invalidOptions: IOptions = {
+		threshold: 1.2,
+		opacity: 0,
+		delay: -200,
+		duration: 2000,
+		blur: -5,
+		scale: 0
+	};
+	expect(() => reveal(node, invalidOptions)).toThrowError('Invalid options');
+
+	// TO BE CONTINUED
 });
