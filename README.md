@@ -139,13 +139,27 @@ If you want to customise the behavior of a single DOM node, you are supposed to 
 
 This library is globally configured as follows right of out the box:
 
-| Parameter           | Type               | Default                 | Description                                                  |
-| ------------------- | ------------------ | ----------------------- | ------------------------------------------------------------ |
-| dev                 | ```boolean```      | ```true```              | Globally enables/disables all logs.                          |
-| once                | ```boolean```      | ```false```             | Runs the scroll animations only once when set to ```true```. When set to ```true```, refreshing the page doesn't re-run them. |
-| observer.root       | ```ObserverRoot``` | ```null```              | The Intersection Observer API root element.                  |
-| observer.rootMargin | ```string```       | ```"0px 0px 0px 0px"``` | The Intersection Observer API rootMargin property.           |
-| observer.threshold  | ```number```       | ```0.6```               | The Intersection Observer API threshold property.            |
+| Parameter                     |        |         | Type               | Default                                            | Description                                                  |
+| ----------------------------- | ------ | ------- | ------------------ | -------------------------------------------------- | ------------------------------------------------------------ |
+| dev                           |        |         | ```boolean```      | ```true```                                         | Globally enables/disables all logs.                          |
+| once                          |        |         | ```boolean```      | ```false```                                        | Runs the scroll animations only once when set to ```true```. When set to ```true```, refreshing the page doesn't re-run them. |
+| responsive                    |        |         | ```IResponsive```  |                                                    |                                                              |
+|                               | mobile |         | ```IDevice```      |                                                    |                                                              |
+|                               |        | enabled | ```boolean```      | ```true```                                         |                                                              |
+| responsive.moble.breakpoint   |        |         | ```number```       | ```425```                                          |                                                              |
+| responsive.mobile.query       |        |         | ```string```       | ```(max-width: 425px)```                           |                                                              |
+| responsive.tablet.enabled     |        |         | ```boolean```      | ```true```                                         |                                                              |
+| responsive.tablet.breakpoint  |        |         | ```number```       | ```768```                                          |                                                              |
+| responsive.tablet.query       |        |         | ```string```       | ```((min-width: 426px) and (max-width: 768px))```  |                                                              |
+| responsive.laptop.enabled     |        |         | ```boolean```      | ```true```                                         |                                                              |
+| responsive.laptop.breakpoint  |        |         | ```number```       | ```1440```                                         |                                                              |
+| responsive.laptop.query       |        |         | ```string```       | ```((min-width: 769px) and (max-width: 1440px))``` |                                                              |
+| responsive.desktop.enabled    |        |         | ```boolean```      | ```true```                                         |                                                              |
+| responsive.desktop.breakpoint |        |         | ```number```       | ```2560```                                         |                                                              |
+| responsive.desktop.query      |        |         | ```string```       | ```(min-width: 1441px)```                          |                                                              |
+| observer.root                 |        |         | ```ObserverRoot``` | ```null```                                         | The Intersection Observer API root element.                  |
+| observer.rootMargin           |        |         | ```string```       | ```"0px 0px 0px 0px"```                            | The Intersection Observer API rootMargin property.           |
+| observer.threshold            |        |         | ```number```       | ```0.6```                                          | The Intersection Observer API threshold property.            |
 
 
 
@@ -162,6 +176,27 @@ These config parameters can be manipulated with the following functions. **All A
 | Args                  | Return        | Description                                                  |
 | --------------------- | ------------- | ------------------------------------------------------------ |
 | ```(once: boolean)``` | ```IConfig``` | Runs the scroll animations only once when set to true. Refreshing the page doesn't re-run them. |
+
+### setResponsive
+
+| Args                            | Return        | Description                                            |
+| ------------------------------- | ------------- | ------------------------------------------------------ |
+| ```(responsive: IResponsive)``` | ```IConfig``` | Sets the responsive property within the config object. |
+
+```typescript
+interface IDevice {
+	enabled: boolean;
+	breakpoint: number;
+	query: string;
+}
+
+interface IResponsive {
+	mobile: IDevice;
+	tablet: IDevice;
+	laptop: IDevice;
+	desktop: IDevice;
+}
+```
 
 ### setObserverRoot
 
