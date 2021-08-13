@@ -137,7 +137,12 @@ export const setConfig = (userConfig: IConfig): IConfig => {
 	return config;
 };
 
-const checkOptions = (options: IOptions): Required<IOptions> => {
+/**
+ * Checks whether some invalid values are found in the options object passed by the user.
+ * @param options The options object specified by the user in the Svelte components
+ * @returns The final valid options object that can be used by the reveal function
+ */
+export const checkOptions = (options: IOptions): Required<IOptions> => {
 	const finalOptions = Object.assign({}, init, options);
 	const { threshold, opacity, delay, duration, blur, scale } = finalOptions;
 
