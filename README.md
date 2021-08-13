@@ -69,11 +69,11 @@ I've put together a demo website where I showcase svelte-reveal in action. [Chec
 
 ## Why svelte-reveal
 
-If you happened to scout the internet for other similar libraries, you would have noticed that other authors have decided to create their own library using Svelte [slots](https://svelte.dev/docs#slot) (similar to [React children](https://reactjs.org/docs/composition-vs-inheritance.html)). There is nothing wrong with that approach, but in my opinion it goes a bit against one of Svelte's core purposes: writing less code.
+If you happened to scout the internet for other similar libraries, you would have noticed that other authors have decided to create their own library using Svelte [slots](https://svelte.dev/docs#slot) (similar to [React children](https://reactjs.org/docs/composition-vs-inheritance.html)). There is nothing wrong with that approach, but in my opinion it goes a bit against one of Svelte's core purposes: writing less code. Having to wrap every to-be-transitioned component adds 2 extra lines of code each time, making your files unnecessarily bloated for such a simple add-on.
 
-Having to wrap every to-be-transitioned component adds 2 extra lines of code each time, making your files unnecessarily bloated for such a simple add-on.
+You might have also noticed people adding event listeners to the window object, but in terms of performance that [doesn't scale very well](https://itnext.io/1v1-scroll-listener-vs-intersection-observers-469a26ab9eb6).
 
-Instead, I decided to use Svelte [actions](https://svelte.dev/docs#use_action), which are functions you can attach to a DOM element and that allow you to get access to that element and to its lifecycle. They take up considerably less space and so far I haven't encounted any obstacle or performance drawback.
+Instead, I decided to use Svelte [actions](https://svelte.dev/docs#use_action), which are functions you can attach to a DOM element and that allow you to get access to that element and its lifecycle. They take up considerably less space and so far I haven't encounted any obstacle or performance drawback. Morever, this library is backed by the Intersection Observer API, which is great for performance.
 
 
 
@@ -83,31 +83,31 @@ Depending on the use case, you can either use this library as-is (which applies 
 
 Keep in mind that these options are applied to the single DOM element you add svelte-reveal to. For global and more in-depth settings, go to the [API](#API) section.
 
-| Name           | Type               | Default                | Description                                                  |
-| -------------- | ------------------ | ---------------------- | ------------------------------------------------------------ |
-| disable        | ```boolean```      | ```false```            | It enables/disables the transition.                          |
-| debug          | ```boolean```      | ```false```            | It enables/disables debugging mode for the targeted DOM element. This will log all options and configs to the console.<br />In order to be able to use this mode, you are required to also set the ```ref``` property. |
-| ref            | ```string```       | ```""```               | When ```debug``` is set to ```true```, you are required to specificy a ```ref``` string. When multiple DOM nodes have ```debug``` mode enabled, ```ref``` strings allow you to know to which DOM node a console log statement belongs to. |
-| highlightLogs  | ```boolean```      | ```false```            | When set to ```true``` the console logs of the target node get colored, making it easier to see them quicker among many other logs. |
-| highlightColor | ```string```       | ```"tomato"```         | You can use this option to tweak the console logs when ```highlightLogs``` is set to ```true```. |
-| root           | ```ObserverRoot``` | ```null```             | The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer API. |
-| marginTop      | ```number```       | ```0```                | Top margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
-| marginBottom   | ```number```       | ```0```                | Bottom margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
-| marginLeft     | ```number```       | ```0```                | Left margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
-| marginRight    | ```number```       | ```0```                | Right margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
-| threshold      | ```number```       | ```0.6```              | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver) (in percentage from ```0.0``` to ```1.0```) property used by the Intersection Observer API to know when its target element is considered visible or not. |
-| transition     | ```string```       | ```"fly"```            | The animation that will be triggered when your target node becomes visible.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L163) the full list of available transitions. |
-| reset          | ```boolean```      | ```false```            | When set to true, the node transitions out when it's out of view from the Intersection Observer.<br /><br />⚠️ Be careful not to overuse this option, as it prevents the Intersection Observer to stop observing the target node. Performance is therefore not guaranteed when many elements have reset set to ```true```. |
-| delay          | ```number```       | ```0```                | The amount of milliseconds (*ms*) you want to delay a given transition. |
-| duration       | ```number```       | ```800```              | The amount of milliseconds (*ms*) you want a given transition to last. |
-| easing         | ```string```       | ```"ease"```           | The type of easing function you want to apply to a given element.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L168-L194) the full list of available easing functions. |
-| customEasing   | ```CustomEasing``` | ```[0.8, 0, 0.2, 1]``` | The individual weights of a custom cubic-bezier curve. [This website](https://cubic-bezier.com/) is great for previewing timing functions. |
-| x              | ```number```       | ```-20```              | The starting offset position in pixels (*px*) on the x-axis of the ```"slide"``` transition. |
-| y              | ```number```       | ```-20```              | The starting offset position in pixels (*px*) on the y-axis of the ```"fly"``` transition. |
-| rotate         | ```number```       | ```-360```             | The starting rotation angle in degrees (*deg*) along the x-axis you want your node to rotate from when being revealed with the ```"spin"``` transition.<br />If the rotation angle is positive, then the element will spin clockwise. Otherwise, if it's negative it will spin counter-clockwise. |
-| opacity        | ```number```       | ```0```                | The starting opacity value in percentage (*%*) of any transition. It can be a number between ```0.0``` and ```1.0```. |
-| blur           | ```number```       | ```16```               | The starting blur value in pixels (*px*) of the ```"blur"``` transition. |
-| scale          | ```number```       | ```0```                | The starting scale value in percentage (*%*) of the ```"scale"``` transition. |
+| Name           | Type               | Default                      | Description                                                  |
+| -------------- | ------------------ | ---------------------------- | ------------------------------------------------------------ |
+| disable        | ```boolean```      | ```false```                  | It enables/disables the transition.                          |
+| debug          | ```boolean```      | ```false```                  | It enables/disables debugging mode for the targeted DOM element. This will log all options and configs to the console.<br />In order to be able to use this mode, you are required to also set the ```ref``` property. |
+| ref            | ```string```       | ```""```                     | When ```debug``` is set to ```true```, you are required to specificy a ```ref``` string. When multiple DOM nodes have ```debug``` mode enabled, ```ref``` strings allow you to know to which DOM node a console log statement belongs to. |
+| highlightLogs  | ```boolean```      | ```false```                  | When set to ```true``` the console logs of the target node get colored, making it easier to see them quicker among many other logs. |
+| highlightColor | ```string```       | ```"tomato"```               | You can use this option to tweak the console logs when ```highlightLogs``` is set to ```true```. |
+| root           | ```ObserverRoot``` | ```null```                   | The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer API. |
+| marginTop      | ```number```       | ```0```                      | Top margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
+| marginBottom   | ```number```       | ```0```                      | Bottom margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
+| marginLeft     | ```number```       | ```0```                      | Left margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
+| marginRight    | ```number```       | ```0```                      | Right margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
+| threshold      | ```number```       | ```0.6```                    | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver) (in percentage from ```0.0``` to ```1.0```) property used by the Intersection Observer API to know when its target element is considered visible or not. |
+| transition     | ```string```       | ```"fly"```                  | The animation that will be triggered when your target node becomes visible.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L163) the full list of available transitions. |
+| reset          | ```boolean```      | ```false```                  | When set to true, the node transitions out when it's out of view from the Intersection Observer.<br /><br />⚠️ Be careful not to overuse this option, as it prevents the Intersection Observer to stop observing the target node. Performance is therefore not guaranteed when many elements have reset set to ```true```. |
+| delay          | ```number```       | ```0```                      | The amount of milliseconds (*ms*) you want to delay a given transition. |
+| duration       | ```number```       | ```800```                    | The amount of milliseconds (*ms*) you want a given transition to last. |
+| easing         | ```string```       | ```"custom"```               | The type of easing function you want to apply to a given element.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/types.ts#L168-L194) the full list of available easing functions.<br />The default easing function used by svelte-reveal corresponds to the [CSS ease transition timing function](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function#values). |
+| customEasing   | ```CustomEasing``` | ```[0.25, 0.1, 0.25, 0.1]``` | The individual weights of a custom cubic-bezier curve. [This website](https://cubic-bezier.com/) is great for previewing timing functions. |
+| x              | ```number```       | ```-20```                    | The starting offset position in pixels (*px*) on the x-axis of the ```"slide"``` transition. |
+| y              | ```number```       | ```-20```                    | The starting offset position in pixels (*px*) on the y-axis of the ```"fly"``` transition. |
+| rotate         | ```number```       | ```-360```                   | The starting rotation angle in degrees (*deg*) along the x-axis you want your node to rotate from when being revealed with the ```"spin"``` transition.<br />If the rotation angle is positive, then the element will spin clockwise. Otherwise, if it's negative it will spin counter-clockwise. |
+| opacity        | ```number```       | ```0```                      | The starting opacity value in percentage (*%*) of any transition. It can be a number between ```0.0``` and ```1.0```. |
+| blur           | ```number```       | ```16```                     | The starting blur value in pixels (*px*) of the ```"blur"``` transition. |
+| scale          | ```number```       | ```0```                      | The starting scale value in percentage (*%*) of the ```"scale"``` transition. |
 
 
 
@@ -236,9 +236,10 @@ If you use [SvelteKit](https://kit.svelte.dev/), this feature is available right
 > ⚠️ Support for SvelteKit is currently experimental.
 
 
+
 ## Troubleshooting
 
-Behind the scenes, in order to work svelte-reveal adds inline styles to the targeted elements. If you have already applied some inline styles (in particular ```transition``` and ```transform``` css properties), they might get overridden by this library.
+In order to work, svelte-reveal adds inline styles to the targeted elements. If you have already applied some inline styles (in particular ```transition```, ```opacity``` and ```transform``` CSS properties), they might get overridden by this library.
 
 To avoid this situation, wrap your element in a ```<div>``` or a ```<span>``` and add the  ```use:reveal``` action to that wrapper element.
 
