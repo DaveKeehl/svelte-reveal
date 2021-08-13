@@ -1,7 +1,10 @@
-import type { IConfig, IOptions, IReturnAction, IObserverOptions, ObserverRoot } from './types';
+import type { IConfig, IOptions, IReturnAction, IObserverOptions, ObserverRoot, IResponsive, IDevice } from './types';
 import { styleTagStore, reloadStore } from './stores';
-import { getCssRules, getEasing } from './utils';
+import { getCssRules, getEasing, hasValidRange, isPositive } from './utils';
 
+/**
+ * Object containing the default options used by the library for the scroll effect.
+ */
 export const init: Required<IOptions> = {
 	disable: false,
 	debug: false,
@@ -35,9 +38,42 @@ export const init: Required<IOptions> = {
 	onDestroy: () => null
 };
 
+/**
+ * Object containing global configurations that apply to all instances of this library.
+ */
 export const config: IConfig = {
 	dev: true,
 	once: false,
+	responsive: {
+		mobile: {
+			enabled: true,
+			breakpoint: 425,
+			get query() {
+				return `(max-width: ${this.breakpoint}px)`;
+			}
+		},
+		tablet: {
+			enabled: true,
+			breakpoint: 768,
+			get query() {
+				return `((min-width: ${config.responsive.mobile.breakpoint + 1}px) and (max-width: ${this.breakpoint}px))`;
+			}
+		},
+		laptop: {
+			enabled: true,
+			breakpoint: 1440,
+			get query() {
+				return `((min-width: ${config.responsive.tablet.breakpoint + 1}px) and (max-width: ${this.breakpoint}px))`;
+			}
+		},
+		desktop: {
+			enabled: true,
+			breakpoint: 2560,
+			get query() {
+				return `(min-width: ${config.responsive.laptop.breakpoint + 1}px)`;
+			}
+		}
+	},
 	observer: {
 		root: init.root,
 		rootMargin: `${init.marginTop}px ${init.marginRight}px ${init.marginBottom}px ${init.marginLeft}px`,
@@ -63,6 +99,32 @@ export const setDev = (dev: boolean): IConfig => {
 export const setOnce = (once: boolean): IConfig => {
 	config.once = once;
 	return config;
+};
+
+/**
+ * Sets the responsive property within the config object.
+ * @param responsive An object that instructs the library how to handle responsiveness
+ * @returns The config object with the updated responsive property
+ */
+export const setResponsive = (responsive: IResponsive): IConfig => {
+	const { mobile, tablet, laptop, desktop } = responsive;
+	const breakpoints: number[] = Object.values(responsive).map((device: IDevice) => device.breakpoint);
+
+	breakpoints.forEach((breakpoint) => {
+		if (!isPositive(breakpoint) || !Number.isInteger(breakpoint))
+			throw new Error('Breakpoints must be positive integers');
+	});
+
+	if (
+		mobile.breakpoint < tablet.breakpoint &&
+		tablet.breakpoint < laptop.breakpoint &&
+		laptop.breakpoint < desktop.breakpoint
+	) {
+		config.responsive = responsive;
+		return config;
+	} else {
+		throw new Error("Breakpoints can't overlap");
+	}
 };
 
 /**
@@ -108,9 +170,6 @@ export const setObserverRootMargin = (rootMargin: string): IConfig => {
 	}
 };
 
-const hasValidRange = (property: number, min: number, max: number): boolean => property >= min && property <= max;
-const isPositive = (property: number): boolean => property >= 0;
-
 /**
  * Sets the threshold used by the Intersection Observer API to detect when an element is considered visible.
  * @param threshold - The observer threshold value
@@ -133,6 +192,7 @@ export const setObserverThreshold = (threshold: number): IConfig => {
 export const setConfig = (userConfig: IConfig): IConfig => {
 	setDev(userConfig.dev);
 	setOnce(userConfig.once);
+	setResponsive(userConfig.responsive);
 	setObserverConfig(userConfig.observer);
 	return config;
 };

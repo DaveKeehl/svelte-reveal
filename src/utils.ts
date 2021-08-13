@@ -1,5 +1,30 @@
-import type { Transitions, IOptions, Easing, CustomEasing } from './types';
-import { init } from '../src/index';
+import type { Transitions, IOptions, Easing, CustomEasing, IResponsive } from './types';
+import { init, config } from '../src/index';
+
+/**
+ * Check whether a given numeric variable is within a specific range.
+ * @param property The property to check
+ * @param min The bottom limit
+ * @param max The upper limit
+ * @returns Whether the variable is within the range or not
+ */
+export const hasValidRange = (property: number, min: number, max: number): boolean => {
+	return property >= min && property <= max;
+};
+
+/**
+ * Checks whether a numeric variable is positive.
+ * @param property The property to check
+ * @returns Whether the variable is positive or not
+ */
+export const isPositive = (property: number): boolean => property >= 0;
+
+/**
+ * Removes trailing whitespace, newlines and tabs from a string.
+ * @param styles The string to be cleaned
+ * @returns The cleaned string
+ */
+export const clean = (styles: string): string => styles.trim().replace(/(\n|\t)/g, '');
 
 /**
  * Extract the CSS rules of a given style
@@ -7,9 +32,7 @@ import { init } from '../src/index';
  * @returns An array of CSS properties
  */
 export const extractCssRules = (styles: string): string[] => {
-	return styles
-		.trim()
-		.replace(/(\n|\t)/g, '')
+	return clean(styles)
 		.split(';')
 		.filter((rule) => rule !== '')
 		.map((rule) => rule.trim());
@@ -44,6 +67,29 @@ export const addVendors = (unprefixedStyles: string): string => {
 	});
 
 	return prefixedStyles.trim();
+};
+
+/**
+ * Decorate a set of CSS rules with configurable media queries.
+ * @param styles The CSS rules to be decorated
+ * @param responsive The object containing the info about how to create the media queries
+ * @returns The decorated CSS ruleset
+ */
+export const addMediaQueries = (styles: string, responsive: IResponsive = config.responsive): string => {
+	const queries: string[] = [];
+
+	// Extract queries for enabled devices
+	Object.values(responsive).forEach((device) => {
+		if (device.enabled) queries.push(device.query);
+	});
+
+	const responsiveStyles = `
+		@media ${queries.join(', ')} {
+			${styles}
+		}
+	`;
+
+	return clean(responsiveStyles);
 };
 
 /**
@@ -91,7 +137,7 @@ export const getCssRules = (transition: Transitions, options: IOptions): string 
 		throw new Error('Invalid CSS class name');
 	}
 
-	return addVendors(styles);
+	return addMediaQueries(addVendors(styles), config.responsive);
 };
 
 /**

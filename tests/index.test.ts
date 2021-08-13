@@ -9,9 +9,10 @@ import {
 	setObserverThreshold,
 	setConfig,
 	checkOptions,
-	reveal
+	reveal,
+	setResponsive
 } from '../src/index';
-import type { IConfig, IObserverOptions, IOptions } from '../src/types';
+import type { IConfig, IObserverOptions, IOptions, IResponsive } from '../src/types';
 
 describe('Testing API correctness', () => {
 	test('setDev', () => {
@@ -36,6 +37,21 @@ describe('Testing API correctness', () => {
 		setOnce(false);
 		setOnce(true);
 		expect(config.once).toBe(true);
+	});
+
+	test('setResponsive', () => {
+		const validResponsive: IResponsive = JSON.parse(JSON.stringify(config.responsive));
+		const validConfig: IConfig = JSON.parse(JSON.stringify(config));
+		validConfig.responsive = validResponsive;
+		expect(setResponsive(validResponsive)).toStrictEqual(validConfig);
+
+		const invalidResponsive: IConfig = JSON.parse(JSON.stringify(config));
+
+		invalidResponsive.responsive.mobile.breakpoint = -200;
+		expect(() => setConfig(invalidResponsive)).toThrowError('Breakpoints must be positive integers');
+
+		invalidResponsive.responsive.mobile.breakpoint = 450.5;
+		expect(() => setConfig(invalidResponsive)).toThrowError('Breakpoints must be positive integers');
 	});
 
 	test('setObserverConfig', () => {
@@ -115,28 +131,65 @@ describe('Testing API correctness', () => {
 	});
 
 	describe('setConfig', () => {
-		const validConfig: IConfig = {
-			dev: false,
-			once: true,
-			observer: {
-				root: null,
-				rootMargin: '0px 0px 0px 0px',
-				threshold: 0.75
-			}
-		};
-		setConfig(validConfig);
-		expect(config).toStrictEqual(validConfig);
+		test('Default config is valid', () => {
+			const validConfig: IConfig = config;
+			expect(setConfig(validConfig)).toStrictEqual(validConfig);
+		});
 
-		const invalidConfig: IConfig = {
-			dev: false,
-			once: true,
-			observer: {
-				root: null,
-				rootMargin: '',
-				threshold: 0.75
-			}
-		};
-		expect(() => setConfig(invalidConfig)).toThrow('Invalid rootMargin syntax');
+		describe('responsive', () => {
+			test('Invalid when breakpoints are not positive integers', () => {
+				const invalidConfig: IConfig = JSON.parse(JSON.stringify(config));
+
+				invalidConfig.responsive.mobile.breakpoint = -200;
+				expect(() => setConfig(invalidConfig)).toThrowError('Breakpoints must be positive integers');
+
+				invalidConfig.responsive.mobile.breakpoint = 450.5;
+				expect(() => setConfig(invalidConfig)).toThrowError('Breakpoints must be positive integers');
+			});
+
+			test('Invalid when breakpoints overlap', () => {
+				const invalidConfig: IConfig = JSON.parse(JSON.stringify(config));
+
+				invalidConfig.responsive.mobile.breakpoint = 400;
+				invalidConfig.responsive.tablet.breakpoint = 300;
+
+				expect(() => setConfig(invalidConfig)).toThrowError("Breakpoints can't overlap");
+			});
+		});
+
+		describe('rootMargin', () => {
+			test('Invalid with empty string', () => {
+				const invalidConfig: IConfig = JSON.parse(JSON.stringify(config));
+				invalidConfig.observer.rootMargin = '';
+				expect(() => setConfig(invalidConfig)).toThrow('Invalid rootMargin syntax');
+			});
+
+			test('Invalid with missing units', () => {
+				const invalidConfig: IConfig = JSON.parse(JSON.stringify(config));
+				invalidConfig.observer.rootMargin = '0 0 0 0';
+				expect(() => setConfig(invalidConfig)).toThrow('Invalid rootMargin syntax');
+			});
+
+			test('Invalid with unknown units', () => {
+				const invalidConfig: IConfig = JSON.parse(JSON.stringify(config));
+				invalidConfig.observer.rootMargin = '0px 0px 0this 0that';
+				expect(() => setConfig(invalidConfig)).toThrow('Invalid rootMargin syntax');
+			});
+		});
+
+		describe('threshold', () => {
+			test('Invalid with negative numbers', () => {
+				const invalidConfig: IConfig = JSON.parse(JSON.stringify(config));
+				invalidConfig.observer.threshold = -1;
+				expect(() => setConfig(invalidConfig)).toThrow('Threshold must be between 0.0 and 1.0');
+			});
+
+			test('Invalid with numbers greater than 1', () => {
+				const invalidConfig: IConfig = JSON.parse(JSON.stringify(config));
+				invalidConfig.observer.threshold = 1.5;
+				expect(() => setConfig(invalidConfig)).toThrow('Threshold must be between 0.0 and 1.0');
+			});
+		});
 	});
 });
 
@@ -210,5 +263,14 @@ describe('Checking the reveal function', () => {
 	};
 	expect(() => reveal(node, invalidOptions)).toThrowError('Invalid options');
 
-	// TO BE CONTINUED
+	/**
+	 * TO BE CONTINUED
+	 *
+	 * svelte-reveal in order to work needs:
+	 * - a stylesheet
+	 * - css classes for each type of animation
+	 * - each class correctly written with browser vendors and media queries
+	 * - the targeted elements receive a css class
+	 * - the targeted elements get their new css class taken away
+	 */
 });

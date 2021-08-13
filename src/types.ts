@@ -158,6 +158,43 @@ export interface IObserverOptions {
 }
 
 /**
+ * An object containing information about a specific type of device
+ */
+export interface IDevice {
+	/**
+	 * Whether the device supports the scroll effect.
+	 */
+	enabled: boolean;
+	/**
+	 * The viewport width upper limit that a device can be targeted to work in.
+	 */
+	breakpoint: number;
+	/**
+	 * The computed media query that is used to target this device.
+	 */
+	query: string;
+}
+
+export interface IResponsive {
+	/**
+	 * Object containing information about responsiveness on mobile devices.
+	 */
+	mobile: IDevice;
+	/**
+	 * Object containing information about responsiveness on tablet devices.
+	 */
+	tablet: IDevice;
+	/**
+	 * Object containing information about responsiveness on laptop devices.
+	 */
+	laptop: IDevice;
+	/**
+	 * Object containing information about responsiveness on desktop devices.
+	 */
+	desktop: IDevice;
+}
+
+/**
  * Object containing global configurations. They apply to all instances of this library.
  */
 export interface IConfig {
@@ -170,6 +207,11 @@ export interface IConfig {
 	 * When set to true, refreshing the page doesn't re-run them.
 	 */
 	once: boolean;
+	/**
+	 * Information about how the library should handle responsiveness.
+	 * It can be used to enable/disable the scroll effect on some devices.
+	 */
+	responsive: IResponsive;
 	/**
 	 * The Intersection Observer API options.
 	 */

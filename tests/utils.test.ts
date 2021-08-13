@@ -1,6 +1,6 @@
-import type { CustomEasing, IOptions, Transitions } from '../src/types';
-import { addVendors, getEasing, sanitizeStyles, getCssRules } from '../src/utils';
-import { init } from '../src/index';
+import type { CustomEasing, IOptions, IResponsive, Transitions } from '../src/types';
+import { addVendors, clean, addMediaQueries, getEasing, sanitizeStyles, getCssRules } from '../src/utils';
+import { init, config } from '../src/index';
 
 describe('CSS browser-vendors', () => {
 	test('Correctly added to the rule sets', () => {
@@ -21,10 +21,29 @@ describe('CSS browser-vendors', () => {
 	});
 });
 
+describe('Media queries are added correctly', () => {
+	const responsive: IResponsive = JSON.parse(JSON.stringify(config.responsive));
+	const { mobile, tablet, laptop } = responsive;
+
+	responsive.desktop.enabled = false;
+
+	const styles = `
+		opacity: 0;
+		transform: translateY(-20px);
+	`;
+
+	const decorated = `
+		@media ${mobile.query}, ${tablet.query}, ${laptop.query} {
+			${styles}
+		}
+	`;
+
+	expect(addMediaQueries(styles, responsive)).toBe(clean(decorated));
+});
+
 describe('CSS rules', () => {
 	describe('Have the correct properties', () => {
 		let options: IOptions = {};
-
 		describe('fly', () => {
 			test('With default values', () => {
 				options = {};
@@ -32,7 +51,7 @@ describe('CSS rules', () => {
 					opacity: 0;
 					transform: translateY(${init.y}px);
 				`;
-				expect(getCssRules('fly', options)).toBe(addVendors(styles));
+				expect(getCssRules('fly', options)).toBe(addMediaQueries(addVendors(styles)));
 			});
 
 			test('With custom values', () => {
@@ -43,7 +62,7 @@ describe('CSS rules', () => {
 					opacity: 0;
 					transform: translateY(${options.y}px);
 				`;
-				expect(getCssRules('fly', options)).toBe(addVendors(styles));
+				expect(getCssRules('fly', options)).toBe(addMediaQueries(addVendors(styles)));
 			});
 		});
 
@@ -51,7 +70,7 @@ describe('CSS rules', () => {
 			const styles = `
 				opacity: 0;
 			`;
-			expect(getCssRules('fade', options)).toBe(addVendors(styles));
+			expect(getCssRules('fade', options)).toBe(addMediaQueries(addVendors(styles)));
 		});
 
 		test('blur', () => {
@@ -59,7 +78,7 @@ describe('CSS rules', () => {
 				opacity: 0;
 				filter: blur(16px);
 			`;
-			expect(getCssRules('blur', options)).toBe(addVendors(styles));
+			expect(getCssRules('blur', options)).toBe(addMediaQueries(addVendors(styles)));
 		});
 
 		test('scale', () => {
@@ -67,7 +86,7 @@ describe('CSS rules', () => {
 				opacity: 0;
 				transform: scale(0);
 			`;
-			expect(getCssRules('scale', options)).toBe(addVendors(styles));
+			expect(getCssRules('scale', options)).toBe(addMediaQueries(addVendors(styles)));
 		});
 
 		describe('slide', () => {
@@ -77,7 +96,7 @@ describe('CSS rules', () => {
 					opacity: 0;
 					transform: translateX(${init.x}px);			
 				`;
-				expect(getCssRules('slide', options)).toBe(addVendors(styles));
+				expect(getCssRules('slide', options)).toBe(addMediaQueries(addVendors(styles)));
 			});
 
 			test('With custom values', () => {
@@ -88,7 +107,7 @@ describe('CSS rules', () => {
 					opacity: 0;
 					transform: translateX(${options.x}px);			
 				`;
-				expect(getCssRules('slide', options)).toBe(addVendors(styles));
+				expect(getCssRules('slide', options)).toBe(addMediaQueries(addVendors(styles)));
 			});
 		});
 
@@ -98,7 +117,7 @@ describe('CSS rules', () => {
 					opacity: 0;
 					transform: rotate(-360deg);
 				`;
-				expect(getCssRules('spin', options)).toBe(addVendors(styles));
+				expect(getCssRules('spin', options)).toBe(addMediaQueries(addVendors(styles)));
 			});
 
 			test('With custom styles', () => {
@@ -107,7 +126,7 @@ describe('CSS rules', () => {
 					opacity: 0;
 					transform: rotate(${options.rotate}deg);
 				`;
-				expect(getCssRules('spin', options)).toBe(addVendors(styles));
+				expect(getCssRules('spin', options)).toBe(addMediaQueries(addVendors(styles)));
 			});
 		});
 	});
