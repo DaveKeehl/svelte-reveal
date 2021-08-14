@@ -227,6 +227,11 @@ export interface IReturnAction {
 }
 
 /**
+ * The categories of supported devices
+ */
+export type Device = 'mobile' | 'tablet' | 'laptop' | 'desktop';
+
+/**
  * The animations that can be used by the library users.
  */
 export type Transitions = 'fly' | 'fade' | 'blur' | 'scale' | 'slide' | 'spin';

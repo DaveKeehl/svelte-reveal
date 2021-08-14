@@ -182,6 +182,22 @@ If you want to customise the behavior of a single DOM node, you are supposed to 
 | --------------------- | ------------- | ------------------------------------------------------------ |
 | ```(once: boolean)``` | ```IConfig``` | Runs the scroll animations only once when set to true. Refreshing the page doesn't re-run them. |
 
+### setDevice
+
+| Args                                      | Return        | Description                               |
+| ----------------------------------------- | ------------- | ----------------------------------------- |
+| ```(device: Device, settings: IDevice)``` | ```IConfig``` | Updates the settings of a type of device. |
+
+```typescript
+type Device = 'mobile' | 'tablet' | 'laptop' | 'desktop'
+
+interface IDevice {
+	enabled: boolean;
+	breakpoint: number;
+	query: string;
+}
+```
+
 ### setResponsive
 
 | Args                            | Return        | Description                                            |

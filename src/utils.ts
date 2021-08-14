@@ -20,6 +20,18 @@ export const hasValidRange = (property: number, min: number, max: number): boole
 export const isPositive = (property: number): boolean => property >= 0;
 
 /**
+ * Checks whether a given breakpoint is valid or not.
+ * @param breakpoint The breakpoint to be checked
+ * @returns Returns true if the breakpoint is valid, otherwise it throws an error
+ */
+export const hasValidBreakpoint = (breakpoint: number): boolean => {
+	if (!isPositive(breakpoint) || !Number.isInteger(breakpoint)) {
+		throw new Error('Breakpoints must be positive integers');
+	}
+	return true;
+};
+
+/**
  * Removes trailing whitespace, newlines and tabs from a string.
  * @param styles The string to be cleaned
  * @returns The cleaned string

@@ -1,6 +1,15 @@
-import type { IConfig, IOptions, IReturnAction, IObserverOptions, ObserverRoot, IResponsive, IDevice } from './types';
+import type {
+	IConfig,
+	IOptions,
+	IReturnAction,
+	IObserverOptions,
+	ObserverRoot,
+	IResponsive,
+	IDevice,
+	Device
+} from './types';
 import { styleTagStore, reloadStore } from './stores';
-import { getCssRules, getEasing, hasValidRange, isPositive } from './utils';
+import { getCssRules, getEasing, hasValidRange, isPositive, hasValidBreakpoint } from './utils';
 
 /**
  * Object containing the default options used by the library for the scroll effect.
@@ -102,6 +111,19 @@ export const setOnce = (once: boolean): IConfig => {
 };
 
 /**
+ * Updates the settings of a type of device.
+ * @param device The type of device you want its settings to be updated
+ * @param settings The new settings
+ * @returns The config object with the updated device settings
+ */
+export const setDevice = (device: Device, settings: IDevice): IConfig => {
+	hasValidBreakpoint(settings.breakpoint);
+
+	config.responsive[device] = settings;
+	return config;
+};
+
+/**
  * Sets the responsive property within the config object.
  * @param responsive An object that instructs the library how to handle responsiveness
  * @returns The config object with the updated responsive property
@@ -111,8 +133,7 @@ export const setResponsive = (responsive: IResponsive): IConfig => {
 	const breakpoints: number[] = Object.values(responsive).map((device: IDevice) => device.breakpoint);
 
 	breakpoints.forEach((breakpoint) => {
-		if (!isPositive(breakpoint) || !Number.isInteger(breakpoint))
-			throw new Error('Breakpoints must be positive integers');
+		hasValidBreakpoint(breakpoint);
 	});
 
 	if (
