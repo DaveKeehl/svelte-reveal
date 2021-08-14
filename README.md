@@ -14,6 +14,7 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
 - [Demo](#Demo)
 - [Why svelte-reveal](#Why-svelte-reveal)
 - [Options](#Options)
+- [Global config](#Global-config)
 - [API](#API)
 - [Suggestions](#Suggestions)
 - [Troubleshooting](#Troubleshooting)
@@ -127,15 +128,7 @@ Among the available options you can set, there are also some callback functions 
 
 
 
-## API
-
-svelte-reveal also exposes several functions you can call to change the internal behavior of this library.
-
-Since these functions operate on a global level for all instances of svelte-reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the global options from multiple points. If you need/want to considerably customize the behavior of this library, I suggest you to create a dedicated file (e.g. reveal.config.js) and from there call the API to set global settings or shared transition properties.
-
-If you want to customise the behavior of a single DOM node, you are supposed to use the [options](#Options) mentioned in the previous section (they override the global ones set by the API).
-
-
+## Global config
 
 This library is globally configured as follows right of out the box:
 
@@ -167,7 +160,15 @@ This library is globally configured as follows right of out the box:
 
 
 
-These config parameters can be manipulated with the following functions. **All API functions return the global config object with the updated properties.**
+## API
+
+svelte-reveal also exposes several functions you can call to change the [global configuration](#Global-config) of this library.
+
+Since these functions operate on a global level for all instances of svelte-reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the global options from multiple points. If you need/want to considerably customize the behavior of this library, I suggest you to create a dedicated file (e.g. reveal.config.js) and from there call the API to set global settings or shared transition properties.
+
+If you want to customise the behavior of a single DOM node, you are supposed to use the [options](#Options).
+
+> 💡 All API functions return the global config object with the updated properties.
 
 ### setDev
 
