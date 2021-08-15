@@ -146,7 +146,7 @@ export interface IObserverOptions {
 	/**
 	 * The Intersection Observer API root element.
 	 */
-	root?: HTMLElement | null;
+	root?: ObserverRoot;
 	/**
 	 * The Intersection Observer API rootMargin property.
 	 */
