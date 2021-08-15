@@ -140,19 +140,15 @@ This library is globally configured as follows right of out the box:
 |            | mobile     |            | ```IDevice```          |                                                    | Object containing information about responsiveness on mobile devices. |
 |            |            | enabled    | ```boolean```          | ```true```                                         | Whether the device supports the scroll effect on mobile devices. |
 |            |            | breakpoint | ```number```           | ```425```                                          | The viewport width upper limit that a mobile device can be targeted to work in. |
-|            |            | query      | ```string```           | ```(max-width: 425px)```                           | The computed media query that is used to target mobile devices. |
 |            | tablet     |            | ```IDevice```          |                                                    | Object containing information about responsiveness on tablet devices. |
 |            |            | enabled    | ```boolean```          | ```true```                                         | Whether the device supports the scroll effect on tablet devices. |
 |            |            | breakpoint | ```number```           | ```768```                                          | The viewport width upper limit that a tablet device can be targeted to work in. |
-|            |            | query      | ```string```           | ```((min-width: 426px) and (max-width: 768px))```  | The computed media query that is used to target tablet devices. |
 |            | laptop     |            | ```IDevice```          |                                                    | Object containing information about responsiveness on laptop devices. |
 |            |            | enabled    | ```boolean```          | ```true```                                         | Whether the device supports the scroll effect on laptop devices. |
 |            |            | breakpoint | ```number```           | ```1440```                                         | The viewport width upper limit that a laptop device can be targeted to work in. |
-|            |            | query      | ```string```           | ```((min-width: 769px) and (max-width: 1440px))``` | The computed media query that is used to target laptop devices. |
 |            | desktop    |            | ```IDevice```          |                                                    | Object containing information about responsiveness on desktop devices. |
 |            |            | enabled    | ```boolean```          | ```true```                                         | Whether the device supports the scroll effect on desktop devices. |
 |            |            | breakpoint | ```number```           | ```2560```                                         | The viewport width upper limit that a desktop device can be targeted to work in. |
-|            |            | query      | ```string```           | ```(min-width: 1441px)```                          | The computed media query that is used to target desktop devices. |
 | observer   |            |            | ```IObserverOptions``` |                                                    | The Intersection Observer API options.                       |
 |            | root       |            | ```ObserverRoot```     | ```null```                                         | The Intersection Observer API root element.                  |
 |            | rootMargin |            | ```string```           | ```"0px 0px 0px 0px"```                            | The Intersection Observer API rootMargin property.           |
@@ -162,13 +158,43 @@ This library is globally configured as follows right of out the box:
 
 ## API
 
+> 💡 All API functions return the global config object with the updated properties.
+
 svelte-reveal also exposes several functions you can call to change the [global configuration](#Global-config) of this library.
 
 Since these functions operate on a global level for all instances of svelte-reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the global options from multiple points. If you need/want to considerably customize the behavior of this library, I suggest you to create a dedicated file (e.g. reveal.config.js) and from there call the API to set global settings or shared transition properties.
 
 If you want to customise the behavior of a single DOM node, you are supposed to use the [options](#Options).
 
-> 💡 All API functions return the global config object with the updated properties.
+Since this library has been built using [TypeScript](https://www.typescriptlang.org/), there are many custom types used all over the source files. The following are the main types used by the API:
+
+```typescript
+type Device = 'mobile' | 'tablet' | 'laptop' | 'desktop';
+
+interface IDevice {
+  enabled: boolean;
+  breakpoint: number;
+}
+
+interface Responsive {
+  [P in Device]: IDevice;
+}
+
+type ObserverRoot = HTMLElement | null | undefined;
+
+interface IObserverOptions {
+  root?: ObserverRoot;
+  rootMargin: string;
+  threshold: number;
+}
+
+interface IConfig {
+  dev: boolean;
+  once: boolean;
+  responsive: Responsive;
+  observer: IObserverOptions;
+}
+```
 
 ### setDev
 
@@ -182,21 +208,23 @@ If you want to customise the behavior of a single DOM node, you are supposed to 
 | --------------------- | ------------- | ------------------------------------------------------------ |
 | ```(once: boolean)``` | ```IConfig``` | Runs the scroll animations only once when set to true. Refreshing the page doesn't re-run them. |
 
+### setDeviceStatus
+
+| Args                                    | Return        | Description                     |
+| --------------------------------------- | ------------- | ------------------------------- |
+| ```(device: Device, status: boolean)``` | ```IConfig``` | Toggles the status of a device. |
+
+### setDeviceBreakpoint
+
+| Args                                       | Return        | Description                      |
+| ------------------------------------------ | ------------- | -------------------------------- |
+| ```(device: Device, breakpoint: number)``` | ```IConfig``` | Sets the breakpoint of a device. |
+
 ### setDevice
 
 | Args                                      | Return        | Description                               |
 | ----------------------------------------- | ------------- | ----------------------------------------- |
 | ```(device: Device, settings: IDevice)``` | ```IConfig``` | Updates the settings of a type of device. |
-
-```typescript
-type Device = 'mobile' | 'tablet' | 'laptop' | 'desktop'
-
-interface IDevice {
-  enabled: boolean;
-  breakpoint: number;
-  query: string;
-}
-```
 
 ### setResponsive
 
@@ -204,30 +232,11 @@ interface IDevice {
 | ------------------------------- | ------------- | ------------------------------------------------------ |
 | ```(responsive: Responsive)``` | ```IConfig``` | Sets the responsive property within the config object. |
 
-```typescript
-interface IDevice {
-  enabled: boolean;
-  breakpoint: number;
-  query: string;
-}
-
-interface Responsive {
-  mobile: IDevice;
-  tablet: IDevice;
-  laptop: IDevice;
-  desktop: IDevice;
-}
-```
-
 ### setObserverRoot
 
 | Args                       | Return        | Description                                               |
 | -------------------------- | ------------- | --------------------------------------------------------- |
 | ```(root: ObserverRoot)``` | ```IConfig``` | Globally sets the Intersection Observer API root element. |
-
-``````typescript
-type ObserverRoot = HTMLElement | null | undefined;
-``````
 
 ### setObserverRootMargin
 
@@ -243,41 +252,15 @@ type ObserverRoot = HTMLElement | null | undefined;
 
 ### setObserverConfig
 
-| Args                                    | Return        | Description                                      |
-| --------------------------------------- | ------------- | ------------------------------------------------ |
-| ```(observerConfig: ObserverOptions)``` | ```IConfig``` | Globally sets the Intersection Observer options. |
-
-```typescript
-type ObserverRoot = HTMLElement | null | undefined;
-
-interface IObserverOptions {
-  root: ObserverRoot;
-  rootMargin: string;
-  threshold: number;
-}
-```
+| Args                                     | Return        | Description                                      |
+| ---------------------------------------- | ------------- | ------------------------------------------------ |
+| ```(observerConfig: IObserverOptions)``` | ```IConfig``` | Globally sets the Intersection Observer options. |
 
 ### setConfig
 
 | Args                        | Type          | Description                                                  |
 | --------------------------- | ------------- | ------------------------------------------------------------ |
 | ```(userConfig: IConfig)``` | ```IConfig``` | By passing an object of type ```IConfig``` you can have full control over all the internal properties. |
-
-``````typescript
-type ObserverRoot = HTMLElement | null | undefined;
-
-interface IObserverOptions {
-  root: ObserverRoot;
-  rootMargin: string;
-  threshold: number;
-}
-
-interface IConfig {
-  disableDebug: boolean;
-  once: boolean;
-  observer: IObserverOptions;
-}
-``````
 
 
 
