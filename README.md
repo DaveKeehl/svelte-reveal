@@ -192,9 +192,9 @@ If you want to customise the behavior of a single DOM node, you are supposed to 
 type Device = 'mobile' | 'tablet' | 'laptop' | 'desktop'
 
 interface IDevice {
-	enabled: boolean;
-	breakpoint: number;
-	query: string;
+  enabled: boolean;
+  breakpoint: number;
+  query: string;
 }
 ```
 
@@ -206,16 +206,16 @@ interface IDevice {
 
 ```typescript
 interface IDevice {
-	enabled: boolean;
-	breakpoint: number;
-	query: string;
+  enabled: boolean;
+  breakpoint: number;
+  query: string;
 }
 
 interface IResponsive {
-	mobile: IDevice;
-	tablet: IDevice;
-	laptop: IDevice;
-	desktop: IDevice;
+  mobile: IDevice;
+  tablet: IDevice;
+  laptop: IDevice;
+  desktop: IDevice;
 }
 ```
 
