@@ -9,7 +9,7 @@ import type {
 	Device
 } from './types';
 import { styleTagStore, reloadStore } from './stores';
-import { getCssRules, getEasing, hasValidRange, isPositive, hasValidBreakpoints } from './utils';
+import { getCssRules, getEasing, hasValidRange, isPositive, hasValidBreakpoints, getConfigClone } from './utils';
 
 /**
  * Object containing the default options used by the library for the scroll effect.
@@ -111,13 +111,39 @@ export const setOnce = (once: boolean): IConfig => {
 };
 
 /**
+ * Toggles the status of a device.
+ * @param device The device to enabled/disable
+ * @param status The new status of a device
+ * @returns The config object with the updated device enabled property
+ */
+export const setDeviceStatus = (device: Device, status: boolean): IConfig => {
+	config.responsive[device].enabled = status;
+	return config;
+};
+
+/**
+ * Sets the breakpoint of a device.
+ * @param device The breakpoint device
+ * @param breakpoint The new breakpoint
+ * @returns The config object with the updated device breakpoint property
+ */
+export const setDeviceBreakpoint = (device: Device, breakpoint: number): IConfig => {
+	const configClone: IConfig = getConfigClone();
+	configClone.responsive[device].breakpoint = breakpoint;
+	hasValidBreakpoints(configClone.responsive);
+
+	config.responsive[device].breakpoint = breakpoint;
+	return config;
+};
+
+/**
  * Updates the settings of a type of device.
  * @param device The type of device you want its settings to be updated
  * @param settings The new settings
  * @returns The config object with the updated device settings
  */
 export const setDevice = (device: Device, settings: IDevice): IConfig => {
-	const configClone: IConfig = JSON.parse(JSON.stringify(config));
+	const configClone: IConfig = getConfigClone();
 	configClone.responsive[device] = settings;
 	hasValidBreakpoints(configClone.responsive);
 
