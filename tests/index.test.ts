@@ -10,6 +10,7 @@ import {
 	setConfig,
 	checkOptions,
 	reveal,
+	setDevice,
 	setResponsive
 } from '../src/index';
 import type { IConfig, IObserverOptions, IOptions, IResponsive } from '../src/types';
@@ -39,19 +40,42 @@ describe('Testing API correctness', () => {
 		expect(config.once).toBe(true);
 	});
 
+	test('setDevice', () => {
+		const defaultConfig: IConfig = JSON.parse(JSON.stringify(config));
+		expect(setDevice('mobile', defaultConfig.responsive.mobile)).toStrictEqual(defaultConfig);
+
+		const invalidConfig: IConfig = JSON.parse(JSON.stringify(config));
+
+		invalidConfig.responsive.mobile.breakpoint = 200.5;
+		expect(() => setDevice('mobile', invalidConfig.responsive.mobile)).toThrow('Breakpoints must be positive integers');
+		invalidConfig.responsive.mobile.breakpoint = config.responsive.mobile.breakpoint;
+
+		invalidConfig.responsive.mobile.breakpoint = -200;
+		expect(() => setDevice('mobile', invalidConfig.responsive.mobile)).toThrow('Breakpoints must be positive integers');
+		invalidConfig.responsive.mobile.breakpoint = config.responsive.mobile.breakpoint;
+
+		invalidConfig.responsive.tablet.breakpoint = 200;
+		expect(() => setDevice('tablet', invalidConfig.responsive.tablet)).toThrow("Breakpoints can't overlap");
+		invalidConfig.responsive.tablet.breakpoint = config.responsive.tablet.breakpoint;
+	});
+
 	test('setResponsive', () => {
-		const validResponsive: IResponsive = JSON.parse(JSON.stringify(config.responsive));
-		const validConfig: IConfig = JSON.parse(JSON.stringify(config));
-		validConfig.responsive = validResponsive;
-		expect(setResponsive(validResponsive)).toStrictEqual(validConfig);
+		const defaultConfig: IConfig = JSON.parse(JSON.stringify(config));
+		expect(setResponsive(defaultConfig.responsive)).toStrictEqual(defaultConfig);
 
-		const invalidResponsive: IConfig = JSON.parse(JSON.stringify(config));
+		const invalidResponsive: IResponsive = JSON.parse(JSON.stringify(config.responsive));
 
-		invalidResponsive.responsive.mobile.breakpoint = -200;
-		expect(() => setConfig(invalidResponsive)).toThrowError('Breakpoints must be positive integers');
+		invalidResponsive.mobile.breakpoint = -200;
+		expect(() => setResponsive(invalidResponsive)).toThrowError('Breakpoints must be positive integers');
+		invalidResponsive.mobile.breakpoint = defaultConfig.responsive.mobile.breakpoint;
 
-		invalidResponsive.responsive.mobile.breakpoint = 450.5;
-		expect(() => setConfig(invalidResponsive)).toThrowError('Breakpoints must be positive integers');
+		invalidResponsive.mobile.breakpoint = 450.5;
+		expect(() => setResponsive(invalidResponsive)).toThrowError('Breakpoints must be positive integers');
+		invalidResponsive.mobile.breakpoint = defaultConfig.responsive.mobile.breakpoint;
+
+		invalidResponsive.tablet.breakpoint = 200;
+		expect(() => setResponsive(invalidResponsive)).toThrowError("Breakpoints can't overlap");
+		invalidResponsive.tablet.breakpoint = defaultConfig.responsive.tablet.breakpoint;
 	});
 
 	test('setObserverConfig', () => {
