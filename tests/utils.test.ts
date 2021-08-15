@@ -1,4 +1,4 @@
-import type { CustomEasing, IOptions, IResponsive, Transitions } from '../src/types';
+import type { CustomEasing, IOptions, Responsive, Transitions } from '../src/types';
 import {
 	addVendors,
 	clean,
@@ -39,16 +39,16 @@ test('hasOverlappingBreakpoints', () => {
 	const defaultResponsive = getConfigClone().responsive;
 	expect(hasOverlappingBreakpoints(defaultResponsive)).toBe(false);
 
-	const invalidResponsive: IResponsive = getConfigClone().responsive;
+	const invalidResponsive: Responsive = getConfigClone().responsive;
 	invalidResponsive.tablet.breakpoint = 200;
 	expect(hasOverlappingBreakpoints(invalidResponsive)).toBe(true);
 });
 
 test('hasValidBreakpoints', () => {
-	const defaultResponsive: IResponsive = getConfigClone().responsive;
+	const defaultResponsive: Responsive = getConfigClone().responsive;
 	expect(hasValidBreakpoints(defaultResponsive)).toBe(true);
 
-	const invalidResponsive: IResponsive = getConfigClone().responsive;
+	const invalidResponsive: Responsive = getConfigClone().responsive;
 	invalidResponsive.mobile.breakpoint = 400.5;
 	expect(() => hasValidBreakpoints(invalidResponsive)).toThrow('Breakpoints must be positive integers');
 
@@ -86,7 +86,7 @@ describe('CSS browser-vendors', () => {
 });
 
 describe('Media queries are added correctly', () => {
-	const responsive: IResponsive = getConfigClone().responsive;
+	const responsive: Responsive = getConfigClone().responsive;
 	const { mobile, tablet, laptop } = responsive;
 
 	responsive.desktop.enabled = false;

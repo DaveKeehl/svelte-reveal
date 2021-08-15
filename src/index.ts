@@ -4,7 +4,7 @@ import type {
 	IReturnAction,
 	IObserverOptions,
 	ObserverRoot,
-	IResponsive,
+	Responsive,
 	IDevice,
 	Device
 } from './types';
@@ -156,7 +156,7 @@ export const setDevice = (device: Device, settings: IDevice): IConfig => {
  * @param responsive An object that instructs the library how to handle responsiveness
  * @returns The config object with the updated responsive property
  */
-export const setResponsive = (responsive: IResponsive): IConfig => {
+export const setResponsive = (responsive: Responsive): IConfig => {
 	hasValidBreakpoints(responsive);
 
 	config.responsive = responsive;

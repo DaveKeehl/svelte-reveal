@@ -136,7 +136,7 @@ This library is globally configured as follows right of out the box:
 | ---------- | ---------- | ---------- | ---------------------- | -------------------------------------------------- | ------------------------------------------------------------ |
 | dev        |            |            | ```boolean```          | ```true```                                         | Globally enables/disables all logs.                          |
 | once       |            |            | ```boolean```          | ```false```                                        | Runs the scroll animations only once when set to ```true```. When set to ```true```, refreshing the page doesn't re-run them. |
-| responsive |            |            | ```IResponsive```      |                                                    | Information about how the library should handle responsiveness. It can be used to enable/disable the scroll effect on some devices. |
+| responsive |            |            | ```Responsive```      |                                                    | Information about how the library should handle responsiveness. It can be used to enable/disable the scroll effect on some devices. |
 |            | mobile     |            | ```IDevice```          |                                                    | Object containing information about responsiveness on mobile devices. |
 |            |            | enabled    | ```boolean```          | ```true```                                         | Whether the device supports the scroll effect on mobile devices. |
 |            |            | breakpoint | ```number```           | ```425```                                          | The viewport width upper limit that a mobile device can be targeted to work in. |
@@ -202,7 +202,7 @@ interface IDevice {
 
 | Args                            | Return        | Description                                            |
 | ------------------------------- | ------------- | ------------------------------------------------------ |
-| ```(responsive: IResponsive)``` | ```IConfig``` | Sets the responsive property within the config object. |
+| ```(responsive: Responsive)``` | ```IConfig``` | Sets the responsive property within the config object. |
 
 ```typescript
 interface IDevice {
@@ -211,7 +211,7 @@ interface IDevice {
   query: string;
 }
 
-interface IResponsive {
+interface Responsive {
   mobile: IDevice;
   tablet: IDevice;
   laptop: IDevice;

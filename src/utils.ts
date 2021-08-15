@@ -1,4 +1,4 @@
-import type { Transitions, IOptions, Easing, CustomEasing, IResponsive, IDevice, IConfig } from './types';
+import type { Transitions, IOptions, Easing, CustomEasing, Responsive, IDevice, IConfig } from './types';
 import { init, config } from '../src/index';
 
 const getClone = <T>(item: T): T => JSON.parse(JSON.stringify(item));
@@ -41,7 +41,7 @@ export const isPositiveInteger = (property: number): boolean => {
  * @param responsive An object that instructs the library how to handle responsiveness
  * @returns Whether the breapoints overlap
  */
-export const hasOverlappingBreakpoints = (responsive: IResponsive): boolean => {
+export const hasOverlappingBreakpoints = (responsive: Responsive): boolean => {
 	const { mobile, tablet, laptop, desktop } = responsive;
 
 	const areOverlapping =
@@ -57,7 +57,7 @@ export const hasOverlappingBreakpoints = (responsive: IResponsive): boolean => {
  * @param responsive An object that instructs the library how to handle responsiveness
  * @returns Returns true if the breakpoints are valid, otherwise it throws errors
  */
-export const hasValidBreakpoints = (responsive: IResponsive): boolean => {
+export const hasValidBreakpoints = (responsive: Responsive): boolean => {
 	const breakpoints: number[] = Object.values(responsive).map((device: IDevice) => device.breakpoint);
 
 	// Check if breakpoints are positive integers
@@ -130,7 +130,7 @@ export const addVendors = (unprefixedStyles: string): string => {
  * @param responsive The object containing the info about how to create the media queries
  * @returns The decorated CSS ruleset
  */
-export const addMediaQueries = (styles: string, responsive: IResponsive = config.responsive): string => {
+export const addMediaQueries = (styles: string, responsive: Responsive = config.responsive): string => {
 	const queries: string[] = [];
 
 	// Extract queries for enabled devices

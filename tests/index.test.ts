@@ -13,7 +13,7 @@ import {
 	setDevice,
 	setResponsive
 } from '../src/index';
-import type { IConfig, IObserverOptions, IOptions, IResponsive } from '../src/types';
+import type { IConfig, IObserverOptions, IOptions, Responsive } from '../src/types';
 import { getConfigClone } from '../src/utils';
 
 describe('Testing API correctness', () => {
@@ -64,7 +64,7 @@ describe('Testing API correctness', () => {
 		const defaultConfig: IConfig = getConfigClone();
 		expect(setResponsive(defaultConfig.responsive)).toStrictEqual(defaultConfig);
 
-		const invalidResponsive: IResponsive = getConfigClone().responsive;
+		const invalidResponsive: Responsive = getConfigClone().responsive;
 
 		invalidResponsive.mobile.breakpoint = -200;
 		expect(() => setResponsive(invalidResponsive)).toThrowError('Breakpoints must be positive integers');

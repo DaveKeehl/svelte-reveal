@@ -175,24 +175,12 @@ export interface IDevice {
 	query: string;
 }
 
-export interface IResponsive {
+export type Responsive = {
 	/**
-	 * Object containing information about responsiveness on mobile devices.
+	 * Object containing information about the responsiveness of a device.
 	 */
-	mobile: IDevice;
-	/**
-	 * Object containing information about responsiveness on tablet devices.
-	 */
-	tablet: IDevice;
-	/**
-	 * Object containing information about responsiveness on laptop devices.
-	 */
-	laptop: IDevice;
-	/**
-	 * Object containing information about responsiveness on desktop devices.
-	 */
-	desktop: IDevice;
-}
+	[P in Device]: IDevice;
+};
 
 /**
  * Object containing global configurations. They apply to all instances of this library.
@@ -211,7 +199,7 @@ export interface IConfig {
 	 * Information about how the library should handle responsiveness.
 	 * It can be used to enable/disable the scroll effect on some devices.
 	 */
-	responsive: IResponsive;
+	responsive: Responsive;
 	/**
 	 * The Intersection Observer API options.
 	 */
