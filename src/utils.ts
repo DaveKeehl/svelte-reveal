@@ -1,13 +1,18 @@
 import type { Transitions, IOptions, Easing, CustomEasing, Responsive, IDevice, IConfig } from './types';
 import { init, config } from '../src/index';
 
-const getClone = <T>(item: T): T => JSON.parse(JSON.stringify(item));
+/**
+ * Deep clone a given data structure.
+ * @param item What you want to clone
+ * @returns The cloned item
+ */
+const clone = <T>(item: T): T => JSON.parse(JSON.stringify(item));
 
 /**
  * Get a clone of the global configuration used by the library.
  * @returns The clone of the config
  */
-export const getConfigClone = (): IConfig => getClone(config);
+export const getConfigClone = (): IConfig => clone(config);
 
 /**
  * Check whether a given numeric variable is within a specific range.
