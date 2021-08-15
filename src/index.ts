@@ -9,7 +9,7 @@ import type {
 	Device
 } from './types';
 import { styleTagStore, reloadStore } from './stores';
-import { getCssRules, getEasing, hasValidRange, isPositive, hasValidBreakpoint } from './utils';
+import { getCssRules, getEasing, hasValidRange, isPositive, hasValidBreakpoints } from './utils';
 
 /**
  * Object containing the default options used by the library for the scroll effect.
@@ -117,7 +117,9 @@ export const setOnce = (once: boolean): IConfig => {
  * @returns The config object with the updated device settings
  */
 export const setDevice = (device: Device, settings: IDevice): IConfig => {
-	hasValidBreakpoint(settings.breakpoint);
+	const configClone: IConfig = JSON.parse(JSON.stringify(config));
+	configClone.responsive[device] = settings;
+	hasValidBreakpoints(configClone.responsive);
 
 	config.responsive[device] = settings;
 	return config;
@@ -129,23 +131,10 @@ export const setDevice = (device: Device, settings: IDevice): IConfig => {
  * @returns The config object with the updated responsive property
  */
 export const setResponsive = (responsive: IResponsive): IConfig => {
-	const { mobile, tablet, laptop, desktop } = responsive;
-	const breakpoints: number[] = Object.values(responsive).map((device: IDevice) => device.breakpoint);
+	hasValidBreakpoints(responsive);
 
-	breakpoints.forEach((breakpoint) => {
-		hasValidBreakpoint(breakpoint);
-	});
-
-	if (
-		mobile.breakpoint < tablet.breakpoint &&
-		tablet.breakpoint < laptop.breakpoint &&
-		laptop.breakpoint < desktop.breakpoint
-	) {
-		config.responsive = responsive;
-		return config;
-	} else {
-		throw new Error("Breakpoints can't overlap");
-	}
+	config.responsive = responsive;
+	return config;
 };
 
 /**
