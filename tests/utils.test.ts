@@ -10,9 +10,10 @@ import {
 	isPositive,
 	isPositiveInteger,
 	hasOverlappingBreakpoints,
-	hasValidBreakpoints
+	hasValidBreakpoints,
+	getConfigClone
 } from '../src/utils';
-import { init, config } from '../src/index';
+import { init } from '../src/index';
 
 test('hasValidRange', () => {
 	expect(hasValidRange(100, 0, 200)).toBe(true);
@@ -35,19 +36,19 @@ test('isPositiveInteger', () => {
 });
 
 test('hasOverlappingBreakpoints', () => {
-	const defaultResponsive = JSON.parse(JSON.stringify(config.responsive));
+	const defaultResponsive = getConfigClone().responsive;
 	expect(hasOverlappingBreakpoints(defaultResponsive)).toBe(false);
 
-	const invalidResponsive: IResponsive = JSON.parse(JSON.stringify(config.responsive));
+	const invalidResponsive: IResponsive = getConfigClone().responsive;
 	invalidResponsive.tablet.breakpoint = 200;
 	expect(hasOverlappingBreakpoints(invalidResponsive)).toBe(true);
 });
 
 test('hasValidBreakpoints', () => {
-	const defaultResponsive: IResponsive = JSON.parse(JSON.stringify(config.responsive));
+	const defaultResponsive: IResponsive = getConfigClone().responsive;
 	expect(hasValidBreakpoints(defaultResponsive)).toBe(true);
 
-	const invalidResponsive: IResponsive = JSON.parse(JSON.stringify(config.responsive));
+	const invalidResponsive: IResponsive = getConfigClone().responsive;
 	invalidResponsive.mobile.breakpoint = 400.5;
 	expect(() => hasValidBreakpoints(invalidResponsive)).toThrow('Breakpoints must be positive integers');
 
@@ -85,7 +86,7 @@ describe('CSS browser-vendors', () => {
 });
 
 describe('Media queries are added correctly', () => {
-	const responsive: IResponsive = JSON.parse(JSON.stringify(config.responsive));
+	const responsive: IResponsive = getConfigClone().responsive;
 	const { mobile, tablet, laptop } = responsive;
 
 	responsive.desktop.enabled = false;

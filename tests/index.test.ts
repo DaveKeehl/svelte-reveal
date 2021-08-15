@@ -14,6 +14,7 @@ import {
 	setResponsive
 } from '../src/index';
 import type { IConfig, IObserverOptions, IOptions, IResponsive } from '../src/types';
+import { getConfigClone } from '../src/utils';
 
 describe('Testing API correctness', () => {
 	test('setDev', () => {
@@ -41,10 +42,10 @@ describe('Testing API correctness', () => {
 	});
 
 	test('setDevice', () => {
-		const defaultConfig: IConfig = JSON.parse(JSON.stringify(config));
+		const defaultConfig: IConfig = getConfigClone();
 		expect(setDevice('mobile', defaultConfig.responsive.mobile)).toStrictEqual(defaultConfig);
 
-		const invalidConfig: IConfig = JSON.parse(JSON.stringify(config));
+		const invalidConfig: IConfig = getConfigClone();
 
 		invalidConfig.responsive.mobile.breakpoint = 200.5;
 		expect(() => setDevice('mobile', invalidConfig.responsive.mobile)).toThrow('Breakpoints must be positive integers');
@@ -60,10 +61,10 @@ describe('Testing API correctness', () => {
 	});
 
 	test('setResponsive', () => {
-		const defaultConfig: IConfig = JSON.parse(JSON.stringify(config));
+		const defaultConfig: IConfig = getConfigClone();
 		expect(setResponsive(defaultConfig.responsive)).toStrictEqual(defaultConfig);
 
-		const invalidResponsive: IResponsive = JSON.parse(JSON.stringify(config.responsive));
+		const invalidResponsive: IResponsive = getConfigClone().responsive;
 
 		invalidResponsive.mobile.breakpoint = -200;
 		expect(() => setResponsive(invalidResponsive)).toThrowError('Breakpoints must be positive integers');
@@ -162,7 +163,7 @@ describe('Testing API correctness', () => {
 
 		describe('responsive', () => {
 			test('Invalid when breakpoints are not positive integers', () => {
-				const invalidConfig: IConfig = JSON.parse(JSON.stringify(config));
+				const invalidConfig: IConfig = getConfigClone();
 
 				invalidConfig.responsive.mobile.breakpoint = -200;
 				expect(() => setConfig(invalidConfig)).toThrowError('Breakpoints must be positive integers');
@@ -172,7 +173,7 @@ describe('Testing API correctness', () => {
 			});
 
 			test('Invalid when breakpoints overlap', () => {
-				const invalidConfig: IConfig = JSON.parse(JSON.stringify(config));
+				const invalidConfig: IConfig = getConfigClone();
 
 				invalidConfig.responsive.mobile.breakpoint = 400;
 				invalidConfig.responsive.tablet.breakpoint = 300;
@@ -183,19 +184,19 @@ describe('Testing API correctness', () => {
 
 		describe('rootMargin', () => {
 			test('Invalid with empty string', () => {
-				const invalidConfig: IConfig = JSON.parse(JSON.stringify(config));
+				const invalidConfig: IConfig = getConfigClone();
 				invalidConfig.observer.rootMargin = '';
 				expect(() => setConfig(invalidConfig)).toThrow('Invalid rootMargin syntax');
 			});
 
 			test('Invalid with missing units', () => {
-				const invalidConfig: IConfig = JSON.parse(JSON.stringify(config));
+				const invalidConfig: IConfig = getConfigClone();
 				invalidConfig.observer.rootMargin = '0 0 0 0';
 				expect(() => setConfig(invalidConfig)).toThrow('Invalid rootMargin syntax');
 			});
 
 			test('Invalid with unknown units', () => {
-				const invalidConfig: IConfig = JSON.parse(JSON.stringify(config));
+				const invalidConfig: IConfig = getConfigClone();
 				invalidConfig.observer.rootMargin = '0px 0px 0this 0that';
 				expect(() => setConfig(invalidConfig)).toThrow('Invalid rootMargin syntax');
 			});
@@ -203,13 +204,13 @@ describe('Testing API correctness', () => {
 
 		describe('threshold', () => {
 			test('Invalid with negative numbers', () => {
-				const invalidConfig: IConfig = JSON.parse(JSON.stringify(config));
+				const invalidConfig: IConfig = getConfigClone();
 				invalidConfig.observer.threshold = -1;
 				expect(() => setConfig(invalidConfig)).toThrow('Threshold must be between 0.0 and 1.0');
 			});
 
 			test('Invalid with numbers greater than 1', () => {
-				const invalidConfig: IConfig = JSON.parse(JSON.stringify(config));
+				const invalidConfig: IConfig = getConfigClone();
 				invalidConfig.observer.threshold = 1.5;
 				expect(() => setConfig(invalidConfig)).toThrow('Threshold must be between 0.0 and 1.0');
 			});
