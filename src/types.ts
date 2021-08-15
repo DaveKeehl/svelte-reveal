@@ -169,10 +169,6 @@ export interface IDevice {
 	 * The viewport width upper limit that a device can be targeted to work in.
 	 */
 	breakpoint: number;
-	/**
-	 * The computed media query that is used to target this device.
-	 */
-	query: string;
 }
 
 /**

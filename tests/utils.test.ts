@@ -85,24 +85,24 @@ describe('CSS browser-vendors', () => {
 	});
 });
 
-describe('Media queries are added correctly', () => {
+describe('Media queries behave correctly', () => {
 	const responsive: Responsive = getConfigClone().responsive;
 	const { mobile, tablet, laptop } = responsive;
 
-	responsive.desktop.enabled = false;
+	test('No media queries when all devices are enabled', () => {
+		const styles = `
+			opacity: 0;
+			transform: translateY(-20px);
+		`;
 
-	const styles = `
-		opacity: 0;
-		transform: translateY(-20px);
-	`;
+		// const decorated = `
+		// 	@media ${mobile.query}, ${tablet.query}, ${laptop.query} {
+		// 		${styles}
+		// 	}
+		// `;
 
-	const decorated = `
-		@media ${mobile.query}, ${tablet.query}, ${laptop.query} {
-			${styles}
-		}
-	`;
-
-	expect(addMediaQueries(styles, responsive)).toBe(clean(decorated));
+		expect(addMediaQueries(styles, responsive)).toBe(styles);
+	});
 });
 
 describe('CSS rules', () => {

@@ -56,31 +56,19 @@ export const config: IConfig = {
 	responsive: {
 		mobile: {
 			enabled: true,
-			breakpoint: 425,
-			get query() {
-				return `(max-width: ${this.breakpoint}px)`;
-			}
+			breakpoint: 425
 		},
 		tablet: {
 			enabled: true,
-			breakpoint: 768,
-			get query() {
-				return `((min-width: ${config.responsive.mobile.breakpoint + 1}px) and (max-width: ${this.breakpoint}px))`;
-			}
+			breakpoint: 768
 		},
 		laptop: {
 			enabled: true,
-			breakpoint: 1440,
-			get query() {
-				return `((min-width: ${config.responsive.tablet.breakpoint + 1}px) and (max-width: ${this.breakpoint}px))`;
-			}
+			breakpoint: 1440
 		},
 		desktop: {
 			enabled: true,
-			breakpoint: 2560,
-			get query() {
-				return `(min-width: ${config.responsive.laptop.breakpoint + 1}px)`;
-			}
+			breakpoint: 2560
 		}
 	},
 	observer: {

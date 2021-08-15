@@ -136,15 +136,31 @@ export const addVendors = (unprefixedStyles: string): string => {
  * @returns The decorated CSS ruleset
  */
 export const addMediaQueries = (styles: string, responsive: Responsive = config.responsive): string => {
-	const queries: string[] = [];
+	const devices = Object.entries(responsive);
+
+	// If all devices are enabled, don't create any media query
+	if (devices.every(([, settings]) => settings.enabled)) {
+		return styles;
+	}
+
+	const { mobile, tablet, laptop } = responsive;
+
+	const mediaQueries: { [P: string]: string } = {
+		mobile: `(max-width: ${mobile.breakpoint}px)`,
+		tablet: `((min-width: ${mobile.breakpoint + 1}px) and (max-width: ${tablet.breakpoint}px))`,
+		laptop: `((min-width: ${tablet.breakpoint + 1}px) and (max-width: ${laptop.breakpoint}px))`,
+		desktop: `(min-width: ${laptop.breakpoint + 1}px)`
+	};
+
+	const activeQueries: string[] = [];
 
 	// Extract queries for enabled devices
-	Object.values(responsive).forEach((device) => {
-		if (device.enabled) queries.push(device.query);
+	devices.forEach(([device, settings]) => {
+		if (settings.enabled) activeQueries.push(mediaQueries[device]);
 	});
 
 	const responsiveStyles = `
-		@media ${queries.join(', ')} {
+		@media ${activeQueries.join(', ')} {
 			${styles}
 		}
 	`;
