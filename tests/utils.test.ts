@@ -1,6 +1,69 @@
 import type { CustomEasing, IOptions, IResponsive, Transitions } from '../src/types';
-import { addVendors, clean, addMediaQueries, getEasing, sanitizeStyles, getCssRules } from '../src/utils';
+import {
+	addVendors,
+	clean,
+	addMediaQueries,
+	getEasing,
+	sanitizeStyles,
+	getCssRules,
+	hasValidRange,
+	isPositive,
+	isPositiveInteger,
+	hasOverlappingBreakpoints,
+	hasValidBreakpoints
+} from '../src/utils';
 import { init, config } from '../src/index';
+
+test('hasValidRange', () => {
+	expect(hasValidRange(100, 0, 200)).toBe(true);
+	expect(hasValidRange(0, 0, 0)).toBe(true);
+	expect(hasValidRange(100, 101, 150)).toBe(false);
+});
+
+test('isPositive', () => {
+	expect(isPositive(0)).toBe(true);
+	expect(isPositive(5)).toBe(true);
+	expect(isPositive(-1)).toBe(false);
+});
+
+test('isPositiveInteger', () => {
+	expect(isPositiveInteger(5)).toBe(true);
+	expect(isPositiveInteger(0)).toBe(true);
+	expect(isPositiveInteger(-1)).toBe(false);
+	expect(isPositiveInteger(5.5)).toBe(false);
+	expect(isPositiveInteger(-5.5)).toBe(false);
+});
+
+test('hasOverlappingBreakpoints', () => {
+	const defaultResponsive = JSON.parse(JSON.stringify(config.responsive));
+	expect(hasOverlappingBreakpoints(defaultResponsive)).toBe(false);
+
+	const invalidResponsive: IResponsive = JSON.parse(JSON.stringify(config.responsive));
+	invalidResponsive.tablet.breakpoint = 200;
+	expect(hasOverlappingBreakpoints(invalidResponsive)).toBe(true);
+});
+
+test('hasValidBreakpoints', () => {
+	const defaultResponsive: IResponsive = JSON.parse(JSON.stringify(config.responsive));
+	expect(hasValidBreakpoints(defaultResponsive)).toBe(true);
+
+	const invalidResponsive: IResponsive = JSON.parse(JSON.stringify(config.responsive));
+	invalidResponsive.mobile.breakpoint = 400.5;
+	expect(() => hasValidBreakpoints(invalidResponsive)).toThrow('Breakpoints must be positive integers');
+
+	invalidResponsive.mobile.breakpoint = defaultResponsive.mobile.breakpoint;
+	invalidResponsive.tablet.breakpoint = 200;
+	expect(() => hasValidBreakpoints(invalidResponsive)).toThrow("Breakpoints can't overlap");
+});
+
+test('clean', () => {
+	const longString = `
+							hello world
+	`;
+
+	expect(clean(longString)).toBe('hello world');
+	expect(clean('')).toBe('');
+});
 
 describe('CSS browser-vendors', () => {
 	test('Correctly added to the rule sets', () => {
