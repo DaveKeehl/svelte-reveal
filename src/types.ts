@@ -175,6 +175,11 @@ export interface IDevice {
 	query: string;
 }
 
+/**
+ * The types of devices.
+ */
+export type Device = 'mobile' | 'tablet' | 'laptop' | 'desktop';
+
 export type Responsive = {
 	/**
 	 * Object containing information about the responsiveness of a device.
@@ -213,11 +218,6 @@ export interface IReturnAction {
 	update?: (options?: IOptions) => void;
 	destroy?: () => void;
 }
-
-/**
- * The categories of supported devices
- */
-export type Device = 'mobile' | 'tablet' | 'laptop' | 'desktop';
 
 /**
  * The animations that can be used by the library users.
