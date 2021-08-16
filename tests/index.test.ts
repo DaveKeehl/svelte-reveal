@@ -10,6 +10,8 @@ import {
 	setConfig,
 	checkOptions,
 	reveal,
+	setDeviceStatus,
+	setDeviceBreakpoint,
 	setDevice,
 	setResponsive
 } from '../src/index';
@@ -39,6 +41,33 @@ describe('Testing API correctness', () => {
 		setOnce(false);
 		setOnce(true);
 		expect(config.once).toBe(true);
+	});
+
+	test('setDeviceStatus', () => {
+		const defaultConfig = getConfigClone();
+
+		expect(setDeviceStatus('mobile', true).responsive.mobile.enabled).toBe(true);
+		config.responsive.mobile.enabled = true;
+
+		expect(setDeviceStatus('mobile', false).responsive.mobile.enabled).toBe(false);
+		config.responsive.mobile.enabled = true;
+
+		expect(setDeviceStatus('desktop', false).responsive.desktop.enabled).toBe(false);
+		config.responsive.desktop.enabled = true;
+
+		expect(setDeviceStatus('laptop', true).responsive.laptop.enabled).toBe(true);
+		config.responsive.laptop.enabled = true;
+
+		expect(setDeviceStatus('tablet', false).responsive.tablet.enabled).toBe(false);
+		config.responsive.tablet.enabled = true;
+	});
+
+	test('setDeviceBreakpoint', () => {
+		expect(() => setDeviceBreakpoint('mobile', -200)).toThrow('Breakpoints must be positive integers');
+		expect(() => setDeviceBreakpoint('mobile', 400.5)).toThrow('Breakpoints must be positive integers');
+		expect(() => setDeviceBreakpoint('tablet', 200)).toThrow("Breakpoints can't overlap");
+
+		expect(setDeviceBreakpoint('laptop', 1200).responsive.laptop.breakpoint).toBe(1200);
 	});
 
 	test('setDevice', () => {
