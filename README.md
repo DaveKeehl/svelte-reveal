@@ -120,8 +120,8 @@ Among the available options you can set, there are also some callback functions 
 | ------------- | ------------------------- | ---------- | ------------------------------------------------------------ |
 | onRevealStart | ```(node: HTMLElement)``` | ```void``` | Function that gets fired when the node starts being revealed. |
 | onRevealEnd   | ```(node: HTMLElement)``` | ```void``` | Function that gets fired when the node is fully revealed.    |
-| onResetStart  | ```(node: HTMLElement)``` | ```void``` | Function that gets fired when the reset option is set to true and the node starts transitioning out. |
-| onResetEnd    | ```(node: HTMLElement)``` | ```void``` | Function that gets fired when the reset option is set to true and the node has fully transitioned out. |
+| onResetStart  | ```(node: HTMLElement)``` | ```void``` | Function that gets fired when the ```reset``` option is set to ```true``` and the node starts transitioning out. |
+| onResetEnd    | ```(node: HTMLElement)``` | ```void``` | Function that gets fired when the ```reset``` option is set to ```true``` and the node has fully transitioned out. |
 | onMount       | ```(node: HTMLElement)``` | ```void``` | Function that gets fired when the node is mounted on the DOM. |
 | onUpdate      | ```(node: HTMLElement)``` | ```void``` | Function that gets fired when the action options are updated. |
 | onDestroy     | ```(node: HTMLElement)``` | ```void``` | Function that gets fired when the node is unmounted from the DOM. |
@@ -166,7 +166,7 @@ Since these functions operate on a global level for all instances of svelte-reve
 
 If you want to customise the behavior of a single DOM node, you are supposed to use the [options](#Options).
 
-Since this library has been built using [TypeScript](https://www.typescriptlang.org/), there are many custom types used all over the source files. The following are the main types used by the API:
+Since this library has been built using [TypeScript](https://www.typescriptlang.org/), there are many custom types used all over the source files. The following types are the main ones used by the API:
 
 ```typescript
 type Device = 'mobile' | 'tablet' | 'laptop' | 'desktop';
@@ -282,6 +282,8 @@ In order to work, svelte-reveal adds inline styles to the targeted elements. If 
 
 To avoid this situation, wrap your element in a ```<div>``` or a ```<span>``` and add the  ```use:reveal``` action to that wrapper element.
 
+Feel free to [open an issue](https://github.com/DaveKeehl/svelte-reveal/issues/new) in case any problems persist.
+
 
 
 ## Funding
@@ -292,7 +294,7 @@ To avoid this situation, wrap your element in a ```<div>``` or a ```<span>``` an
 
 ## Versioning
 
-This project uses semantic versioning ([semver](https://semver.org/)) to keep track of its version number.
+This project uses [Semantic Versioning](https://semver.org/) to keep track of its version number.
 
 
 
