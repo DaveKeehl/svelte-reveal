@@ -62,6 +62,8 @@ describe('Testing API correctness', () => {
 	});
 
 	test('setDevicesStatus', () => {
+		expect(() => setDevicesStatus([], true)).toThrow('At least one device required');
+
 		expect(setDevicesStatus(['mobile'], true).responsive.mobile.enabled).toBe(true);
 		config.responsive.mobile.enabled = true;
 

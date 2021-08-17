@@ -124,8 +124,12 @@ export const setDeviceStatus = (device: Device, status: boolean): IConfig => {
  * @returns The config object with the updated devices enabled property
  */
 export const setDevicesStatus = (devices: Device[], status: boolean): IConfig => {
-	devices.forEach((device) => (config.responsive[device].enabled = status));
-	return config;
+	if (devices.length > 0) {
+		const uniqueDevices = [...new Set(devices)];
+		uniqueDevices.forEach((device) => (config.responsive[device].enabled = status));
+		return config;
+	}
+	throw new Error('At least one device required');
 };
 
 /**
