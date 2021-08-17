@@ -9,7 +9,15 @@ import type {
 	Device
 } from './types';
 import { styleTagStore, reloadStore } from './stores';
-import { getCssRules, getEasing, hasValidRange, isPositive, hasValidBreakpoints, getConfigClone } from './utils';
+import {
+	getCssRules,
+	getEasing,
+	hasValidRange,
+	isPositive,
+	hasValidBreakpoints,
+	getConfigClone,
+	addMediaQueries
+} from './utils';
 
 /**
  * Object containing the default options used by the library for the scroll effect.
@@ -321,7 +329,8 @@ export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
 		const style = document.createElement('style');
 		style.setAttribute('type', 'text/css');
 		style.setAttribute('data-action', 'reveal');
-		style.innerHTML = `
+
+		const css = `
 		.fly--hidden {
 			${getCssRules('fly', finalOptions)}
 		}
@@ -341,6 +350,8 @@ export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
 			${getCssRules('spin', finalOptions)}
 		}
 		`;
+		style.innerHTML = addMediaQueries(css.trim());
+
 		const head = document.querySelector('head');
 		if (head !== null) head.appendChild(style);
 		styleTagStore.set(true);
