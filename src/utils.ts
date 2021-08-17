@@ -165,23 +165,13 @@ export const addMediaQueries = (styles: string, responsive: Responsive = config.
 	let i = 0;
 
 	while (i < devices.length) {
-		console.log(`i = ${i}`, devices[i]);
-
-		let count = 0;
-
 		if (devices[i][1].enabled) {
-			count++;
-
 			let j = i;
 			let query = '';
 
 			while (j < devices.length && devices[j][1].enabled) {
-				count++;
-
 				const beginning = devices[i][1].breakpoint;
 				const end = devices[j][1].breakpoint;
-
-				console.log(`j = ${j}, count = ${count}`, devices[j]);
 
 				if (beginning === smallestBreakpoint) {
 					query = `(max-width: ${end}px)`;
@@ -191,7 +181,7 @@ export const addMediaQueries = (styles: string, responsive: Responsive = config.
 					if (end === largestBreakpoint) {
 						query = `(min-width: ${previous.breakpoint + 1}px)`;
 					} else {
-						query = `((min-width: ${previous.breakpoint + 1}px) and (max-width: ${end}px))`;
+						query = `(min-width: ${previous.breakpoint + 1}px) and (max-width: ${end}px)`;
 					}
 				}
 
