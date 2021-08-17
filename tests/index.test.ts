@@ -44,8 +44,6 @@ describe('Testing API correctness', () => {
 	});
 
 	test('setDeviceStatus', () => {
-		const defaultConfig = getConfigClone();
-
 		expect(setDeviceStatus('mobile', true).responsive.mobile.enabled).toBe(true);
 		config.responsive.mobile.enabled = true;
 
