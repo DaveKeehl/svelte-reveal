@@ -118,7 +118,10 @@ export const addVendors = (unprefixedStyles: string): string => {
 	let prefixedStyles = '';
 
 	rules.forEach((rule) => {
-		const [property, value] = rule.trim().split(': ');
+		const [property, value] = rule
+			.trim()
+			.split(':')
+			.map((x) => x.trim());
 		prefixedStyles += sanitizeStyles(`
 			-webkit-${property}: ${value};
 			-ms-${property}: ${value};
@@ -138,29 +141,71 @@ export const addVendors = (unprefixedStyles: string): string => {
 export const addMediaQueries = (styles: string, responsive: Responsive = config.responsive): string => {
 	const devices = Object.entries(responsive);
 
-	// If all devices are enabled, don't create any media query
+	// All devices are enabled
 	if (devices.every(([, settings]) => settings.enabled)) {
 		return styles;
 	}
 
-	const { mobile, tablet, laptop } = responsive;
+	// All devices are disabled
+	if (devices.every(([, settings]) => !settings.enabled)) {
+		const query = `
+			@media not all {
+				${styles}
+			}
+		`;
+		return clean(query);
+	}
 
-	const mediaQueries: { [P: string]: string } = {
-		mobile: `(max-width: ${mobile.breakpoint}px)`,
-		tablet: `((min-width: ${mobile.breakpoint + 1}px) and (max-width: ${tablet.breakpoint}px))`,
-		laptop: `((min-width: ${tablet.breakpoint + 1}px) and (max-width: ${laptop.breakpoint}px))`,
-		desktop: `(min-width: ${laptop.breakpoint + 1}px)`
-	};
+	hasValidBreakpoints(responsive);
 
-	const activeQueries: string[] = [];
+	const smallestBreakpoint = Math.min(...devices.map(([, settings]) => settings.breakpoint));
+	const largestBreakpoint = Math.max(...devices.map(([, settings]) => settings.breakpoint));
 
-	// Extract queries for enabled devices
-	devices.forEach(([device, settings]) => {
-		if (settings.enabled) activeQueries.push(mediaQueries[device]);
-	});
+	const queries: string[] = [];
+	let i = 0;
+
+	while (i < devices.length) {
+		console.log(`i = ${i}`, devices[i]);
+
+		let count = 0;
+
+		if (devices[i][1].enabled) {
+			count++;
+
+			let j = i;
+			let query = '';
+
+			while (j < devices.length && devices[j][1].enabled) {
+				count++;
+
+				const beginning = devices[i][1].breakpoint;
+				const end = devices[j][1].breakpoint;
+
+				console.log(`j = ${j}, count = ${count}`, devices[j]);
+
+				if (beginning === smallestBreakpoint) {
+					query = `(max-width: ${end}px)`;
+				} else {
+					const previous: IDevice = devices[i - 1][1];
+
+					if (end === largestBreakpoint) {
+						query = `(min-width: ${previous.breakpoint + 1}px)`;
+					} else {
+						query = `((min-width: ${previous.breakpoint + 1}px) and (max-width: ${end}px))`;
+					}
+				}
+
+				j++;
+			}
+			queries.push(query);
+			i = j;
+		} else {
+			i++;
+		}
+	}
 
 	const responsiveStyles = `
-		@media ${activeQueries.join(', ')} {
+		@media ${queries.join(', ')} {
 			${styles}
 		}
 	`;
@@ -213,7 +258,7 @@ export const getCssRules = (transition: Transitions, options: IOptions): string 
 		throw new Error('Invalid CSS class name');
 	}
 
-	return addMediaQueries(addVendors(styles), config.responsive);
+	return addVendors(styles);
 };
 
 /**
