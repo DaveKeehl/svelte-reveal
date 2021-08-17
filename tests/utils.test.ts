@@ -86,22 +86,302 @@ describe('CSS browser-vendors', () => {
 });
 
 describe('Media queries behave correctly', () => {
-	const responsive: Responsive = getConfigClone().responsive;
-	const { mobile, tablet, laptop } = responsive;
+	const styles = '.class { opacity: 0; transform: translateY(-20px); }';
 
 	test('No media queries when all devices are enabled', () => {
-		const styles = `
-			opacity: 0;
-			transform: translateY(-20px);
+		expect(addMediaQueries(styles)).toBe(styles);
+	});
+
+	test('Disable library CSS styles when no devices are enabled', () => {
+		const custom: Responsive = {
+			mobile: {
+				enabled: false,
+				breakpoint: 425
+			},
+			tablet: {
+				enabled: false,
+				breakpoint: 768
+			},
+			laptop: {
+				enabled: false,
+				breakpoint: 1440
+			},
+			desktop: {
+				enabled: false,
+				breakpoint: 2560
+			}
+		};
+
+		const decorated = `
+			@media not all {
+				${styles}
+			}
 		`;
 
-		// const decorated = `
-		// 	@media ${mobile.query}, ${tablet.query}, ${laptop.query} {
-		// 		${styles}
-		// 	}
-		// `;
+		expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+	});
 
-		expect(addMediaQueries(styles, responsive)).toBe(styles);
+	describe('Combine queries', () => {
+		test('With only consecutive devices starting from the smallest one', () => {
+			const custom: Responsive = {
+				mobile: {
+					enabled: true,
+					breakpoint: 425
+				},
+				tablet: {
+					enabled: true,
+					breakpoint: 768
+				},
+				laptop: {
+					enabled: true,
+					breakpoint: 1440
+				},
+				desktop: {
+					enabled: false,
+					breakpoint: 2560
+				}
+			};
+
+			const decorated = `
+				@media (max-width: 1440px) {
+					${styles}
+				}
+			`;
+
+			expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+		});
+
+		test('With only consecutive devices starting from the largest one', () => {
+			const custom: Responsive = {
+				mobile: {
+					enabled: false,
+					breakpoint: 425
+				},
+				tablet: {
+					enabled: true,
+					breakpoint: 768
+				},
+				laptop: {
+					enabled: true,
+					breakpoint: 1440
+				},
+				desktop: {
+					enabled: true,
+					breakpoint: 2560
+				}
+			};
+
+			const decorated = `
+				@media (min-width: 426px) {
+					${styles}
+				}
+			`;
+
+			expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+		});
+
+		test('With multiple single spaced devices (1)', () => {
+			const custom: Responsive = {
+				mobile: {
+					enabled: true,
+					breakpoint: 425
+				},
+				tablet: {
+					enabled: false,
+					breakpoint: 768
+				},
+				laptop: {
+					enabled: true,
+					breakpoint: 1440
+				},
+				desktop: {
+					enabled: false,
+					breakpoint: 2560
+				}
+			};
+
+			const decorated = `
+				@media (max-width: 425px), ((min-width: 769px) and (max-width: 1440px)) {
+					${styles}
+				}
+			`;
+
+			expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+		});
+
+		test('With multiple single spaced devices (2)', () => {
+			const custom: Responsive = {
+				mobile: {
+					enabled: false,
+					breakpoint: 425
+				},
+				tablet: {
+					enabled: true,
+					breakpoint: 768
+				},
+				laptop: {
+					enabled: false,
+					breakpoint: 1440
+				},
+				desktop: {
+					enabled: true,
+					breakpoint: 2560
+				}
+			};
+
+			const decorated = `
+				@media ((min-width: 426px) and (max-width: 768px)), (min-width: 1441px) {
+					${styles}
+				}
+			`;
+
+			expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+		});
+
+		test('With pairs of consecutive enabled devices (1)', () => {
+			const custom: Responsive = {
+				mobile: {
+					enabled: true,
+					breakpoint: 425
+				},
+				tablet: {
+					enabled: true,
+					breakpoint: 768
+				},
+				laptop: {
+					enabled: false,
+					breakpoint: 1440
+				},
+				desktop: {
+					enabled: false,
+					breakpoint: 2560
+				}
+			};
+
+			const decorated = `
+				@media (max-width: 768px) {
+					${styles}
+				}
+			`;
+
+			expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+		});
+
+		test('With pairs of consecutive enabled devices (2)', () => {
+			const custom: Responsive = {
+				mobile: {
+					enabled: false,
+					breakpoint: 425
+				},
+				tablet: {
+					enabled: false,
+					breakpoint: 768
+				},
+				laptop: {
+					enabled: true,
+					breakpoint: 1440
+				},
+				desktop: {
+					enabled: true,
+					breakpoint: 2560
+				}
+			};
+
+			const decorated = `
+				@media (min-width: 769px) {
+					${styles}
+				}
+			`;
+
+			expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+		});
+
+		test('With pairs of consecutive enabled devices (3)', () => {
+			const custom: Responsive = {
+				mobile: {
+					enabled: false,
+					breakpoint: 425
+				},
+				tablet: {
+					enabled: true,
+					breakpoint: 768
+				},
+				laptop: {
+					enabled: true,
+					breakpoint: 1440
+				},
+				desktop: {
+					enabled: false,
+					breakpoint: 2560
+				}
+			};
+
+			const decorated = `
+				@media ((min-width: 426px) and (max-width: 1440px)) {
+					${styles}
+				}
+			`;
+
+			expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+		});
+
+		test('With pairs and single enabled devices (1)', () => {
+			const custom: Responsive = {
+				mobile: {
+					enabled: true,
+					breakpoint: 425
+				},
+				tablet: {
+					enabled: true,
+					breakpoint: 768
+				},
+				laptop: {
+					enabled: false,
+					breakpoint: 1440
+				},
+				desktop: {
+					enabled: true,
+					breakpoint: 2560
+				}
+			};
+
+			const decorated = `
+				@media (max-width: 768px), (min-width: 1441px) {
+					${styles}
+				}
+			`;
+
+			expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+		});
+
+		test('With pairs and single enabled devices (2)', () => {
+			const custom: Responsive = {
+				mobile: {
+					enabled: true,
+					breakpoint: 425
+				},
+				tablet: {
+					enabled: false,
+					breakpoint: 768
+				},
+				laptop: {
+					enabled: true,
+					breakpoint: 1440
+				},
+				desktop: {
+					enabled: true,
+					breakpoint: 2560
+				}
+			};
+
+			const decorated = `
+				@media (max-width: 425px), (min-width: 769px) {
+					${styles}
+				}
+			`;
+
+			expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+		});
 	});
 });
 
