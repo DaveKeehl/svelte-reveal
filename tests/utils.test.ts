@@ -201,7 +201,7 @@ describe('Media queries behave correctly', () => {
 			};
 
 			const decorated = `
-				@media (max-width: 425px), ((min-width: 769px) and (max-width: 1440px)) {
+				@media (max-width: 425px), (min-width: 769px) and (max-width: 1440px) {
 					${styles}
 				}
 			`;
@@ -230,7 +230,7 @@ describe('Media queries behave correctly', () => {
 			};
 
 			const decorated = `
-				@media ((min-width: 426px) and (max-width: 768px)), (min-width: 1441px) {
+				@media (min-width: 426px) and (max-width: 768px), (min-width: 1441px) {
 					${styles}
 				}
 			`;
@@ -317,7 +317,7 @@ describe('Media queries behave correctly', () => {
 			};
 
 			const decorated = `
-				@media ((min-width: 426px) and (max-width: 1440px)) {
+				@media (min-width: 426px) and (max-width: 1440px) {
 					${styles}
 				}
 			`;

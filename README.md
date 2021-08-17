@@ -210,9 +210,15 @@ interface IConfig {
 
 ### setDeviceStatus
 
-| Args                                    | Return        | Description                     |
-| --------------------------------------- | ------------- | ------------------------------- |
-| ```(device: Device, status: boolean)``` | ```IConfig``` | Toggles the status of a device. |
+| Args                                    | Return        | Description                  |
+| --------------------------------------- | ------------- | ---------------------------- |
+| ```(device: Device, status: boolean)``` | ```IConfig``` | Sets the status of a device. |
+
+### setDevicesStatus
+
+| Args                                       | Return        | Description                          |
+| ------------------------------------------ | ------------- | ------------------------------------ |
+| ```(devices: Device[], status: boolean)``` | ```IConfig``` | Sets the status of multiple devices. |
 
 ### setDeviceBreakpoint
 

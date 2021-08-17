@@ -13,7 +13,8 @@ import {
 	setDeviceStatus,
 	setDeviceBreakpoint,
 	setDevice,
-	setResponsive
+	setResponsive,
+	setDevicesStatus
 } from '../src/index';
 import type { IConfig, IObserverOptions, IOptions, Responsive } from '../src/types';
 import { getConfigClone } from '../src/utils';
@@ -57,6 +58,24 @@ describe('Testing API correctness', () => {
 		config.responsive.laptop.enabled = true;
 
 		expect(setDeviceStatus('tablet', false).responsive.tablet.enabled).toBe(false);
+		config.responsive.tablet.enabled = true;
+	});
+
+	test('setDevicesStatus', () => {
+		expect(setDevicesStatus(['mobile'], true).responsive.mobile.enabled).toBe(true);
+		config.responsive.mobile.enabled = true;
+
+		expect(setDevicesStatus(['mobile'], false).responsive.mobile.enabled).toBe(false);
+		config.responsive.mobile.enabled = true;
+
+		expect(setDevicesStatus(['mobile', 'desktop'], false).responsive.mobile.enabled).toBe(false);
+		expect(setDevicesStatus(['mobile', 'desktop'], false).responsive.desktop.enabled).toBe(false);
+		config.responsive.mobile.enabled = true;
+		config.responsive.desktop.enabled = true;
+
+		expect(setDevicesStatus(['laptop', 'tablet'], true).responsive.laptop.enabled).toBe(true);
+		expect(setDevicesStatus(['laptop', 'tablet'], true).responsive.tablet.enabled).toBe(true);
+		config.responsive.laptop.enabled = true;
 		config.responsive.tablet.enabled = true;
 	});
 

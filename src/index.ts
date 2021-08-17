@@ -16,7 +16,8 @@ import {
 	isPositive,
 	hasValidBreakpoints,
 	getConfigClone,
-	addMediaQueries
+	addMediaQueries,
+	clean
 } from './utils';
 
 /**
@@ -107,13 +108,23 @@ export const setOnce = (once: boolean): IConfig => {
 };
 
 /**
- * Toggles the status of a device.
- * @param device The device to enabled/disable
- * @param status The new status of a device
+ * Sets the status of a device.
+ * @param device The device to enable/disable
+ * @param status The new status
  * @returns The config object with the updated device enabled property
  */
 export const setDeviceStatus = (device: Device, status: boolean): IConfig => {
-	config.responsive[device].enabled = status;
+	return setDevicesStatus([device], status);
+};
+
+/**
+ * Sets the status of multiple devices.
+ * @param devices The devices to enabled/disable
+ * @param status The new status
+ * @returns The config object with the updated devices enabled property
+ */
+export const setDevicesStatus = (devices: Device[], status: boolean): IConfig => {
+	devices.forEach((device) => (config.responsive[device].enabled = status));
 	return config;
 };
 
@@ -350,7 +361,7 @@ export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
 			${getCssRules('spin', finalOptions)}
 		}
 		`;
-		style.innerHTML = addMediaQueries(css.trim());
+		style.innerHTML = addMediaQueries(clean(css));
 
 		const head = document.querySelector('head');
 		if (head !== null) head.appendChild(style);
