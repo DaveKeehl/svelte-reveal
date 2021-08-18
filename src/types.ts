@@ -158,6 +158,11 @@ export interface IObserverOptions {
 }
 
 /**
+ * List of devices where {string} is the name and {IDevice} are the settings.
+ */
+export type Devices = [string, IDevice][];
+
+/**
  * An object containing information about a specific type of device
  */
 export interface IDevice {
