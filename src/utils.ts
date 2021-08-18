@@ -1,4 +1,4 @@
-import type { Transitions, IOptions, Easing, CustomEasing, Responsive, IDevice, IConfig } from './types';
+import type { Transitions, IOptions, Easing, CustomEasing, Responsive, IDevice, Devices, IConfig } from './types';
 import { init, config } from '../src/index';
 
 /**
@@ -49,12 +49,11 @@ export const isPositiveInteger = (property: number): boolean => {
 export const hasOverlappingBreakpoints = (responsive: Responsive): boolean => {
 	const { mobile, tablet, laptop, desktop } = responsive;
 
-	const areOverlapping =
+	return (
 		mobile.breakpoint > tablet.breakpoint ||
 		tablet.breakpoint > laptop.breakpoint ||
-		laptop.breakpoint > desktop.breakpoint;
-
-	return areOverlapping;
+		laptop.breakpoint > desktop.breakpoint
+	);
 };
 
 /**
@@ -133,34 +132,40 @@ export const addVendors = (unprefixedStyles: string): string => {
 };
 
 /**
- * Decorate a set of CSS rules with configurable media queries.
- * @param styles The CSS rules to be decorated
- * @param responsive The object containing the info about how to create the media queries
- * @returns The decorated CSS ruleset
+ * Creates the query of a sequence of consecutive enabled devices.
+ * @param devices The devices supported by this library
+ * @param i The current outer iteration point
+ * @param beginning The breakpoint that started the sequence of consecutive enabled devices
+ * @param end The breakpoint that ended the sequence of consecutive enabled devices
+ * @returns The final optimal query
  */
-export const addMediaQueries = (styles: string, responsive: Responsive = config.responsive): string => {
-	const devices = Object.entries(responsive);
+const createQuery = (devices: Devices, i: number, beginning: number, end: number): string => {
+	const smallest = Math.min(...devices.map(([, settings]) => settings.breakpoint));
+	const largest = Math.max(...devices.map(([, settings]) => settings.breakpoint));
 
-	// All devices are enabled
-	if (devices.every(([, settings]) => settings.enabled)) {
-		return styles;
+	let query: string;
+
+	if (beginning === smallest) {
+		query = `(max-width: ${end}px)`;
+	} else {
+		const previous: IDevice = devices[i - 1][1];
+
+		if (end === largest) {
+			query = `(min-width: ${previous.breakpoint + 1}px)`;
+		} else {
+			query = `(min-width: ${previous.breakpoint + 1}px) and (max-width: ${end}px)`;
+		}
 	}
 
-	// All devices are disabled
-	if (devices.every(([, settings]) => !settings.enabled)) {
-		const query = `
-			@media not all {
-				${styles}
-			}
-		`;
-		return clean(query);
-	}
+	return query;
+};
 
-	hasValidBreakpoints(responsive);
-
-	const smallestBreakpoint = Math.min(...devices.map(([, settings]) => settings.breakpoint));
-	const largestBreakpoint = Math.max(...devices.map(([, settings]) => settings.breakpoint));
-
+/**
+ * Find a sequence of optimal media queries, given a list of devices.
+ * @param devices The devices to be analyzed
+ * @returns A list of optimal queries to be combined and use to create responsiveness
+ */
+const findOptimalQueries = (devices: Devices): string[] => {
 	const queries: string[] = [];
 	let i = 0;
 
@@ -173,17 +178,7 @@ export const addMediaQueries = (styles: string, responsive: Responsive = config.
 				const beginning = devices[i][1].breakpoint;
 				const end = devices[j][1].breakpoint;
 
-				if (beginning === smallestBreakpoint) {
-					query = `(max-width: ${end}px)`;
-				} else {
-					const previous: IDevice = devices[i - 1][1];
-
-					if (end === largestBreakpoint) {
-						query = `(min-width: ${previous.breakpoint + 1}px)`;
-					} else {
-						query = `(min-width: ${previous.breakpoint + 1}px) and (max-width: ${end}px)`;
-					}
-				}
+				query = createQuery(devices, i, beginning, end);
 
 				j++;
 			}
@@ -194,13 +189,38 @@ export const addMediaQueries = (styles: string, responsive: Responsive = config.
 		}
 	}
 
-	const responsiveStyles = `
-		@media ${queries.join(', ')} {
+	return queries;
+};
+
+/**
+ * Decorate a set of CSS rules with configurable media queries.
+ * @param styles The CSS rules to be decorated
+ * @param responsive The object containing the info about how to create the media queries
+ * @returns The decorated CSS ruleset
+ */
+export const addMediaQueries = (styles: string, responsive: Responsive = config.responsive): string => {
+	const devices: Devices = Object.entries(responsive);
+
+	const allDevicesEnabled = devices.every(([, settings]) => settings.enabled);
+	const allDevicesDisabled = devices.every(([, settings]) => !settings.enabled);
+
+	if (allDevicesEnabled) return styles;
+
+	if (allDevicesDisabled) {
+		return clean(`
+		@media not all {
 			${styles}
 		}
-	`;
+	`);
+	}
 
-	return clean(responsiveStyles);
+	hasValidBreakpoints(responsive);
+
+	return clean(`
+		@media ${findOptimalQueries(devices).join(', ')} {
+			${styles}
+		}
+	`);
 };
 
 /**
@@ -290,7 +310,7 @@ export const getEasing = (easing: Easing, customEasing?: CustomEasing): string =
 		easeInOutBack: [0.68, -0.6, 0.32, 1.6]
 	};
 
-	let weights: CustomEasing = [0, 0, 1, 1];
+	let weights: CustomEasing;
 
 	if (easing === 'custom' && customEasing !== undefined) {
 		weights = customEasing;
