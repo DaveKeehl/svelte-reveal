@@ -330,7 +330,7 @@ export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
 		navigationType = navigation[0].type;
 	} else {
 		// Using deprecated navigation object as a last resort to detect a page reload
-		navigationType = window.performance.navigation.type;
+		navigationType = window.performance.navigation.type; // NOSONAR
 	}
 	if (navigationType === 'reload' || navigationType === 1) reloadStore.set(true);
 
@@ -377,32 +377,35 @@ export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
 	node.classList.add(`${transition}--hidden`);
 	node.style.transition = `all ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEasing)}`;
 
-	const observer = new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
-		if (canDebug) {
-			const entry = entries[0];
-			const entryTarget = entry.target;
+	const ObserverInstance = new IntersectionObserver(
+		(entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+			if (canDebug) {
+				const entry = entries[0];
+				const entryTarget = entry.target;
 
-			if (entryTarget === node) {
-				console.groupCollapsed(`%cRef: ${ref} (Intersection Observer Callback)`, highlightText);
-				console.log(entry);
-				console.groupEnd();
+				if (entryTarget === node) {
+					console.groupCollapsed(`%cRef: ${ref} (Intersection Observer Callback)`, highlightText);
+					console.log(entry);
+					console.groupEnd();
+				}
 			}
-		}
 
-		entries.forEach((entry) => {
-			if (reset && !entry.isIntersecting) {
-				onResetStart(node);
-				node.classList.add(`${transition}--hidden`);
-				setTimeout(() => onResetEnd(node), duration + delay);
-			} else if (entry.intersectionRatio >= threshold) {
-				setTimeout(() => onRevealEnd(node), duration + delay);
-				node.classList.remove(`${transition}--hidden`);
-				if (!reset) observer.unobserve(node);
-			}
-		});
-	}, config.observer);
+			entries.forEach((entry) => {
+				if (reset && !entry.isIntersecting) {
+					onResetStart(node);
+					node.classList.add(`${transition}--hidden`);
+					setTimeout(() => onResetEnd(node), duration + delay);
+				} else if (entry.intersectionRatio >= threshold) {
+					setTimeout(() => onRevealEnd(node), duration + delay);
+					node.classList.remove(`${transition}--hidden`);
+					if (!reset) observer.unobserve(node);
+				}
+			});
+		},
+		config.observer
+	);
 
-	observer.observe(node);
+	ObserverInstance.observe(node);
 	console.groupEnd();
 
 	return {
