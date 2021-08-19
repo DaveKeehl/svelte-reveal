@@ -19,6 +19,7 @@ import {
 	addMediaQueries,
 	clean
 } from './utils';
+import type { Unsubscriber } from 'svelte/store';
 
 /**
  * Object containing the default options used by the library for the scroll effect.
@@ -267,6 +268,75 @@ export const checkOptions = (options: IOptions): Required<IOptions> => {
 	}
 };
 
+export const createStylesheet = (options: Required<IOptions>): Unsubscriber => {
+	let styleTagExists = false;
+	const unsubscribeStyleTag = styleTagStore.subscribe((value: boolean) => (styleTagExists = value));
+
+	// Creating stylesheet
+	if (!styleTagExists) {
+		const style = document.createElement('style');
+		style.setAttribute('type', 'text/css');
+		style.setAttribute('data-action', 'reveal');
+
+		const css = `
+		.fly--hidden {
+			${getCssRules('fly', options)}
+		}
+		.fade--hidden {
+			${getCssRules('fade', options)}
+		}
+		.blur--hidden {
+			${getCssRules('blur', options)}
+		}
+		.scale--hidden {
+			${getCssRules('scale', options)}
+		}
+		.slide--hidden {
+			${getCssRules('slide', options)}
+		}
+		.spin--hidden {
+			${getCssRules('spin', options)}
+		}
+		`;
+		style.innerHTML = addMediaQueries(clean(css));
+
+		const head = document.querySelector('head');
+		if (head !== null) head.appendChild(style);
+		styleTagStore.set(true);
+	}
+
+	return unsubscribeStyleTag;
+};
+
+const createObserver = (canDebug: boolean, highlightText: string, node: HTMLElement, options: Required<IOptions>) => {
+	const { ref, reset, transition, duration, delay, threshold, onResetStart, onResetEnd, onRevealEnd } = options;
+
+	return new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+		if (canDebug) {
+			const entry = entries[0];
+			const entryTarget = entry.target;
+
+			if (entryTarget === node) {
+				console.groupCollapsed(`%cRef: ${ref} (Intersection Observer Callback)`, highlightText);
+				console.log(entry);
+				console.groupEnd();
+			}
+		}
+
+		entries.forEach((entry) => {
+			if (reset && !entry.isIntersecting) {
+				onResetStart(node);
+				node.classList.add(`${transition}--hidden`);
+				setTimeout(() => onResetEnd(node), duration + delay);
+			} else if (entry.intersectionRatio >= threshold) {
+				setTimeout(() => onRevealEnd(node), duration + delay);
+				node.classList.remove(`${transition}--hidden`);
+				if (!reset) observer.unobserve(node);
+			}
+		});
+	}, config.observer);
+};
+
 /**
  * Reveals a given node element on scroll
  * @param node - The DOM node you want to reveal on scroll
@@ -281,17 +351,12 @@ export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
 		ref,
 		highlightLogs,
 		highlightColor,
-		threshold,
 		transition,
-		reset,
 		delay,
 		duration,
 		easing,
 		customEasing,
 		onRevealStart,
-		onRevealEnd,
-		onResetStart,
-		onResetEnd,
 		onMount,
 		onUpdate,
 		onDestroy
@@ -324,6 +389,7 @@ export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
 
 	const navigation = window.performance.getEntriesByType('navigation');
 	let navigationType: string | number = '';
+
 	if (navigation.length > 0) {
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignoreq
@@ -332,80 +398,21 @@ export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
 		// Using deprecated navigation object as a last resort to detect a page reload
 		navigationType = window.performance.navigation.type; // NOSONAR
 	}
+
 	if (navigationType === 'reload' || navigationType === 1) reloadStore.set(true);
 
 	if (disable || (config.once && reloaded)) return {};
 
-	let styleTagExists = false;
-	const unsubscribeStyleTag = styleTagStore.subscribe((value: boolean) => (styleTagExists = value));
-
-	// Creating stylesheet
-	if (!styleTagExists) {
-		const style = document.createElement('style');
-		style.setAttribute('type', 'text/css');
-		style.setAttribute('data-action', 'reveal');
-
-		const css = `
-		.fly--hidden {
-			${getCssRules('fly', finalOptions)}
-		}
-		.fade--hidden {
-			${getCssRules('fade', finalOptions)}
-		}
-		.blur--hidden {
-			${getCssRules('blur', finalOptions)}
-		}
-		.scale--hidden {
-			${getCssRules('scale', finalOptions)}
-		}
-		.slide--hidden {
-			${getCssRules('slide', finalOptions)}
-		}
-		.spin--hidden {
-			${getCssRules('spin', finalOptions)}
-		}
-		`;
-		style.innerHTML = addMediaQueries(clean(css));
-
-		const head = document.querySelector('head');
-		if (head !== null) head.appendChild(style);
-		styleTagStore.set(true);
-	}
+	const unsubscribeStyleTag = createStylesheet(finalOptions);
 
 	onRevealStart(node);
 
 	node.classList.add(`${transition}--hidden`);
 	node.style.transition = `all ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEasing)}`;
 
-	const ObserverInstance = new IntersectionObserver(
-		(entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
-			if (canDebug) {
-				const entry = entries[0];
-				const entryTarget = entry.target;
-
-				if (entryTarget === node) {
-					console.groupCollapsed(`%cRef: ${ref} (Intersection Observer Callback)`, highlightText);
-					console.log(entry);
-					console.groupEnd();
-				}
-			}
-
-			entries.forEach((entry) => {
-				if (reset && !entry.isIntersecting) {
-					onResetStart(node);
-					node.classList.add(`${transition}--hidden`);
-					setTimeout(() => onResetEnd(node), duration + delay);
-				} else if (entry.intersectionRatio >= threshold) {
-					setTimeout(() => onRevealEnd(node), duration + delay);
-					node.classList.remove(`${transition}--hidden`);
-					if (!reset) observer.unobserve(node);
-				}
-			});
-		},
-		config.observer
-	);
-
+	const ObserverInstance = createObserver(canDebug, highlightText, node, finalOptions);
 	ObserverInstance.observe(node);
+
 	console.groupEnd();
 
 	return {
