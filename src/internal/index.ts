@@ -19,7 +19,6 @@ import {
 	addMediaQueries,
 	clean
 } from './utils';
-import type { Unsubscriber } from 'svelte/store';
 
 /**
  * Object containing the default options used by the library for the scroll effect.
@@ -268,17 +267,13 @@ export const checkOptions = (options: IOptions): Required<IOptions> => {
 	}
 };
 
-export const createStylesheet = (options: Required<IOptions>): Unsubscriber => {
-	let styleTagExists = false;
-	const unsubscribeStyleTag = styleTagStore.subscribe((value: boolean) => (styleTagExists = value));
+export const createStylesheet = (options: Required<IOptions>): void => {
+	const style = document.createElement('style');
 
-	// Creating stylesheet
-	if (!styleTagExists) {
-		const style = document.createElement('style');
-		style.setAttribute('type', 'text/css');
-		style.setAttribute('data-action', 'reveal');
+	style.setAttribute('type', 'text/css');
+	style.setAttribute('data-action', 'reveal');
 
-		const css = `
+	const css = `
 		.fly--hidden {
 			${getCssRules('fly', options)}
 		}
@@ -297,15 +292,11 @@ export const createStylesheet = (options: Required<IOptions>): Unsubscriber => {
 		.spin--hidden {
 			${getCssRules('spin', options)}
 		}
-		`;
-		style.innerHTML = addMediaQueries(clean(css));
+	`;
+	style.innerHTML = addMediaQueries(clean(css));
 
-		const head = document.querySelector('head');
-		if (head !== null) head.appendChild(style);
-		styleTagStore.set(true);
-	}
-
-	return unsubscribeStyleTag;
+	const head = document.querySelector('head');
+	if (head !== null) head.appendChild(style);
 };
 
 const createObserver = (canDebug: boolean, highlightText: string, node: HTMLElement, options: Required<IOptions>) => {
@@ -403,7 +394,13 @@ export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
 
 	if (disable || (config.once && reloaded)) return {};
 
-	const unsubscribeStyleTag = createStylesheet(finalOptions);
+	let styleTagExists = false;
+	const unsubscribeStyleTag = styleTagStore.subscribe((value: boolean) => (styleTagExists = value));
+
+	if (!styleTagExists) {
+		createStylesheet(finalOptions);
+		styleTagStore.set(true);
+	}
 
 	onRevealStart(node);
 
