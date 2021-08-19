@@ -1,4 +1,4 @@
-import type { CustomEasing, IOptions, Responsive, Transitions } from '../src/types';
+import type { CustomEasing, IOptions, Responsive, Transitions } from '../src/internal/types';
 import {
 	addVendors,
 	clean,
@@ -12,8 +12,8 @@ import {
 	hasOverlappingBreakpoints,
 	hasValidBreakpoints,
 	getConfigClone
-} from '../src/utils';
-import { init } from '../src/index';
+} from '../src/internal/utils';
+import { init } from '../src/internal/index';
 
 test('hasValidRange', () => {
 	expect(hasValidRange(100, 0, 200)).toBe(true);

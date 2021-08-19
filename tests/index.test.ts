@@ -15,9 +15,9 @@ import {
 	setDevice,
 	setResponsive,
 	setDevicesStatus
-} from '../src/index';
-import type { IConfig, IObserverOptions, IOptions, Responsive } from '../src/types';
-import { getConfigClone } from '../src/utils';
+} from '../src/internal/index';
+import type { IConfig, IObserverOptions, IOptions, Responsive } from '../src/internal/types';
+import { getConfigClone } from '../src/internal/utils';
 
 describe('Testing API correctness', () => {
 	test('setDev', () => {

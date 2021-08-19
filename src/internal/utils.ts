@@ -1,5 +1,5 @@
 import type { Transitions, IOptions, Easing, CustomEasing, Responsive, IDevice, Devices, IConfig } from './types';
-import { init, config } from '../src/index';
+import { init, config } from './index';
 
 /**
  * Deep clone a given data structure.
