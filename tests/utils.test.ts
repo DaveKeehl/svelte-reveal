@@ -11,9 +11,39 @@ import {
 	isPositiveInteger,
 	hasOverlappingBreakpoints,
 	hasValidBreakpoints,
-	getConfigClone
+	checkOptions
 } from '../src/internal/utils';
-import { init } from '../src/internal/index';
+import { init, config, setConfig } from '../src/internal/index';
+
+beforeEach(() => {
+	setConfig({
+		dev: true,
+		once: false,
+		responsive: {
+			mobile: {
+				enabled: true,
+				breakpoint: 425
+			},
+			tablet: {
+				enabled: true,
+				breakpoint: 768
+			},
+			laptop: {
+				enabled: true,
+				breakpoint: 1440
+			},
+			desktop: {
+				enabled: true,
+				breakpoint: 2560
+			}
+		},
+		observer: {
+			root: null,
+			rootMargin: '0px 0px 0px 0px',
+			threshold: 0.6
+		}
+	});
+});
 
 test('hasValidRange', () => {
 	expect(hasValidRange(100, 0, 200)).toBe(true);
@@ -35,26 +65,31 @@ test('isPositiveInteger', () => {
 	expect(isPositiveInteger(-5.5)).toBe(false);
 });
 
-test('hasOverlappingBreakpoints', () => {
-	const defaultResponsive = getConfigClone().responsive;
-	expect(hasOverlappingBreakpoints(defaultResponsive)).toBe(false);
+describe('hasOverlappingBreakpoints', () => {
+	test('Returns false with default values', () => {
+		expect(hasOverlappingBreakpoints(config.responsive)).toBe(false);
+	});
 
-	const invalidResponsive: Responsive = getConfigClone().responsive;
-	invalidResponsive.tablet.breakpoint = 200;
-	expect(hasOverlappingBreakpoints(invalidResponsive)).toBe(true);
+	test('Returns true when breakpoints overlap', () => {
+		config.responsive.tablet.breakpoint = 200;
+		expect(hasOverlappingBreakpoints(config.responsive)).toBe(true);
+	});
 });
 
-test('hasValidBreakpoints', () => {
-	const defaultResponsive: Responsive = getConfigClone().responsive;
-	expect(hasValidBreakpoints(defaultResponsive)).toBe(true);
+describe('hasValidBreakpoints', () => {
+	test('Returns true with default values', () => {
+		expect(hasValidBreakpoints(config.responsive)).toBe(true);
+	});
 
-	const invalidResponsive: Responsive = getConfigClone().responsive;
-	invalidResponsive.mobile.breakpoint = 400.5;
-	expect(() => hasValidBreakpoints(invalidResponsive)).toThrow('Breakpoints must be positive integers');
+	test('Should throw an error when using floating point numbers', () => {
+		config.responsive.mobile.breakpoint = 400.5;
+		expect(() => hasValidBreakpoints(config.responsive)).toThrow('Breakpoints must be positive integers');
+	});
 
-	invalidResponsive.mobile.breakpoint = defaultResponsive.mobile.breakpoint;
-	invalidResponsive.tablet.breakpoint = 200;
-	expect(() => hasValidBreakpoints(invalidResponsive)).toThrow("Breakpoints can't overlap");
+	test('Should throw an error when breakpoints overlap', () => {
+		config.responsive.tablet.breakpoint = 200;
+		expect(() => hasValidBreakpoints(config.responsive)).toThrow("Breakpoints can't overlap");
+	});
 });
 
 test('clean', () => {
@@ -594,5 +629,32 @@ describe('Easing functions', () => {
 		test('Throws error', () => {
 			expect(() => getEasing('custom')).toThrow('Invalid easing function');
 		});
+	});
+});
+
+describe('checkOptions', () => {
+	test('Using valid options', () => {
+		const validOptions: IOptions = {
+			threshold: 0.6,
+			opacity: 0,
+			delay: 200,
+			duration: 2000,
+			blur: 16,
+			scale: 0
+		};
+		const finalOptions = Object.assign({}, init, validOptions);
+		expect(checkOptions(validOptions)).toStrictEqual(finalOptions);
+	});
+
+	test('Should throw an error when using invalid options', () => {
+		const invalidOptions: IOptions = {
+			threshold: 1.2,
+			opacity: 0,
+			delay: -200,
+			duration: 2000,
+			blur: -5,
+			scale: 0
+		};
+		expect(() => checkOptions(invalidOptions)).toThrowError('Invalid options');
 	});
 });
