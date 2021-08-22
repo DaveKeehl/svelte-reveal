@@ -322,3 +322,26 @@ export const getEasing = (easing: Easing, customEasing?: CustomEasing): string =
 
 	return `cubic-bezier(${weights.join(', ')})`;
 };
+
+/**
+ * Checks whether some invalid values are found in the options object passed by the user.
+ * @param options The options object specified by the user in the Svelte components
+ * @returns The final valid options object that can be used by the reveal function
+ */
+export const checkOptions = (options: IOptions): Required<IOptions> => {
+	const finalOptions = Object.assign({}, init, options);
+	const { threshold, opacity, delay, duration, blur, scale } = finalOptions;
+
+	if (
+		hasValidRange(threshold, 0, 1) &&
+		hasValidRange(opacity, 0, 1) &&
+		isPositive(delay) &&
+		isPositive(duration) &&
+		isPositive(blur) &&
+		isPositive(scale)
+	) {
+		return finalOptions;
+	} else {
+		throw new Error('Invalid options');
+	}
+};
