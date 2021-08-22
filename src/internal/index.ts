@@ -13,11 +13,11 @@ import {
 	getCssRules,
 	getEasing,
 	hasValidRange,
-	isPositive,
 	hasValidBreakpoints,
 	getConfigClone,
 	addMediaQueries,
-	clean
+	clean,
+	checkOptions
 } from './utils';
 
 /**
@@ -245,28 +245,9 @@ export const setConfig = (userConfig: IConfig): IConfig => {
 };
 
 /**
- * Checks whether some invalid values are found in the options object passed by the user.
- * @param options The options object specified by the user in the Svelte components
- * @returns The final valid options object that can be used by the reveal function
+ * Creates the stylesheet for the reveal animation styles.
+ * @param options The reveal options
  */
-export const checkOptions = (options: IOptions): Required<IOptions> => {
-	const finalOptions = Object.assign({}, init, options);
-	const { threshold, opacity, delay, duration, blur, scale } = finalOptions;
-
-	if (
-		hasValidRange(threshold, 0, 1) &&
-		hasValidRange(opacity, 0, 1) &&
-		isPositive(delay) &&
-		isPositive(duration) &&
-		isPositive(blur) &&
-		isPositive(scale)
-	) {
-		return finalOptions;
-	} else {
-		throw new Error('Invalid options');
-	}
-};
-
 export const createStylesheet = (options: Required<IOptions>): void => {
 	const style = document.createElement('style');
 
@@ -299,6 +280,14 @@ export const createStylesheet = (options: Required<IOptions>): void => {
 	if (head !== null) head.appendChild(style);
 };
 
+/**
+ * Creates a custom Intersection Observer for the reveal effect.
+ * @param canDebug - Enables/disabled logging the observer notifications
+ * @param highlightText - Whether the logs are colored or not
+ * @param node - The HTML node to observe
+ * @param options - The reveal options
+ * @returns The custom Intersection Observer
+ */
 const createObserver = (canDebug: boolean, highlightText: string, node: HTMLElement, options: Required<IOptions>) => {
 	const { ref, reset, transition, duration, delay, threshold, onResetStart, onResetEnd, onRevealEnd } = options;
 
