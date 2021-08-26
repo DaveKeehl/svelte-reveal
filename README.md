@@ -4,9 +4,9 @@
 
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/DaveKeehl/svelte-reveal/tree/develop)  ![npm](https://img.shields.io/npm/v/svelte-reveal)  [![CI/CD](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml/badge.svg)](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml)  ![GitHub](https://img.shields.io/github/license/davekeehl/svelte-reveal)  [![codecov](https://codecov.io/gh/DaveKeehl/svelte-reveal/branch/develop/graph/badge.svg?token=AL1KI5XRDF)](https://codecov.io/gh/DaveKeehl/svelte-reveal)
 
-svelte-reveal is a library created with the purpose of helping [Svelte](https://svelte.dev/) users add reveal on scroll transitions to their web applications. This library leverages the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) in order to know when to trigger the animations.
+> ⚠️ svelte-reveal is currently in beta. Do you want to [contribute](https://github.com/DaveKeehl/svelte-reveal/issues)? Do you want to [report a bug](https://github.com/DaveKeehl/svelte-reveal/issues)?
 
-> ⚠️ svelte-reveal is currently in beta and it needs people to use it and test it out in different situations. Support for SvelteKit is experimental.
+svelte-reveal is a library created with the purpose of helping [Svelte](https://svelte.dev/) users add reveal on scroll transitions to their web applications. This library leverages the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) in order to know when to trigger the animations.
 
 ## Table of Content
 
@@ -162,7 +162,7 @@ This library is globally configured as follows right of out the box:
 
 svelte-reveal also exposes several functions you can call to change the [global configuration](#Global-config) of this library.
 
-Since these functions operate on a global level for all instances of svelte-reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the global options from multiple points. If you need/want to considerably customize the behavior of this library, I suggest you to create a dedicated file (e.g. reveal.config.js) and from there call the API to set global settings or shared transition properties.
+Since these functions operate on a global level for all instances of svelte-reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the global options from multiple points. If you need/want to considerably customize the behavior of this library, I suggest you to create a dedicated file (e.g. [reveal.config.js](https://github.com/DaveKeehl/svelte-reveal/blob/develop/example/reveal.config.js)) and from there call the API to set global settings or shared transition properties.
 
 If you want to customise the behavior of a single DOM node, you are supposed to use the [options](#Options).
 
@@ -193,6 +193,19 @@ interface IConfig {
   once: boolean;
   responsive: Responsive;
   observer: IObserverOptions;
+}
+
+interface IOptions {
+  disable?: boolean;
+  debug?: boolean;
+  ref?: string;
+  highlightLogs?: boolean;
+  highlightColor?: string;
+  root?: ObserverRoot;
+  marginTop?: number;
+  ...
+  onUpdate?: (node: HTMLElement) => void;
+  onDestroy?: (node: HTMLElement) => void;
 }
 ```
 
