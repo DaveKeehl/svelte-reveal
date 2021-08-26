@@ -23,7 +23,7 @@ import {
 /**
  * Object containing the default options used by the library for the scroll effect.
  */
-export const init: Required<IOptions> = {
+export let init: Required<IOptions> = {
 	disable: false,
 	debug: false,
 	ref: '',
@@ -315,6 +315,17 @@ const createObserver = (canDebug: boolean, highlightText: string, node: HTMLElem
 			}
 		});
 	}, config.observer);
+};
+
+/**
+ * Set the default options to be used for the reveal effect.
+ * @param options Your new global options
+ * @returns The new full and updated options object
+ */
+export const setDefaultOptions = (options: IOptions): Required<IOptions> => {
+	const validOptions = checkOptions(options);
+	init = Object.assign({}, init, validOptions);
+	return init;
 };
 
 /**
