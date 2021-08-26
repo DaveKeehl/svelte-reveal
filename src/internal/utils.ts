@@ -6,7 +6,7 @@ import { init, config } from './index';
  * @param item What you want to clone
  * @returns The cloned item
  */
-const clone = <T>(item: T): T => JSON.parse(JSON.stringify(item));
+export const clone = <T>(item: T): T => JSON.parse(JSON.stringify(item));
 
 /**
  * Get a clone of the global configuration used by the library.
