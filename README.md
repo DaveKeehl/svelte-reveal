@@ -264,9 +264,15 @@ interface IConfig {
 
 ### setConfig
 
-| Args                        | Type          | Description                                                  |
+| Args                        | Return        | Description                                                  |
 | --------------------------- | ------------- | ------------------------------------------------------------ |
 | ```(userConfig: IConfig)``` | ```IConfig``` | By passing an object of type ```IConfig``` you can have full control over all the internal properties. |
+
+### setDefaultOptions
+
+| Args                      | Return         | Description                                                  |
+| ------------------------- | -------------- | ------------------------------------------------------------ |
+| ```(options: IOptions)``` | ```IOptions``` | You can use this function to override the global default options of the reveal effect. It can be useful when you want a specific option for many elements, so that you don't have to change it for every element individually. |
 
 
 
