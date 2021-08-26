@@ -11,5 +11,6 @@ export {
 	setObserverRootMargin,
 	setObserverThreshold,
 	setConfig,
+	setDefaultOptions,
 	reveal
 } from './internal';
