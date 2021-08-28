@@ -2,8 +2,131 @@ import type { Transitions, IOptions, Easing, CustomEasing, Responsive, IDevice, 
 import { init, config } from './index';
 
 /**
+ * Adds a "watermark" to the element to be revealed. It sets the data attribute to "reveal".
+ * @param revealNode - The element to be marked
+ * @returns The marked element
+ */
+const markRevealNode = (revealNode: HTMLElement): HTMLElement => {
+	revealNode.setAttribute('data-action', 'reveal');
+	return revealNode;
+};
+
+/**
+ * Activates the reveal effect on the target element.
+ * @param revealNode - The element to be revealed
+ * @param options - The options to be applied to the reveal effect
+ * @returns The element to be revealed
+ */
+export const activateRevealNode = (revealNode: HTMLElement, options: Required<IOptions>): HTMLElement => {
+	const { transition, duration, delay, easing, customEasing } = options;
+
+	markRevealNode(revealNode);
+	revealNode.classList.add(`${transition}--hidden`);
+	revealNode.style.transition = `all ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEasing)}`;
+
+	return revealNode;
+};
+
+/**
+ * Creates the stylesheet for the reveal animation styles.
+ * @param options The reveal options
+ */
+export const createStylesheet = (options: Required<IOptions>): void => {
+	const style = document.createElement('style');
+	style.setAttribute('type', 'text/css');
+
+	markRevealNode(style);
+
+	const css = `
+		.fly--hidden {
+			${getCssRules('fly', options)}
+		}
+		.fade--hidden {
+			${getCssRules('fade', options)}
+		}
+		.blur--hidden {
+			${getCssRules('blur', options)}
+		}
+		.scale--hidden {
+			${getCssRules('scale', options)}
+		}
+		.slide--hidden {
+			${getCssRules('slide', options)}
+		}
+		.spin--hidden {
+			${getCssRules('spin', options)}
+		}
+	`;
+	style.innerHTML = addMediaQueries(clean(css));
+
+	const head = document.querySelector('head');
+	if (head !== null) head.appendChild(style);
+};
+
+/**
+ * Creates a custom Intersection Observer for the reveal effect.
+ * @param canDebug - Enables/disabled logging the observer notifications
+ * @param highlightText - Whether the logs are colored or not
+ * @param revealNode - The HTML node to observe
+ * @param options - The reveal options
+ * @returns The custom Intersection Observer
+ */
+export const createObserver = (
+	canDebug: boolean,
+	highlightText: string,
+	revealNode: HTMLElement,
+	options: Required<IOptions>
+): IntersectionObserver => {
+	const { ref, reset, transition, duration, delay, threshold, onResetStart, onResetEnd, onRevealEnd } = options;
+
+	return new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+		if (canDebug) {
+			const entry = entries[0];
+			const entryTarget = entry.target;
+
+			if (entryTarget === revealNode) {
+				console.groupCollapsed(`%cRef: ${ref} (Intersection Observer Callback)`, highlightText);
+				console.log(entry);
+				console.groupEnd();
+			}
+		}
+
+		entries.forEach((entry) => {
+			if (reset && !entry.isIntersecting) {
+				onResetStart(revealNode);
+				revealNode.classList.add(`${transition}--hidden`);
+				setTimeout(() => onResetEnd(revealNode), duration + delay);
+			} else if (entry.intersectionRatio >= threshold) {
+				setTimeout(() => onRevealEnd(revealNode), duration + delay);
+				revealNode.classList.remove(`${transition}--hidden`);
+				if (!reset) observer.unobserve(revealNode);
+			}
+		});
+	}, config.observer);
+};
+
+/**
+ * Get the HTML element to be revealed.
+ * @param node - The HTML element passed by the svelte action
+ * @returns The element to be revealed
+ */
+export const getRevealNode = (node: HTMLElement): HTMLElement => {
+	let revealNode: HTMLElement;
+
+	if (node.style.length === 0) {
+		revealNode = node;
+	} else {
+		const wrapper = document.createElement('div');
+		wrapper.appendChild(node);
+		revealNode = wrapper;
+	}
+
+	return revealNode;
+};
+
+/**
  * Deep clone a given data structure.
- * @param item What you want to clone
+ * @param item - What you want to clone
  * @returns The cloned item
  */
 export const clone = <T>(item: T): T => JSON.parse(JSON.stringify(item));

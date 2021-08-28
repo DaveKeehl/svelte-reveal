@@ -10,14 +10,14 @@ import type {
 } from './types';
 import { styleTagStore, reloadStore } from './stores';
 import {
-	getCssRules,
-	getEasing,
 	hasValidRange,
 	hasValidBreakpoints,
 	getConfigClone,
-	addMediaQueries,
-	clean,
-	checkOptions
+	checkOptions,
+	getRevealNode,
+	createStylesheet,
+	createObserver,
+	activateRevealNode
 } from './utils';
 
 /**
@@ -256,79 +256,6 @@ export const setDefaultOptions = (options: IOptions): Required<IOptions> => {
 };
 
 /**
- * Creates the stylesheet for the reveal animation styles.
- * @param options The reveal options
- */
-export const createStylesheet = (options: Required<IOptions>): void => {
-	const style = document.createElement('style');
-
-	style.setAttribute('type', 'text/css');
-	style.setAttribute('data-action', 'reveal');
-
-	const css = `
-		.fly--hidden {
-			${getCssRules('fly', options)}
-		}
-		.fade--hidden {
-			${getCssRules('fade', options)}
-		}
-		.blur--hidden {
-			${getCssRules('blur', options)}
-		}
-		.scale--hidden {
-			${getCssRules('scale', options)}
-		}
-		.slide--hidden {
-			${getCssRules('slide', options)}
-		}
-		.spin--hidden {
-			${getCssRules('spin', options)}
-		}
-	`;
-	style.innerHTML = addMediaQueries(clean(css));
-
-	const head = document.querySelector('head');
-	if (head !== null) head.appendChild(style);
-};
-
-/**
- * Creates a custom Intersection Observer for the reveal effect.
- * @param canDebug - Enables/disabled logging the observer notifications
- * @param highlightText - Whether the logs are colored or not
- * @param node - The HTML node to observe
- * @param options - The reveal options
- * @returns The custom Intersection Observer
- */
-const createObserver = (canDebug: boolean, highlightText: string, node: HTMLElement, options: Required<IOptions>) => {
-	const { ref, reset, transition, duration, delay, threshold, onResetStart, onResetEnd, onRevealEnd } = options;
-
-	return new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
-		if (canDebug) {
-			const entry = entries[0];
-			const entryTarget = entry.target;
-
-			if (entryTarget === node) {
-				console.groupCollapsed(`%cRef: ${ref} (Intersection Observer Callback)`, highlightText);
-				console.log(entry);
-				console.groupEnd();
-			}
-		}
-
-		entries.forEach((entry) => {
-			if (reset && !entry.isIntersecting) {
-				onResetStart(node);
-				node.classList.add(`${transition}--hidden`);
-				setTimeout(() => onResetEnd(node), duration + delay);
-			} else if (entry.intersectionRatio >= threshold) {
-				setTimeout(() => onRevealEnd(node), duration + delay);
-				node.classList.remove(`${transition}--hidden`);
-				if (!reset) observer.unobserve(node);
-			}
-		});
-	}, config.observer);
-};
-
-/**
  * Reveals a given node element on scroll
  * @param node - The DOM node you want to reveal on scroll
  * @param options - The custom options that will used to tweak the behavior of the animation of the node element
@@ -336,24 +263,12 @@ const createObserver = (canDebug: boolean, highlightText: string, node: HTMLElem
  */
 export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
 	const finalOptions = checkOptions(options);
-	const {
-		disable,
-		debug,
-		ref,
-		highlightLogs,
-		highlightColor,
-		transition,
-		delay,
-		duration,
-		easing,
-		customEasing,
-		onRevealStart,
-		onMount,
-		onUpdate,
-		onDestroy
-	} = finalOptions;
+	const { disable, debug, ref, highlightLogs, highlightColor, onRevealStart, onMount, onUpdate, onDestroy } =
+		finalOptions;
 
-	onMount(node);
+	const revealNode = getRevealNode(node);
+
+	onMount(revealNode);
 
 	const canDebug = config.dev && debug && ref !== '';
 	const highlightText = `color: ${highlightLogs ? highlightColor : '#B4BEC8'}`;
@@ -363,7 +278,7 @@ export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
 		console.groupCollapsed(`%cRef: ${ref}`, highlightText);
 
 		console.groupCollapsed('%cNode', highlightText);
-		console.log(node);
+		console.log(revealNode);
 		console.groupEnd();
 
 		console.groupCollapsed('%cConfig', highlightText);
@@ -402,23 +317,22 @@ export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
 		styleTagStore.set(true);
 	}
 
-	onRevealStart(node);
+	onRevealStart(revealNode);
 
-	node.classList.add(`${transition}--hidden`);
-	node.style.transition = `all ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEasing)}`;
+	activateRevealNode(revealNode, finalOptions);
 
-	const ObserverInstance = createObserver(canDebug, highlightText, node, finalOptions);
-	ObserverInstance.observe(node);
+	const ObserverInstance = createObserver(canDebug, highlightText, revealNode, finalOptions);
+	ObserverInstance.observe(revealNode);
 
 	console.groupEnd();
 
 	return {
 		update() {
-			onUpdate(node);
+			onUpdate(revealNode);
 		},
 
 		destroy() {
-			onDestroy(node);
+			onDestroy(revealNode);
 			unsubscribeStyleTag();
 			unsubscribeReloaded();
 		}
