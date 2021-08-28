@@ -6,7 +6,7 @@ import { init, config } from './index';
  * @param revealNode - The element to be marked
  * @returns The marked element
  */
-const markRevealNode = (revealNode: HTMLElement): HTMLElement => {
+export const markRevealNode = (revealNode: HTMLElement): HTMLElement => {
 	revealNode.setAttribute('data-action', 'reveal');
 	return revealNode;
 };
