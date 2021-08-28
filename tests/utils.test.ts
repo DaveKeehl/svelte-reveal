@@ -11,7 +11,10 @@ import {
 	isPositiveInteger,
 	hasOverlappingBreakpoints,
 	hasValidBreakpoints,
-	checkOptions
+	checkOptions,
+	markRevealNode,
+	activateRevealNode,
+	getRevealNode
 } from '../src/internal/utils';
 import { init, config, setConfig } from '../src/internal/index';
 
@@ -42,6 +45,52 @@ beforeEach(() => {
 			rootMargin: '0px 0px 0px 0px',
 			threshold: 0.6
 		}
+	});
+});
+
+describe('markRevealNode', () => {
+	const node = document.createElement('div');
+
+	test('The reveal node has the data-action attribute', () => {
+		expect(markRevealNode(node).getAttribute('data-action')).not.toBeNull();
+	});
+
+	test("The reveal node has the data-action attribute set to 'reveal'", () => {
+		expect(markRevealNode(node).getAttribute('data-action')).toMatch(/reveal/);
+	});
+});
+
+describe('activateRevealNode', () => {
+	const node = document.createElement('div');
+
+	test('The reveal node has the correct css class', () => {
+		expect(Object.values(activateRevealNode(node, init).classList)).toContain('fly--hidden');
+	});
+
+	test('The reveal node has the correct inline styles', () => {
+		expect(activateRevealNode(node, init).style.transition).toBe('all 0.8s 0s cubic-bezier(0.25, 0.1, 0.25, 0.1)');
+	});
+});
+
+describe('getRevealNode', () => {
+	const node = document.createElement('p');
+
+	afterEach(() => {
+		node.setAttribute('style', '');
+	});
+
+	test('The reveal node did not have any inline styles already', () => {
+		expect(node.style.length).toBe(0);
+		expect(getRevealNode(node)).toBe(node);
+	});
+
+	test('The reveal node already had inline styles', () => {
+		node.style.position = 'absolute';
+		node.style.top = '0';
+
+		expect(node.style.length).toBe(2);
+		expect(getRevealNode(node).children.length).toBe(1);
+		expect(getRevealNode(node).children[0]).toBe(node);
 	});
 });
 
