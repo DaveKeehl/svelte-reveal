@@ -162,7 +162,21 @@ This library is globally configured as follows right of out the box:
 
 svelte-reveal also exposes several functions you can call to change the [global configuration](#Global-config) of this library.
 
-Since these functions operate on a global level for all instances of svelte-reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the global options from multiple points. If you need/want to considerably customize the behavior of this library, I suggest you to create a dedicated file (e.g. [reveal.config.js](https://github.com/DaveKeehl/svelte-reveal/blob/develop/example/reveal.config.js)) and from there call the API to set global settings or shared transition properties.
+Since these functions operate on a global level for all instances of svelte-reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the global options from multiple points. If you need/want to considerably customize the behavior of this library, I suggest you to create a dedicated file (e.g. [reveal.config.js](https://github.com/DaveKeehl/svelte-reveal/blob/develop/example/reveal.config.js)) and import it from the top-most component in the hierachy tree of your project. Within that file you can then call the API to set global settings or shared transition properties.
+
+```html
+// App.svelte
+
+<script>
+	import '../reveal.config'
+</script>
+
+<div>
+  {your markup goes here}
+</div>
+```
+
+
 
 If you want to customise the behavior of a single DOM node, you are supposed to use the [options](#Options).
 
