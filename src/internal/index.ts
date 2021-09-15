@@ -261,7 +261,7 @@ export const setDefaultOptions = (options: IOptions): Required<IOptions> => {
  * @param options - The custom options that will used to tweak the behavior of the animation of the node element
  * @returns An object containing update and/or destroy functions
  */
-export const reveal = (node: HTMLElement, options: IOptions): IReturnAction => {
+export const reveal = (node: HTMLElement, options: IOptions = init): IReturnAction => {
 	const finalOptions = checkOptions(options);
 	const { disable, debug, ref, highlightLogs, highlightColor, onRevealStart, onMount, onUpdate, onDestroy } =
 		finalOptions;
