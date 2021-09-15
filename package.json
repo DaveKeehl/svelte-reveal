@@ -48,6 +48,7 @@
 		"animation"
 	],
 	"devDependencies": {
+		"@types/babel__core": "^7.1.16",
 		"@types/jest": "^26.0.24",
 		"@typescript-eslint/eslint-plugin": "^4.28.5",
 		"@typescript-eslint/parser": "^4.28.5",
