@@ -168,7 +168,7 @@ Since these functions operate on a global level for all instances of svelte-reve
 // App.svelte
 
 <script>
-	import '../reveal.config'
+  import '../reveal.config'
 </script>
 
 <div>
