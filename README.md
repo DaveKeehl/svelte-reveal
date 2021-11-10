@@ -27,8 +27,6 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
 
 ## Usage
 
-Using svelte-reveal is dead simple:
-
 1. Install the library. You can use either [npm](https://www.npmjs.com/):
 
    ```bash
@@ -38,7 +36,7 @@ Using svelte-reveal is dead simple:
    or [yarn](https://yarnpkg.com/):
 
    ```````bash
-   yarn add svelte-reveal -D
+   yarn add -D svelte-reveal
    ```````
 
 2. Import the library within your Svelte component:
@@ -47,12 +45,37 @@ Using svelte-reveal is dead simple:
    <script>
      import { reveal } from 'svelte-reveal';
    </script>
-   
-   <h1 use:reveal>Your title</h1>
-   <p use:reveal={{transition: "fade"}}>A paragraph</p>
    ```
 
+3. Add the imported reveal action to any DOM element you want:
 
+   ```html
+   <h1 use:reveal>Your title</h1>
+   <p use:reveal={{ transition: "fade" }}>A paragraph</p>
+   ```
+
+   If you want to use the action on a Svelte component you can use props:
+
+   ```html
+   // App.svelte
+   <script>
+   	import Heading from './Heading.svelte';
+   </script>
+   
+   <Heading revealConfig={{ transition: "fade" }}>Hello world</Heading>
+   
+   // Heading.svelte
+   <script>
+     import { reveal } from 'svelte-reveal';
+     export let revealConfig;
+   </script>
+   
+   <h1 use:reveal={ revealConfig }>
+   	<slot />
+   </h1>
+   ```
+
+   
 
 A Docker image is also available on [DockerHub](https://hub.docker.com/):
 
