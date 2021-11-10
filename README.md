@@ -59,7 +59,7 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
    ```html
    // App.svelte
    <script>
-   	import Heading from './Heading.svelte';
+     import Heading from './Heading.svelte';
    </script>
    
    <Heading revealConfig={{ transition: "fade" }}>Hello world</Heading>
@@ -71,7 +71,7 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
    </script>
    
    <h1 use:reveal={ revealConfig }>
-   	<slot />
+     <slot />
    </h1>
    ```
 
