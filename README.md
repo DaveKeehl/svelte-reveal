@@ -340,9 +340,9 @@ If you use [SvelteKit](https://kit.svelte.dev/), this feature is available right
 
 ## Troubleshooting
 
-In order to work, svelte-reveal adds inline styles to the targeted elements. If you have already applied some inline styles (in particular ```transition```, ```opacity``` and ```transform``` CSS properties), they might get overridden by this library.
+In order to work, svelte-reveal adds inline styles to the targeted elements, which can cause problems in case you have already applied some inline styles as well (in particular ```transition```, ```opacity``` and ```transform``` CSS properties).
 
-To avoid this situation, wrap your element in a ```<div>``` or a ```<span>``` and add the  ```use:reveal``` action to that wrapper element.
+To avoid this situation, wrap your element in a ```<div>``` or a ```<span>``` and add the  ```use:reveal``` action to that wrapper element. If you really need to style that wrapper element, please use css classes instead.
 
 Feel free to [open an issue](https://github.com/DaveKeehl/svelte-reveal/issues/new) in case any problems persist.
 
