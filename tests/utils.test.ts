@@ -14,7 +14,8 @@ import {
 	checkOptions,
 	markRevealNode,
 	activateRevealNode,
-	getRevealNode
+	getRevealNode,
+	createStylesheet
 } from '../src/internal/utils';
 import { init, config, setConfig } from '../src/internal/index';
 
@@ -45,6 +46,38 @@ beforeEach(() => {
 			rootMargin: '0px 0px 0px 0px',
 			threshold: 0.6
 		}
+	});
+});
+
+describe('createStylesheet', () => {
+	document.body.innerHTML = `
+		<!DOCTYPE html>
+		<html lang="en">
+			<head>
+				<meta charset="UTF-8">
+				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<meta http-equiv="X-UA-Compatible" content="ie=edge">
+				<title>HTML 5 Boilerplate</title>
+				<link rel="stylesheet" href="style.css">
+			</head>
+			<body>
+			<script src="index.js"></script>
+			</body>
+		</html>
+	`;
+
+	createStylesheet(init);
+
+	test('Library stylesheet is correctly added to the page', () => {
+		const stylesheets = document.querySelectorAll('style');
+		const newStylesheetContent = stylesheets[0].innerHTML;
+		const classes = newStylesheetContent
+			.trim()
+			.split('}')
+			.filter((el) => el.length > 0);
+
+		expect(stylesheets.length).toEqual(1);
+		expect(classes.length).toEqual(6);
 	});
 });
 
