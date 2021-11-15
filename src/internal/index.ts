@@ -206,7 +206,7 @@ export const setObserverRootMargin = (rootMargin: string): IConfig => {
 		.trim()
 		.split(' ')
 		.map((margin) => margin.trim());
-	const regex = /^(0|([1-9][0-9]*))(px|%)$/;
+	const regex = /^(0|([1-9]\d*))(px|%)$/;
 	const hasCorrectUnits = margins.every((margin) => regex.test(margin));
 
 	if (rootMargin !== '' && margins.length <= 4 && hasCorrectUnits) {
