@@ -87,7 +87,7 @@ docker pull davekeehl/svelte-reveal:latest
 
 ## Demo
 
-I've put together a demo website where I showcase svelte-reveal in action. [Check it out](https://svelte-reveal.netlify.app).
+Coming soon!
 
 
 
