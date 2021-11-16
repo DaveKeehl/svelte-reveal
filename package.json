@@ -55,7 +55,7 @@
 		"esbuild": "0.13.14",
 		"eslint": "8.2.0",
 		"eslint-config-prettier": "8.3.0",
-		"eslint-plugin-prettier": "3.4.1",
+		"eslint-plugin-prettier": "4.0.0",
 		"husky": "7.0.4",
 		"jest": "27.3.1",
 		"pinst": "2.1.6",
