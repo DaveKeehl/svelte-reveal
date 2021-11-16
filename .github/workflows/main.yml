@@ -92,13 +92,15 @@ jobs:
         with:
           token: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish new GitHub release
-        uses: svenstaro/upload-release-action@v2
+      - name: Create new release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: svelte-reveal-*.tgz
-          tag: ${{ github.ref }}
-          file_glob: true
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          draft: false
+          prerelease: false
           body: ${{ steps.extract-release-notes.outputs.release_notes }}
 
       # DOCKER
