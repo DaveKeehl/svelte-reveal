@@ -8,9 +8,40 @@ body:
       value: |
         Thanks for taking the time to fill out this bug report!
   - type: textarea
+    id: bug-description
     attributes:
-      label: What happened?
-      description: Also tell us, what did you expect to happen?
-      placeholder: Tell us what you see!
+      label: Describe the bug
+      placeholder: Bug description
     validations:
       required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: A link to a repository that reproduces the issue. Explaining how to reproduce is generally not enough. If no reproduction is provided within a reasonable time-frame, the issue will be closed.
+      placeholder: Reproduction
+    validations:
+      required: true
+  - type: textarea
+    id: system-info
+    attributes:
+      label: System Info
+      description: Output of `npx envinfo --system --binaries --browsers --npmPackages "{svelte-reveal}"`
+      render: shell
+      placeholder: System, Binaries, Browsers
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - Annoyance
+        - Serious, but I can work around it
+        - Blocking
+    validations:
+      required: true
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Information
