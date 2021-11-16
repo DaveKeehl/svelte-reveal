@@ -15,8 +15,8 @@ jobs:
   CI:
     runs-on: ubuntu-latest
     outputs:
-      currentVersion: ${{ steps.getVersion.outputs.storeVersion }}
-      latestTag: ${{ steps.getLatestTag.outputs.storeLatestTag }}
+      package-version: ${{ steps.getVersion.outputs.store-package-version }}
+      latest-tag: ${{ steps.getLatestTag.outputs.store-latest-tag }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -59,28 +59,28 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      - name: Get NPM Version
+      - name: Get Package Version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
 
-      - name: Store NPM Version
-        id: storeVersion
+      - name: Store Package Version
+        id: store-package-version
         run: |
           echo "${{ steps.package-version.outputs.current-version }}" \
-          echo "::set-output name=currentVersion::steps.package-version.outputs.current-version"
+          echo "::set-output name=package-version::steps.package-version.outputs.current-version"
 
       - name: 'Get Latest Tag'
-        id: getLatestTag
+        id: get-latest-tag
         uses: 'WyriHaximus/github-action-get-previous-tag@v1'
 
       - name: Store Latest tag
-        id: storeLatestTag
-        run: echo "::set-output name=latestTag::steps.getLatestTag.outputs.tag"
+        id: store-latest-tag
+        run: echo "::set-output name=latest-tag::steps.get-latest-tag.outputs.tag"
 
   CD:
     needs: [CI]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && github.event.pull_request.merged == false && needs.CI.outputs.currentVersion != needs.CI.outputs.latestTag
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && github.event.pull_request.merged == false && needs.CI.outputs.package-version != needs.CI.outputs.latest-tag
 
     steps:
       - name: Checkout code
