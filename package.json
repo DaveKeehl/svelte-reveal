@@ -59,7 +59,7 @@
 		"husky": "7.0.2",
 		"jest": "27.3.1",
 		"pinst": "2.1.6",
-		"prettier": "2.4.0",
+		"prettier": "2.4.1",
 		"pretty-quick": "3.1.1",
 		"svelte": "3.42.6",
 		"ts-jest": "27.0.5",
