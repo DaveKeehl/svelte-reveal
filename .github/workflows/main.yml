@@ -88,9 +88,9 @@ jobs:
         uses: ffurrer2/extract-release-notes@v1
 
       - name: Publish package on NPM
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish new GitHub release
         uses: svenstaro/upload-release-action@v2
