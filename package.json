@@ -49,7 +49,7 @@
 	],
 	"devDependencies": {
 		"@types/babel__core": "^7.1.16",
-		"@types/jest": "^26.0.24",
+		"@types/jest": "26.0.24",
 		"@typescript-eslint/eslint-plugin": "^4.28.5",
 		"@typescript-eslint/parser": "^4.28.5",
 		"esbuild": "^0.12.16",
@@ -57,7 +57,7 @@
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-prettier": "^3.4.0",
 		"husky": "^7.0.1",
-		"jest": "^27.0.6",
+		"jest": "27.3.1",
 		"pinst": "^2.1.6",
 		"prettier": "^2.3.2",
 		"pretty-quick": "^3.1.1",
