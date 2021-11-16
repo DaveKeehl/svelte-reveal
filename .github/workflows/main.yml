@@ -59,7 +59,7 @@ jobs:
   CD:
     needs: [CI]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: github.ref == 'refs/heads/main' && (github.event_name != 'pull_request' || github.event.pull_request.merged == true)
 
     steps:
       - name: Checkout code
@@ -80,17 +80,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
 
-      - name: Installing dependencies
-        run: npm install
-
       - name: Extract release notes
         id: extract-release-notes
         uses: ffurrer2/extract-release-notes@v1
-
-      - name: Publish package on NPM
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
 
       - name: Get NPM version
         id: package-version
@@ -140,3 +132,11 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/svelte-reveal:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+
+      - name: Installing dependencies
+        run: npm install
+
+      - name: Publish package on NPM
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
