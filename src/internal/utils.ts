@@ -206,7 +206,7 @@ export const hasValidBreakpoints = (responsive: Responsive): boolean => {
  * @param styles The string to be cleaned
  * @returns The cleaned string
  */
-export const clean = (styles: string): string => styles.trim().replace(/(\n|\t)/g, '');
+export const clean = (styles: string): string => styles.trim().replace(/[\n|\t]/g, '');
 
 /**
  * Extract the CSS rules of a given style
