@@ -14,6 +14,9 @@ on:
 jobs:
   CI:
     runs-on: ubuntu-latest
+    outputs:
+      currentVersion: ${{ steps.getVersion.outputs.storeVersion }}
+      latestTag: ${{ steps.getLatestTag.outputs.storeLatestTag }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -56,10 +59,26 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
+      - name: Get NPM Version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+
+      - name: Store NPM Version
+        id: storeVersion
+        run: echo "::set-output name=currentVersion::steps.package-version.outputs.current-version"
+
+      - name: 'Get Latest Tag'
+        id: getLatestTag
+        uses: 'WyriHaximus/github-action-get-previous-tag@v1'
+
+      - name: Store Latest tag
+        id: storeLatestTag
+        run: echo "::set-output name=latestTag::steps.getLatestTag.outputs.tag"
+
   CD:
     needs: [CI]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && github.event.pull_request.merged == false
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && github.event.pull_request.merged == false && needs.CI.outputs.currentVersion != needs.CI.outputs.latestTag
 
     steps:
       - name: Checkout code
