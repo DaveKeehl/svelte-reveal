@@ -97,13 +97,13 @@ If you happened to scout the internet for other similar libraries, you would hav
 
 You might have also noticed people adding event listeners to the window object, but in terms of performance that [doesn't scale very well](https://itnext.io/1v1-scroll-listener-vs-intersection-observers-469a26ab9eb6).
 
-Instead, I decided to use Svelte [actions](https://svelte.dev/docs#use_action), which are functions you can attach to a DOM element and that allow you to get access to that element and its lifecycle. They take up considerably less space and so far I haven't encounted any obstacle or performance drawback. Morever, this library is backed by the Intersection Observer API, which is great for performance.
+Instead, I decided to use Svelte [actions](https://svelte.dev/docs#use_action), which are functions you can attach to a DOM element and that allow you to get access to that element and its lifecycle. They take up considerably less space and so far I haven't encountered any obstacle or performance drawback. Morever, this library is backed by the Intersection Observer API, which is great for performance.
 
 
 
 ## Options
 
-Depending on the use case, you can either use this library as-is (which applies some [default styles](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/index.ts#L26-L57) I have chosen), or customize it to your liking. If you choose to do so, you can pass to this action an object containing additional options.
+Depending on the use case, you can either use this library as-is (which applies some [default styles](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/index.ts#L26-L57) I have chosen), or customize it to your liking. If you choose to do so, you can pass an object to this action containing additional options.
 
 Keep in mind that these options are applied to the single DOM element you add svelte-reveal to. For global and more in-depth settings, go to the [API](#API) section.
 
@@ -195,7 +195,7 @@ Since these functions operate on a global level for all instances of svelte-reve
 </script>
 
 <div>
-  {your markup goes here}
+  { your markup goes here }
 </div>
 ```
 
@@ -328,7 +328,7 @@ interface IOptions {
 
 ## Suggestions
 
-In order to take full advantage of this library, I suggest you to create some environment variables to keep track of the environment you are currently in (e.g. development, staging, production) and to leverage npm scripts to update those variables. [This article](https://www.twilio.com/blog/working-with-environment-variables-in-node-js-html) explains well this concept.
+In order to take full advantage of this library, I suggest you to create some environment variables to keep track of the environment you are currently in (e.g. development, staging, production) and to leverage NPM scripts to update those variables. [This article](https://www.twilio.com/blog/working-with-environment-variables-in-node-js-html) explains well this concept.
 
 That way you can for example set the config ```dev``` property to ```false``` when in production and avoid exposing console logs to the end users.
 
@@ -340,11 +340,11 @@ If you use [SvelteKit](https://kit.svelte.dev/), this feature is available right
 
 ## Troubleshooting
 
-In order to work, svelte-reveal adds inline styles to the targeted elements, which can cause problems in case you have already applied some inline styles as well (in particular ```transition```, ```opacity``` and ```transform``` CSS properties).
+In order to work, svelte-reveal adds inline styles to the targeted elements, which can cause problems in case you have already applied some inline styles (in particular ```transition```, ```opacity``` and ```transform``` CSS properties).
 
-To avoid this situation, wrap your element in a ```<div>``` or a ```<span>``` and add the  ```use:reveal``` action to that wrapper element. If you really need to style that wrapper element, please use css classes instead.
+To avoid this situation, you can wrap your element in a ```<div>``` or a ```<span>``` and add the  ```use:reveal``` action to that wrapper element. If you really need to style that wrapper element, please use CSS classes instead.
 
-Feel free to [open an issue](https://github.com/DaveKeehl/svelte-reveal/issues/new) in case any problems persist.
+Feel free to [open a new issue](https://github.com/DaveKeehl/svelte-reveal/issues/new/choose) in case any problems persist.
 
 
 
