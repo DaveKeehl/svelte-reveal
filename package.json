@@ -1,0 +1,69 @@
+{
+	"name": "svelte-reveal",
+	"version": "0.1.0",
+	"description": "Svelte action that leverages the Intersection Observer API to trigger reveal on scroll transitions",
+	"main": "dist/index.js",
+	"types": "dist/types/index.d.ts",
+	"scripts": {
+		"clean": "rm -rf dist/ && npm run format",
+		"prebuild": "npm run clean && npm run build:types",
+		"build": "node esbuild.config.js",
+		"build:types": "tsc --emitDeclarationOnly --rootDir src",
+		"build:watch": "npm run clean && npm run build -- --watch",
+		"lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
+		"format": "prettier --write --plugin-search-dir=. .",
+		"format:staged": "pretty-quick --staged",
+		"prepack": "npm run build && pinst --disable",
+		"postpack": "pinst --enable",
+		"test": "jest",
+		"test:watch": "jest --watchAll",
+		"prepublishOnly": "pinst --disable && npm pack",
+		"postpublish": "pinst --enable",
+		"postinstall": "husky install"
+	},
+	"files": [
+		"dist/"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/DaveKeehl/svelte-reveal.git"
+	},
+	"author": {
+		"name": "Davide Ciulla",
+		"email": "davide.ciulla@hotmail.com"
+	},
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/DaveKeehl/svelte-reveal/issues"
+	},
+	"homepage": "https://github.com/DaveKeehl/svelte-reveal#readme",
+	"keywords": [
+		"svelte-reveal",
+		"svelte",
+		"reveal",
+		"scroll",
+		"intersection",
+		"observer",
+		"transition",
+		"animation"
+	],
+	"devDependencies": {
+		"@types/babel__core": "^7.1.16",
+		"@types/jest": "^26.0.24",
+		"@typescript-eslint/eslint-plugin": "^4.28.5",
+		"@typescript-eslint/parser": "^4.28.5",
+		"esbuild": "^0.12.16",
+		"eslint": "^7.31.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-prettier": "^3.4.0",
+		"husky": "^7.0.1",
+		"jest": "^27.0.6",
+		"pinst": "^2.1.6",
+		"prettier": "^2.3.2",
+		"pretty-quick": "^3.1.1",
+		"svelte": "^3.41.0",
+		"ts-jest": "^27.0.4",
+		"typescript": "^4.3.5"
+	},
+	"type": "module"
+}
