@@ -79,7 +79,7 @@ jobs:
   CD:
     needs: [CI]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && needs.CI.outputs.current-version > needs.CI.outputs.latest-tag
 
     steps:
       - name: Printing CI output
