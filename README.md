@@ -75,7 +75,8 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
    </h1>
    ```
 
-   
+
+### Docker
 
 A Docker image is also available on [DockerHub](https://hub.docker.com/):
 
@@ -83,7 +84,7 @@ A Docker image is also available on [DockerHub](https://hub.docker.com/):
 docker pull davekeehl/svelte-reveal:latest
 ```
 
-
+You can also use the provided Dockerfile in the repository as a development environment. You can read more [here](https://code.visualstudio.com/docs/remote/containers).
 
 ## Demo
 
