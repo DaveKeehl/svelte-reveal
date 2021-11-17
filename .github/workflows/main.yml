@@ -17,7 +17,7 @@ jobs:
     outputs:
       current-version: ${{ steps.package-version.outputs.current-version }}
       latest-tag: ${{ steps.latest-tag.outputs.tag }}
-      new-version: ${{ steps.new-version.outputs.new-version }}
+      new-version: ${{ steps.package-version.outputs.current-version > steps.latest-tag.outputs.tag }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -68,24 +68,14 @@ jobs:
         id: latest-tag
         uses: 'WyriHaximus/github-action-get-previous-tag@v1'
 
-      - name: Check If New Version
-        id: new-version
-        run: |
-          echo "${{ steps.package-version.outputs.current-version }}" \
-          echo "${{ steps.latest-tag.outputs.tag }}" \
-          echo "${{ steps.package-version.outputs.current-version > steps.latest-tag.outputs.tag }}" \
-          echo "::set-output name=new-version::${{ steps.package-version.outputs.current-version > steps.latest-tag.outputs.tag }}"
-
   CD:
     needs: [CI]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && needs.CI.outputs.current-version > needs.CI.outputs.latest-tag
+    if: github.ref == 'refs/heads/main' && needs.CI.outputs.new-version
 
     steps:
-      - name: Printing CI output
-        run: |
-          echo "${{ needs.CI.outputs.current-version }}" \
-          echo "${{ needs.CI.outputs.latest-tag }}"
+      - name: Testing stuff
+        run: echo "it works"
 
       # - name: Checkout code
       #   uses: actions/checkout@v2
