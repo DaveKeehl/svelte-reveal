@@ -15,6 +15,8 @@ jobs:
   CI:
     runs-on: ubuntu-latest
     outputs:
+      current-version: ${{ steps.package-version.outputs.current-version }}
+      latest-tag: ${{ steps.latest-tag.outputs.tag }}
       new-version: ${{ steps.new-version.outputs.new-version }}
     steps:
       - name: Checkout code
@@ -104,21 +106,13 @@ jobs:
         id: extract-release-notes
         uses: ffurrer2/extract-release-notes@v1
 
-      - name: Get NPM version
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@master
-
-      - name: 'Get Previous tag'
-        id: previoustag
-        uses: 'WyriHaximus/github-action-get-previous-tag@v1'
-
       - name: Create new release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.package-version.outputs.current-version}}
-          release_name: ${{ steps.package-version.outputs.current-version}}
+          tag_name: ${{ needs.CI.outputs.current-version }}
+          release_name: ${{ needs.CI.outputs.current-version }}
           draft: false
           prerelease: false
           body: ${{ steps.extract-release-notes.outputs.release_notes }}
