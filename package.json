@@ -1,6 +1,6 @@
 {
 	"name": "svelte-reveal",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "Svelte action that leverages the Intersection Observer API to trigger reveal on scroll transitions",
 	"main": "dist/index.js",
 	"types": "dist/types/index.d.ts",
@@ -58,6 +58,7 @@
 		"eslint-plugin-prettier": "4.0.0",
 		"husky": "7.0.4",
 		"jest": "27.3.1",
+		"jest-sonar-reporter": "^2.0.0",
 		"pinst": "2.1.6",
 		"prettier": "2.4.1",
 		"pretty-quick": "3.1.2",
@@ -65,5 +66,10 @@
 		"ts-jest": "27.0.7",
 		"typescript": "4.4.4"
 	},
-	"type": "module"
+	"type": "module",
+	"jestSonar": {
+		"reportPath": "coverage",
+		"reportFile": "test-report.xml",
+		"indent": 4
+	}
 }
