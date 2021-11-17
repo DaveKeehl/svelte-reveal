@@ -76,8 +76,9 @@ jobs:
     steps:
       - name: Print CI output
         run: |
-          echo "Current version: ${{ steps.package-version.outputs.current-version }}" \
-          echo "Latest tag: ${{ steps.latest-tag.outputs.tag }}"
+          echo "Current version: ${{ needs.CI.outputs.current-version }}" \
+          echo "Latest tag: ${{ needs.CI.outputs.latest-tag }}" \
+          echo "New version: ${{ needs.CI.outputs.new-version }}"
 
       # - name: Checkout code
       #   uses: actions/checkout@v2
