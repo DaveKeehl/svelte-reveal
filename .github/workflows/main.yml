@@ -80,8 +80,8 @@ jobs:
       - name: Check If New Version
         id: check-if-new-version
         run: |
-          echo steps.package-version.outputs.current-version \
-          echo steps.get-latest-tag.outputs.tag \
+          echo "${{ steps.package-version.outputs.current-version }}" \
+          echo "${{ steps.get-latest-tag.outputs.tag }}" \
           echo "${{ steps.package-version.outputs.current-version == steps.get-latest-tag.outputs.tag }}"
 
   CD:
