@@ -30,7 +30,7 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
 1. Install the library. You can use either [npm](https://www.npmjs.com/):
 
    ```bash
-   npm install svelte-reveal --save-dev
+   npm install -D svelte-reveal
    ```
 
    or [yarn](https://yarnpkg.com/):
