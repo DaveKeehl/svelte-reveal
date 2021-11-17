@@ -1,4 +1,4 @@
-![](assets/readme_cover_0.1.0.png)
+![](assets/readme_cover.png)
 
 # svelte-reveal
 
