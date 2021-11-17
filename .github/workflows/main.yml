@@ -71,7 +71,7 @@ jobs:
         run: |
           echo "${{ steps.package-version.outputs.current-version }}" \
           echo "${{ steps.latest-tag.outputs.tag }}" \
-          echo "${{ steps.package-version.outputs.current-version == steps.latest-tag.outputs.tag }}" \
+          echo "${{ steps.package-version.outputs.current-version != steps.latest-tag.outputs.tag }}" \
           echo "::set-output name=new-version::${{ steps.package-version.outputs.current-version == steps.latest-tag.outputs.tag }}"
 
   CD:
