@@ -82,8 +82,10 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
-      - name: Has new version
-        run: echo "${{ needs.CI.outputs.new-version }}"
+      - name: Printing CI output
+        run: |
+          echo "${{ needs.CI.outputs.current-version }}" \
+          echo "${{ needs.CI.outputs.latest-tag }}"
 
       # - name: Checkout code
       #   uses: actions/checkout@v2
