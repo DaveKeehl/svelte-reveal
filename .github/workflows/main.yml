@@ -79,7 +79,7 @@ jobs:
   CD:
     needs: [CI]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && github.event.pull_request.merged == false && needs.CI.outputs.new-version
+    if: github.ref == 'refs/heads/main' && needs.CI.outputs.new-version
 
     steps:
       - name: Checkout code
