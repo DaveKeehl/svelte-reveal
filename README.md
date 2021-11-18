@@ -88,9 +88,7 @@ You can also use the provided Dockerfile in the repository as a development envi
 
 ## Demo
 
-Coming soon!
-
-
+In this [Svelte REPL](https://svelte.dev/repl/1cf37b0947ac46b8ae9cc791abda7159?version=3.44.1) I created you can see svelte-reveal in action.
 
 ## Why svelte-reveal
 
