@@ -68,6 +68,12 @@ jobs:
         id: latest-tag
         uses: 'WyriHaximus/github-action-get-previous-tag@v1'
 
+      - name: Print CI output
+        run: |
+          echo "Current version: ${{ toJSON(needs.CI.outputs.current-version) }}" \
+          echo "Latest tag: ${{ toJSON(needs.CI.outputs.latest-tag) }}" \
+          echo "New version: ${{ toJSON(toJSON(steps.package-version.outputs.current-version) > toJSON(steps.latest-tag.outputs.tag)) }}"
+
   CD:
     needs: [CI]
     runs-on: ubuntu-latest
