@@ -15,9 +15,9 @@ jobs:
   CI:
     runs-on: ubuntu-latest
     outputs:
-      current-version: ${{ toJSON(steps.package-version.outputs.current-version) }}
-      latest-tag: ${{ toJSON(steps.latest-tag.outputs.tag) }}
-      new-version: ${{ toJSON(toJSON(steps.package-version.outputs.current-version) != toJSON(steps.latest-tag.outputs.tag)) }}
+      current-version: ${{ steps.package-version.outputs.current-version }}
+      latest-tag: ${{ steps.latest-tag.outputs.tag }}
+      new-version: ${{ toJSON(steps.package-version.outputs.current-version != steps.latest-tag.outputs.tag) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -70,9 +70,9 @@ jobs:
 
       - name: Print CI output
         run: |
-          echo "Current version: ${{ toJSON(steps.package-version.outputs.current-version) }}" \
-          echo "Latest tag: ${{ toJSON(steps.latest-tag.outputs.tag) }}" \
-          echo "New version: ${{ toJSON(toJSON(steps.package-version.outputs.current-version) > toJSON(steps.latest-tag.outputs.tag)) }}"
+          echo "Current version: ${{ steps.package-version.outputs.current-version }}" \
+          echo "Latest tag: ${{ steps.latest-tag.outputs.tag }}" \
+          echo "New version: ${{ toJSON(steps.package-version.outputs.current-version != steps.latest-tag.outputs.tag) }}"
 
   CD:
     needs: [CI]
@@ -82,8 +82,8 @@ jobs:
     steps:
       - name: Print CI output
         run: |
-          echo "Current version: ${{ fromJSON(needs.CI.outputs.current-version) }}" \
-          echo "Latest tag: ${{ fromJSON(needs.CI.outputs.latest-tag) }}" \
+          echo "Current version: ${{ needs.CI.outputs.current-version }}" \
+          echo "Latest tag: ${{ needs.CI.outputs.latest-tag }}" \
           echo "New version: ${{ fromJSON(needs.CI.outputs.new-version) }}"
 
       - name: Checkout code
