@@ -266,6 +266,8 @@ export const reveal = (node: HTMLElement, options: IOptions = init): IReturnActi
 	const { disable, debug, ref, highlightLogs, highlightColor, onRevealStart, onMount, onUpdate, onDestroy } =
 		finalOptions;
 
+	// TODO: Generate UUID for the node
+
 	const revealNode = getRevealNode(node);
 
 	onMount(revealNode);
