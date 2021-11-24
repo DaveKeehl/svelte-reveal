@@ -1,23 +1,17 @@
+import { init, config, setConfig } from '../src/internal/index';
 import type { CustomEasing, IOptions, Responsive, Transitions } from '../src/internal/types';
+import { checkOptions, markRevealNode, activateRevealNode, getRevealNode, clean } from '../src/internal/utils';
 import {
 	addVendors,
-	clean,
 	addMediaQueries,
 	getEasing,
 	sanitizeStyles,
 	getCssRules,
-	hasValidRange,
-	isPositive,
-	isPositiveInteger,
 	hasOverlappingBreakpoints,
 	hasValidBreakpoints,
-	checkOptions,
-	markRevealNode,
-	activateRevealNode,
-	getRevealNode,
 	createStylesheet
-} from '../src/internal/utils';
-import { init, config, setConfig } from '../src/internal/index';
+} from '../src/internal/styling';
+import { hasValidRange, isPositive, isPositiveInteger } from '../src/internal/validations';
 
 beforeEach(() => {
 	setConfig({

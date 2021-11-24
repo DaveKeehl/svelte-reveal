@@ -9,16 +9,9 @@ import type {
 	Device
 } from './types';
 import { styleTagStore, reloadStore } from './stores';
-import {
-	hasValidRange,
-	hasValidBreakpoints,
-	getConfigClone,
-	checkOptions,
-	getRevealNode,
-	createStylesheet,
-	createObserver,
-	activateRevealNode
-} from './utils';
+import { getConfigClone, checkOptions, getRevealNode, createObserver, activateRevealNode } from './utils';
+import { hasValidBreakpoints, createStylesheet } from './styling';
+import { hasValidRange } from './validations';
 
 /**
  * Object containing the default options used by the library for the scroll effect.
