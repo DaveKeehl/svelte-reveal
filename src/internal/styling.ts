@@ -5,36 +5,11 @@ import { isPositiveInteger } from './validations';
 
 /**
  * Creates the stylesheet for the reveal animation styles.
- * @param options The reveal options
  */
-export const createStylesheet = (options: Required<IOptions>): void => {
+export const createStylesheet = (): void => {
 	const style = document.createElement('style');
 	style.setAttribute('type', 'text/css');
-
 	markRevealNode(style);
-
-	const css = `
-		.fly--hidden {
-			${getCssRules('fly', options)}
-		}
-		.fade--hidden {
-			${getCssRules('fade', options)}
-		}
-		.blur--hidden {
-			${getCssRules('blur', options)}
-		}
-		.scale--hidden {
-			${getCssRules('scale', options)}
-		}
-		.slide--hidden {
-			${getCssRules('slide', options)}
-		}
-		.spin--hidden {
-			${getCssRules('spin', options)}
-		}
-	`;
-	style.innerHTML = addMediaQueries(clean(css));
-
 	const head = document.querySelector('head');
 	if (head !== null) head.appendChild(style);
 };

@@ -9,9 +9,20 @@ import type {
 	Device
 } from './types';
 import { styleTagStore, reloadStore } from './stores';
-import { getConfigClone, checkOptions, getRevealNode, createObserver, activateRevealNode } from './utils';
+import {
+	createCssClass,
+	getConfigClone,
+	checkOptions,
+	getRevealNode,
+	createObserver,
+	activateRevealNode
+} from './utils';
 import { hasValidBreakpoints, createStylesheet } from './styling';
 import { hasValidRange } from './validations';
+
+//=====================================================================
+// SETTINGS
+//=====================================================================
 
 /**
  * Object containing the default options used by the library for the scroll effect.
@@ -79,6 +90,10 @@ export const config: IConfig = {
 		threshold: init.threshold
 	}
 };
+
+//=====================================================================
+// API
+//=====================================================================
 
 /**
  * Toggles on/off the development mode.
@@ -248,6 +263,10 @@ export const setDefaultOptions = (options: IOptions): Required<IOptions> => {
 	return init;
 };
 
+//=====================================================================
+// REVEAL
+//=====================================================================
+
 /**
  * Reveals a given node element on scroll
  * @param node - The DOM node you want to reveal on scroll
@@ -256,19 +275,29 @@ export const setDefaultOptions = (options: IOptions): Required<IOptions> => {
  */
 export const reveal = (node: HTMLElement, options: IOptions = init): IReturnAction => {
 	const finalOptions = checkOptions(options);
-	const { disable, debug, ref, highlightLogs, highlightColor, onRevealStart, onMount, onUpdate, onDestroy } =
-		finalOptions;
-
-	// TODO: Generate UUID for the node
+	const {
+		transition,
+		disable,
+		debug,
+		ref,
+		highlightLogs,
+		highlightColor,
+		onRevealStart,
+		onMount,
+		onUpdate,
+		onDestroy
+	} = finalOptions;
 
 	const revealNode = getRevealNode(node);
+	const className = createCssClass(ref, false, transition); // The CSS class responsible for the animation: ;
+	const baseClassName = createCssClass(ref, true, transition); // The CSS class responsible for transitioning the properties
 
 	onMount(revealNode);
 
+	// Logging initial options and configurations info
 	const canDebug = config.dev && debug && ref !== '';
 	const highlightText = `color: ${highlightLogs ? highlightColor : '#B4BEC8'}`;
 
-	// Logging initial options and configurations info
 	if (canDebug) {
 		console.groupCollapsed(`%cRef: ${ref}`, highlightText);
 
@@ -285,12 +314,12 @@ export const reveal = (node: HTMLElement, options: IOptions = init): IReturnActi
 		console.groupEnd();
 	}
 
+	// Checking if page was reloaded
 	let reloaded = false;
 	const unsubscribeReloaded = reloadStore.subscribe((value: boolean) => (reloaded = value));
-
 	const navigation = window.performance.getEntriesByType('navigation');
-	let navigationType: string | number = '';
 
+	let navigationType: string | number = '';
 	if (navigation.length > 0) {
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignoreq
@@ -299,24 +328,22 @@ export const reveal = (node: HTMLElement, options: IOptions = init): IReturnActi
 		// Using deprecated navigation object as a last resort to detect a page reload
 		navigationType = window.performance.navigation.type; // NOSONAR
 	}
-
 	if (navigationType === 'reload' || navigationType === 1) reloadStore.set(true);
-
 	if (disable || (config.once && reloaded)) return {};
 
+	// Setting up the styles
 	let styleTagExists = false;
 	const unsubscribeStyleTag = styleTagStore.subscribe((value: boolean) => (styleTagExists = value));
 
 	if (!styleTagExists) {
-		createStylesheet(finalOptions);
+		createStylesheet();
 		styleTagStore.set(true);
 	}
 
 	onRevealStart(revealNode);
+	activateRevealNode(revealNode, className, baseClassName, finalOptions);
 
-	activateRevealNode(revealNode, finalOptions);
-
-	const ObserverInstance = createObserver(canDebug, highlightText, revealNode, finalOptions);
+	const ObserverInstance = createObserver(canDebug, highlightText, revealNode, finalOptions, className);
 	ObserverInstance.observe(revealNode);
 
 	console.groupEnd();
