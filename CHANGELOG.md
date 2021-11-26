@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Stopped using inline styles in favor of proper classes
+- Better internal project structure
+
+### Fixed
+- Same type transitions now don't share properties anymore
 
 ## [0.3.1] - 2021-11-18
 ### Fixed
