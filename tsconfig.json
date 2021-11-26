@@ -19,10 +19,7 @@
 		"declaration": true,
 		"declarationDir": "dist/types",
 		"noEmitOnError": true,
-		"strict": true,
-		"paths": {
-			"@core/*": ["src/internal/*"]
-		}
+		"strict": true
 	},
-	"include": ["./src", "./tests"]
+	"include": ["./src"]
 }

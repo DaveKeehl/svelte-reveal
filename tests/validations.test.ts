@@ -1,4 +1,4 @@
-import { hasValidRange, isPositive, isPositiveInteger } from '@core/validations';
+import { hasValidRange, isPositive, isPositiveInteger } from '../src/internal/validations';
 
 test('hasValidRange', () => {
 	expect(hasValidRange(100, 0, 200)).toBe(true);

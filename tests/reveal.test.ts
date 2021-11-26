@@ -1,8 +1,8 @@
-import { reveal } from '@core/reveal';
-import { init } from '@core/config';
-import { setConfig, setDefaultOptions } from '@core/API';
-import type { IOptions } from '@core/types';
-import { clone } from '@core/utils';
+import { reveal } from '../src/internal/reveal';
+import { init } from '../src/internal/config';
+import { setConfig, setDefaultOptions } from '../src/internal/API';
+import type { IOptions } from '../src/internal/types';
+import { clone } from '../src/internal/utils';
 
 beforeEach(() => {
 	setConfig({

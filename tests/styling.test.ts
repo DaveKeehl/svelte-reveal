@@ -1,5 +1,5 @@
-import { init, config } from '@core/config';
-import { setConfig } from '@core/API';
+import { init, config } from '../src/internal/config';
+import { setConfig } from '../src/internal/API';
 import {
 	createStylesheet,
 	hasOverlappingBreakpoints,
@@ -9,9 +9,9 @@ import {
 	addMediaQueries,
 	getCssRules,
 	getEasing
-} from '@core/styling';
-import type { Responsive, IOptions, Transitions, CustomEasing } from '@core/types';
-import { clean } from '@core/utils';
+} from '../src/internal/styling';
+import type { Responsive, IOptions, Transitions, CustomEasing } from '../src/internal/types';
+import { clean } from '../src/internal/utils';
 
 beforeEach(() => {
 	setConfig({
