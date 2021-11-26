@@ -1,4 +1,4 @@
-import { config } from '../src/internal/config';
+import { config } from '@core/config';
 import {
 	setDev,
 	setOnce,
@@ -12,9 +12,9 @@ import {
 	setObserverRootMargin,
 	setObserverThreshold,
 	setConfig
-} from '../src/internal/API';
-import type { IConfig } from '../src/internal/types';
-import { getConfigClone } from '../src/internal/utils';
+} from '@core/API';
+import type { IConfig } from '@core/types';
+import { getConfigClone } from '@core/utils';
 
 beforeEach(() => {
 	setConfig({

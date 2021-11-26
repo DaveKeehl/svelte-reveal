@@ -1,4 +1,4 @@
-export { reveal } from './internal/reveal';
+export { reveal } from '@core/reveal';
 export {
 	setDev,
 	setOnce,
@@ -13,4 +13,4 @@ export {
 	setObserverThreshold,
 	setConfig,
 	setDefaultOptions
-} from './internal/API';
+} from '@core/API';

@@ -1,7 +1,7 @@
-import { init } from '../src/internal/config';
-import { setConfig } from '../src/internal/API';
-import { createStylesheet } from '../src/internal/styling';
-import type { IOptions } from '../src/internal/types';
+import { init } from '@core/config';
+import { setConfig } from '@core/API';
+import { createStylesheet } from '@core/styling';
+import type { IOptions } from '@core/types';
 import {
 	checkOptions,
 	markRevealNode,
