@@ -1,36 +1,7 @@
-import { init, setConfig, reveal, setDefaultOptions } from '../src/internal/index';
+import { init } from '../src/internal/config';
+import { setDefaultOptions } from '../src/internal/API';
 import type { IOptions } from '../src/internal/types';
 import { clone } from '../src/internal/utils';
-
-beforeEach(() => {
-	setConfig({
-		dev: true,
-		once: false,
-		responsive: {
-			mobile: {
-				enabled: true,
-				breakpoint: 425
-			},
-			tablet: {
-				enabled: true,
-				breakpoint: 768
-			},
-			laptop: {
-				enabled: true,
-				breakpoint: 1440
-			},
-			desktop: {
-				enabled: true,
-				breakpoint: 2560
-			}
-		},
-		observer: {
-			root: null,
-			rootMargin: '0px 0px 0px 0px',
-			threshold: 0.6
-		}
-	});
-});
 
 test('Checking init values', () => {
 	expect(init.disable).toBe(false);
@@ -93,30 +64,4 @@ describe('setDefaultOptions', () => {
 		expect(setDefaultOptions(newOptions).delay).toBe(0);
 		expect(Object.keys(setDefaultOptions(newOptions)).length).toBe(30);
 	});
-});
-
-describe('reveal', () => {
-	test('Should throw an error when using invalid options', () => {
-		const node = document.createElement('p');
-		const invalidOptions: IOptions = {
-			threshold: 1.2,
-			opacity: 0,
-			delay: -200,
-			duration: 2000,
-			blur: -5,
-			scale: 0
-		};
-		expect(() => reveal(node, invalidOptions)).toThrowError('Invalid options');
-	});
-
-	/**
-	 * TO BE CONTINUED
-	 *
-	 * svelte-reveal in order to work needs:
-	 * - a stylesheet
-	 * - css classes for each type of animation
-	 * - each class correctly written with browser vendors and media queries
-	 * - the targeted elements receive a css class
-	 * - the targeted elements get their new css class taken away
-	 */
 });

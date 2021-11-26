@@ -1,7 +1,7 @@
-import type { Transitions, IOptions, Easing, CustomEasing, Responsive, IDevice, Devices } from './types';
-import { init, config } from './index';
+import { init, config } from './config';
 import { markRevealNode, clean } from './utils';
 import { isPositiveInteger } from './validations';
+import type { Transitions, IOptions, Easing, CustomEasing, Responsive, IDevice, Devices } from './types';
 
 /**
  * Creates the stylesheet for the reveal animation styles.

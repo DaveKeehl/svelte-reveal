@@ -1,4 +1,5 @@
-import { init, setConfig } from '../src/internal/index';
+import { init } from '../src/internal/config';
+import { setConfig } from '../src/internal/API';
 import { createStylesheet } from '../src/internal/styling';
 import type { IOptions } from '../src/internal/types';
 import {

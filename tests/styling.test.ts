@@ -1,4 +1,5 @@
-import { init, config, setConfig } from '../src/internal';
+import { init, config } from '../src/internal/config';
+import { setConfig } from '../src/internal/API';
 import {
 	createStylesheet,
 	hasOverlappingBreakpoints,

@@ -1,3 +1,4 @@
+export { reveal } from './internal/reveal';
 export {
 	setDev,
 	setOnce,
@@ -11,6 +12,5 @@ export {
 	setObserverRootMargin,
 	setObserverThreshold,
 	setConfig,
-	setDefaultOptions,
-	reveal
-} from './internal';
+	setDefaultOptions
+} from './internal/API';

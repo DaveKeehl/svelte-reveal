@@ -1,9 +1,8 @@
 import seedrandom from 'seedrandom';
-
-import type { IOptions, IConfig, Transitions } from './types';
-import { init, config } from './index';
+import { init, config } from './config';
 import { addMediaQueries, addVendors, getCssRules, getEasing } from './styling';
 import { hasValidRange, isPositive } from './validations';
+import type { IOptions, IConfig, Transitions } from './types';
 
 /**
  * Create a unique CSS class name for the target element.

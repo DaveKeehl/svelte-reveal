@@ -1,6 +1,6 @@
+import { config } from '../src/internal/config';
 import {
 	setDev,
-	config,
 	setOnce,
 	setDeviceStatus,
 	setDevicesStatus,
@@ -12,7 +12,7 @@ import {
 	setObserverRootMargin,
 	setObserverThreshold,
 	setConfig
-} from '../src/internal';
+} from '../src/internal/API';
 import type { IConfig } from '../src/internal/types';
 import { getConfigClone } from '../src/internal/utils';
 
