@@ -4,6 +4,65 @@ import { isPositiveInteger } from './validations';
 import type { Transitions, IOptions, Easing, CustomEasing, Responsive, IDevice, Devices } from './types';
 
 /**
+ * Generate the main CSS for the target element.
+ * @param className - The main CSS class of the target element
+ * @param options - The options to be used when creating the CSS
+ * @returns The main CSS for the target element
+ */
+export const createMainCss = (className: string, options: Required<IOptions>): string => {
+	const { transition } = options;
+
+	return `
+		.${className} {
+			${getCssRules(transition, options)}
+		}
+	`;
+};
+
+/**
+ * Generate the transition CSS for the target element.
+ * @param className - The transition CSS class of the target element
+ * @param options - The options to be used when creating the CSS
+ * @returns The transition CSS for the target element
+ */
+export const createTransitionCss = (className: string, options: Required<IOptions>) => {
+	const { duration, delay, easing, customEasing } = options;
+
+	const tmp = addVendors(`transition: all ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEasing)};`);
+
+	return `
+		.${className} {
+			${tmp}
+		}
+	`;
+};
+
+/**
+ * Get the new updated styles to work both on the previously activated elements and the currently target element.
+ * @param oldStyles - The previous styles present in the stylesheet
+ * @param mainCss - The name of the main CSS class of the current target element
+ * @param transitionCss - The name of the CSS class used for the transitioning of the current target element
+ * @returns The final updated styles to be injected into the stylesheet
+ */
+export const getUpdatedStyles = (oldStyles: string, mainCss: string, transitionCss: string): string => {
+	const prevStyles = getMinifiedStylesFromQuery(oldStyles);
+	const newStyles = clean([mainCss, transitionCss].join(' '));
+	const decorated = addMediaQueries([prevStyles, newStyles].join(' '));
+	return decorated.trim();
+};
+
+/**
+ * Extracts and minifies styles nested inside a media query.
+ * @param query - The query to extract the styles from
+ * @returns The nested styles
+ */
+export const getMinifiedStylesFromQuery = (query: string): string => {
+	const cleaned = clean(query.trim());
+	if (cleaned === '' || !cleaned.startsWith('@media')) return cleaned;
+	return clean(cleaned.replace(/{/, '___').split('___')[1].slice(0, -1).trim());
+};
+
+/**
  * Creates the stylesheet for the reveal animation styles.
  */
 export const createStylesheet = (): void => {

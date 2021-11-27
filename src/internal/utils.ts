@@ -1,6 +1,6 @@
 import seedrandom from 'seedrandom';
 import { init, config } from './config';
-import { addMediaQueries, addVendors, getCssRules, getEasing } from './styling';
+import { createMainCss, createTransitionCss, getUpdatedStyles } from './styling';
 import { hasValidRange, isPositive } from './validations';
 import type { IOptions, IConfig, Transitions } from './types';
 
@@ -43,28 +43,13 @@ export const activateRevealNode = (
 	baseClassName: string,
 	options: Required<IOptions>
 ): HTMLElement => {
-	const { transition, duration, delay, easing, customEasing } = options;
-
 	markRevealNode(revealNode);
-
-	const mainCss = `
-		.${className} {
-			${getCssRules(transition, options)}
-		}
-	`;
-
-	const tmp = addVendors(`transition: all ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEasing)};`);
-	const transitionCss = `
-		.${baseClassName} {
-			${tmp}
-		}
-	`;
-
+	const mainCss = createMainCss(className, options);
+	const transitionCss = createTransitionCss(baseClassName, options);
 	const stylesheet = document.querySelector('style[data-action="reveal"]');
 
 	if (stylesheet) {
-		const styles = stylesheet.innerHTML;
-		const newStyles = styles.concat(addMediaQueries(clean(mainCss)).concat(addMediaQueries(clean(transitionCss))));
+		const newStyles = getUpdatedStyles(stylesheet.innerHTML, clean(mainCss), clean(transitionCss));
 		stylesheet.innerHTML = newStyles;
 		revealNode.classList.add(className);
 		revealNode.classList.add(baseClassName);
@@ -148,7 +133,11 @@ export const clone = <T>(item: T): T => JSON.parse(JSON.stringify(item));
  * @param styles The string to be cleaned
  * @returns The cleaned string
  */
-export const clean = (styles: string): string => styles.trim().replace(/[\n|\t]/g, '');
+export const clean = (styles: string): string =>
+	styles
+		.trim()
+		.replace(/[\n|\t]/g, '')
+		.replace(/\s(\s+)/g, ' ');
 
 /**
  * Get a clone of the global configuration used by the library.

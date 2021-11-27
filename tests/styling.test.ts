@@ -8,10 +8,14 @@ import {
 	addVendors,
 	addMediaQueries,
 	getCssRules,
-	getEasing
+	getEasing,
+	getMinifiedStylesFromQuery,
+	createMainCss,
+	createTransitionCss,
+	getUpdatedStyles
 } from '../src/internal/styling';
 import type { Responsive, IOptions, Transitions, CustomEasing } from '../src/internal/types';
-import { clean } from '../src/internal/utils';
+import { clean, createCssClass } from '../src/internal/utils';
 
 beforeEach(() => {
 	setConfig({
@@ -40,6 +44,60 @@ beforeEach(() => {
 			rootMargin: '0px 0px 0px 0px',
 			threshold: 0.6
 		}
+	});
+});
+
+describe('getStylesFromQueries', () => {
+	test('Just minifies when no media query is used', () => {
+		const tree = `
+			parent: {
+				children: {
+					children: {
+						res: "bingo"
+					}
+				}
+			}
+		`;
+		expect(getMinifiedStylesFromQuery(tree)).toStrictEqual('parent: {children: {children: {res: "bingo"}}}');
+	});
+
+	test('Correctly extracts inner styles', () => {
+		const tree = `
+			@media (min-width: 320px) and (max-width: 1080px) {
+				parent: {
+					children: {
+						children: {
+							res: "bingo"
+						}
+					}
+				}
+			}
+		`;
+		expect(getMinifiedStylesFromQuery(tree)).toStrictEqual('parent: {children: {children: {res: "bingo"}}}');
+	});
+});
+
+describe('getUpdatedStyles', () => {
+	const oldStyles = `
+		.class1 {
+			opacity: 0;
+		}
+		.class2 {
+			opacity: 1;
+		}
+	`;
+	const mainCssClass = createCssClass('', false, 'fly');
+	const baseCssClass = createCssClass('', true, 'fly');
+	const mainCss = createMainCss(mainCssClass, init);
+	const transitionCss = createTransitionCss(baseCssClass, init);
+	const updatedStyles = getUpdatedStyles(oldStyles, mainCss, transitionCss);
+
+	test('Has no media queries by default', () => {
+		expect((updatedStyles.match(/@media/g) || []).length).toBe(0);
+	});
+
+	test('Has only one media query when responsiveness is applied', () => {
+		// TODO
 	});
 });
 

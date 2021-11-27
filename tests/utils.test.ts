@@ -80,6 +80,32 @@ describe('activateRevealNode', () => {
 		createStylesheet();
 		expect(Object.values(activateRevealNode(node, className, baseClassName, init).classList)).toContain(baseClassName);
 	});
+
+	// test('Stylesheet only has one set of media queries', () => {
+	// 	document.body.innerHTML = `
+	// 		<!DOCTYPE html>
+	// 		<html lang="en">
+	// 			<head>
+	// 				<meta charset="UTF-8">
+	// 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	// 				<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	// 				<title>HTML 5 Boilerplate</title>
+	// 			</head>
+	// 			<body>
+	// 			<script src="index.js"></script>
+	// 			</body>
+	// 		</html>
+	// 	`;
+	// 	createStylesheet();
+	// 	// console.log(document.body.innerHTML);
+	// 	// activateRevealNode(node, className, baseClassName, init);
+	// 	// const stylesheet = document.querySelector('style[data-action="reveal"]');
+	// 	// if (stylesheet) {
+	// 	// 	const styles = stylesheet.innerHTML;
+	// 	// 	const split = styles.split(/@media/g);
+	// 	// 	expect(split.length).toBe(2);
+	// 	// }
+	// });
 });
 
 describe('getRevealNode', () => {
