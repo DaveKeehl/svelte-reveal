@@ -73,5 +73,9 @@
 		"reportPath": "coverage",
 		"reportFile": "test-report.xml",
 		"indent": 4
+	},
+	"funding": {
+		"type": "ko-fi",
+		"url": "https://ko-fi.com/davekeehl"
 	}
 }
