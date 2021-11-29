@@ -1,15 +1,10 @@
 import { init } from '../src/internal/config';
 import { setConfig } from '../src/internal/API';
-import { createStylesheet } from '../src/internal/styling';
+import { createClassNames, createStylesheet } from '../src/internal/styling';
 import type { IOptions } from '../src/internal/types';
-import {
-	checkOptions,
-	markRevealNode,
-	activateRevealNode,
-	getRevealNode,
-	clean,
-	createCssClass
-} from '../src/internal/utils';
+import { clean } from '../src/internal/utils';
+import { markRevealNode, activateRevealNode, getRevealNode } from '../src/internal/DOM';
+import { checkOptions } from '../src/internal/validations';
 
 beforeEach(() => {
 	setConfig({
@@ -55,8 +50,8 @@ describe('markRevealNode', () => {
 
 describe('activateRevealNode', () => {
 	const node = document.createElement('div');
-	const className = createCssClass(init.ref, false, init.transition);
-	const baseClassName = createCssClass(init.ref, true, init.transition);
+	const className = createClassNames(init.ref, false, init.transition);
+	const baseClassName = createClassNames(init.ref, true, init.transition);
 
 	test('The reveal node has no css class when stylesheet does not exist', () => {
 		expect(Object.values(activateRevealNode(node, className, baseClassName, init).classList)).toStrictEqual([]);
