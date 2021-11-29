@@ -4,35 +4,35 @@
 
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/DaveKeehl/svelte-reveal/tree/develop)  ![npm](https://img.shields.io/npm/v/svelte-reveal)  [![CI/CD](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml/badge.svg)](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml)  ![GitHub](https://img.shields.io/github/license/davekeehl/svelte-reveal)  [![codecov](https://codecov.io/gh/DaveKeehl/svelte-reveal/branch/develop/graph/badge.svg?token=AL1KI5XRDF)](https://codecov.io/gh/DaveKeehl/svelte-reveal)
 
-> ⚠️ svelte-reveal is currently in beta. Do you want to [contribute](https://github.com/DaveKeehl/svelte-reveal/issues)? Do you want to [report a bug](https://github.com/DaveKeehl/svelte-reveal/issues)?
+> ⚠️&nbsp;&nbsp;svelte-reveal is currently in beta. Do you want to [contribute](https://github.com/DaveKeehl/svelte-reveal/issues)? Do you want to [report a bug](https://github.com/DaveKeehl/svelte-reveal/issues)?
 
-> ⚠️ Support for SvelteKit is currently experimental
+> ⚠️&nbsp;&nbsp;Support for SvelteKit is currently experimental
 
 svelte-reveal is a library created with the purpose of helping [Svelte](https://svelte.dev/) users add reveal on scroll transitions to their web applications. This library leverages the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) in order to know when to trigger the animations.
 
-## ✨ Features
+## ✨&nbsp;&nbsp;Features
 
 - Can be used with zero config
 - Highly customizable transitions
 - Integrated performant Intersection Observer API
 - TypeScript ready
 
-## 📖 Table of Content
+## 📖&nbsp;&nbsp;Table of Content
 
-1. [Usage](#Usage)
-2. [Demo](#Demo)
-3. [Why svelte-reveal](#Why-svelte-reveal)
-4. [Options](#Options)
-5. [Global config](#Global-config)
-6. [API](#API)
-7. [Suggestions](#Suggestions)
-8. [Troubleshooting](#Troubleshooting)
-9. [Funding](#Funding)
-10. [Versioning](#Versioning)
-11. [Changelog](#Changelog)
-12. [License](#License)
+1. [Usage](#usage)
+2. [Demo](#demo)
+3. [Why svelte-reveal](#why-svelte-reveal)
+4. [Options](#options)
+5. [Global config](#global-config)
+6. [API](#api)
+7. [Suggestions](#suggestions)
+8. [Troubleshooting](#troubleshooting)
+9. [Funding](#funding)
+10. [Versioning](#versioning)
+11. [Changelog](#changelog)
+12. [License](#license)
 
-## 🔨 Usage
+## 🔨&nbsp;&nbsp;Usage
 
 1. Install the library. You can use either [npm](https://www.npmjs.com/):
 
@@ -93,11 +93,11 @@ docker pull davekeehl/svelte-reveal:latest
 
 You can also use the provided Dockerfile in the repository as a development environment. You can read more [here](https://code.visualstudio.com/docs/remote/containers).
 
-## 🕺🏻 Demo
+## 🕺🏻&nbsp;&nbsp;Demo
 
 In this [Svelte REPL](https://svelte.dev/repl/1cf37b0947ac46b8ae9cc791abda7159?version=3.44.1) I created you can see svelte-reveal in action.
 
-## 🤔 Why svelte-reveal
+## 🤔&nbsp;&nbsp;Why svelte-reveal
 
 If you happened to scout the internet for other similar libraries, you would have noticed that other authors have decided to create their own library using Svelte [slots](https://svelte.dev/docs#slot) (similar to [React children](https://reactjs.org/docs/composition-vs-inheritance.html)). There is nothing wrong with that approach, but in my opinion it goes a bit against one of Svelte's core purposes: writing less code. Having to wrap every to-be-transitioned component adds 2 extra lines of code each time, making your files unnecessarily bloated for such a simple add-on.
 
@@ -105,7 +105,7 @@ You might have also noticed people adding event listeners to the window object, 
 
 Instead, I decided to use Svelte [actions](https://svelte.dev/docs#use_action), which are functions you can attach to a DOM element and that allow you to get access to that element and its lifecycle. They take up considerably less space and so far I haven't encountered any obstacle or performance drawback. Morever, this library is backed by the Intersection Observer API, which is great for performance.
 
-## ⛩ Options
+## ⛩&nbsp;&nbsp;Options
 
 Depending on the use case, you can either use this library as-is (which applies some [default styles](https://github.com/DaveKeehl/svelte-reveal/blob/main/src/internal/index.ts#L26-L57) I have chosen), or customize it to your liking. If you choose to do so, you can pass an object to this action containing additional options.
 
@@ -155,7 +155,7 @@ Among the available options you can set, there are also some callback functions 
 
 
 
-## 📄 Global config
+## 📄&nbsp;&nbsp;Global config
 
 This library is globally configured as follows right of out the box:
 
@@ -183,9 +183,9 @@ This library is globally configured as follows right of out the box:
 
 
 
-## ⚡️ API
+## ⚡️&nbsp;&nbsp;API
 
-> 💡 All API functions return the global config object with the updated properties.
+> 💡&nbsp;&nbsp;All API functions return the global config object with the updated properties.
 
 svelte-reveal also exposes several functions you can call to change the [global configuration](#Global-config) of this library.
 
@@ -328,7 +328,7 @@ interface IOptions {
 | ------------------------- | -------------- | ------------------------------------------------------------ |
 | ```(options: IOptions)``` | ```IOptions``` | You can use this function to override the global default options of the reveal effect. It can be useful when you want a specific option for many elements, so that you don't have to change it for every element individually. |
 
-## 👀 Suggestions
+## 👀&nbsp;&nbsp;Suggestions
 
 In order to take full advantage of this library, I suggest you to create some environment variables to keep track of the environment you are currently in (e.g. development, staging, production) and to leverage NPM scripts to update those variables. [This article](https://www.twilio.com/blog/working-with-environment-variables-in-node-js-html) explains well this concept.
 
@@ -336,24 +336,24 @@ That way you can for example set the config ```dev``` property to ```false``` wh
 
 If you use [SvelteKit](https://kit.svelte.dev/), this feature is available right out of the box with the [$app/env](https://kit.svelte.dev/docs#modules-$app-env) module.
 
-> ⚠️ Support for SvelteKit is currently experimental
+> ⚠️&nbsp;&nbsp;Support for SvelteKit is currently experimental
 
-## 🤕 Troubleshooting
+## 🤕&nbsp;&nbsp;Troubleshooting
 
 Feel free to [open a new issue](https://github.com/DaveKeehl/svelte-reveal/issues/new/choose) in case of any problems.
 
-## ☕️ Funding
+## ☕️&nbsp;&nbsp;Funding
 
 [Want to buy me a coffee?](https://ko-fi.com/davekeehl) 
 
-## 📚 Versioning
+## 📚&nbsp;&nbsp;Versioning
 
 This project uses [Semantic Versioning](https://semver.org/) to keep track of its version number.
 
-## ✍🏻 Changelog
+## ✍🏻&nbsp;&nbsp;Changelog
 
 [CHANGELOG](https://github.com/DaveKeehl/svelte-reveal/blob/develop/CHANGELOG.md)
 
-## 👨🏻‍⚖️ License
+## 👨🏻‍⚖️&nbsp;&nbsp;License
 
 [MIT](https://github.com/DaveKeehl/svelte-reveal/blob/develop/LICENSE)
