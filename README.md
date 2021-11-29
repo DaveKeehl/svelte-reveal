@@ -24,7 +24,7 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
 3. [Why svelte-reveal](#why-svelte-reveal)
 4. [Options](#options)
 5. [Global config](#global-config)
-6. [API](#api)
+6. [API](#API)
 7. [Suggestions](#suggestions)
 8. [Troubleshooting](#troubleshooting)
 9. [Funding](#funding)
@@ -83,7 +83,7 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
    ```
 
 
-### Docker
+### 🐳&nbsp;&nbsp;Docker
 
 A Docker image is also available on [DockerHub](https://hub.docker.com/):
 
@@ -141,7 +141,7 @@ Keep in mind that these options are applied to the single DOM element you add sv
 
 Among the available options you can set, there are also some callback functions you can leverage to inject some code during specific moments of the lifecycle of the nodes attached to this action:
 
-### Callbacks
+### 🤙🏻&nbsp;&nbsp;Callbacks
 
 | Name          | Args                      | Return     | Description                                                  |
 | ------------- | ------------------------- | ---------- | ------------------------------------------------------------ |
