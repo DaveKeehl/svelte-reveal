@@ -12,9 +12,9 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
 
 ## ✨&nbsp;&nbsp;Features
 
-- Can be used with zero config
+- Zero config Svelte action
 - Highly customizable transitions
-- Integrated performant Intersection Observer API
+- Integrates a performant intersection observer
 - TypeScript ready
 
 ## 📖&nbsp;&nbsp;Table of Content
@@ -107,7 +107,7 @@ Instead, I decided to use Svelte [actions](https://svelte.dev/docs#use_action), 
 
 ## ⛩&nbsp;&nbsp;Options
 
-Depending on the use case, you can either use this library as-is (which applies some [default styles](https://github.com/DaveKeehl/svelte-reveal/blob/main/src/internal/index.ts#L26-L57) I have chosen), or customize it to your liking. If you choose to do so, you can pass an object to this action containing additional options.
+Depending on the use case, you can either use this library as-is (which applies some [default styles](https://github.com/DaveKeehl/svelte-reveal/blob/main/src/internal/index.ts#L26-L57)), or customize it to your liking. If you choose to do so, you can pass an object to this action containing additional options.
 
 Keep in mind that these options are applied to the single DOM element you add svelte-reveal to. For global and more in-depth settings, go to the [API](#API) section.
 
@@ -117,15 +117,15 @@ Keep in mind that these options are applied to the single DOM element you add sv
 | debug          | ```boolean```      | ```false```                  | It enables/disables debugging mode for the targeted DOM element. This will log all options and configs to the console.<br />In order to be able to use this mode, you are required to also set the ```ref``` property. |
 | ref            | ```string```       | ```""```                     | When ```debug``` is set to ```true```, you are required to specificy a ```ref``` string. When multiple DOM nodes have ```debug``` mode enabled, ```ref``` strings allow you to know to which DOM node a console log statement belongs to. |
 | highlightLogs  | ```boolean```      | ```false```                  | When set to ```true``` the console logs of the target node get colored, making it easier to see them quicker among many other logs. |
-| highlightColor | ```string```       | ```"tomato"```               | You can use this option to tweak the console logs when ```highlightLogs``` is set to ```true```. |
+| highlightColor | ```string```       | ```"tomato"```               | You can use this option to tweak the console logs color when ```highlightLogs``` is set to ```true```. |
 | root           | ```ObserverRoot``` | ```null```                   | The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer API. |
 | marginTop      | ```number```       | ```0```                      | Top margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
 | marginBottom   | ```number```       | ```0```                      | Bottom margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
 | marginLeft     | ```number```       | ```0```                      | Left margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
 | marginRight    | ```number```       | ```0```                      | Right margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
 | threshold      | ```number```       | ```0.6```                    | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver) (in percentage from ```0.0``` to ```1.0```) property used by the Intersection Observer API to know when its target element is considered visible or not. |
-| transition     | ```string```       | ```"fly"```                  | The animation that will be triggered when your target node becomes visible.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/main/src/internal/types.ts#L226) the full list of available transitions. |
-| reset          | ```boolean```      | ```false```                  | When set to true, the node transitions out when it's out of view from the Intersection Observer.<br /><br />⚠️ Be careful not to overuse this option, as it prevents the Intersection Observer to stop observing the target node. Performance is therefore not guaranteed when many elements have reset set to ```true```. |
+| transition     | ```string```       | ```"fly"```                  | The animation that will be triggered when your target node becomes visible.<br />Read more [in this subsection](###transitions) for a comprehensive explanation of the full list of available transitions. |
+| reset          | ```boolean```      | ```false```                  | When set to true, the node transitions out when it's out of view.<br /><br />⚠️ Be careful not to overuse this option, as it prevents the Intersection Observer to stop observing the target node. Performance is therefore not guaranteed when many elements have reset set to ```true```. |
 | delay          | ```number```       | ```0```                      | The amount of milliseconds (*ms*) you want to delay a given transition. |
 | duration       | ```number```       | ```800```                    | The amount of milliseconds (*ms*) you want a given transition to last. |
 | easing         | ```string```       | ```"custom"```               | The type of easing function you want to apply to a given element.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/main/src/internal/types.ts#L231-L257) the full list of available easing functions.<br />The default easing function used by svelte-reveal corresponds to the [CSS ease transition timing function](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function#values). |
@@ -137,11 +137,22 @@ Keep in mind that these options are applied to the single DOM element you add sv
 | blur           | ```number```       | ```16```                     | The starting blur value in pixels (*px*) of the ```"blur"``` transition. |
 | scale          | ```number```       | ```0```                      | The starting scale value in percentage (*%*) of the ```"scale"``` transition. |
 
+### 🪄&nbsp;&nbsp;Transitions
 
+The following are all the transitions available by svelte-reveal. The names listed in the table match the ones you can write in your source code. All transitions have the fade transition backed in.
 
-Among the available options you can set, there are also some callback functions you can leverage to inject some code during specific moments of the lifecycle of the nodes attached to this action:
+| Name  | Description                                                  |
+| ----- | ------------------------------------------------------------ |
+| fade  | The element fades in gracefully.<br />In practice: ```opacity: 0 -> 1``` |
+| fly   | The element fades in and performs a translation on the y-axis (vertical).<br />In practice: ```opacity: 0 -> 1``` and ```transform: translateY(-20px -> 0px) ``` |
+| slide | The element fades in and performs a translation on the x-axis (horizontal).<br />In practice: ```opacity: 0 -> 1``` and ```transform: translateX(-20px -> 0px)``` |
+| blur  | The element fades in and becomes unblurred.<br />In practice: ```opacity: 0 -> 1``` and ```filter: blur(8px -> 0px)``` |
+| scale | The element fades in and gets to the original size.<br />In practice: ```opacity: 0 -> 1``` and ```transform: scale(0 -> 1)``` |
+| spin  | The element fades in and gets to the original rotation degree.<br />In practice: ```opacity: 0 -> 1``` and ```transform: rotate(-360 -> 0)``` |
 
 ### 🤙🏻&nbsp;&nbsp;Callbacks
+
+Among the available options you can set, there are also some callback functions you can leverage to inject some code during specific moments of the lifecycle of the nodes attached to this action.
 
 | Name          | Args                      | Return     | Description                                                  |
 | ------------- | ------------------------- | ---------- | ------------------------------------------------------------ |
