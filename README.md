@@ -107,7 +107,7 @@ Instead, I decided to use Svelte [actions](https://svelte.dev/docs#use_action), 
 
 ## ⛩&nbsp;&nbsp;Options
 
-Depending on the use case, you can either use this library as-is (which applies some [default styles](https://github.com/DaveKeehl/svelte-reveal/blob/main/src/internal/index.ts#L26-L57)), or customize it to your liking. If you choose to do so, you can pass an object to this action containing additional options.
+Depending on the use case, you can either use this library as-is (which applies some [default styles](https://github.com/DaveKeehl/svelte-reveal/blob/main/src/internal/config.ts#L6-L37)), or customize it to your liking. If you choose to do so, you can pass an object to this action containing additional options.
 
 Keep in mind that these options are applied to the single DOM element you add svelte-reveal to. For global and more in-depth settings, go to the [API](#API) section.
 
