@@ -1,4 +1,4 @@
-import { config, setInit } from './config';
+import { config, init } from './config';
 import { hasValidBreakpoints } from './styling';
 import { getConfigClone } from './utils';
 import { checkOptions, hasValidRange } from './validations';
@@ -168,5 +168,5 @@ export const setConfig = (userConfig: IConfig): IConfig => {
  */
 export const setDefaultOptions = (options: IOptions): Required<IOptions> => {
 	const validOptions = checkOptions(options);
-	return setInit(validOptions);
+	return Object.assign(init, validOptions);
 };

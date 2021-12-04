@@ -66,12 +66,3 @@ export const config: IConfig = {
 		threshold: init.threshold
 	}
 };
-
-/**
- * Update the default styles (aka "init") object
- * @param newInit - The new object to be used
- * @returns The updated init object
- */
-export const setInit = (newInit: Required<IOptions>): Required<IOptions> => {
-	return Object.assign({}, init, newInit);
-};

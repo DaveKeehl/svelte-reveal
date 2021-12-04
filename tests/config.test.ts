@@ -37,31 +37,3 @@ test('Checking init values', () => {
 	expect(init.onUpdate(node)).toBe(null);
 	expect(init.onDestroy(node)).toBe(null);
 });
-
-describe('setDefaultOptions', () => {
-	test('Passing default options should return default options', () => {
-		const initOptions = clone(init);
-		const newOptions = clone(setDefaultOptions(init));
-		expect(newOptions).toStrictEqual(initOptions);
-	});
-
-	test('Should throw an error when some options are invalid', () => {
-		const invalidOptions: IOptions = {
-			blur: -20
-		};
-		expect(() => setDefaultOptions(invalidOptions)).toThrow('Invalid options');
-	});
-
-	test('Passing new valid options override the default ones', () => {
-		const newOptions: IOptions = {
-			blur: 20,
-			x: 50,
-			y: 100
-		};
-		expect(setDefaultOptions(newOptions).blur).toBe(20);
-		expect(setDefaultOptions(newOptions).x).toBe(50);
-		expect(setDefaultOptions(newOptions).y).toBe(100);
-		expect(setDefaultOptions(newOptions).delay).toBe(0);
-		expect(Object.keys(setDefaultOptions(newOptions)).length).toBe(30);
-	});
-});

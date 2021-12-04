@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - General improvement to README
 - Extended documentation for transitions in README
 
+### Fixed
+- ``setDefaultOptions`` now works as expected
+
 ## [0.3.2] - 2021-11-28
 ### Changed
 - Stopped using inline styles in favor of proper classes
