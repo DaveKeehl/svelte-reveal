@@ -44,11 +44,16 @@ export const createMainCss = (className: string, options: Required<IOptions>): s
 export const createTransitionCss = (className: string, options: Required<IOptions>) => {
 	const { duration, delay, easing, customEasing } = options;
 
-	const tmp = addVendors(`transition: all ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEasing)};`);
+	let styles = `
+		display: block;
+		width: fit-content;
+		transition: all ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEasing)};
+	`;
+	styles = addVendors(styles.trim());
 
 	return `
 		.${className} {
-			${tmp}
+			${styles}
 		}
 	`;
 };
