@@ -1,7 +1,4 @@
 import { init } from '../src/internal/config';
-import { setDefaultOptions } from '../src/internal/API';
-import type { IOptions } from '../src/internal/types';
-import { clone } from '../src/internal/utils';
 
 test('Checking init values', () => {
 	expect(init.disable).toBe(false);
