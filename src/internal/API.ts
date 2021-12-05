@@ -1,7 +1,7 @@
-import { config, setInit } from './config';
+import { config, init } from './config';
 import { hasValidBreakpoints } from './styling';
-import { getConfigClone, checkOptions } from './utils';
-import { hasValidRange } from './validations';
+import { getConfigClone } from './utils';
+import { checkOptions, hasValidRange } from './validations';
 import type { IConfig, Device, IDevice, Responsive, IObserverOptions, ObserverRoot, IOptions } from './types';
 
 /**
@@ -168,5 +168,5 @@ export const setConfig = (userConfig: IConfig): IConfig => {
  */
 export const setDefaultOptions = (options: IOptions): Required<IOptions> => {
 	const validOptions = checkOptions(options);
-	return setInit(validOptions);
+	return Object.assign(init, validOptions);
 };

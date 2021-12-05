@@ -12,10 +12,11 @@ import {
 	getMinifiedStylesFromQuery,
 	createMainCss,
 	createTransitionCss,
-	getUpdatedStyles
+	getUpdatedStyles,
+	createClassNames
 } from '../src/internal/styling';
 import type { Responsive, IOptions, Transitions, CustomEasing } from '../src/internal/types';
-import { clean, createCssClass } from '../src/internal/utils';
+import { clean } from '../src/internal/utils';
 
 beforeEach(() => {
 	setConfig({
@@ -86,8 +87,8 @@ describe('getUpdatedStyles', () => {
 			opacity: 1;
 		}
 	`;
-	const mainCssClass = createCssClass('', false, 'fly');
-	const baseCssClass = createCssClass('', true, 'fly');
+	const mainCssClass = createClassNames('', false, 'fly');
+	const baseCssClass = createClassNames('', true, 'fly');
 	const mainCss = createMainCss(mainCssClass, init);
 	const transitionCss = createTransitionCss(baseCssClass, init);
 	const updatedStyles = getUpdatedStyles(oldStyles, mainCss, transitionCss);

@@ -1,8 +1,9 @@
-import { createStylesheet } from './styling';
+import { createClassNames, createStylesheet } from './styling';
 import { config, init } from './config';
 import { styleTagStore, reloadStore } from './stores';
-import { createCssClass, checkOptions, getRevealNode, createObserver, activateRevealNode } from './utils';
 import type { IOptions, IReturnAction } from './types';
+import { getRevealNode, activateRevealNode, createObserver } from './DOM';
+import { checkOptions } from './validations';
 
 /**
  * Reveals a given node element on scroll
@@ -26,8 +27,8 @@ export const reveal = (node: HTMLElement, options: IOptions = init): IReturnActi
 	} = finalOptions;
 
 	const revealNode = getRevealNode(node);
-	const className = createCssClass(ref, false, transition); // The CSS class responsible for the animation: ;
-	const baseClassName = createCssClass(ref, true, transition); // The CSS class responsible for transitioning the properties
+	const className = createClassNames(ref, false, transition); // The CSS class responsible for the animation: ;
+	const baseClassName = createClassNames(ref, true, transition); // The CSS class responsible for transitioning the properties
 
 	onMount(revealNode);
 

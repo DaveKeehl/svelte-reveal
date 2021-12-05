@@ -1,4 +1,4 @@
-import { config } from '../src/internal/config';
+import { config, init } from '../src/internal/config';
 import {
 	setDev,
 	setOnce,
@@ -11,10 +11,11 @@ import {
 	setObserverRoot,
 	setObserverRootMargin,
 	setObserverThreshold,
-	setConfig
+	setConfig,
+	setDefaultOptions
 } from '../src/internal/API';
-import type { IConfig } from '../src/internal/types';
-import { getConfigClone } from '../src/internal/utils';
+import type { IConfig, IOptions } from '../src/internal/types';
+import { clone, getConfigClone } from '../src/internal/utils';
 
 beforeEach(() => {
 	setConfig({
@@ -322,6 +323,34 @@ describe('Testing API', () => {
 				config.observer.threshold = 1.5;
 				expect(() => setConfig(config)).toThrow('Threshold must be between 0.0 and 1.0');
 			});
+		});
+	});
+
+	describe('setDefaultOptions', () => {
+		test('Passing default options should return default options', () => {
+			const initOptions = clone(init);
+			const newOptions = clone(setDefaultOptions(init));
+			expect(newOptions).toStrictEqual(initOptions);
+		});
+
+		test('Should throw an error when some options are invalid', () => {
+			const invalidOptions: IOptions = {
+				blur: -20
+			};
+			expect(() => setDefaultOptions(invalidOptions)).toThrow('Invalid options');
+		});
+
+		test('Passing new valid options override the default ones', () => {
+			const newOptions: IOptions = {
+				blur: 20,
+				x: 50,
+				y: 100
+			};
+			expect(setDefaultOptions(newOptions).blur).toBe(20);
+			expect(setDefaultOptions(newOptions).x).toBe(50);
+			expect(setDefaultOptions(newOptions).y).toBe(100);
+			expect(setDefaultOptions(newOptions).delay).toBe(0);
+			expect(Object.keys(setDefaultOptions(newOptions)).length).toBe(30);
 		});
 	});
 });

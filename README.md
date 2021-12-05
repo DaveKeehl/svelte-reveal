@@ -4,35 +4,35 @@
 
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/DaveKeehl/svelte-reveal/tree/develop)  ![npm](https://img.shields.io/npm/v/svelte-reveal)  [![CI/CD](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml/badge.svg)](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml)  ![GitHub](https://img.shields.io/github/license/davekeehl/svelte-reveal)  [![codecov](https://codecov.io/gh/DaveKeehl/svelte-reveal/branch/develop/graph/badge.svg?token=AL1KI5XRDF)](https://codecov.io/gh/DaveKeehl/svelte-reveal)
 
-> ⚠️ svelte-reveal is currently in beta. Do you want to [contribute](https://github.com/DaveKeehl/svelte-reveal/issues)? Do you want to [report a bug](https://github.com/DaveKeehl/svelte-reveal/issues)?
+> ⚠️&nbsp;&nbsp;svelte-reveal is currently in beta. Do you want to [contribute](https://github.com/DaveKeehl/svelte-reveal/issues)? Do you want to [report a bug](https://github.com/DaveKeehl/svelte-reveal/issues)?
 
-> ⚠️ Support for SvelteKit is currently experimental
+> ⚠️&nbsp;&nbsp;Support for SvelteKit is currently experimental
 
 svelte-reveal is a library created with the purpose of helping [Svelte](https://svelte.dev/) users add reveal on scroll transitions to their web applications. This library leverages the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) in order to know when to trigger the animations.
 
-## ✨ Features
+## ✨&nbsp;&nbsp;Features
 
-- Can be used with zero config
+- Zero config Svelte action
 - Highly customizable transitions
-- Integrated performant Intersection Observer API
+- Integrates a performant intersection observer
 - TypeScript ready
 
-## 📖 Table of Content
+## 📖&nbsp;&nbsp;Table of Content
 
-1. [Usage](#Usage)
-2. [Demo](#Demo)
-3. [Why svelte-reveal](#Why-svelte-reveal)
-4. [Options](#Options)
-5. [Global config](#Global-config)
+1. [Usage](#usage)
+2. [Demo](#demo)
+3. [Why svelte-reveal](#why-svelte-reveal)
+4. [Options](#options)
+5. [Global config](#global-config)
 6. [API](#API)
-7. [Suggestions](#Suggestions)
-8. [Troubleshooting](#Troubleshooting)
-9. [Funding](#Funding)
-10. [Versioning](#Versioning)
-11. [Changelog](#Changelog)
-12. [License](#License)
+7. [Suggestions](#suggestions)
+8. [Troubleshooting](#troubleshooting)
+9. [Funding](#funding)
+10. [Versioning](#versioning)
+11. [Changelog](#changelog)
+12. [License](#license)
 
-## 🔨 Usage
+## 🔨&nbsp;&nbsp;Usage
 
 1. Install the library. You can use either [npm](https://www.npmjs.com/):
 
@@ -83,7 +83,7 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
    ```
 
 
-### Docker
+### 🐳&nbsp;&nbsp;Docker
 
 A Docker image is also available on [DockerHub](https://hub.docker.com/):
 
@@ -93,11 +93,11 @@ docker pull davekeehl/svelte-reveal:latest
 
 You can also use the provided Dockerfile in the repository as a development environment. You can read more [here](https://code.visualstudio.com/docs/remote/containers).
 
-## 🕺🏻 Demo
+## 🕺🏻&nbsp;&nbsp;Demo
 
 In this [Svelte REPL](https://svelte.dev/repl/1cf37b0947ac46b8ae9cc791abda7159?version=3.44.1) I created you can see svelte-reveal in action.
 
-## 🤔 Why svelte-reveal
+## 🤔&nbsp;&nbsp;Why svelte-reveal
 
 If you happened to scout the internet for other similar libraries, you would have noticed that other authors have decided to create their own library using Svelte [slots](https://svelte.dev/docs#slot) (similar to [React children](https://reactjs.org/docs/composition-vs-inheritance.html)). There is nothing wrong with that approach, but in my opinion it goes a bit against one of Svelte's core purposes: writing less code. Having to wrap every to-be-transitioned component adds 2 extra lines of code each time, making your files unnecessarily bloated for such a simple add-on.
 
@@ -105,9 +105,9 @@ You might have also noticed people adding event listeners to the window object, 
 
 Instead, I decided to use Svelte [actions](https://svelte.dev/docs#use_action), which are functions you can attach to a DOM element and that allow you to get access to that element and its lifecycle. They take up considerably less space and so far I haven't encountered any obstacle or performance drawback. Morever, this library is backed by the Intersection Observer API, which is great for performance.
 
-## ⛩ Options
+## ⛩&nbsp;&nbsp;Options
 
-Depending on the use case, you can either use this library as-is (which applies some [default styles](https://github.com/DaveKeehl/svelte-reveal/blob/main/src/internal/index.ts#L26-L57) I have chosen), or customize it to your liking. If you choose to do so, you can pass an object to this action containing additional options.
+Depending on the use case, you can either use this library as-is (which applies some [default styles](https://github.com/DaveKeehl/svelte-reveal/blob/main/src/internal/config.ts#L6-L37)), or customize it to your liking. If you choose to do so, you can pass an object to this action containing additional options.
 
 Keep in mind that these options are applied to the single DOM element you add svelte-reveal to. For global and more in-depth settings, go to the [API](#API) section.
 
@@ -117,15 +117,15 @@ Keep in mind that these options are applied to the single DOM element you add sv
 | debug          | ```boolean```      | ```false```                  | It enables/disables debugging mode for the targeted DOM element. This will log all options and configs to the console.<br />In order to be able to use this mode, you are required to also set the ```ref``` property. |
 | ref            | ```string```       | ```""```                     | When ```debug``` is set to ```true```, you are required to specificy a ```ref``` string. When multiple DOM nodes have ```debug``` mode enabled, ```ref``` strings allow you to know to which DOM node a console log statement belongs to. |
 | highlightLogs  | ```boolean```      | ```false```                  | When set to ```true``` the console logs of the target node get colored, making it easier to see them quicker among many other logs. |
-| highlightColor | ```string```       | ```"tomato"```               | You can use this option to tweak the console logs when ```highlightLogs``` is set to ```true```. |
+| highlightColor | ```string```       | ```"tomato"```               | You can use this option to tweak the console logs color when ```highlightLogs``` is set to ```true```. |
 | root           | ```ObserverRoot``` | ```null```                   | The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer API. |
 | marginTop      | ```number```       | ```0```                      | Top margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
 | marginBottom   | ```number```       | ```0```                      | Bottom margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
 | marginLeft     | ```number```       | ```0```                      | Left margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
 | marginRight    | ```number```       | ```0```                      | Right margin (in ```px``` or ```%```) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API. |
 | threshold      | ```number```       | ```0.6```                    | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver) (in percentage from ```0.0``` to ```1.0```) property used by the Intersection Observer API to know when its target element is considered visible or not. |
-| transition     | ```string```       | ```"fly"```                  | The animation that will be triggered when your target node becomes visible.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/main/src/internal/types.ts#L226) the full list of available transitions. |
-| reset          | ```boolean```      | ```false```                  | When set to true, the node transitions out when it's out of view from the Intersection Observer.<br /><br />⚠️ Be careful not to overuse this option, as it prevents the Intersection Observer to stop observing the target node. Performance is therefore not guaranteed when many elements have reset set to ```true```. |
+| transition     | ```string```       | ```"fly"```                  | The animation that will be triggered when your target node becomes visible.<br />Read more [in this subsection](#transitions) for a comprehensive explanation of the full list of available transitions. |
+| reset          | ```boolean```      | ```false```                  | When set to true, the node transitions out when it's out of view.<br /><br />⚠️ Be careful not to overuse this option, as it prevents the Intersection Observer to stop observing the target node. Performance is therefore not guaranteed when many elements have reset set to ```true```. |
 | delay          | ```number```       | ```0```                      | The amount of milliseconds (*ms*) you want to delay a given transition. |
 | duration       | ```number```       | ```800```                    | The amount of milliseconds (*ms*) you want a given transition to last. |
 | easing         | ```string```       | ```"custom"```               | The type of easing function you want to apply to a given element.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/main/src/internal/types.ts#L231-L257) the full list of available easing functions.<br />The default easing function used by svelte-reveal corresponds to the [CSS ease transition timing function](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function#values). |
@@ -137,11 +137,22 @@ Keep in mind that these options are applied to the single DOM element you add sv
 | blur           | ```number```       | ```16```                     | The starting blur value in pixels (*px*) of the ```"blur"``` transition. |
 | scale          | ```number```       | ```0```                      | The starting scale value in percentage (*%*) of the ```"scale"``` transition. |
 
+### 🪄&nbsp;&nbsp;Transitions
 
+The following are all the transitions available by svelte-reveal. The names listed in the table match the ones you can write in your source code. All transitions have the fade transition backed in.
 
-Among the available options you can set, there are also some callback functions you can leverage to inject some code during specific moments of the lifecycle of the nodes attached to this action:
+| Name  | Description                                                  |
+| ----- | ------------------------------------------------------------ |
+| fade  | The element fades in gracefully.<br />In practice: ```opacity: 0 -> 1``` |
+| fly   | The element fades in and performs a translation on the y-axis (vertical).<br />In practice: ```opacity: 0 -> 1``` and ```transform: translateY(-20px -> 0px) ``` |
+| slide | The element fades in and performs a translation on the x-axis (horizontal).<br />In practice: ```opacity: 0 -> 1``` and ```transform: translateX(-20px -> 0px)``` |
+| blur  | The element fades in and becomes unblurred.<br />In practice: ```opacity: 0 -> 1``` and ```filter: blur(8px -> 0px)``` |
+| scale | The element fades in and gets to the original size.<br />In practice: ```opacity: 0 -> 1``` and ```transform: scale(0 -> 1)``` |
+| spin  | The element fades in and gets to the original rotation degree.<br />In practice: ```opacity: 0 -> 1``` and ```transform: rotate(-360 -> 0)``` |
 
-### Callbacks
+### 🤙🏻&nbsp;&nbsp;Callbacks
+
+Among the available options you can set, there are also some callback functions you can leverage to inject some code during specific moments of the lifecycle of the nodes attached to this action.
 
 | Name          | Args                      | Return     | Description                                                  |
 | ------------- | ------------------------- | ---------- | ------------------------------------------------------------ |
@@ -155,7 +166,7 @@ Among the available options you can set, there are also some callback functions 
 
 
 
-## 📄 Global config
+## 📄&nbsp;&nbsp;Global config
 
 This library is globally configured as follows right of out the box:
 
@@ -183,9 +194,9 @@ This library is globally configured as follows right of out the box:
 
 
 
-## ⚡️ API
+## ⚡️&nbsp;&nbsp;API
 
-> 💡 All API functions return the global config object with the updated properties.
+> 💡&nbsp;&nbsp;All API functions return the global config object with the updated properties.
 
 svelte-reveal also exposes several functions you can call to change the [global configuration](#Global-config) of this library.
 
@@ -328,7 +339,7 @@ interface IOptions {
 | ------------------------- | -------------- | ------------------------------------------------------------ |
 | ```(options: IOptions)``` | ```IOptions``` | You can use this function to override the global default options of the reveal effect. It can be useful when you want a specific option for many elements, so that you don't have to change it for every element individually. |
 
-## 👀 Suggestions
+## 👀&nbsp;&nbsp;Suggestions
 
 In order to take full advantage of this library, I suggest you to create some environment variables to keep track of the environment you are currently in (e.g. development, staging, production) and to leverage NPM scripts to update those variables. [This article](https://www.twilio.com/blog/working-with-environment-variables-in-node-js-html) explains well this concept.
 
@@ -336,24 +347,24 @@ That way you can for example set the config ```dev``` property to ```false``` wh
 
 If you use [SvelteKit](https://kit.svelte.dev/), this feature is available right out of the box with the [$app/env](https://kit.svelte.dev/docs#modules-$app-env) module.
 
-> ⚠️ Support for SvelteKit is currently experimental
+> ⚠️&nbsp;&nbsp;Support for SvelteKit is currently experimental
 
-## 🤕 Troubleshooting
+## 🤕&nbsp;&nbsp;Troubleshooting
 
 Feel free to [open a new issue](https://github.com/DaveKeehl/svelte-reveal/issues/new/choose) in case of any problems.
 
-## ☕️ Funding
+## ☕️&nbsp;&nbsp;Funding
 
 [Want to buy me a coffee?](https://ko-fi.com/davekeehl) 
 
-## 📚 Versioning
+## 📚&nbsp;&nbsp;Versioning
 
 This project uses [Semantic Versioning](https://semver.org/) to keep track of its version number.
 
-## ✍🏻 Changelog
+## ✍🏻&nbsp;&nbsp;Changelog
 
 [CHANGELOG](https://github.com/DaveKeehl/svelte-reveal/blob/develop/CHANGELOG.md)
 
-## 👨🏻‍⚖️ License
+## 👨🏻‍⚖️&nbsp;&nbsp;License
 
 [MIT](https://github.com/DaveKeehl/svelte-reveal/blob/develop/LICENSE)

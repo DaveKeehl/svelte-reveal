@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.3] - 2021-12-05
+### Changed
+- Better internal architecture
+- General improvement to README
+- Extended documentation for transitions in README
+
+### Fixed
+- ``setDefaultOptions`` now works as expected
+- Scale and spin transitions now look much better
+
 ## [0.3.2] - 2021-11-28
 ### Changed
 - Stopped using inline styles in favor of proper classes
