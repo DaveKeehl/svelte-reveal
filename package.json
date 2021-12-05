@@ -65,7 +65,7 @@
 		"pretty-quick": "3.1.2",
 		"seedrandom": "3.0.5",
 		"svelte": "3.44.2",
-		"ts-jest": "27.0.7",
+		"ts-jest": "27.1.0",
 		"typescript": "4.5.2"
 	},
 	"type": "module",
