@@ -63,7 +63,7 @@ export const getRevealNode = (node: HTMLElement): HTMLElement => {
 /**
  * Creates a custom Intersection Observer for the reveal effect.
  * @param canDebug - Enables/disabled logging the observer notifications
- * @param highlightText - Whether the logs are colored or not
+ * @param highlightText - The color hex code to be used to color the logs
  * @param revealNode - The HTML node to observe
  * @param options - The reveal options
  * @param className - The CSS class to add/remove from/to the target element
