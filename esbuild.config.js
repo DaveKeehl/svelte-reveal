@@ -5,7 +5,7 @@ build({
 	outfile: 'dist/index.js',
 	bundle: true,
 	minify: false,
-	sourcemap: true,
+	sourcemap: false,
 	format: 'esm',
 	watch: process.argv[2] === '--watch'
 });
