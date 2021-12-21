@@ -14,15 +14,4 @@ describe('reveal', () => {
 		};
 		expect(() => reveal(node, invalidOptions)).toThrowError('Invalid options');
 	});
-
-	/**
-	 * TO BE CONTINUED
-	 *
-	 * svelte-reveal in order to work needs:
-	 * - a stylesheet
-	 * - css classes for each type of animation
-	 * - each class correctly written with browser vendors and media queries
-	 * - the targeted elements receive a css class
-	 * - the targeted elements get their new css class taken away
-	 */
 });
