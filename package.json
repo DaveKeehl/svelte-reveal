@@ -50,7 +50,7 @@
 	"devDependencies": {
 		"@types/babel__core": "7.1.18",
 		"@types/jest": "27.4.0",
-		"@types/seedrandom": "3.0.1",
+		"@types/seedrandom": "3.0.2",
 		"@typescript-eslint/eslint-plugin": "5.10.2",
 		"@typescript-eslint/parser": "5.10.2",
 		"esbuild": "0.14.18",
