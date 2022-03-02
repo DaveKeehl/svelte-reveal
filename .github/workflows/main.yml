@@ -20,7 +20,7 @@ jobs:
       new-version: ${{ toJSON(steps.package-version.outputs.current-version != steps.latest-tag.outputs.tag) }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
@@ -87,7 +87,7 @@ jobs:
           echo "New version: ${{ fromJSON(needs.CI.outputs.new-version) }}"
 
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Required due to the weg Git works, without it this action won't be able to find any or the correct tags
 
