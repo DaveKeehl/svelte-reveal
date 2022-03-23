@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Fixed some minor things in README
 - Version numbers in CHANGELOG now allow to compare changes with previous release
+## [0.5.0] - 2022-03-15
+### Changed
+- Documented how to use svelte-reveal with SvelteKit
 
 ## [0.4.0] - 2021-12-21
 ### Changed
