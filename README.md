@@ -123,7 +123,7 @@ In case of problems, please create a new issue and submit a bug report.
 </script>
 
 {#if show}
-<your-element-or-component />
+	<your-element-or-component />
 {/if}
 ```
 
