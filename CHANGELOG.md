@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed some minor things in README
 - Version numbers in CHANGELOG now allow to compare changes with previous release
 - Fixed some typos in some JSDoc
+- Separated some business logic into separate modules
+- Created unit tests for new modules
 
 ## [0.5.0] - 2022-03-15
 ### Changed
