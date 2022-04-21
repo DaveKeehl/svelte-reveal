@@ -8,7 +8,7 @@ import { checkOptions } from './validations';
 /**
  * Reveals a given node element on scroll
  * @param node - The DOM node you want to reveal on scroll
- * @param options - The custom options that will used to tweak the behavior of the animation of the node element
+ * @param options - The custom options that will be used to tweak the behavior of the animation of the node element
  * @returns An object containing update and/or destroy functions
  */
 export const reveal = (node: HTMLElement, options: IOptions = init): IReturnAction => {
