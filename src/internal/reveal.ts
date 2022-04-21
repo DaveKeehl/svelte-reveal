@@ -2,55 +2,26 @@ import { createClassNames, createStylesheet } from './styling';
 import { config, init } from './config';
 import { styleTagStore, reloadStore } from './stores';
 import type { IOptions, IReturnAction } from './types';
-import { getRevealNode, activateRevealNode, createObserver } from './DOM';
+import { getRevealNode, activateRevealNode, createObserver, logInfo } from './DOM';
 import { checkOptions } from './validations';
 
 /**
  * Reveals a given node element on scroll
  * @param node - The DOM node you want to reveal on scroll
  * @param options - The custom options that will be used to tweak the behavior of the animation of the node element
- * @returns An object containing update and/or destroy functions
+ * @returns An object containing the update and/or destroy functions
  */
 export const reveal = (node: HTMLElement, options: IOptions = init): IReturnAction => {
 	const finalOptions = checkOptions(options);
-	const {
-		transition,
-		disable,
-		debug,
-		ref,
-		highlightLogs,
-		highlightColor,
-		onRevealStart,
-		onMount,
-		onUpdate,
-		onDestroy
-	} = finalOptions;
+	const { transition, disable, ref, onRevealStart, onMount, onUpdate, onDestroy } = finalOptions;
 
 	const revealNode = getRevealNode(node);
-	const className = createClassNames(ref, false, transition); // The CSS class responsible for the animation: ;
+	const className = createClassNames(ref, false, transition); // The CSS class responsible for the animation
 	const baseClassName = createClassNames(ref, true, transition); // The CSS class responsible for transitioning the properties
 
 	onMount(revealNode);
 
-	// Logging initial options and configurations info
-	const canDebug = config.dev && debug && ref !== '';
-	const highlightText = `color: ${highlightLogs ? highlightColor : '#B4BEC8'}`;
-
-	if (canDebug) {
-		console.groupCollapsed(`%cRef: ${ref}`, highlightText);
-
-		console.groupCollapsed('%cNode', highlightText);
-		console.log(revealNode);
-		console.groupEnd();
-
-		console.groupCollapsed('%cConfig', highlightText);
-		console.log(config);
-		console.groupEnd();
-
-		console.groupCollapsed('%cOptions', highlightText);
-		console.log(finalOptions);
-		console.groupEnd();
-	}
+	const [canDebug, highlightText] = logInfo(finalOptions, revealNode);
 
 	// Checking if page was reloaded
 	let reloaded = false;

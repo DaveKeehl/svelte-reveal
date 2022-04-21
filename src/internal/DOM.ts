@@ -103,3 +103,34 @@ export const createObserver = (
 		});
 	}, config.observer);
 };
+
+/**
+ * Logging initial options and configurations info
+ * @param finalOptions - The options used to log
+ * @param revealNode - The DOM element to be revealed
+ * @returns A tuple consisting of canDebug and highlightText
+ */
+export const logInfo = (finalOptions: Required<IOptions>, revealNode: HTMLElement): [boolean, string] => {
+	const { debug, ref, highlightLogs, highlightColor } = finalOptions;
+
+	const canDebug = config.dev && debug && ref !== '';
+	const highlightText = `color: ${highlightLogs ? highlightColor : '#B4BEC8'}`;
+
+	if (canDebug) {
+		console.groupCollapsed(`%cRef: ${ref}`, highlightText);
+
+		console.groupCollapsed('%cNode', highlightText);
+		console.log(revealNode);
+		console.groupEnd();
+
+		console.groupCollapsed('%cConfig', highlightText);
+		console.log(config);
+		console.groupEnd();
+
+		console.groupCollapsed('%cOptions', highlightText);
+		console.log(finalOptions);
+		console.groupEnd();
+	}
+
+	return [canDebug, highlightText];
+};
