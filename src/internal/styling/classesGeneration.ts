@@ -14,7 +14,7 @@ export const createClassNames = (ref: string, transitionClass: boolean, transiti
 	const tokens = [ref, transitionClass ? 'base' : '', transition];
 	const validTokens = tokens.filter((x) => x && x !== '');
 	const prefix = `sr__${validTokens.join('__')}__`;
-	const seed = document.querySelectorAll('[data-action="reveal"').length;
+	const seed = document.querySelectorAll('[data-action="reveal"]').length;
 	const uid = seedrandom(seed.toString())();
 	return `${prefix}${uid.toString().slice(2)}`;
 };
