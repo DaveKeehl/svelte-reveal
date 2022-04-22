@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Changed
+- Version numbers in CHANGELOG now allow to compare changes with previous release
+- Separated some business logic into separate modules
+- Created unit tests for new modules
+- Updated README with CSS requirements for the scale and spin transitions
+
+### Fixed
+- Fixed and improved README (emojis have been removed from the headings to fix broken links)
+- Fixed some JSDoc typos
+
+### Removed
+- Vendor prefixes are not added anymore
+
 ## [0.5.0] - 2022-03-15
 ### Changed
 - Documented how to use svelte-reveal with SvelteKit
@@ -57,3 +71,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0] - 2021-11-16
 - Initial beta release
+
+[0.1.0]: https://github.com/DaveKeehl/svelte-reveal/releases/tag/0.1.0
+[0.2.0]: https://github.com/DaveKeehl/svelte-reveal/compare/0.1.0...0.2.0
+[0.3.0]: https://github.com/DaveKeehl/svelte-reveal/compare/0.2.0...0.3.0
+[0.3.1]: https://github.com/DaveKeehl/svelte-reveal/compare/0.3.0...0.3.1
+[0.3.2]: https://github.com/DaveKeehl/svelte-reveal/compare/0.3.1...0.3.2
+[0.3.3]: https://github.com/DaveKeehl/svelte-reveal/compare/0.3.2...0.3.3
+[0.4.0]: https://github.com/DaveKeehl/svelte-reveal/compare/0.3.3...0.4.0
+[0.5.0]: https://github.com/DaveKeehl/svelte-reveal/compare/0.4.0...0.5.0

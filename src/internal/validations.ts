@@ -46,7 +46,7 @@ export const checkOptions = (options: IOptions): Required<IOptions> => {
 		isPositive(scale)
 	) {
 		return finalOptions;
-	} else {
-		throw new Error('Invalid options');
 	}
+
+	throw new Error('Invalid options');
 };

@@ -1,4 +1,4 @@
-import { createObserver } from '../src/internal/DOM';
+import { createObserver, logInfo } from '../src/internal/DOM';
 import { init } from '../src/internal/config';
 
 export function setupIntersectionObserverMock({
@@ -42,5 +42,12 @@ describe('createObserver', () => {
 		const node = document.createElement('div');
 		const res = createObserver(true, '#000000', node, init, 'css_class');
 		expect(res).toBeInstanceOf(IntersectionObserver);
+	});
+});
+
+describe('logInfo', () => {
+	test('The function returns the correct values', () => {
+		const node = document.createElement('div');
+		expect(logInfo(init, node)).toStrictEqual([init.debug, 'color: #B4BEC8']);
 	});
 });
