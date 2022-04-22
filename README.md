@@ -4,7 +4,7 @@
 
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/DaveKeehl/svelte-reveal/tree/develop) ![npm](https://img.shields.io/npm/v/svelte-reveal) [![CI/CD](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml/badge.svg)](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml) ![GitHub](https://img.shields.io/github/license/davekeehl/svelte-reveal) [![codecov](https://codecov.io/gh/DaveKeehl/svelte-reveal/branch/develop/graph/badge.svg?token=AL1KI5XRDF)](https://codecov.io/gh/DaveKeehl/svelte-reveal)
 
-> ⚠️&nbsp;&nbsp;svelte-reveal is currently in beta. Do you want to [contribute](https://github.com/DaveKeehl/svelte-reveal/issues)? Do you want to [report a bug](https://github.com/DaveKeehl/svelte-reveal/issues)?
+> ⚠️&nbsp;&nbsp;svelte-reveal is currently in beta. Do you want to [contribute](https://github.com/DaveKeehl/svelte-reveal/issues)? Do you want to [report a bug](https://github.com/DaveKeehl/svelte-reveal/issues/new?assignees=&labels=bug&template=bug_report.yml&title=%5BBug%5D%3A+)?
 
 svelte-reveal is a library created with the purpose of helping [Svelte](https://svelte.dev/) users add reveal on scroll transitions to their web applications. This library leverages the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) in order to know when to trigger the animations.
 
@@ -18,18 +18,18 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
 ## Table of Content
 
 1. [Usage](#usage)
-2. [Demo](#demo)
-3. [Why svelte-reveal](#why-svelte-reveal)
-4. [SvelteKit](#sveltekit)
-5. [Options](#options)
-6. [Global config](#global-config)
-7. [API](#API)
-8. [Suggestions](#suggestions)
-9. [Troubleshooting](#troubleshooting)
-10. [Funding](#funding)
-11. [Versioning](#versioning)
-12. [Changelog](#changelog)
-13. [License](#license)
+1. [Demo](#demo)
+1. [Why svelte-reveal](#why-svelte-reveal)
+1. [SvelteKit](#sveltekit)
+1. [Options](#options)
+1. [Global config](#global-config)
+1. [API](#api)
+1. [Suggestions](#suggestions)
+1. [Troubleshooting](#troubleshooting)
+1. [Funding](#funding)
+1. [Versioning](#versioning)
+1. [Changelog](#changelog)
+1. [License](#license)
 
 ## Usage
 
@@ -49,7 +49,7 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
 
    ```html
    <script>
-   	import { reveal } from 'svelte-reveal';
+     import { reveal } from 'svelte-reveal';
    </script>
    ```
 
@@ -113,17 +113,17 @@ In case of problems, please create a new issue and submit a bug report.
 
 ```html
 <script>
-	import { afterUpdate } from 'svelte';
+  import { afterUpdate } from 'svelte';
 
-	let show = false;
+  let show = false;
 
-	afterUpdate(() => {
-		show = true;
-	});
+  afterUpdate(() => {
+    show = true;
+  });
 </script>
 
 {#if show}
-	<your-element-or-component />
+  <your-element-or-component />
 {/if}
 ```
 
@@ -131,7 +131,7 @@ In case of problems, please create a new issue and submit a bug report.
 
 Depending on the use case, you can either use this library as-is (which applies some [default styles](https://github.com/DaveKeehl/svelte-reveal/blob/main/src/internal/config.ts#L6-L37)), or customize it to your liking. If you choose to do so, you can pass an object to this action containing additional options.
 
-Keep in mind that these options are applied to the single DOM element you add svelte-reveal to. For global and more in-depth settings, go to the [API](#API) section.
+Keep in mind that these options are applied to the single DOM element you add svelte-reveal to. For global and more in-depth settings, go to the [API](#api) section.
 
 | Name           | Type           | Default                  | Description                                                                                                                                                                                                                                                                                                                                                                                                                |
 | -------------- | -------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -216,7 +216,7 @@ This library is globally configured as follows right of out the box:
 
 > 💡&nbsp;&nbsp;All API functions return the global config object with the updated properties.
 
-svelte-reveal also exposes several functions you can call to change the [global configuration](#Global-config) of this library.
+svelte-reveal also exposes several functions you can call to change the [global configuration](#global-config) of this library.
 
 Since these functions operate on a global level for all instances of svelte-reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the global options from multiple points. If you need/want to considerably customize the behavior of this library, I suggest you to create a dedicated file (e.g. [reveal.config.js](https://github.com/DaveKeehl/svelte-reveal/blob/main/example/reveal.config.js)) and import it from the top-most component in the hierachy tree of your project. Within that file you can then call the API to set global settings or shared transition properties.
 
@@ -224,13 +224,13 @@ Since these functions operate on a global level for all instances of svelte-reve
 // App.svelte
 
 <script>
-	import '../reveal.config';
+  import '../reveal.config';
 </script>
 
 <div>{ your markup goes here }</div>
 ```
 
-If you want to customise the behavior of a single DOM node, you are supposed to use the [options](#Options).
+If you want to customise the behavior of a single DOM node, you are supposed to use the [options](#options).
 
 Since this library has been built using [TypeScript](https://www.typescriptlang.org/), there are many custom types used all over the source files. The following types are the main ones used by the API:
 
@@ -359,7 +359,7 @@ In order to take full advantage of this library, I suggest you to create some en
 
 That way you can for example set the config `dev` property to `false` when in production and avoid exposing console logs to the end users.
 
-If you use [SvelteKit](https://kit.svelte.dev/), this feature is available right out of the box with the [$app/env](https://kit.svelte.dev/docs#modules-$app-env) module.
+If you use [SvelteKit](https://kit.svelte.dev/), this feature is available right out of the box with the [$app/env](https://kit.svelte.dev/docs/modules#$app-env) module.
 
 ## Troubleshooting
 
