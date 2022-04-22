@@ -7,11 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- Fixed some minor things in README
 - Version numbers in CHANGELOG now allow to compare changes with previous release
-- Fixed some typos in some JSDoc
 - Separated some business logic into separate modules
 - Created unit tests for new modules
+- Updated README with CSS requirements for the scale and spin transitions
+
+### Fixed
+- Fixed and improved README (emojis have been removed from the headings to fix broken links)
+- Fixed some JSDoc typos
+
+### Removed
+- Vendor prefixes are not added anymore
 
 ## [0.5.0] - 2022-03-15
 ### Changed
