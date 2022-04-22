@@ -1,6 +1,5 @@
 import seedrandom from 'seedrandom';
 import type { IOptions, Transitions } from '../types';
-import { addVendors } from './stylesGeneration';
 import { getCssRules, getEasing } from './stylesRetrieval';
 
 /**
