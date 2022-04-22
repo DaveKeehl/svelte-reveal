@@ -1,6 +1,5 @@
 import seedrandom from 'seedrandom';
 import type { IOptions, Transitions } from '../types';
-import { addVendors } from './stylesGeneration';
 import { getCssRules, getEasing } from './stylesRetrieval';
 
 /**
@@ -14,7 +13,7 @@ export const createClassNames = (ref: string, transitionClass: boolean, transiti
 	const tokens = [ref, transitionClass ? 'base' : '', transition];
 	const validTokens = tokens.filter((x) => x && x !== '');
 	const prefix = `sr__${validTokens.join('__')}__`;
-	const seed = document.querySelectorAll('[data-action="reveal"').length;
+	const seed = document.querySelectorAll('[data-action="reveal"]').length;
 	const uid = seedrandom(seed.toString())();
 	return `${prefix}${uid.toString().slice(2)}`;
 };
@@ -44,16 +43,13 @@ export const createMainCss = (className: string, options: Required<IOptions>): s
 export const createTransitionCss = (className: string, options: Required<IOptions>) => {
 	const { duration, delay, easing, customEasing } = options;
 
-	let styles = `
-		display: block;
-		width: fit-content;
+	const styles = `
 		transition: all ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEasing)};
 	`;
-	styles = addVendors(styles.trim());
 
 	return `
 		.${className} {
-			${styles}
+			${styles.trim()}
 		}
 	`;
 };
