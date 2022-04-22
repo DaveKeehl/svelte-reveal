@@ -8,14 +8,14 @@
 
 svelte-reveal is a library created with the purpose of helping [Svelte](https://svelte.dev/) users add reveal on scroll transitions to their web applications. This library leverages the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) in order to know when to trigger the animations.
 
-## ✨&nbsp;&nbsp;Features
+## Features
 
 - Zero config Svelte action
 - Highly customizable transitions
 - Integrates a performant intersection observer
 - TypeScript ready
 
-## 📖&nbsp;&nbsp;Table of Content
+## Table of Content
 
 1. [Usage](#usage)
 2. [Demo](#demo)
@@ -31,7 +31,7 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
 12. [Changelog](#changelog)
 13. [License](#license)
 
-## 🔨&nbsp;&nbsp;Usage
+## Usage
 
 1. Install the library. You can use either [npm](https://www.npmjs.com/):
 
@@ -83,7 +83,7 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
 
 4. Using [SvelteKit](https://kit.svelte.dev/)? Please read [section "SvelteKit"](#sveltekit)
 
-### 🐳&nbsp;&nbsp;Docker
+### Docker
 
 A Docker image is also available on [DockerHub](https://hub.docker.com/):
 
@@ -93,11 +93,11 @@ docker pull davekeehl/svelte-reveal:latest
 
 You can also use the provided Dockerfile in the repository as a development environment. You can read more [here](https://code.visualstudio.com/docs/remote/containers).
 
-## 🕺🏻&nbsp;&nbsp;Demo
+## Demo
 
 In this [Svelte REPL](https://svelte.dev/repl/1cf37b0947ac46b8ae9cc791abda7159?version=3.44.1) I created you can see svelte-reveal in action.
 
-## 🤔&nbsp;&nbsp;Why svelte-reveal
+## Why svelte-reveal
 
 If you happened to scout the internet for other similar libraries, you would have noticed that other authors have decided to create their own library using Svelte [slots](https://svelte.dev/docs#slot) (similar to [React children](https://reactjs.org/docs/composition-vs-inheritance.html)). There is nothing wrong with that approach, but in my opinion it goes a bit against one of Svelte's core purposes: writing less code. Having to wrap every to-be-transitioned component adds 2 extra lines of code each time, making your files unnecessarily bloated for such a simple add-on.
 
@@ -105,7 +105,7 @@ You might have also noticed people adding event listeners to the window object, 
 
 Instead, I decided to use Svelte [actions](https://svelte.dev/docs#use_action), which are functions you can attach to a DOM element and that allow you to get access to that element and its lifecycle. They take up considerably less space and so far I haven't encountered any obstacle or performance drawback. Morever, this library is backed by the Intersection Observer API, which is great for performance.
 
-## ⚠️&nbsp;&nbsp;SvelteKit
+## SvelteKit
 
 The way svelte-reveal transitions the elements does not work well with [SSR](https://kit.svelte.dev/docs/appendix#ssr), which is enabled by default on SvelteKit. One way to get around this issue is to wrap your top-most element or component inside an if-block that is evaluated to `true` only when its context has been updated, as in the following example.
 
@@ -127,7 +127,7 @@ In case of problems, please create a new issue and submit a bug report.
 {/if}
 ```
 
-## ⛩&nbsp;&nbsp;Options
+## Options
 
 Depending on the use case, you can either use this library as-is (which applies some [default styles](https://github.com/DaveKeehl/svelte-reveal/blob/main/src/internal/config.ts#L6-L37)), or customize it to your liking. If you choose to do so, you can pass an object to this action containing additional options.
 
@@ -159,20 +159,20 @@ Keep in mind that these options are applied to the single DOM element you add sv
 | blur           | `number`       | `16`                     | The starting blur value in pixels (_px_) of the `"blur"` transition.                                                                                                                                                                                                                                                                                                                                                       |
 | scale          | `number`       | `0`                      | The starting scale value in percentage (_%_) of the `"scale"` transition.                                                                                                                                                                                                                                                                                                                                                  |
 
-### 🪄&nbsp;&nbsp;Transitions
+### Transitions
 
 The following are all the transitions available by svelte-reveal. The names listed in the table match the ones you can write in your source code. All transitions have the fade transition backed in.
 
-| Name  | Description                                                                                                                                               |
-| ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| fade  | The element fades in gracefully.<br />In practice: `opacity: 0 -> 1`                                                                                      |
-| fly   | The element fades in and performs a translation on the y-axis (vertical).<br />In practice: `opacity: 0 -> 1` and `transform: translateY(-20px -> 0px) `  |
+| Name  | Description                                                  |
+| ----- | ------------------------------------------------------------ |
+| fade  | The element fades in gracefully.<br />In practice: `opacity: 0 -> 1` |
+| fly   | The element fades in and performs a translation on the y-axis (vertical).<br />In practice: `opacity: 0 -> 1` and `transform: translateY(-20px -> 0px) ` |
 | slide | The element fades in and performs a translation on the x-axis (horizontal).<br />In practice: `opacity: 0 -> 1` and `transform: translateX(-20px -> 0px)` |
-| blur  | The element fades in and becomes unblurred.<br />In practice: `opacity: 0 -> 1` and `filter: blur(8px -> 0px)`                                            |
-| scale | The element fades in and gets to the original size.<br />In practice: `opacity: 0 -> 1` and `transform: scale(0 -> 1)`                                    |
-| spin  | The element fades in and gets to the original rotation degree.<br />In practice: `opacity: 0 -> 1` and `transform: rotate(-360 -> 0)`                     |
+| blur  | The element fades in and becomes unblurred.<br />In practice: `opacity: 0 -> 1` and `filter: blur(8px -> 0px)` |
+| scale | The element fades in and gets to the original size.<br />In practice: `opacity: 0 -> 1` and `transform: scale(0 -> 1)`<br /><br />⚠️ In order to use this transition it is required to use the `width` CSS property on the element to reveal. If you are not already using this property for other things, you can set it to `width: fit-content` . |
+| spin  | The element fades in and gets to the original rotation degree.<br />In practice: `opacity: 0 -> 1` and `transform: rotate(-360 -> 0)`<br /><br />⚠️ In order to use this transition it is required to use the `width` CSS property on the element to reveal. If you are not already using this property for other things, you can use set it to `width: fit-content` . |
 
-### 🤙🏻&nbsp;&nbsp;Callbacks
+### Callbacks
 
 Among the available options you can set, there are also some callback functions you can leverage to inject some code during specific moments of the lifecycle of the nodes attached to this action.
 
@@ -186,7 +186,7 @@ Among the available options you can set, there are also some callback functions 
 | onUpdate      | `(node: HTMLElement)` | `void` | Function that gets fired when the action options are updated.                                              |
 | onDestroy     | `(node: HTMLElement)` | `void` | Function that gets fired when the node is unmounted from the DOM.                                          |
 
-## 📄&nbsp;&nbsp;Global config
+## Global config
 
 This library is globally configured as follows right of out the box:
 
@@ -212,7 +212,7 @@ This library is globally configured as follows right of out the box:
 |            | rootMargin |            | `string`           | `"0px 0px 0px 0px"` | The Intersection Observer API rootMargin property.                                                                                  |
 |            | threshold  |            | `number`           | `0.6`               | The Intersection Observer API threshold property.                                                                                   |
 
-## ⚡️&nbsp;&nbsp;API
+## API
 
 > 💡&nbsp;&nbsp;All API functions return the global config object with the updated properties.
 
@@ -353,7 +353,7 @@ interface IOptions {
 | --------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `(options: IOptions)` | `IOptions` | You can use this function to override the global default options of the reveal effect. It can be useful when you want a specific option for many elements, so that you don't have to change it for every element individually. |
 
-## 👀&nbsp;&nbsp;Suggestions
+## Suggestions
 
 In order to take full advantage of this library, I suggest you to create some environment variables to keep track of the environment you are currently in (e.g. development, staging, production) and to leverage NPM scripts to update those variables. [This article](https://www.twilio.com/blog/working-with-environment-variables-in-node-js-html) explains well this concept.
 
@@ -361,22 +361,22 @@ That way you can for example set the config `dev` property to `false` when in pr
 
 If you use [SvelteKit](https://kit.svelte.dev/), this feature is available right out of the box with the [$app/env](https://kit.svelte.dev/docs#modules-$app-env) module.
 
-## 🤕&nbsp;&nbsp;Troubleshooting
+## Troubleshooting
 
 Feel free to [open a new issue](https://github.com/DaveKeehl/svelte-reveal/issues/new/choose) in case of any problems.
 
-## ☕️&nbsp;&nbsp;Funding
+## Funding
 
 [Want to buy me a coffee?](https://ko-fi.com/davekeehl)
 
-## 📚&nbsp;&nbsp;Versioning
+## Versioning
 
 This project uses [Semantic Versioning](https://semver.org/) to keep track of its version number.
 
-## ✍🏻&nbsp;&nbsp;Changelog
+## Changelog
 
 [CHANGELOG](https://github.com/DaveKeehl/svelte-reveal/blob/develop/CHANGELOG.md)
 
-## 👨🏻‍⚖️&nbsp;&nbsp;License
+## License
 
 [MIT](https://github.com/DaveKeehl/svelte-reveal/blob/develop/LICENSE)
