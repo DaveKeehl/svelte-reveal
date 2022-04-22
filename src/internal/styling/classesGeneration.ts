@@ -45,8 +45,6 @@ export const createTransitionCss = (className: string, options: Required<IOption
 	const { duration, delay, easing, customEasing } = options;
 
 	let styles = `
-		display: block;
-		width: fit-content;
 		transition: all ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEasing)};
 	`;
 	styles = addVendors(styles.trim());
