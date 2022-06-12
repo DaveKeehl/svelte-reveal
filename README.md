@@ -67,21 +67,21 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
    <script>
      import Heading from './Heading.svelte';
    </script>
-
+   
    <Heading revealConfig={{ transition: "fade" }}>Hello world</Heading>
-
+   
    // Heading.svelte
    <script>
      import { reveal } from 'svelte-reveal';
      export let revealConfig;
    </script>
-
+   
    <h1 use:reveal={ revealConfig }>
      <slot />
    </h1>
    ```
 
-4. Using [SvelteKit](https://kit.svelte.dev/)? Please read [section "SvelteKit"](#sveltekit)
+   Using [SvelteKit](https://kit.svelte.dev/)? Please read [section "SvelteKit"](#sveltekit)
 
 ### Docker
 
@@ -99,17 +99,15 @@ In this [Svelte REPL](https://svelte.dev/repl/1cf37b0947ac46b8ae9cc791abda7159?v
 
 ## Why svelte-reveal
 
-If you happened to scout the internet for other similar libraries, you would have noticed that other authors have decided to create their own library using Svelte [slots](https://svelte.dev/docs#slot) (similar to [React children](https://reactjs.org/docs/composition-vs-inheritance.html)). There is nothing wrong with that approach, but in my opinion it goes a bit against one of Svelte's core purposes: writing less code. Having to wrap every to-be-transitioned component adds 2 extra lines of code each time, making your files unnecessarily bloated for such a simple add-on.
+If you happened to scout the internet for other similar libraries, you would have noticed that other authors have decided to create their own library using Svelte [slots](https://svelte.dev/docs#slot) (similar to [React children](https://reactjs.org/docs/composition-vs-inheritance.html)). There is nothing wrong with that approach, but in my opinion it goes a bit against one of Svelte's core purpose: writing less code. Having to wrap every to-be-transitioned component adds 2 extra lines of code each time, making your files unnecessarily bloated for such a simple add-on.
 
-You might have also noticed people adding event listeners to the window object, but in terms of performance that [doesn't scale very well](https://itnext.io/1v1-scroll-listener-vs-intersection-observers-469a26ab9eb6).
+You might have also noticed people adding event listeners to the window object in order to transition elements, but in terms of performance it [doesn't scale very well](https://itnext.io/1v1-scroll-listener-vs-intersection-observers-469a26ab9eb6).
 
 Instead, I decided to use Svelte [actions](https://svelte.dev/docs#use_action), which are functions you can attach to a DOM element and that allow you to get access to that element and its lifecycle. They take up considerably less space and so far I haven't encountered any obstacle or performance drawback. Morever, this library is backed by the Intersection Observer API, which is great for performance.
 
 ## SvelteKit
 
-The way svelte-reveal transitions the elements does not work well with [SSR](https://kit.svelte.dev/docs/appendix#ssr), which is enabled by default on SvelteKit. One way to get around this issue is to wrap your top-most element or component inside an if-block that is evaluated to `true` only when its context has been updated, as in the following example.
-
-In case of problems, please create a new issue and submit a bug report.
+The way svelte-reveal transitions the elements does not work well with [SSR](https://kit.svelte.dev/docs/appendix#ssr), which is enabled by default on SvelteKit. One way to get around this issue and to keep using SSR, is to wrap your top-most element or component inside an if-block that is evaluated to `true` only when its context has been updated, as in the following example.
 
 ```html
 <script>
@@ -126,6 +124,8 @@ In case of problems, please create a new issue and submit a bug report.
   <your-element-or-component />
 {/if}
 ```
+
+In case of problems, please [create a new issue](https://github.com/DaveKeehl/svelte-reveal/issues/new/choose) and submit a bug report.
 
 ## Options
 
@@ -218,7 +218,7 @@ This library is globally configured as follows right of out the box:
 
 svelte-reveal also exposes several functions you can call to change the [global configuration](#global-config) of this library.
 
-Since these functions operate on a global level for all instances of svelte-reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the global options from multiple points. If you need/want to considerably customize the behavior of this library, I suggest you to create a dedicated file (e.g. [reveal.config.js](https://github.com/DaveKeehl/svelte-reveal/blob/main/example/reveal.config.js)) and import it from the top-most component in the hierachy tree of your project. Within that file you can then call the API to set global settings or shared transition properties.
+Since these functions operate on a global level across all components using svelte-reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the global options from multiple points. If you need/want to considerably customize the behavior of this library, I suggest you to create a dedicated file (e.g. [reveal.config.js](https://github.com/DaveKeehl/svelte-reveal/blob/main/example/reveal.config.js)) and to import it from the top-most component in the hierarchy tree of your project. Within that file you can then call the API to set global settings or shared transition properties.
 
 ```html
 // App.svelte
