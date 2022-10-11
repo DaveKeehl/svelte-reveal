@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed broken links in README
 - Fixed indentation in code blocks in README
 - Removed validation steps in pre-commit hook
+- Renamed $app/env into $app/environment in README
 
 ## [0.6.0] - 2022-04-22
 ### Added
