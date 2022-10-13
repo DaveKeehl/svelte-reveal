@@ -2,7 +2,7 @@
 
 # svelte-reveal
 
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/DaveKeehl/svelte-reveal/tree/develop) ![npm](https://img.shields.io/npm/v/svelte-reveal) [![CI/CD](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml/badge.svg)](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml) ![GitHub](https://img.shields.io/github/license/davekeehl/svelte-reveal) [![codecov](https://codecov.io/gh/DaveKeehl/svelte-reveal/branch/develop/graph/badge.svg?token=AL1KI5XRDF)](https://codecov.io/gh/DaveKeehl/svelte-reveal)
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/DaveKeehl/svelte-reveal/tree/develop) ![npm](https://img.shields.io/npm/v/svelte-reveal)![npm](https://img.shields.io/npm/dw/svelte-reveal) [![CI/CD](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml/badge.svg)](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml) ![GitHub](https://img.shields.io/github/license/davekeehl/svelte-reveal) [![codecov](https://codecov.io/gh/DaveKeehl/svelte-reveal/branch/develop/graph/badge.svg?token=AL1KI5XRDF)](https://codecov.io/gh/DaveKeehl/svelte-reveal)
 
 > ⚠️&nbsp;&nbsp;svelte-reveal is currently in beta. Do you want to [contribute](https://github.com/DaveKeehl/svelte-reveal/issues)? Do you want to [report a bug](https://github.com/DaveKeehl/svelte-reveal/issues/new?assignees=&labels=bug&template=bug_report.yml&title=%5BBug%5D%3A+)?
 
@@ -15,7 +15,7 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
 - Integrates a performant intersection observer
 - TypeScript ready
 
-## Table of Content
+## Table of Contents
 
 1. [Usage](#usage)
 1. [Demo](#demo)

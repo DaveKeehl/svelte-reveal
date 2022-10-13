@@ -7,10 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- Fixed broken links in README
-- Fixed indentation in code blocks in README
+- README: Fixed broken links
+- README: Fixed indentation in code blocks
+- README: Renamed $app/env into $app/environment
+- README: Fixed typo in ToC
+- README: Added badge for NPM weekly downloads
 - Removed validation steps in pre-commit hook
-- Renamed $app/env into $app/environment in README
 
 ## [0.6.0] - 2022-04-22
 ### Added
