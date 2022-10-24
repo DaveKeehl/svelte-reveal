@@ -1,5 +1,5 @@
 import { config } from './config';
-import type { IConfig } from './types';
+import type { IConfig, ObserverRootMargin } from './types';
 
 /**
  * Deep clone a given data structure.
@@ -24,3 +24,12 @@ export const clean = (styles: string): string =>
  * @returns The clone of the config
  */
 export const getConfigClone = (): IConfig => clone(config);
+
+/**
+ * Format the root margin string needed by the intersection observer
+ * @param rootMargin - An object containing the four margin values as number
+ * @returns The formatted root margin string
+ */
+export const createObserverRootMargin = ({ top, right, bottom, left }: ObserverRootMargin) => {
+	return `${top}px ${right}px ${bottom}px ${left}px`;
+};

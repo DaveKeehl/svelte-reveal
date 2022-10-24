@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - README: Fixed typo in ToC
 - README: Added badge for NPM weekly downloads
 - Removed validation steps in pre-commit hook
+- Updated dependencies
+- Fixed wrong options passed to the intersection observer
 
 ## [0.6.0] - 2022-04-22
 ### Added

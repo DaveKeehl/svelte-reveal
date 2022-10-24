@@ -1,7 +1,7 @@
 import { config } from './config';
 import { createMainCss, createTransitionCss, getUpdatedStyles } from './styling';
 import type { IOptions } from './types';
-import { clean } from './utils';
+import { clean, createObserverRootMargin } from './utils';
 
 /**
  * Adds a "watermark" to the element to be revealed. It sets the data attribute to "reveal".
@@ -78,6 +78,17 @@ export const createObserver = (
 ): IntersectionObserver => {
 	const { ref, reset, duration, delay, threshold, onResetStart, onResetEnd, onRevealEnd } = options;
 
+	const observerOptions = {
+		root: options.root,
+		rootMargin: createObserverRootMargin({
+			top: options.marginTop,
+			right: options.marginRight,
+			bottom: options.marginBottom,
+			left: options.marginLeft
+		}),
+		threshold: options.threshold
+	};
+
 	return new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
 		if (canDebug) {
 			const entry = entries[0];
@@ -101,7 +112,7 @@ export const createObserver = (
 				if (!reset) observer.unobserve(revealNode);
 			}
 		});
-	}, config.observer);
+	}, observerOptions);
 };
 
 /**

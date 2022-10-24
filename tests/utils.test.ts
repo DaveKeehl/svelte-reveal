@@ -1,8 +1,8 @@
 import { init } from '../src/internal/config';
 import { setConfig } from '../src/internal/API';
 import { createClassNames, createStylesheet } from '../src/internal/styling';
-import type { IOptions } from '../src/internal/types';
-import { clean } from '../src/internal/utils';
+import type { IOptions, ObserverRootMargin } from '../src/internal/types';
+import { clean, createObserverRootMargin } from '../src/internal/utils';
 import { markRevealNode, activateRevealNode, getRevealNode } from '../src/internal/DOM';
 import { checkOptions } from '../src/internal/validations';
 
@@ -158,5 +158,20 @@ describe('checkOptions', () => {
 			scale: 0
 		};
 		expect(() => checkOptions(invalidOptions)).toThrowError('Invalid options');
+	});
+});
+
+test('createObserverRootMargin', () => {
+	const rootMargin: ObserverRootMargin = {
+		top: 100,
+		right: 50,
+		bottom: 25,
+		left: 12
+	};
+	const margins = createObserverRootMargin(rootMargin).split(' ');
+	expect(margins.length).toBe(4);
+	margins.forEach((margin, idx) => {
+		expect(margin.endsWith('px')).toBe(true);
+		expect(parseInt(margin.split('px')[0])).toBe(Object.entries(rootMargin)[idx][1]);
 	});
 });

@@ -1,4 +1,5 @@
 import type { IOptions, IConfig } from './types';
+import { createObserverRootMargin } from './utils';
 
 /**
  * Object containing the default options used by the library for the scroll effect.
@@ -62,7 +63,12 @@ export const config: IConfig = {
 	},
 	observer: {
 		root: init.root,
-		rootMargin: `${init.marginTop}px ${init.marginRight}px ${init.marginBottom}px ${init.marginLeft}px`,
+		rootMargin: createObserverRootMargin({
+			top: init.marginTop,
+			right: init.marginRight,
+			bottom: init.marginBottom,
+			left: init.marginLeft
+		}),
 		threshold: init.threshold
 	}
 };

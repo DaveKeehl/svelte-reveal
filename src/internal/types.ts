@@ -142,6 +142,17 @@ export interface IOptions {
  */
 export type ObserverRoot = HTMLElement | null | undefined;
 
+/**
+ * An object containing the exact margin values as numbers for the
+ * intersection observer
+ */
+export interface ObserverRootMargin {
+	top: number;
+	right: number;
+	bottom: number;
+	left: number;
+}
+
 export interface IObserverOptions {
 	/**
 	 * The Intersection Observer API root element.
