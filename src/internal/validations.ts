@@ -29,24 +29,27 @@ export const isPositiveInteger = (property: number): boolean => {
 };
 
 /**
- * Checks whether some invalid values are found in the options object passed by the user.
- * @param options The options object specified by the user in the Svelte components
- * @returns The final valid options object that can be used by the reveal function
+ * Overrides the default option values with the ones provided by the user.
+ * @param userOptions - The options provided by the user
+ * @returns The final options that can be used by the rest of the library
  */
-export const checkOptions = (options: IOptions): Required<IOptions> => {
-	const finalOptions = Object.assign({}, init, options);
-	const { threshold, opacity, delay, duration, blur, scale } = finalOptions;
+export const createFinalOptions = (userOptions: IOptions): Required<IOptions> => {
+	return Object.assign({}, init, userOptions);
+};
 
-	if (
+/**
+ * Checks whether some the options contain invalid values.
+ * @param options The options to be checked
+ * @returns Whether the provided options are valid or not
+ */
+export const areOptionsValid = (options: Required<IOptions>): boolean => {
+	const { threshold, opacity, delay, duration, blur, scale } = options;
+	return (
 		hasValidRange(threshold, 0, 1) &&
 		hasValidRange(opacity, 0, 1) &&
 		isPositive(delay) &&
 		isPositive(duration) &&
 		isPositive(blur) &&
 		isPositive(scale)
-	) {
-		return finalOptions;
-	}
-
-	throw new Error('Invalid options');
+	);
 };

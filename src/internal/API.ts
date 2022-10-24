@@ -1,8 +1,8 @@
 import { config, init } from './config';
 import { hasValidBreakpoints } from './styling';
 import { getConfigClone } from './utils';
-import { checkOptions, hasValidRange } from './validations';
-import type { IConfig, Device, IDevice, Responsive, IObserverOptions, ObserverRoot, IOptions } from './types';
+import { areOptionsValid, createFinalOptions } from './validations';
+import type { IConfig, Device, IDevice, Responsive, IOptions } from './types';
 
 /**
  * Toggles on/off the development mode.
@@ -96,57 +96,57 @@ export const setResponsive = (responsive: Responsive): IConfig => {
  * @param observerConfig - Your custom observer config
  * @returns The config object with the updated dev property
  */
-export const setObserverConfig = (observerConfig: IObserverOptions): IConfig => {
-	setObserverRoot(observerConfig.root);
-	setObserverRootMargin(observerConfig.rootMargin);
-	setObserverThreshold(observerConfig.threshold);
-	return config;
-};
+// export const setObserverConfig = (observerConfig: IObserverOptions): IConfig => {
+// 	setObserverRoot(observerConfig.root);
+// 	setObserverRootMargin(observerConfig.rootMargin);
+// 	setObserverThreshold(observerConfig.threshold);
+// 	return config;
+// };
 
 /**
  * Sets the Intersection Observer API root element.
  * @param root - The root element
  * @returns The config object with the updated dev property
  */
-export const setObserverRoot = (root: ObserverRoot): IConfig => {
-	config.observer.root = root;
-	return config;
-};
+// export const setObserverRoot = (root: ObserverRoot): IConfig => {
+// 	config.observer.root = root;
+// 	return config;
+// };
 
 /**
  * Sets the rootMargin property of the Intersection Observer API.
  * @param rootMargin - The margin used by the observer with respect to the root element
  * @returns The config object with the updated dev property
  */
-export const setObserverRootMargin = (rootMargin: string): IConfig => {
-	const margins = rootMargin
-		.trim()
-		.split(' ')
-		.map((margin) => margin.trim());
-	const regex = /^(0|([1-9]\d*))(px|%)$/;
-	const hasCorrectUnits = margins.every((margin) => regex.test(margin));
+// export const setObserverRootMargin = (rootMargin: string): IConfig => {
+// 	const margins = rootMargin
+// 		.trim()
+// 		.split(' ')
+// 		.map((margin) => margin.trim());
+// 	const regex = /^(0|([1-9]\d*))(px|%)$/;
+// 	const hasCorrectUnits = margins.every((margin) => regex.test(margin));
 
-	if (rootMargin !== '' && margins.length <= 4 && hasCorrectUnits) {
-		config.observer.rootMargin = margins.join(' ');
-		return config;
-	} else {
-		throw new SyntaxError('Invalid rootMargin syntax');
-	}
-};
+// 	if (rootMargin !== '' && margins.length <= 4 && hasCorrectUnits) {
+// 		config.observer.rootMargin = margins.join(' ');
+// 		return config;
+// 	} else {
+// 		throw new SyntaxError('Invalid rootMargin syntax');
+// 	}
+// };
 
 /**
  * Sets the threshold used by the Intersection Observer API to detect when an element is considered visible.
  * @param threshold - The observer threshold value
  * @returns The config object with the updated dev property
  */
-export const setObserverThreshold = (threshold: number): IConfig => {
-	if (hasValidRange(threshold, 0, 1)) {
-		config.observer.threshold = threshold;
-		return config;
-	} else {
-		throw new RangeError('Threshold must be between 0.0 and 1.0');
-	}
-};
+// export const setObserverThreshold = (threshold: number): IConfig => {
+// 	if (hasValidRange(threshold, 0, 1)) {
+// 		config.observer.threshold = threshold;
+// 		return config;
+// 	} else {
+// 		throw new RangeError('Threshold must be between 0.0 and 1.0');
+// 	}
+// };
 
 /**
  * Sets all the global configurations (dev, once, observer) used by this library.
@@ -157,7 +157,7 @@ export const setConfig = (userConfig: IConfig): IConfig => {
 	setDev(userConfig.dev);
 	setOnce(userConfig.once);
 	setResponsive(userConfig.responsive);
-	setObserverConfig(userConfig.observer);
+	// setObserverConfig(userConfig.observer);
 	return config;
 };
 
@@ -167,6 +167,11 @@ export const setConfig = (userConfig: IConfig): IConfig => {
  * @returns The new full and updated options object
  */
 export const setDefaultOptions = (options: IOptions): Required<IOptions> => {
-	const validOptions = checkOptions(options);
+	const validOptions = createFinalOptions(options);
+
+	if (!areOptionsValid(validOptions)) {
+		throw new Error('Invalid options');
+	}
+
 	return Object.assign(init, validOptions);
 };

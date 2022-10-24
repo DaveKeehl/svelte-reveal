@@ -3,7 +3,7 @@ import { config, init } from './config';
 import { styleTagStore, reloadStore } from './stores';
 import type { IOptions, IReturnAction } from './types';
 import { getRevealNode, activateRevealNode, createObserver, logInfo } from './DOM';
-import { checkOptions } from './validations';
+import { areOptionsValid, createFinalOptions } from './validations';
 
 /**
  * Reveals a given node element on scroll
@@ -12,7 +12,12 @@ import { checkOptions } from './validations';
  * @returns An object containing the update and/or destroy functions
  */
 export const reveal = (node: HTMLElement, options: IOptions = init): IReturnAction => {
-	const finalOptions = checkOptions(options);
+	const finalOptions = createFinalOptions(options);
+
+	if (!areOptionsValid(finalOptions)) {
+		throw new Error('Invalid options');
+	}
+
 	const { transition, disable, ref, onRevealStart, onMount, onUpdate, onDestroy } = finalOptions;
 
 	const revealNode = getRevealNode(node);

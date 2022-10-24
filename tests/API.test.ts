@@ -7,10 +7,10 @@ import {
 	setDeviceBreakpoint,
 	setDevice,
 	setResponsive,
-	setObserverConfig,
-	setObserverRoot,
-	setObserverRootMargin,
-	setObserverThreshold,
+	// setObserverConfig,
+	// setObserverRoot,
+	// setObserverRootMargin,
+	// setObserverThreshold,
 	setConfig,
 	setDefaultOptions
 } from '../src/internal/API';
@@ -38,12 +38,12 @@ beforeEach(() => {
 				enabled: true,
 				breakpoint: 2560
 			}
-		},
-		observer: {
-			root: null,
-			rootMargin: '0px 0px 0px 0px',
-			threshold: 0.6
 		}
+		// observer: {
+		// 	root: null,
+		// 	rootMargin: '0px 0px 0px 0px',
+		// 	threshold: 0.6
+		// }
 	});
 });
 
@@ -195,83 +195,83 @@ describe('Testing API', () => {
 		});
 	});
 
-	describe('setObserverConfig', () => {
-		test('Checking default config', () => {
-			expect(setObserverConfig(config.observer)).toStrictEqual(config);
-		});
+	// describe('setObserverConfig', () => {
+	// 	test('Checking default config', () => {
+	// 		expect(setObserverConfig(config.observer)).toStrictEqual(config);
+	// 	});
 
-		/**
-		 * @todo test the root property with invalid value
-		 */
+	// 	/**
+	// 	 * @todo test the root property with invalid value
+	// 	 */
 
-		test('Should throw an error when root margin is invalid', () => {
-			config.observer.rootMargin = '0px 00px 0px 0px';
-			expect(() => setObserverConfig(config.observer)).toThrow('Invalid rootMargin syntax');
-		});
+	// 	test('Should throw an error when root margin is invalid', () => {
+	// 		config.observer.rootMargin = '0px 00px 0px 0px';
+	// 		expect(() => setObserverConfig(config.observer)).toThrow('Invalid rootMargin syntax');
+	// 	});
 
-		test('Should throw an error when threshold is invalid', () => {
-			config.observer.threshold = 1.2;
-			expect(() => setObserverConfig(config.observer)).toThrow('Threshold must be between 0.0 and 1.0');
-		});
-	});
+	// 	test('Should throw an error when threshold is invalid', () => {
+	// 		config.observer.threshold = 1.2;
+	// 		expect(() => setObserverConfig(config.observer)).toThrow('Threshold must be between 0.0 and 1.0');
+	// 	});
+	// });
 
-	describe('setObserverRoot', () => {
-		test('Checking default config', () => {
-			expect(setObserverRoot(null).observer.root).toBe(null);
-		});
+	// describe('setObserverRoot', () => {
+	// 	test('Checking default config', () => {
+	// 		expect(setObserverRoot(null).observer.root).toBe(null);
+	// 	});
 
-		test('Correctly updates root when latter is valid', () => {
-			const div = document.createElement('div');
-			expect(setObserverRoot(div).observer.root).toBe(div);
-		});
-	});
+	// 	test('Correctly updates root when latter is valid', () => {
+	// 		const div = document.createElement('div');
+	// 		expect(setObserverRoot(div).observer.root).toBe(div);
+	// 	});
+	// });
 
-	describe('setObserverRootMargin', () => {
-		test('Updates rootMargin when respecting the regex', () => {
-			setObserverRootMargin('0px 5px 50px 500%');
-			expect(config.observer.rootMargin).toBe('0px 5px 50px 500%');
+	// describe('setObserverRootMargin', () => {
+	// 	test('Updates rootMargin when respecting the regex', () => {
+	// 		setObserverRootMargin('0px 5px 50px 500%');
+	// 		expect(config.observer.rootMargin).toBe('0px 5px 50px 500%');
 
-			setObserverRootMargin('0px 5px 50px');
-			expect(config.observer.rootMargin).toBe('0px 5px 50px');
+	// 		setObserverRootMargin('0px 5px 50px');
+	// 		expect(config.observer.rootMargin).toBe('0px 5px 50px');
 
-			setObserverRootMargin('0px 5px');
-			expect(config.observer.rootMargin).toBe('0px 5px');
+	// 		setObserverRootMargin('0px 5px');
+	// 		expect(config.observer.rootMargin).toBe('0px 5px');
 
-			setObserverRootMargin('0px');
-			expect(config.observer.rootMargin).toBe('0px');
-		});
+	// 		setObserverRootMargin('0px');
+	// 		expect(config.observer.rootMargin).toBe('0px');
+	// 	});
 
-		test('Should throw an error when rootMargin is invalid', () => {
-			expect(() => setObserverRootMargin('0px 0px 0px 0px 0px')).toThrow('Invalid rootMargin syntax');
-			expect(() => setObserverRootMargin('0px 0 0px')).toThrow('Invalid rootMargin syntax');
-			expect(() => setObserverRootMargin('')).toThrow('Invalid rootMargin syntax');
-			expect(() => setObserverRootMargin('0')).toThrow('Invalid rootMargin syntax');
-		});
-	});
+	// 	test('Should throw an error when rootMargin is invalid', () => {
+	// 		expect(() => setObserverRootMargin('0px 0px 0px 0px 0px')).toThrow('Invalid rootMargin syntax');
+	// 		expect(() => setObserverRootMargin('0px 0 0px')).toThrow('Invalid rootMargin syntax');
+	// 		expect(() => setObserverRootMargin('')).toThrow('Invalid rootMargin syntax');
+	// 		expect(() => setObserverRootMargin('0')).toThrow('Invalid rootMargin syntax');
+	// 	});
+	// });
 
-	describe('setObserverThreshold', () => {
-		test('Updates the threshold when the latter is valid', () => {
-			setObserverThreshold(1);
-			expect(config.observer.threshold).toBe(1);
+	// describe('setObserverThreshold', () => {
+	// 	test('Updates the threshold when the latter is valid', () => {
+	// 		setObserverThreshold(1);
+	// 		expect(config.observer.threshold).toBe(1);
 
-			setObserverThreshold(1.0);
-			expect(config.observer.threshold).toBeCloseTo(1.0);
+	// 		setObserverThreshold(1.0);
+	// 		expect(config.observer.threshold).toBeCloseTo(1.0);
 
-			setObserverThreshold(0);
-			expect(config.observer.threshold).toBe(0);
+	// 		setObserverThreshold(0);
+	// 		expect(config.observer.threshold).toBe(0);
 
-			setObserverThreshold(0.0);
-			expect(config.observer.threshold).toBeCloseTo(0.0);
+	// 		setObserverThreshold(0.0);
+	// 		expect(config.observer.threshold).toBeCloseTo(0.0);
 
-			setObserverThreshold(0.5);
-			expect(config.observer.threshold).toBeCloseTo(0.5);
-		});
+	// 		setObserverThreshold(0.5);
+	// 		expect(config.observer.threshold).toBeCloseTo(0.5);
+	// 	});
 
-		test('Throws an error when 1 < threshold < 0', () => {
-			expect(() => setObserverThreshold(-0.2)).toThrow('Threshold must be between 0.0 and 1.0');
-			expect(() => setObserverThreshold(1.5)).toThrow('Threshold must be between 0.0 and 1.0');
-		});
-	});
+	// 	test('Throws an error when 1 < threshold < 0', () => {
+	// 		expect(() => setObserverThreshold(-0.2)).toThrow('Threshold must be between 0.0 and 1.0');
+	// 		expect(() => setObserverThreshold(1.5)).toThrow('Threshold must be between 0.0 and 1.0');
+	// 	});
+	// });
 
 	describe('setConfig', () => {
 		test('Default config is valid', () => {
@@ -296,34 +296,34 @@ describe('Testing API', () => {
 			});
 		});
 
-		describe('rootMargin', () => {
-			test('Invalid with empty string', () => {
-				config.observer.rootMargin = '';
-				expect(() => setConfig(config)).toThrow('Invalid rootMargin syntax');
-			});
+		// describe('rootMargin', () => {
+		// 	test('Invalid with empty string', () => {
+		// 		config.observer.rootMargin = '';
+		// 		expect(() => setConfig(config)).toThrow('Invalid rootMargin syntax');
+		// 	});
 
-			test('Invalid with missing units', () => {
-				config.observer.rootMargin = '0 0 0 0';
-				expect(() => setConfig(config)).toThrow('Invalid rootMargin syntax');
-			});
+		// 	test('Invalid with missing units', () => {
+		// 		config.observer.rootMargin = '0 0 0 0';
+		// 		expect(() => setConfig(config)).toThrow('Invalid rootMargin syntax');
+		// 	});
 
-			test('Invalid with unknown units', () => {
-				config.observer.rootMargin = '0px 0px 0this 0that';
-				expect(() => setConfig(config)).toThrow('Invalid rootMargin syntax');
-			});
-		});
+		// 	test('Invalid with unknown units', () => {
+		// 		config.observer.rootMargin = '0px 0px 0this 0that';
+		// 		expect(() => setConfig(config)).toThrow('Invalid rootMargin syntax');
+		// 	});
+		// });
 
-		describe('threshold', () => {
-			test('Invalid with negative numbers', () => {
-				config.observer.threshold = -1;
-				expect(() => setConfig(config)).toThrow('Threshold must be between 0.0 and 1.0');
-			});
+		// describe('threshold', () => {
+		// 	test('Invalid with negative numbers', () => {
+		// 		config.observer.threshold = -1;
+		// 		expect(() => setConfig(config)).toThrow('Threshold must be between 0.0 and 1.0');
+		// 	});
 
-			test('Invalid with numbers greater than 1', () => {
-				config.observer.threshold = 1.5;
-				expect(() => setConfig(config)).toThrow('Threshold must be between 0.0 and 1.0');
-			});
-		});
+		// 	test('Invalid with numbers greater than 1', () => {
+		// 		config.observer.threshold = 1.5;
+		// 		expect(() => setConfig(config)).toThrow('Threshold must be between 0.0 and 1.0');
+		// 	});
+		// });
 	});
 
 	describe('setDefaultOptions', () => {

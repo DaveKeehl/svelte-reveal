@@ -7,10 +7,10 @@ export {
 	setDeviceBreakpoint,
 	setDevice,
 	setResponsive,
-	setObserverConfig,
-	setObserverRoot,
-	setObserverRootMargin,
-	setObserverThreshold,
+	// setObserverConfig,
+	// setObserverRoot,
+	// setObserverRootMargin,
+	// setObserverThreshold,
 	setConfig,
 	setDefaultOptions
 } from './internal/API';

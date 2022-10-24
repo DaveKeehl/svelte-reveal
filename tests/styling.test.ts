@@ -39,12 +39,12 @@ beforeEach(() => {
 				enabled: true,
 				breakpoint: 2560
 			}
-		},
-		observer: {
-			root: null,
-			rootMargin: '0px 0px 0px 0px',
-			threshold: 0.6
 		}
+		// observer: {
+		// 	root: null,
+		// 	rootMargin: '0px 0px 0px 0px',
+		// 	threshold: 0.6
+		// }
 	});
 });
 

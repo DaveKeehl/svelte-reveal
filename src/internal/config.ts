@@ -60,15 +60,5 @@ export const config: IConfig = {
 			enabled: true,
 			breakpoint: 2560
 		}
-	},
-	observer: {
-		root: init.root,
-		rootMargin: createObserverRootMargin({
-			top: init.marginTop,
-			right: init.marginRight,
-			bottom: init.marginBottom,
-			left: init.marginLeft
-		}),
-		threshold: init.threshold
 	}
 };

@@ -1,5 +1,5 @@
 import type { IOptions } from '../src/internal/types';
-import { checkOptions, hasValidRange, isPositive, isPositiveInteger } from '../src/internal/validations';
+import { createFinalOptions, hasValidRange, isPositive, isPositiveInteger } from '../src/internal/validations';
 
 test('hasValidRange', () => {
 	expect(hasValidRange(100, 0, 200)).toBe(true);
@@ -30,7 +30,7 @@ test('checkOptions', () => {
 		marginBottom: 100,
 		marginTop: 100
 	};
-	const options = checkOptions(userOptions);
+	const options = createFinalOptions(userOptions);
 
 	expect(options.disable).toBe(false);
 	expect(options.debug).toBe(true);

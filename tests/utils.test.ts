@@ -4,7 +4,7 @@ import { createClassNames, createStylesheet } from '../src/internal/styling';
 import type { IOptions, ObserverRootMargin } from '../src/internal/types';
 import { clean, createObserverRootMargin } from '../src/internal/utils';
 import { markRevealNode, activateRevealNode, getRevealNode } from '../src/internal/DOM';
-import { checkOptions } from '../src/internal/validations';
+import { areOptionsValid, createFinalOptions } from '../src/internal/validations';
 
 beforeEach(() => {
 	setConfig({
@@ -27,12 +27,12 @@ beforeEach(() => {
 				enabled: true,
 				breakpoint: 2560
 			}
-		},
-		observer: {
-			root: null,
-			rootMargin: '0px 0px 0px 0px',
-			threshold: 0.6
 		}
+		// observer: {
+		// 	root: null,
+		// 	rootMargin: '0px 0px 0px 0px',
+		// 	threshold: 0.6
+		// }
 	});
 });
 
@@ -134,7 +134,7 @@ test('clean', () => {
 	expect(clean('')).toBe('');
 });
 
-describe('checkOptions', () => {
+describe('createFinalOptions', () => {
 	test('Using valid options', () => {
 		const validOptions: IOptions = {
 			threshold: 0.6,
@@ -145,10 +145,12 @@ describe('checkOptions', () => {
 			scale: 0
 		};
 		const finalOptions = Object.assign({}, init, validOptions);
-		expect(checkOptions(validOptions)).toStrictEqual(finalOptions);
+		expect(createFinalOptions(validOptions)).toStrictEqual(finalOptions);
 	});
+});
 
-	test('Should throw an error when using invalid options', () => {
+describe('areOptionsValid', () => {
+	test('Should return false when using invalid options', () => {
 		const invalidOptions: IOptions = {
 			threshold: 1.2,
 			opacity: 0,
@@ -157,7 +159,8 @@ describe('checkOptions', () => {
 			blur: -5,
 			scale: 0
 		};
-		expect(() => checkOptions(invalidOptions)).toThrowError('Invalid options');
+		const finalOptions = createFinalOptions(invalidOptions);
+		expect(areOptionsValid(finalOptions)).toBe(false);
 	});
 });
 

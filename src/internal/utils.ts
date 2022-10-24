@@ -26,7 +26,7 @@ export const clean = (styles: string): string =>
 export const getConfigClone = (): IConfig => clone(config);
 
 /**
- * Format the root margin string needed by the intersection observer
+ * Format the root margin string needed by the intersection observer.
  * @param rootMargin - An object containing the four margin values as number
  * @returns The formatted root margin string
  */
