@@ -19,8 +19,8 @@
 		"declaration": true,
 		"declarationDir": "dist/types",
 		"noEmitOnError": true,
-		"strict": true
-		// "noUncheckedIndexedAccess": true
+		"strict": true,
+		"noUncheckedIndexedAccess": true
 	},
 	"include": ["./src", "./tests"]
 }

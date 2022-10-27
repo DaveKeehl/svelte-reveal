@@ -42,7 +42,7 @@ const getOptimalQueries = (devices: Devices): string[] => {
 	for (let i = 0; i < devices.length; ) {
 		const startDevice = devices[i];
 
-		if (!startDevice[1].enabled) {
+		if (!startDevice || !startDevice[1].enabled) {
 			i++;
 			continue;
 		}
@@ -58,7 +58,7 @@ const getOptimalQueries = (devices: Devices): string[] => {
 			query = createQuery(devices, previous, start, end);
 
 			j++;
-			endDevice = devices[j];
+			endDevice = devices[j] || endDevice;
 		}
 
 		queries.push(query);
