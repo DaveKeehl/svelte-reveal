@@ -1,5 +1,5 @@
 import { createObserver, logInfo } from '../src/internal/DOM';
-import { init } from '../src/internal/config';
+import { defOpts } from '../src/internal/config';
 
 export function setupIntersectionObserverMock({
 	root = null,
@@ -40,7 +40,7 @@ beforeEach(() => {
 describe('createObserver', () => {
 	test('The function returns an IntersectionObserver object', () => {
 		const node = document.createElement('div');
-		const res = createObserver(true, '#000000', node, init, 'css_class');
+		const res = createObserver(true, '#000000', node, defOpts, 'css_class');
 		expect(res).toBeInstanceOf(IntersectionObserver);
 	});
 });
@@ -48,6 +48,6 @@ describe('createObserver', () => {
 describe('logInfo', () => {
 	test('The function returns the correct values', () => {
 		const node = document.createElement('div');
-		expect(logInfo(init, node)).toStrictEqual([init.debug, 'color: #B4BEC8']);
+		expect(logInfo(defOpts, node)).toStrictEqual([defOpts.debug, 'color: #B4BEC8']);
 	});
 });

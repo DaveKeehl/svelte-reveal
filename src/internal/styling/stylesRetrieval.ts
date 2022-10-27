@@ -1,4 +1,4 @@
-import { init } from '../config';
+import { defOpts } from '../config';
 import type { Transitions, IOptions, Easing, CustomEasing } from '../types';
 import { clean } from '../utils';
 import { addMediaQueries } from './mediaQueries';
@@ -14,8 +14,8 @@ import { addVendors } from './stylesGeneration';
 export const getUpdatedStyles = (oldStyles: string, mainCss: string, transitionCss: string): string => {
 	const prevStyles = getMinifiedStylesFromQuery(oldStyles);
 	const newStyles = clean([mainCss, transitionCss].join(' '));
-	const decorated = addMediaQueries([prevStyles, newStyles].join(' '));
-	return decorated.trim();
+	const decoratedStyles = addMediaQueries([prevStyles, newStyles].join(' '));
+	return decoratedStyles.trim();
 };
 
 /**
@@ -24,71 +24,73 @@ export const getUpdatedStyles = (oldStyles: string, mainCss: string, transitionC
  * @returns The nested styles
  */
 export const getMinifiedStylesFromQuery = (query: string): string => {
-	const cleaned = clean(query.trim());
-	if (cleaned === '' || !cleaned.startsWith('@media')) return cleaned;
-	return clean(cleaned.replace(/{/, '___').split('___')[1].slice(0, -1).trim());
+	const cleanQuery = clean(query.trim());
+	const isMediaQuery = cleanQuery.startsWith('@media');
+
+	if (!isMediaQuery) return cleanQuery;
+
+	const separator = '<opening_media_query_brace>';
+	const queryFromOpeningBrace = cleanQuery.replace(/{/, separator).split(separator)[1];
+
+	if (!queryFromOpeningBrace) {
+		throw new Error('Invalid media query');
+	}
+
+	const queryContent = queryFromOpeningBrace.slice(0, -1);
+	return queryContent.trim();
 };
 
 /**
  * Get the CSS rules of a given transition.
  * @param transition - The name of the transition
- * @param init - The options default values
  * @param options - The options used by the transition
  * @returns The assembled rules of a given transition
  */
 export const getCssRules = (transition: Transitions, options: IOptions): string => {
-	const { x, y, rotate, opacity, blur, scale } = Object.assign({}, init, options);
+	const { x, y, rotate, opacity, blur, scale } = Object.assign({}, defOpts, options);
 
-	let styles = '';
-
-	if (transition === 'fly') {
-		styles = `
+	const transitions = {
+		fly: `
 			opacity: ${opacity};
 			transform: translateY(${y}px);
-		`;
-	} else if (transition === 'fade') {
-		styles = `
+		`,
+		fade: `
 			opacity: ${opacity};
-		`;
-	} else if (transition === 'blur') {
-		styles = `
+		`,
+		blur: `
 			opacity: ${opacity};
 			filter: blur(${blur}px);
-		`;
-	} else if (transition === 'scale') {
-		styles = `
+		`,
+		scale: `
 			opacity: ${opacity};
 			transform: scale(${scale});
-		`;
-	} else if (transition === 'slide') {
-		styles = `
+		`,
+		slide: `
 			opacity: ${opacity};
 			transform: translateX(${x}px);
-		`;
-	} else if (transition === 'spin') {
-		styles = `
+		`,
+		spin: `
 			opacity: ${opacity};
 			transform: rotate(${rotate}deg);
-		`;
-	} else {
+		`
+	};
+
+	if (!Object.keys(transitions).includes(transition)) {
 		throw new Error('Invalid CSS class name');
 	}
 
+	const styles = transitions[transition];
 	return addVendors(styles);
 };
 
 /**
  * Get a valid CSS easing function
  * @param easing - The easing function to be applied
- * @param customEase - Custom values of cubic-bezier easing function
+ * @param customEasing - Custom values of cubic-bezier easing function
  * @returns A CSS valid easing function value
  */
 export const getEasing = (easing: Easing, customEasing?: CustomEasing): string => {
-	interface IWeight {
-		[P: string]: CustomEasing;
-	}
-
-	const weightsObj: IWeight = {
+	const weights = {
 		linear: [0, 0, 1, 1],
 		easeInSine: [0.12, 0, 0.39, 0],
 		easeOutSine: [0.61, 1, 0.88, 1],
@@ -116,15 +118,13 @@ export const getEasing = (easing: Easing, customEasing?: CustomEasing): string =
 		easeInOutBack: [0.68, -0.6, 0.32, 1.6]
 	};
 
-	let weights: CustomEasing;
-
-	if (easing === 'custom' && customEasing !== undefined) {
-		weights = customEasing;
-	} else if (easing !== 'custom' && Object.keys(weightsObj).includes(easing)) {
-		weights = weightsObj[easing];
-	} else {
-		throw new Error('Invalid easing function');
+	if (easing === 'custom' && customEasing) {
+		return `cubic-bezier(${customEasing.join(', ')})`;
 	}
 
-	return `cubic-bezier(${weights.join(', ')})`;
+	if (easing !== 'custom' && Object.keys(weights).includes(easing)) {
+		return `cubic-bezier(${weights[easing].join(', ')})`;
+	}
+
+	throw new Error('Invalid easing function');
 };

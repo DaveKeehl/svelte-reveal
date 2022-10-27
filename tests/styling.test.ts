@@ -1,4 +1,4 @@
-import { init, config } from '../src/internal/config';
+import { defOpts, config } from '../src/internal/config';
 import { setConfig } from '../src/internal/API';
 import {
 	createStylesheet,
@@ -39,12 +39,12 @@ beforeEach(() => {
 				enabled: true,
 				breakpoint: 2560
 			}
+		},
+		observer: {
+			root: null,
+			rootMargin: '0px 0px 0px 0px',
+			threshold: 0.6
 		}
-		// observer: {
-		// 	root: null,
-		// 	rootMargin: '0px 0px 0px 0px',
-		// 	threshold: 0.6
-		// }
 	});
 });
 
@@ -89,8 +89,8 @@ describe('getUpdatedStyles', () => {
 	`;
 	const mainCssClass = createClassNames('', false, 'fly');
 	const baseCssClass = createClassNames('', true, 'fly');
-	const mainCss = createMainCss(mainCssClass, init);
-	const transitionCss = createTransitionCss(baseCssClass, init);
+	const mainCss = createMainCss(mainCssClass, defOpts);
+	const transitionCss = createTransitionCss(baseCssClass, defOpts);
 	const updatedStyles = getUpdatedStyles(oldStyles, mainCss, transitionCss);
 
 	test('Has no media queries by default', () => {
@@ -145,12 +145,12 @@ describe('hasValidBreakpoints', () => {
 
 	test('Should throw an error when using floating point numbers', () => {
 		config.responsive.mobile.breakpoint = 400.5;
-		expect(() => hasValidBreakpoints(config.responsive)).toThrow('Breakpoints must be positive integers');
+		expect(hasValidBreakpoints(config.responsive)).toBe(false);
 	});
 
 	test('Should throw an error when breakpoints overlap', () => {
 		config.responsive.tablet.breakpoint = 200;
-		expect(() => hasValidBreakpoints(config.responsive)).toThrow("Breakpoints can't overlap");
+		expect(hasValidBreakpoints(config.responsive)).toBe(false);
 	});
 });
 
@@ -481,7 +481,7 @@ describe('CSS rules', () => {
 				options = {};
 				const styles = `
 					opacity: 0;
-					transform: translateY(${init.y}px);
+					transform: translateY(${defOpts.y}px);
 				`;
 				expect(getCssRules('fly', options)).toBe(addMediaQueries(addVendors(styles)));
 			});
@@ -526,7 +526,7 @@ describe('CSS rules', () => {
 				options = {};
 				const styles = `
 					opacity: 0;
-					transform: translateX(${init.x}px);			
+					transform: translateX(${defOpts.x}px);			
 				`;
 				expect(getCssRules('slide', options)).toBe(addMediaQueries(addVendors(styles)));
 			});

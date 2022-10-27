@@ -11,11 +11,12 @@ import { getCssRules, getEasing } from './stylesRetrieval';
  */
 export const createClassNames = (ref: string, transitionClass: boolean, transition: Transitions): string => {
 	const tokens = [ref, transitionClass ? 'base' : '', transition];
-	const validTokens = tokens.filter((x) => x && x !== '');
-	const prefix = `sr__${validTokens.join('__')}__`;
-	const seed = document.querySelectorAll('[data-action="reveal"]').length;
-	const uid = seedrandom(seed.toString())();
-	return `${prefix}${uid.toString().slice(2)}`;
+	const validTokens = tokens.filter((token) => token && token !== '').join('__');
+
+	const seed = document.querySelectorAll('[data-action="reveal"]').length.toString();
+	const uid = seedrandom(seed)().toString().slice(2);
+
+	return `sr__${validTokens}__${uid}`;
 };
 
 /**
@@ -41,15 +42,13 @@ export const createMainCss = (className: string, options: Required<IOptions>): s
  * @returns The transition CSS for the target element
  */
 export const createTransitionCss = (className: string, options: Required<IOptions>) => {
-	const { duration, delay, easing, customEasing } = options;
-
-	const styles = `
-		transition: all ${duration / 1000}s ${delay / 1000}s ${getEasing(easing, customEasing)};
-	`;
+	const duration = options.duration / 1000;
+	const delay = options.delay / 1000;
+	const easingFunction = getEasing(options.easing, options.customEasing);
 
 	return `
 		.${className} {
-			${styles.trim()}
+			transition: all ${duration}s ${delay}s ${easingFunction};
 		}
 	`;
 };

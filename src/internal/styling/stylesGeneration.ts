@@ -7,7 +7,9 @@ import { extractCssRules, sanitizeStyles } from './stylesExtraction';
 export const createStylesheet = (): void => {
 	const style = document.createElement('style');
 	style.setAttribute('type', 'text/css');
+
 	markRevealNode(style);
+
 	const head = document.querySelector('head');
 	if (head !== null) head.appendChild(style);
 };
@@ -20,19 +22,20 @@ export const createStylesheet = (): void => {
 export const addVendors = (unprefixedStyles: string): string => {
 	const rules = extractCssRules(unprefixedStyles);
 
-	let prefixedStyles = '';
-
-	rules.forEach((rule) => {
+	const prefixedStyles = rules.reduce((styles, rule) => {
 		const [property, value] = rule
 			.trim()
 			.split(':')
-			.map((x) => x.trim());
-		prefixedStyles += sanitizeStyles(`
+			.map((r) => r.trim());
+
+		const newStyles = sanitizeStyles(`
 			-webkit-${property}: ${value};
 			-ms-${property}: ${value};
 			${property}: ${value};
 		`);
-	});
+
+		return styles.concat(newStyles);
+	}, '');
 
 	return prefixedStyles.trim();
 };

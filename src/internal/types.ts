@@ -220,7 +220,7 @@ export interface IConfig {
 	/**
 	 * The Intersection Observer API options.
 	 */
-	// observer: IObserverOptions;
+	observer: IObserverOptions;
 }
 
 /**

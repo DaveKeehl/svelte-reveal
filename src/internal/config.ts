@@ -4,7 +4,7 @@ import { createObserverRootMargin } from './utils';
 /**
  * Object containing the default options used by the library for the scroll effect.
  */
-export const init: Required<IOptions> = {
+export const defOpts: Required<IOptions> = {
 	disable: false,
 	debug: false,
 	ref: '',
@@ -60,5 +60,15 @@ export const config: IConfig = {
 			enabled: true,
 			breakpoint: 2560
 		}
+	},
+	observer: {
+		root: defOpts.root,
+		rootMargin: createObserverRootMargin({
+			top: defOpts.marginTop,
+			right: defOpts.marginRight,
+			bottom: defOpts.marginBottom,
+			left: defOpts.marginLeft
+		}),
+		threshold: defOpts.threshold
 	}
 };

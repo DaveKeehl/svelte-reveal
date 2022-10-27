@@ -47,17 +47,11 @@ export const activateRevealNode = (
  * @returns The element to be revealed
  */
 export const getRevealNode = (node: HTMLElement): HTMLElement => {
-	let revealNode: HTMLElement;
+	if (node.style.length === 0) return node;
 
-	if (node.style.length === 0) {
-		revealNode = node;
-	} else {
-		const wrapper = document.createElement('div');
-		wrapper.appendChild(node);
-		revealNode = wrapper;
-	}
-
-	return revealNode;
+	const wrapper = document.createElement('div');
+	wrapper.appendChild(node);
+	return wrapper;
 };
 
 /**
@@ -92,11 +86,17 @@ export const createObserver = (
 	return new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
 		if (canDebug) {
 			const entry = entries[0];
+
+			if (!entry) {
+				throw new Error('Intersection Observer entry is undefined');
+			}
+
 			const entryTarget = entry.target;
 
 			if (entryTarget === revealNode) {
 				console.groupCollapsed(`%cRef: ${ref} (Intersection Observer Callback)`, highlightText);
 				console.log(entry);
+				console.log(observerOptions);
 				console.groupEnd();
 			}
 		}

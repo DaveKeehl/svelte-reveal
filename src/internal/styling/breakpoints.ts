@@ -22,18 +22,10 @@ export const hasOverlappingBreakpoints = (responsive: Responsive): boolean => {
  * @returns Returns true if the breakpoints are valid, otherwise it throws errors
  */
 export const hasValidBreakpoints = (responsive: Responsive): boolean => {
-	const breakpoints: number[] = Object.values(responsive).map((device: IDevice) => device.breakpoint);
+	const breakpoints = Object.values(responsive).map((device) => device.breakpoint);
 
-	// Check if breakpoints are positive integers
-	breakpoints.forEach((breakpoint) => {
-		if (!isPositiveInteger(breakpoint)) {
-			throw new Error('Breakpoints must be positive integers');
-		}
-	});
+	const breakpointsOverlap = hasOverlappingBreakpoints(responsive);
+	const allBreakpointsPositive = breakpoints.every((breakpoint) => isPositiveInteger(breakpoint));
 
-	if (hasOverlappingBreakpoints(responsive)) {
-		throw new Error("Breakpoints can't overlap");
-	}
-
-	return true;
+	return !breakpointsOverlap && allBreakpointsPositive;
 };

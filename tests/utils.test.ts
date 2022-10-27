@@ -1,4 +1,4 @@
-import { init } from '../src/internal/config';
+import { defOpts } from '../src/internal/config';
 import { setConfig } from '../src/internal/API';
 import { createClassNames, createStylesheet } from '../src/internal/styling';
 import type { IOptions, ObserverRootMargin } from '../src/internal/types';
@@ -27,12 +27,12 @@ beforeEach(() => {
 				enabled: true,
 				breakpoint: 2560
 			}
+		},
+		observer: {
+			root: null,
+			rootMargin: '0px 0px 0px 0px',
+			threshold: 0.6
 		}
-		// observer: {
-		// 	root: null,
-		// 	rootMargin: '0px 0px 0px 0px',
-		// 	threshold: 0.6
-		// }
 	});
 });
 
@@ -50,11 +50,11 @@ describe('markRevealNode', () => {
 
 describe('activateRevealNode', () => {
 	const node = document.createElement('div');
-	const className = createClassNames(init.ref, false, init.transition);
-	const baseClassName = createClassNames(init.ref, true, init.transition);
+	const className = createClassNames(defOpts.ref, false, defOpts.transition);
+	const baseClassName = createClassNames(defOpts.ref, true, defOpts.transition);
 
 	test('The reveal node has no css class when stylesheet does not exist', () => {
-		expect(Object.values(activateRevealNode(node, className, baseClassName, init).classList)).toStrictEqual([]);
+		expect(Object.values(activateRevealNode(node, className, baseClassName, defOpts).classList)).toStrictEqual([]);
 	});
 
 	test('The reveal node has correct css class when stylesheet exists', () => {
@@ -73,7 +73,9 @@ describe('activateRevealNode', () => {
 			</html>
 		`;
 		createStylesheet();
-		expect(Object.values(activateRevealNode(node, className, baseClassName, init).classList)).toContain(baseClassName);
+		expect(Object.values(activateRevealNode(node, className, baseClassName, defOpts).classList)).toContain(
+			baseClassName
+		);
 	});
 
 	// test('Stylesheet only has one set of media queries', () => {
@@ -144,7 +146,7 @@ describe('createFinalOptions', () => {
 			blur: 16,
 			scale: 0
 		};
-		const finalOptions = Object.assign({}, init, validOptions);
+		const finalOptions = Object.assign({}, defOpts, validOptions);
 		expect(createFinalOptions(validOptions)).toStrictEqual(finalOptions);
 	});
 });
@@ -175,6 +177,12 @@ test('createObserverRootMargin', () => {
 	expect(margins.length).toBe(4);
 	margins.forEach((margin, idx) => {
 		expect(margin.endsWith('px')).toBe(true);
-		expect(parseInt(margin.split('px')[0])).toBe(Object.entries(rootMargin)[idx][1]);
+
+		const extractedMarginValue = margin.split('px')[0];
+		const rootMarginValue = Object.entries(rootMargin)[idx];
+
+		if (extractedMarginValue && rootMarginValue) {
+			expect(parseInt(extractedMarginValue)).toBe(rootMarginValue[1]);
+		}
 	});
 });

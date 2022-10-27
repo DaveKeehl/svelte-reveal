@@ -1,8 +1,8 @@
-import { config, init } from './config';
+import { config, defOpts } from './config';
 import { hasValidBreakpoints } from './styling';
 import { getConfigClone } from './utils';
-import { areOptionsValid, createFinalOptions } from './validations';
-import type { IConfig, Device, IDevice, Responsive, IOptions } from './types';
+import { areOptionsValid, createFinalOptions, hasValidRange } from './validations';
+import type { IConfig, Device, IDevice, Responsive, IOptions, IObserverOptions, ObserverRoot } from './types';
 
 /**
  * Toggles on/off the development mode.
@@ -58,7 +58,10 @@ export const setDevicesStatus = (devices: Device[], status: boolean): IConfig =>
 export const setDeviceBreakpoint = (device: Device, breakpoint: number): IConfig => {
 	const configClone: IConfig = getConfigClone();
 	configClone.responsive[device].breakpoint = breakpoint;
-	hasValidBreakpoints(configClone.responsive);
+
+	if (!hasValidBreakpoints(configClone.responsive)) {
+		throw new Error('Invalid breakpoints');
+	}
 
 	config.responsive[device].breakpoint = breakpoint;
 	return config;
@@ -73,7 +76,10 @@ export const setDeviceBreakpoint = (device: Device, breakpoint: number): IConfig
 export const setDevice = (device: Device, settings: IDevice): IConfig => {
 	const configClone: IConfig = getConfigClone();
 	configClone.responsive[device] = settings;
-	hasValidBreakpoints(configClone.responsive);
+
+	if (!hasValidBreakpoints(configClone.responsive)) {
+		throw new Error('Invalid breakpoints');
+	}
 
 	config.responsive[device] = settings;
 	return config;
@@ -85,7 +91,9 @@ export const setDevice = (device: Device, settings: IDevice): IConfig => {
  * @returns The config object with the updated responsive property
  */
 export const setResponsive = (responsive: Responsive): IConfig => {
-	hasValidBreakpoints(responsive);
+	if (!hasValidBreakpoints(responsive)) {
+		throw new Error('Invalid breakpoints');
+	}
 
 	config.responsive = responsive;
 	return config;
@@ -96,57 +104,57 @@ export const setResponsive = (responsive: Responsive): IConfig => {
  * @param observerConfig - Your custom observer config
  * @returns The config object with the updated dev property
  */
-// export const setObserverConfig = (observerConfig: IObserverOptions): IConfig => {
-// 	setObserverRoot(observerConfig.root);
-// 	setObserverRootMargin(observerConfig.rootMargin);
-// 	setObserverThreshold(observerConfig.threshold);
-// 	return config;
-// };
+export const setObserverConfig = (observerConfig: IObserverOptions): IConfig => {
+	setObserverRoot(observerConfig.root);
+	setObserverRootMargin(observerConfig.rootMargin);
+	setObserverThreshold(observerConfig.threshold);
+	return config;
+};
 
 /**
  * Sets the Intersection Observer API root element.
  * @param root - The root element
  * @returns The config object with the updated dev property
  */
-// export const setObserverRoot = (root: ObserverRoot): IConfig => {
-// 	config.observer.root = root;
-// 	return config;
-// };
+export const setObserverRoot = (root: ObserverRoot): IConfig => {
+	config.observer.root = root;
+	return config;
+};
 
 /**
  * Sets the rootMargin property of the Intersection Observer API.
  * @param rootMargin - The margin used by the observer with respect to the root element
  * @returns The config object with the updated dev property
  */
-// export const setObserverRootMargin = (rootMargin: string): IConfig => {
-// 	const margins = rootMargin
-// 		.trim()
-// 		.split(' ')
-// 		.map((margin) => margin.trim());
-// 	const regex = /^(0|([1-9]\d*))(px|%)$/;
-// 	const hasCorrectUnits = margins.every((margin) => regex.test(margin));
+export const setObserverRootMargin = (rootMargin: string): IConfig => {
+	const margins = rootMargin
+		.trim()
+		.split(' ')
+		.map((margin) => margin.trim());
+	const regex = /^(0|([1-9]\d*))(px|%)$/;
+	const hasCorrectUnits = margins.every((margin) => regex.test(margin));
 
-// 	if (rootMargin !== '' && margins.length <= 4 && hasCorrectUnits) {
-// 		config.observer.rootMargin = margins.join(' ');
-// 		return config;
-// 	} else {
-// 		throw new SyntaxError('Invalid rootMargin syntax');
-// 	}
-// };
+	if (rootMargin === '' || margins.length > 4 || !hasCorrectUnits) {
+		throw new SyntaxError('Invalid rootMargin syntax');
+	}
+
+	config.observer.rootMargin = margins.join(' ');
+	return config;
+};
 
 /**
  * Sets the threshold used by the Intersection Observer API to detect when an element is considered visible.
  * @param threshold - The observer threshold value
  * @returns The config object with the updated dev property
  */
-// export const setObserverThreshold = (threshold: number): IConfig => {
-// 	if (hasValidRange(threshold, 0, 1)) {
-// 		config.observer.threshold = threshold;
-// 		return config;
-// 	} else {
-// 		throw new RangeError('Threshold must be between 0.0 and 1.0');
-// 	}
-// };
+export const setObserverThreshold = (threshold: number): IConfig => {
+	if (!hasValidRange(threshold, 0, 1)) {
+		throw new RangeError('Threshold must be between 0.0 and 1.0');
+	}
+
+	config.observer.threshold = threshold;
+	return config;
+};
 
 /**
  * Sets all the global configurations (dev, once, observer) used by this library.
@@ -157,7 +165,7 @@ export const setConfig = (userConfig: IConfig): IConfig => {
 	setDev(userConfig.dev);
 	setOnce(userConfig.once);
 	setResponsive(userConfig.responsive);
-	// setObserverConfig(userConfig.observer);
+	setObserverConfig(userConfig.observer);
 	return config;
 };
 
@@ -173,5 +181,5 @@ export const setDefaultOptions = (options: IOptions): Required<IOptions> => {
 		throw new Error('Invalid options');
 	}
 
-	return Object.assign(init, validOptions);
+	return Object.assign(defOpts, validOptions);
 };

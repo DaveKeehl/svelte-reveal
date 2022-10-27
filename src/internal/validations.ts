@@ -1,4 +1,4 @@
-import { init } from './config';
+import { defOpts } from './config';
 import type { IOptions } from './types';
 
 /**
@@ -34,7 +34,7 @@ export const isPositiveInteger = (property: number): boolean => {
  * @returns The final options that can be used by the rest of the library
  */
 export const createFinalOptions = (userOptions: IOptions): Required<IOptions> => {
-	return Object.assign({}, init, userOptions);
+	return Object.assign({}, defOpts, userOptions);
 };
 
 /**
