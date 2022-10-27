@@ -35,21 +35,26 @@ const createQuery = (devices: Devices, i: number, start: number, end: number): s
  */
 const findOptimalQueries = (devices: Devices): string[] => {
 	const queries: string[] = [];
-	let i = 0;
 
-	while (i < devices.length) {
-		if (!devices[i][1].enabled) {
+	for (let i = 0; i < devices.length; ) {
+		const startDevice = devices[i];
+
+		if (!startDevice[1].enabled) {
 			i++;
 			continue;
 		}
 
 		let j = i;
 		let query = '';
+		let endDevice = startDevice;
 
-		for (; j < devices.length && devices[j][1].enabled; j++) {
-			const beginning = devices[i][1].breakpoint;
-			const end = devices[j][1].breakpoint;
-			query = createQuery(devices, i, beginning, end);
+		while (j < devices.length && endDevice[1].enabled) {
+			const start = startDevice[1].breakpoint;
+			const end = endDevice[1].breakpoint;
+			query = createQuery(devices, i, start, end);
+
+			j++;
+			endDevice = devices[j];
 		}
 
 		queries.push(query);
