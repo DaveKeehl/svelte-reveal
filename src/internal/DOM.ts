@@ -1,7 +1,7 @@
-import { config } from './config';
+import { config, observerConfig } from './config';
 import { createTransitionPropertiesCSS, createTransitionDeclarationCSS, getUpdatedStyles } from './styling';
 import type { IOptions } from './types';
-import { clean, createObserverRootMargin } from './utils';
+import { clean } from './utils';
 
 /**
  * Marks a DOM node as part of reveal process.
@@ -74,17 +74,6 @@ export const createObserver = (
 ): IntersectionObserver => {
 	const { ref, reset, duration, delay, threshold, onResetStart, onResetEnd, onRevealEnd } = options;
 
-	const observerOptions = {
-		root: options.root,
-		rootMargin: createObserverRootMargin({
-			top: options.marginTop,
-			right: options.marginRight,
-			bottom: options.marginBottom,
-			left: options.marginLeft
-		}),
-		threshold: options.threshold
-	};
-
 	return new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
 		if (canDebug) {
 			const entry = entries[0];
@@ -98,7 +87,7 @@ export const createObserver = (
 			if (entryTarget === revealNode) {
 				console.groupCollapsed(`%cRef: ${ref} (Intersection Observer Callback)`, highlightText);
 				console.log(entry);
-				console.log(observerOptions);
+				console.log(observerConfig);
 				console.groupEnd();
 			}
 		}
@@ -114,7 +103,7 @@ export const createObserver = (
 				if (!reset) observer.unobserve(revealNode);
 			}
 		});
-	}, observerOptions);
+	}, observerConfig);
 };
 
 /**

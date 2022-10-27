@@ -1,4 +1,4 @@
-import type { IOptions, IConfig } from './types';
+import type { IOptions, IConfig, IObserverOptions } from './types';
 import { createObserverRootMargin } from './utils';
 
 /**
@@ -37,6 +37,17 @@ export const defOpts: Required<IOptions> = {
 	onDestroy: () => null
 };
 
+export const observerConfig: IObserverOptions = {
+	root: defOpts.root,
+	rootMargin: createObserverRootMargin({
+		top: defOpts.marginTop,
+		right: defOpts.marginRight,
+		bottom: defOpts.marginBottom,
+		left: defOpts.marginLeft
+	}),
+	threshold: defOpts.threshold
+};
+
 /**
  * Object containing global configurations that apply to all instances of this library.
  */
@@ -61,16 +72,7 @@ export const config: IConfig = {
 			breakpoint: 2560
 		}
 	},
-	observer: {
-		root: defOpts.root,
-		rootMargin: createObserverRootMargin({
-			top: defOpts.marginTop,
-			right: defOpts.marginRight,
-			bottom: defOpts.marginBottom,
-			left: defOpts.marginLeft
-		}),
-		threshold: defOpts.threshold
-	}
+	observer: observerConfig
 };
 
 /**

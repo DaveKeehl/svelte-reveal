@@ -117,7 +117,7 @@ export const setObserverConfig = (observerConfig: IObserverOptions): IConfig => 
  * @returns The config object with the updated dev property
  */
 export const setObserverRoot = (root: ObserverRoot): IConfig => {
-	config.observer.root = root;
+	defOpts.root = root || null;
 	return config;
 };
 
@@ -131,8 +131,8 @@ export const setObserverRootMargin = (rootMargin: string): IConfig => {
 		.trim()
 		.split(' ')
 		.map((margin) => margin.trim());
-	const regex = /^(0|([1-9]\d*))(px|%)$/;
-	const hasCorrectUnits = margins.every((margin) => regex.test(margin));
+	const isValidMargin = /^(0|([1-9]\d*))(px|%)$/;
+	const hasCorrectUnits = margins.every((margin) => isValidMargin.test(margin));
 
 	if (rootMargin === '' || margins.length > 4 || !hasCorrectUnits) {
 		throw new SyntaxError('Invalid rootMargin syntax');
@@ -152,7 +152,7 @@ export const setObserverThreshold = (threshold: number): IConfig => {
 		throw new RangeError('Threshold must be between 0.0 and 1.0');
 	}
 
-	config.observer.threshold = threshold;
+	defOpts.threshold = threshold;
 	return config;
 };
 
@@ -165,7 +165,7 @@ export const setConfig = (userConfig: IConfig): IConfig => {
 	setDev(userConfig.dev);
 	setOnce(userConfig.once);
 	setResponsive(userConfig.responsive);
-	setObserverConfig(userConfig.observer);
+	// setObserverConfig(userConfig.observer);
 	return config;
 };
 
