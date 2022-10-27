@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed validation steps in pre-commit hook
 - Updated dependencies
 - Fixed wrong options passed to the intersection observer
+- Plenty of refactoring and little quality of life improvements
 
 ## [0.6.0] - 2022-04-22
 ### Added
