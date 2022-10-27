@@ -1,5 +1,6 @@
+import { createFinalOptions } from '../src/internal/config';
 import type { IOptions } from '../src/internal/types';
-import { createFinalOptions, hasValidRange, isPositive, isPositiveInteger } from '../src/internal/validations';
+import { hasValidRange, isPositive, isPositiveInteger } from '../src/internal/validations';
 
 test('hasValidRange', () => {
 	expect(hasValidRange(100, 0, 200)).toBe(true);

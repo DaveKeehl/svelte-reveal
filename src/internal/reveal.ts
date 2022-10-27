@@ -1,9 +1,9 @@
-import { createClassNames, createStylesheet } from './styling';
-import { config, defOpts } from './config';
-import { styleTagStore, reloadStore } from './stores';
+import { getRevealClassNames, createStylesheet } from './styling';
+import { config, createFinalOptions, defOpts } from './config';
+import { isStyleTagCreated, hasPageReloaded } from './stores';
 import type { IOptions, IReturnAction } from './types';
 import { getRevealNode, activateRevealNode, createObserver, logInfo } from './DOM';
-import { areOptionsValid, createFinalOptions } from './validations';
+import { areOptionsValid } from './validations';
 
 /**
  * Reveals a given node element on scroll
@@ -21,8 +21,7 @@ export const reveal = (node: HTMLElement, options: IOptions = defOpts): IReturnA
 	const { transition, disable, ref, onRevealStart, onMount, onUpdate, onDestroy } = finalOptions;
 
 	const revealNode = getRevealNode(node);
-	const className = createClassNames(ref, false, transition); // The CSS class responsible for the animation
-	const baseClassName = createClassNames(ref, true, transition); // The CSS class responsible for transitioning the properties
+	const [transitionDeclaration, transitionProperties] = getRevealClassNames(ref, transition);
 
 	onMount(revealNode);
 
@@ -30,7 +29,7 @@ export const reveal = (node: HTMLElement, options: IOptions = defOpts): IReturnA
 
 	// Checking if page was reloaded
 	let reloaded = false;
-	const unsubscribeReloaded = reloadStore.subscribe((value: boolean) => (reloaded = value));
+	const unsubscribeReloaded = hasPageReloaded.subscribe((value: boolean) => (reloaded = value));
 	const navigation = window.performance.getEntriesByType('navigation');
 
 	let navigationType: string | number = '';
@@ -42,22 +41,22 @@ export const reveal = (node: HTMLElement, options: IOptions = defOpts): IReturnA
 		// Using deprecated navigation object as a last resort to detect a page reload
 		navigationType = window.performance.navigation.type; // NOSONAR
 	}
-	if (navigationType === 'reload' || navigationType === 1) reloadStore.set(true);
+	if (navigationType === 'reload' || navigationType === 1) hasPageReloaded.set(true);
 	if (disable || (config.once && reloaded)) return {};
 
 	// Setting up the styles
 	let styleTagExists = false;
-	const unsubscribeStyleTag = styleTagStore.subscribe((value: boolean) => (styleTagExists = value));
+	const unsubscribeStyleTag = isStyleTagCreated.subscribe((value: boolean) => (styleTagExists = value));
 
 	if (!styleTagExists) {
 		createStylesheet();
-		styleTagStore.set(true);
+		isStyleTagCreated.set(true);
 	}
 
 	onRevealStart(revealNode);
-	activateRevealNode(revealNode, className, baseClassName, finalOptions);
+	activateRevealNode(revealNode, transitionDeclaration, transitionProperties, finalOptions);
 
-	const ObserverInstance = createObserver(canDebug, highlightText, revealNode, finalOptions, className);
+	const ObserverInstance = createObserver(canDebug, highlightText, revealNode, finalOptions, transitionDeclaration);
 	ObserverInstance.observe(revealNode);
 
 	console.groupEnd();

@@ -7,13 +7,13 @@ import {
 	sanitizeStyles,
 	addVendors,
 	addMediaQueries,
-	getCssRules,
+	getCSSRules,
 	getEasing,
 	getMinifiedStylesFromQuery,
-	createMainCss,
-	createTransitionCss,
+	createTransitionPropertiesCSS,
+	createTransitionDeclarationCSS,
 	getUpdatedStyles,
-	createClassNames
+	getRevealClassNames
 } from '../src/internal/styling';
 import type { Responsive, IOptions, Transitions, CustomEasing } from '../src/internal/types';
 import { clean } from '../src/internal/utils';
@@ -87,10 +87,9 @@ describe('getUpdatedStyles', () => {
 			opacity: 1;
 		}
 	`;
-	const mainCssClass = createClassNames('', false, 'fly');
-	const baseCssClass = createClassNames('', true, 'fly');
-	const mainCss = createMainCss(mainCssClass, defOpts);
-	const transitionCss = createTransitionCss(baseCssClass, defOpts);
+	const [transitionDeclaration, transitionProperties] = getRevealClassNames('', 'fly');
+	const mainCss = createTransitionPropertiesCSS(transitionDeclaration, defOpts);
+	const transitionCss = createTransitionDeclarationCSS(transitionProperties, defOpts);
 	const updatedStyles = getUpdatedStyles(oldStyles, mainCss, transitionCss);
 
 	test('Has no media queries by default', () => {
@@ -483,7 +482,7 @@ describe('CSS rules', () => {
 					opacity: 0;
 					transform: translateY(${defOpts.y}px);
 				`;
-				expect(getCssRules('fly', options)).toBe(addMediaQueries(addVendors(styles)));
+				expect(getCSSRules('fly', options)).toBe(addMediaQueries(addVendors(styles)));
 			});
 
 			test('With custom values', () => {
@@ -494,7 +493,7 @@ describe('CSS rules', () => {
 					opacity: 0;
 					transform: translateY(${options.y}px);
 				`;
-				expect(getCssRules('fly', options)).toBe(addMediaQueries(addVendors(styles)));
+				expect(getCSSRules('fly', options)).toBe(addMediaQueries(addVendors(styles)));
 			});
 		});
 
@@ -502,7 +501,7 @@ describe('CSS rules', () => {
 			const styles = `
 				opacity: 0;
 			`;
-			expect(getCssRules('fade', options)).toBe(addMediaQueries(addVendors(styles)));
+			expect(getCSSRules('fade', options)).toBe(addMediaQueries(addVendors(styles)));
 		});
 
 		test('blur', () => {
@@ -510,7 +509,7 @@ describe('CSS rules', () => {
 				opacity: 0;
 				filter: blur(16px);
 			`;
-			expect(getCssRules('blur', options)).toBe(addMediaQueries(addVendors(styles)));
+			expect(getCSSRules('blur', options)).toBe(addMediaQueries(addVendors(styles)));
 		});
 
 		test('scale', () => {
@@ -518,7 +517,7 @@ describe('CSS rules', () => {
 				opacity: 0;
 				transform: scale(0);
 			`;
-			expect(getCssRules('scale', options)).toBe(addMediaQueries(addVendors(styles)));
+			expect(getCSSRules('scale', options)).toBe(addMediaQueries(addVendors(styles)));
 		});
 
 		describe('slide', () => {
@@ -528,7 +527,7 @@ describe('CSS rules', () => {
 					opacity: 0;
 					transform: translateX(${defOpts.x}px);			
 				`;
-				expect(getCssRules('slide', options)).toBe(addMediaQueries(addVendors(styles)));
+				expect(getCSSRules('slide', options)).toBe(addMediaQueries(addVendors(styles)));
 			});
 
 			test('With custom values', () => {
@@ -539,7 +538,7 @@ describe('CSS rules', () => {
 					opacity: 0;
 					transform: translateX(${options.x}px);			
 				`;
-				expect(getCssRules('slide', options)).toBe(addMediaQueries(addVendors(styles)));
+				expect(getCSSRules('slide', options)).toBe(addMediaQueries(addVendors(styles)));
 			});
 		});
 
@@ -549,7 +548,7 @@ describe('CSS rules', () => {
 					opacity: 0;
 					transform: rotate(-360deg);
 				`;
-				expect(getCssRules('spin', options)).toBe(addMediaQueries(addVendors(styles)));
+				expect(getCSSRules('spin', options)).toBe(addMediaQueries(addVendors(styles)));
 			});
 
 			test('With custom styles', () => {
@@ -558,7 +557,7 @@ describe('CSS rules', () => {
 					opacity: 0;
 					transform: rotate(${options.rotate}deg);
 				`;
-				expect(getCssRules('spin', options)).toBe(addMediaQueries(addVendors(styles)));
+				expect(getCSSRules('spin', options)).toBe(addMediaQueries(addVendors(styles)));
 			});
 		});
 	});
@@ -566,7 +565,7 @@ describe('CSS rules', () => {
 	test(`Catch errors`, () => {
 		const options: IOptions = {};
 
-		expect(() => getCssRules('randomCssClass' as Transitions, options)).toThrow('Invalid CSS class name');
+		expect(() => getCSSRules('randomCssClass' as Transitions, options)).toThrow('Invalid CSS class name');
 	});
 });
 

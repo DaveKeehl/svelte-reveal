@@ -1,7 +1,7 @@
-import { config, defOpts } from './config';
+import { config, createFinalOptions, defOpts } from './config';
 import { hasValidBreakpoints } from './styling';
 import { getConfigClone } from './utils';
-import { areOptionsValid, createFinalOptions, hasValidRange } from './validations';
+import { areOptionsValid, hasValidRange } from './validations';
 import type { IConfig, Device, IDevice, Responsive, IOptions, IObserverOptions, ObserverRoot } from './types';
 
 /**

@@ -1,10 +1,10 @@
-import { defOpts } from '../src/internal/config';
+import { createFinalOptions, defOpts } from '../src/internal/config';
 import { setConfig } from '../src/internal/API';
-import { createClassNames, createStylesheet } from '../src/internal/styling';
+import { getRevealClassNames, createStylesheet } from '../src/internal/styling';
 import type { IOptions, ObserverRootMargin } from '../src/internal/types';
 import { clean, createObserverRootMargin } from '../src/internal/utils';
 import { markRevealNode, activateRevealNode, getRevealNode } from '../src/internal/DOM';
-import { areOptionsValid, createFinalOptions } from '../src/internal/validations';
+import { areOptionsValid } from '../src/internal/validations';
 
 beforeEach(() => {
 	setConfig({
@@ -50,11 +50,12 @@ describe('markRevealNode', () => {
 
 describe('activateRevealNode', () => {
 	const node = document.createElement('div');
-	const className = createClassNames(defOpts.ref, false, defOpts.transition);
-	const baseClassName = createClassNames(defOpts.ref, true, defOpts.transition);
+	const [transitionDeclaration, transitionProperties] = getRevealClassNames(defOpts.ref, defOpts.transition);
 
 	test('The reveal node has no css class when stylesheet does not exist', () => {
-		expect(Object.values(activateRevealNode(node, className, baseClassName, defOpts).classList)).toStrictEqual([]);
+		expect(
+			Object.values(activateRevealNode(node, transitionDeclaration, transitionProperties, defOpts).classList)
+		).toStrictEqual([]);
 	});
 
 	test('The reveal node has correct css class when stylesheet exists', () => {
@@ -73,9 +74,9 @@ describe('activateRevealNode', () => {
 			</html>
 		`;
 		createStylesheet();
-		expect(Object.values(activateRevealNode(node, className, baseClassName, defOpts).classList)).toContain(
-			baseClassName
-		);
+		expect(
+			Object.values(activateRevealNode(node, transitionDeclaration, transitionProperties, defOpts).classList)
+		).toContain(transitionProperties);
 	});
 
 	// test('Stylesheet only has one set of media queries', () => {

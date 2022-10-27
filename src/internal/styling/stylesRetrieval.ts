@@ -46,7 +46,7 @@ export const getMinifiedStylesFromQuery = (query: string): string => {
  * @param options - The options used by the transition
  * @returns The assembled rules of a given transition
  */
-export const getCssRules = (transition: Transitions, options: IOptions): string => {
+export const getCSSRules = (transition: Transitions, options: IOptions): string => {
 	const { x, y, rotate, opacity, blur, scale } = Object.assign({}, defOpts, options);
 
 	const transitions = {

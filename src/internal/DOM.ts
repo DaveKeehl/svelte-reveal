@@ -1,10 +1,10 @@
 import { config } from './config';
-import { createMainCss, createTransitionCss, getUpdatedStyles } from './styling';
+import { createTransitionPropertiesCSS, createTransitionDeclarationCSS, getUpdatedStyles } from './styling';
 import type { IOptions } from './types';
 import { clean, createObserverRootMargin } from './utils';
 
 /**
- * Adds a "watermark" to the element to be revealed. It sets the data attribute to "reveal".
+ * Marks a DOM node as part of reveal process.
  * @param revealNode - The element to be marked
  * @returns The marked element
  */
@@ -17,6 +17,7 @@ export const markRevealNode = (revealNode: HTMLElement): HTMLElement => {
  * Activates the reveal effect on the target element.
  * @param revealNode - The element to be revealed
  * @param className - The CSS class to be used for the target element
+ * @param baseClassName - The CSS class to be used for the target element transitions
  * @param options - The options to be applied to the reveal effect
  * @returns The element to be revealed
  */
@@ -27,8 +28,9 @@ export const activateRevealNode = (
 	options: Required<IOptions>
 ): HTMLElement => {
 	markRevealNode(revealNode);
-	const mainCss = createMainCss(className, options);
-	const transitionCss = createTransitionCss(baseClassName, options);
+
+	const mainCss = createTransitionPropertiesCSS(className, options);
+	const transitionCss = createTransitionDeclarationCSS(baseClassName, options);
 	const stylesheet = document.querySelector('style[data-action="reveal"]');
 
 	if (stylesheet) {

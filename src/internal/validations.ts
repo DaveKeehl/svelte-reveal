@@ -1,4 +1,3 @@
-import { defOpts } from './config';
 import type { IOptions } from './types';
 
 /**
@@ -26,15 +25,6 @@ export const isPositive = (property: number): boolean => property >= 0;
  */
 export const isPositiveInteger = (property: number): boolean => {
 	return isPositive(property) && Number.isInteger(property);
-};
-
-/**
- * Overrides the default option values with the ones provided by the user.
- * @param userOptions - The options provided by the user
- * @returns The final options that can be used by the rest of the library
- */
-export const createFinalOptions = (userOptions: IOptions): Required<IOptions> => {
-	return Object.assign({}, defOpts, userOptions);
 };
 
 /**

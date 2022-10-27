@@ -72,3 +72,12 @@ export const config: IConfig = {
 		threshold: defOpts.threshold
 	}
 };
+
+/**
+ * Overrides the default option values with the ones provided by the user.
+ * @param userOptions - The options provided by the user
+ * @returns The final options that can be used by the rest of the library
+ */
+export const createFinalOptions = (userOptions: IOptions): Required<IOptions> => {
+	return Object.assign({}, defOpts, userOptions);
+};
