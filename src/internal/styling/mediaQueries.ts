@@ -11,25 +11,21 @@ import { hasValidBreakpoints } from './breakpoints';
  * @param end The breakpoint that ended the sequence of consecutive enabled devices
  * @returns The final optimal query
  */
-const createQuery = (devices: Devices, i: number, beginning: number, end: number): string => {
+const createQuery = (devices: Devices, i: number, start: number, end: number): string => {
 	const smallest = Math.min(...devices.map(([, settings]) => settings.breakpoint));
 	const largest = Math.max(...devices.map(([, settings]) => settings.breakpoint));
 
-	let query: string;
-
-	if (beginning === smallest) {
-		query = `(max-width: ${end}px)`;
-	} else {
-		const previous: IDevice = devices[i - 1][1];
-
-		if (end === largest) {
-			query = `(min-width: ${previous.breakpoint + 1}px)`;
-		} else {
-			query = `(min-width: ${previous.breakpoint + 1}px) and (max-width: ${end}px)`;
-		}
+	if (start === smallest) {
+		return `(max-width: ${end}px)`;
 	}
 
-	return query;
+	const previous: IDevice = devices[i - 1][1];
+
+	if (end === largest) {
+		return `(min-width: ${previous.breakpoint + 1}px)`;
+	}
+
+	return `(min-width: ${previous.breakpoint + 1}px) and (max-width: ${end}px)`;
 };
 
 /**
