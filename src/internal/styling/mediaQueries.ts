@@ -38,23 +38,22 @@ const findOptimalQueries = (devices: Devices): string[] => {
 	let i = 0;
 
 	while (i < devices.length) {
-		if (devices[i][1].enabled) {
-			let j = i;
-			let query = '';
-
-			while (j < devices.length && devices[j][1].enabled) {
-				const beginning = devices[i][1].breakpoint;
-				const end = devices[j][1].breakpoint;
-
-				query = createQuery(devices, i, beginning, end);
-
-				j++;
-			}
-			queries.push(query);
-			i = j;
-		} else {
+		if (!devices[i][1].enabled) {
 			i++;
+			continue;
 		}
+
+		let j = i;
+		let query = '';
+
+		for (; j < devices.length && devices[j][1].enabled; j++) {
+			const beginning = devices[i][1].breakpoint;
+			const end = devices[j][1].breakpoint;
+			query = createQuery(devices, i, beginning, end);
+		}
+
+		queries.push(query);
+		i = j;
 	}
 
 	return queries;
