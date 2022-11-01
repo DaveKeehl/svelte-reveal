@@ -33,23 +33,27 @@ export interface IOptions {
 	/**
 	 * The root element used by the Intersection Observer API.
 	 */
-	root?: ObserverRoot;
+	root?: IntersectionObserver['root'];
+	/**
+	 * TODO: Write docs
+	 */
+	rootMargin?: IntersectionObserver['rootMargin'];
 	/**
 	 * Top margin (in px or %) of the rootMargin property of the Intersection Observer API.
 	 */
-	marginTop?: number;
+	// marginTop?: number;
 	/**
 	 * Bottom margin  (in px or %)of the rootMargin property of the Intersection Observer API.
 	 */
-	marginBottom?: number;
+	// marginBottom?: number;
 	/**
 	 * Left margin (in px or %) of the rootMargin property of the Intersection Observer API.
 	 */
-	marginLeft?: number;
+	// marginLeft?: number;
 	/**
 	 * Right margin (in px or %) of the rootMargin property of the Intersection Observer API.
 	 */
-	marginRight?: number;
+	// marginRight?: number;
 	/**
 	 * The threshold (in percentage from 0.0 to 1.0) property used by the Intersection
 	 * Observer API to know when its target element is considered visible or not.
@@ -157,11 +161,11 @@ export interface IObserverOptions {
 	/**
 	 * The Intersection Observer API root element.
 	 */
-	root?: ObserverRoot;
+	root?: IntersectionObserver['root'];
 	/**
 	 * The Intersection Observer API rootMargin property.
 	 */
-	rootMargin: string;
+	rootMargin: IntersectionObserver['rootMargin'];
 	/**
 	 * The Intersection Observer API threshold property.
 	 */
@@ -220,7 +224,7 @@ export interface IConfig {
 	/**
 	 * The Intersection Observer API options.
 	 */
-	observer: IObserverOptions;
+	// observer: IObserverOptions;
 }
 
 /**

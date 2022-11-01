@@ -28,8 +28,9 @@ test('checkOptions', () => {
 		debug: true,
 		ref: 'a',
 		threshold: 0.2,
-		marginBottom: 100,
-		marginTop: 100
+		rootMargin: '100px 0 100px 0'
+		// marginBottom: 100,
+		// marginTop: 100
 	};
 	const options = createFinalOptions(userOptions);
 
@@ -39,10 +40,11 @@ test('checkOptions', () => {
 	expect(options.highlightLogs).toBe(false);
 	expect(options.highlightColor).toBe('tomato');
 	expect(options.root).toBe(null);
-	expect(options.marginTop).toBe(100);
-	expect(options.marginBottom).toBe(100);
-	expect(options.marginLeft).toBe(0);
-	expect(options.marginRight).toBe(0);
+	expect(options.rootMargin).toBe('100px 0 100px 0');
+	// expect(options.marginTop).toBe(100);
+	// expect(options.marginBottom).toBe(100);
+	// expect(options.marginLeft).toBe(0);
+	// expect(options.marginRight).toBe(0);
 	expect(options.threshold).toBe(0.2);
 	expect(options.transition).toBe('fly');
 	expect(options.reset).toBe(false);

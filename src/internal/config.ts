@@ -1,5 +1,4 @@
-import type { IOptions, IConfig, IObserverOptions } from './types';
-import { createObserverRootMargin } from './utils';
+import type { IOptions, IConfig } from './types';
 
 /**
  * Object containing the default options used by the library for the scroll effect.
@@ -11,10 +10,11 @@ export const defOpts: Required<IOptions> = {
 	highlightLogs: false,
 	highlightColor: 'tomato',
 	root: null,
-	marginTop: 0,
-	marginBottom: 0,
-	marginLeft: 0,
-	marginRight: 0,
+	rootMargin: '0px 0px 0px 0px',
+	// marginTop: 0,
+	// marginBottom: 0,
+	// marginLeft: 0,
+	// marginRight: 0,
 	threshold: 0.6,
 	transition: 'fly',
 	reset: false,
@@ -37,16 +37,11 @@ export const defOpts: Required<IOptions> = {
 	onDestroy: () => null
 };
 
-export const observerConfig: IObserverOptions = {
-	root: defOpts.root,
-	rootMargin: createObserverRootMargin({
-		top: defOpts.marginTop,
-		right: defOpts.marginRight,
-		bottom: defOpts.marginBottom,
-		left: defOpts.marginLeft
-	}),
-	threshold: defOpts.threshold
-};
+// export const observerConfig: IObserverOptions = {
+// 	root: defOpts.root,
+// 	rootMargin: defOpts.rootMargin,
+// 	threshold: defOpts.threshold
+// };
 
 /**
  * Object containing global configurations that apply to all instances of this library.
@@ -71,8 +66,8 @@ export const config: IConfig = {
 			enabled: true,
 			breakpoint: 2560
 		}
-	},
-	observer: observerConfig
+	}
+	// observer: observerConfig
 };
 
 /**

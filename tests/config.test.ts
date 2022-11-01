@@ -7,10 +7,11 @@ test('Checking init values', () => {
 	expect(defOpts.highlightLogs).toBe(false);
 	expect(defOpts.highlightColor).toBe('tomato');
 	expect(defOpts.root).toBe(null);
-	expect(defOpts.marginTop).toBe(0);
-	expect(defOpts.marginBottom).toBe(0);
-	expect(defOpts.marginLeft).toBe(0);
-	expect(defOpts.marginRight).toBe(0);
+	expect(defOpts.rootMargin).toBe('0px 0px 0px 0px');
+	// expect(defOpts.marginTop).toBe(0);
+	// expect(defOpts.marginBottom).toBe(0);
+	// expect(defOpts.marginLeft).toBe(0);
+	// expect(defOpts.marginRight).toBe(0);
 	expect(defOpts.threshold).toBe(0.6);
 	expect(defOpts.transition).toBe('fly');
 	expect(defOpts.reset).toBe(false);

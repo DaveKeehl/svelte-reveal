@@ -1,5 +1,5 @@
 import { defOpts, config } from '../src/internal/config';
-import { setConfig } from '../src/internal/API';
+import { setConfig, setObserverConfig } from '../src/internal/API';
 import {
 	createStylesheet,
 	hasOverlappingBreakpoints,
@@ -39,16 +39,27 @@ beforeEach(() => {
 				enabled: true,
 				breakpoint: 2560
 			}
-		},
-		observer: {
-			root: null,
-			rootMargin: '0px 0px 0px 0px',
-			threshold: 0.6
 		}
+		// observer: {
+		// 	root: null,
+		// 	rootMargin: '0px 0px 0px 0px',
+		// 	threshold: 0.6
+		// }
+	});
+	setObserverConfig({
+		root: null,
+		rootMargin: '0px 0px 0px 0px',
+		threshold: 0.6
 	});
 });
 
-describe('getStylesFromQueries', () => {
+describe('getMinifiedStylesFromQueries', () => {
+	test('Throw an error when using invalid media queries', () => {
+		const invalidQuery = `
+			@media (min-width: 320px) and (max-width: 1080px) {`;
+		expect(() => getMinifiedStylesFromQuery(invalidQuery)).toThrow('Invalid media query');
+	});
+
 	test('Just minifies when no media query is used', () => {
 		const tree = `
 			parent: {
@@ -177,6 +188,30 @@ describe('Media queries behave correctly', () => {
 
 	test('No media queries when all devices are enabled', () => {
 		expect(addMediaQueries(styles)).toBe(styles);
+	});
+
+	test('Throw an error when adding media queries with invalid breakpoints', () => {
+		const invalidResponsive: Responsive = {
+			mobile: {
+				enabled: false,
+				breakpoint: 425
+			},
+			tablet: {
+				enabled: false,
+				breakpoint: 400
+			},
+			laptop: {
+				enabled: false,
+				breakpoint: 1440
+			},
+			desktop: {
+				enabled: false,
+				breakpoint: 2560
+			}
+		};
+		expect(() => addMediaQueries(styles, invalidResponsive)).toThrow(
+			'Cannot create media queries due to invalid breakpoints'
+		);
 	});
 
 	test('Disable library CSS styles when no devices are enabled', () => {

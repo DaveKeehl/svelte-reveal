@@ -1,8 +1,8 @@
 import { config, createFinalOptions, defOpts } from './config';
 import { hasValidBreakpoints } from './styling';
-import { getConfigClone } from './utils';
+import { createObserverConfig, getConfigClone } from './utils';
 import { areOptionsValid, hasValidRange } from './validations';
-import type { IConfig, Device, IDevice, Responsive, IOptions, IObserverOptions, ObserverRoot } from './types';
+import type { IConfig, Device, IDevice, Responsive, IOptions, IObserverOptions } from './types';
 
 /**
  * Toggles on/off the development mode.
@@ -104,11 +104,11 @@ export const setResponsive = (responsive: Responsive): IConfig => {
  * @param observerConfig - Your custom observer config
  * @returns The config object with the updated dev property
  */
-export const setObserverConfig = (observerConfig: IObserverOptions): IConfig => {
-	setObserverRoot(observerConfig.root);
+export const setObserverConfig = (observerConfig: IObserverOptions): IObserverOptions => {
+	setObserverRoot(observerConfig.root || null);
 	setObserverRootMargin(observerConfig.rootMargin);
 	setObserverThreshold(observerConfig.threshold);
-	return config;
+	return observerConfig;
 };
 
 /**
@@ -116,9 +116,9 @@ export const setObserverConfig = (observerConfig: IObserverOptions): IConfig => 
  * @param root - The root element
  * @returns The config object with the updated dev property
  */
-export const setObserverRoot = (root: ObserverRoot): IConfig => {
+export const setObserverRoot = (root: IntersectionObserver['root']): IObserverOptions => {
 	defOpts.root = root || null;
-	return config;
+	return createObserverConfig();
 };
 
 /**
@@ -126,7 +126,7 @@ export const setObserverRoot = (root: ObserverRoot): IConfig => {
  * @param rootMargin - The margin used by the observer with respect to the root element
  * @returns The config object with the updated dev property
  */
-export const setObserverRootMargin = (rootMargin: string): IConfig => {
+export const setObserverRootMargin = (rootMargin: IntersectionObserver['rootMargin']): IObserverOptions => {
 	const margins = rootMargin
 		.trim()
 		.split(' ')
@@ -134,12 +134,12 @@ export const setObserverRootMargin = (rootMargin: string): IConfig => {
 	const isValidMargin = /^(0|([1-9]\d*))(px|%)$/;
 	const hasCorrectUnits = margins.every((margin) => isValidMargin.test(margin));
 
-	if (rootMargin === '' || margins.length > 4 || !hasCorrectUnits) {
+	if (margins.length > 4 || !hasCorrectUnits) {
 		throw new SyntaxError('Invalid rootMargin syntax');
 	}
 
-	config.observer.rootMargin = margins.join(' ');
-	return config;
+	defOpts.rootMargin = margins.join(' ');
+	return createObserverConfig();
 };
 
 /**
@@ -147,13 +147,13 @@ export const setObserverRootMargin = (rootMargin: string): IConfig => {
  * @param threshold - The observer threshold value
  * @returns The config object with the updated dev property
  */
-export const setObserverThreshold = (threshold: number): IConfig => {
+export const setObserverThreshold = (threshold: number): IObserverOptions => {
 	if (!hasValidRange(threshold, 0, 1)) {
 		throw new RangeError('Threshold must be between 0.0 and 1.0');
 	}
 
 	defOpts.threshold = threshold;
-	return config;
+	return createObserverConfig();
 };
 
 /**

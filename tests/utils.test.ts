@@ -1,8 +1,8 @@
 import { createFinalOptions, defOpts } from '../src/internal/config';
-import { setConfig } from '../src/internal/API';
+import { setConfig, setObserverConfig } from '../src/internal/API';
 import { getRevealClassNames, createStylesheet } from '../src/internal/styling';
-import type { IOptions, ObserverRootMargin } from '../src/internal/types';
-import { clean, createObserverRootMargin } from '../src/internal/utils';
+import type { IObserverOptions, IOptions } from '../src/internal/types';
+import { clean, createObserverConfig } from '../src/internal/utils';
 import { markRevealNode, activateRevealNode, getRevealNode } from '../src/internal/DOM';
 import { areOptionsValid } from '../src/internal/validations';
 
@@ -27,12 +27,17 @@ beforeEach(() => {
 				enabled: true,
 				breakpoint: 2560
 			}
-		},
-		observer: {
-			root: null,
-			rootMargin: '0px 0px 0px 0px',
-			threshold: 0.6
 		}
+		// observer: {
+		// 	root: null,
+		// 	rootMargin: '0px 0px 0px 0px',
+		// 	threshold: 0.6
+		// }
+	});
+	setObserverConfig({
+		root: null,
+		rootMargin: '0px 0px 0px 0px',
+		threshold: 0.6
 	});
 });
 
@@ -167,23 +172,25 @@ describe('areOptionsValid', () => {
 	});
 });
 
-test('createObserverRootMargin', () => {
-	const rootMargin: ObserverRootMargin = {
-		top: 100,
-		right: 50,
-		bottom: 25,
-		left: 12
+test('createObserverConfig', () => {
+	const observerOverrides = {
+		threshold: 0.3
 	};
-	const margins = createObserverRootMargin(rootMargin).split(' ');
-	expect(margins.length).toBe(4);
-	margins.forEach((margin, idx) => {
-		expect(margin.endsWith('px')).toBe(true);
+	const observerConfig = createObserverConfig(observerOverrides);
 
-		const extractedMarginValue = margin.split('px')[0];
-		const rootMarginValue = Object.entries(rootMargin)[idx];
+	expect(observerConfig.threshold).toBe(observerOverrides.threshold);
+	expect(observerConfig.rootMargin).toBe(defOpts.rootMargin);
+	expect(observerConfig.root).toBe(defOpts.root);
+	// const margins = createObserverRootMargin(rootMargin).split(' ');
+	// expect(margins.length).toBe(4);
+	// margins.forEach((margin, idx) => {
+	// 	expect(margin.endsWith('px')).toBe(true);
 
-		if (extractedMarginValue && rootMarginValue) {
-			expect(parseInt(extractedMarginValue)).toBe(rootMarginValue[1]);
-		}
-	});
+	// 	const extractedMarginValue = margin.split('px')[0];
+	// 	const rootMarginValue = Object.entries(rootMargin)[idx];
+
+	// 	if (extractedMarginValue && rootMarginValue) {
+	// 		expect(parseInt(extractedMarginValue)).toBe(rootMarginValue[1]);
+	// 	}
+	// });
 });

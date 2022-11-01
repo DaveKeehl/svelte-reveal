@@ -7,5 +7,6 @@ build({
 	minify: false,
 	sourcemap: false,
 	format: 'esm',
+	tsconfig: 'tsconfig.build.json',
 	watch: process.argv[2] === '--watch'
 });

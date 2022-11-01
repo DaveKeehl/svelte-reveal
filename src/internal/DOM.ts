@@ -1,7 +1,7 @@
-import { config, observerConfig } from './config';
+import { config } from './config';
 import { createTransitionPropertiesCSS, createTransitionDeclarationCSS, getUpdatedStyles } from './styling';
 import type { IOptions } from './types';
-import { clean } from './utils';
+import { clean, createObserverConfig } from './utils';
 
 /**
  * Marks a DOM node as part of reveal process.
@@ -73,6 +73,8 @@ export const createObserver = (
 	className: string
 ): IntersectionObserver => {
 	const { ref, reset, duration, delay, threshold, onResetStart, onResetEnd, onRevealEnd } = options;
+
+	const observerConfig = createObserverConfig();
 
 	return new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
 		if (canDebug) {

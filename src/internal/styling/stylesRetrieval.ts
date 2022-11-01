@@ -37,6 +37,7 @@ export const getMinifiedStylesFromQuery = (query: string): string => {
 	}
 
 	const queryContent = queryFromOpeningBrace.slice(0, -1);
+
 	return queryContent.trim();
 };
 
