@@ -1,5 +1,5 @@
 import seedrandom from 'seedrandom';
-import type { IOptions, Transitions } from '../types';
+import type { RevealOptions, Transitions } from '../types';
 import { getCSSRules, getEasing } from './stylesRetrieval';
 
 /**
@@ -40,7 +40,7 @@ export const getRevealClassNames = (ref: string, transition: Transitions): [stri
  * @param options - The options to be used when creating the CSS
  * @returns The CSS with the transition properties for the target element
  */
-export const createTransitionPropertiesCSS = (className: string, options: Required<IOptions>) => {
+export const createTransitionPropertiesCSS = (className: string, options: Required<RevealOptions>) => {
 	const { transition } = options;
 
 	return `
@@ -56,7 +56,7 @@ export const createTransitionPropertiesCSS = (className: string, options: Requir
  * @param options - The options to be used when creating the CSS
  * @returns The transition CSS for the target element
  */
-export const createTransitionDeclarationCSS = (className: string, options: Required<IOptions>) => {
+export const createTransitionDeclarationCSS = (className: string, options: Required<RevealOptions>) => {
 	const duration = options.duration / 1000;
 	const delay = options.delay / 1000;
 	const easingFunction = getEasing(options.easing, options.customEasing);

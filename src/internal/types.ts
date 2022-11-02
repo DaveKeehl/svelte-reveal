@@ -1,7 +1,7 @@
 /**
  * Object containing options that tweak the behavior of a local svelte-reveal instance.
  */
-export interface IOptions {
+export interface RevealOptions {
 	/**
 	 * It enables/disables the transition.
 	 */
@@ -194,7 +194,7 @@ export interface IConfig {
  * The return type of the Svelte action.
  */
 export interface IReturnAction {
-	update?: (options?: IOptions) => void;
+	update?: (options?: RevealOptions) => void;
 	destroy?: () => void;
 }
 

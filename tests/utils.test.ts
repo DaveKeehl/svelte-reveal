@@ -1,7 +1,7 @@
 import { createFinalOptions, defOpts } from '../src/internal/config';
 import { setConfig, setObserverConfig } from '../src/internal/API';
 import { getRevealClassNames, createStylesheet } from '../src/internal/styling';
-import type { IOptions } from '../src/internal/types';
+import type { RevealOptions } from '../src/internal/types';
 import { clean, createObserverConfig } from '../src/internal/utils';
 import { markRevealNode, activateRevealNode, getRevealNode } from '../src/internal/DOM';
 import { areOptionsValid } from '../src/internal/validations';
@@ -139,7 +139,7 @@ test('clean', () => {
 
 describe('createFinalOptions', () => {
 	test('Using valid options', () => {
-		const validOptions: IOptions = {
+		const validOptions: RevealOptions = {
 			threshold: 0.6,
 			opacity: 0,
 			delay: 200,
@@ -154,7 +154,7 @@ describe('createFinalOptions', () => {
 
 describe('areOptionsValid', () => {
 	test('Should return false when using invalid options', () => {
-		const invalidOptions: IOptions = {
+		const invalidOptions: RevealOptions = {
 			threshold: 1.2,
 			opacity: 0,
 			delay: -200,

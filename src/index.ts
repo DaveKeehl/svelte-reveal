@@ -14,3 +14,4 @@ export {
 	setConfig,
 	setDefaultOptions
 } from './internal/API';
+export type { RevealOptions } from './internal/types';

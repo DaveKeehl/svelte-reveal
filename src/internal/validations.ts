@@ -1,4 +1,4 @@
-import type { IOptions } from './types';
+import type { RevealOptions } from './types';
 
 /**
  * Check whether a given numeric variable is within a specific range.
@@ -32,7 +32,7 @@ export const isPositiveInteger = (property: number): boolean => {
  * @param options The options to be checked
  * @returns Whether the provided options are valid or not
  */
-export const areOptionsValid = (options: Required<IOptions>): boolean => {
+export const areOptionsValid = (options: Required<RevealOptions>): boolean => {
 	const { threshold, opacity, delay, duration, blur, scale } = options;
 	return (
 		hasValidRange(threshold, 0, 1) &&

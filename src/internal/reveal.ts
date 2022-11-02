@@ -1,7 +1,7 @@
 import { getRevealClassNames, createStylesheet } from './styling';
 import { config, createFinalOptions, defOpts } from './config';
 import { isStyleTagCreated, hasPageReloaded } from './stores';
-import type { IOptions, IReturnAction } from './types';
+import type { RevealOptions, IReturnAction } from './types';
 import { getRevealNode, activateRevealNode, createObserver, logInfo } from './DOM';
 import { areOptionsValid } from './validations';
 
@@ -11,7 +11,7 @@ import { areOptionsValid } from './validations';
  * @param options - The custom options that will be used to tweak the behavior of the animation of the node element
  * @returns An object containing the update and/or destroy functions
  */
-export const reveal = (node: HTMLElement, options: IOptions = defOpts): IReturnAction => {
+export const reveal = (node: HTMLElement, options: RevealOptions = defOpts): IReturnAction => {
 	const finalOptions = createFinalOptions(options);
 
 	if (!areOptionsValid(finalOptions)) {

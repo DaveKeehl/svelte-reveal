@@ -1,5 +1,5 @@
 import { defOpts } from '../config';
-import type { Transitions, IOptions, Easing, CustomEasing } from '../types';
+import type { Transitions, RevealOptions, Easing, CustomEasing } from '../types';
 import { clean } from '../utils';
 import { addMediaQueries } from './mediaQueries';
 import { addVendors } from './stylesGeneration';
@@ -47,7 +47,7 @@ export const getMinifiedStylesFromQuery = (query: string): string => {
  * @param options - The options used by the transition
  * @returns The assembled rules of a given transition
  */
-export const getCSSRules = (transition: Transitions, options: IOptions): string => {
+export const getCSSRules = (transition: Transitions, options: RevealOptions): string => {
 	const { x, y, rotate, opacity, blur, scale } = Object.assign({}, defOpts, options);
 
 	const transitions = {

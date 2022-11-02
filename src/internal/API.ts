@@ -2,7 +2,7 @@ import { config, createFinalOptions, defOpts } from './config';
 import { hasValidBreakpoints } from './styling';
 import { createObserverConfig, getConfigClone } from './utils';
 import { areOptionsValid, hasValidRange } from './validations';
-import type { IConfig, Device, IDevice, Responsive, IOptions, IObserverOptions } from './types';
+import type { IConfig, Device, IDevice, Responsive, RevealOptions, IObserverOptions } from './types';
 
 /**
  * Toggles on/off the development mode.
@@ -173,7 +173,7 @@ export const setConfig = (userConfig: IConfig): IConfig => {
  * @param options Your new global options
  * @returns The new full and updated options object
  */
-export const setDefaultOptions = (options: IOptions): Required<IOptions> => {
+export const setDefaultOptions = (options: RevealOptions): Required<RevealOptions> => {
 	const validOptions = createFinalOptions(options);
 
 	if (!areOptionsValid(validOptions)) {

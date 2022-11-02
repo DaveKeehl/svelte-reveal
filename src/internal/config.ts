@@ -1,9 +1,9 @@
-import type { IOptions, IConfig } from './types';
+import type { RevealOptions, IConfig } from './types';
 
 /**
  * Object containing the default options used by the library for the scroll effect.
  */
-export const defOpts: Required<IOptions> = {
+export const defOpts: Required<RevealOptions> = {
 	disable: false,
 	debug: false,
 	ref: '',
@@ -64,6 +64,6 @@ export const config: IConfig = {
  * @param userOptions - The options provided by the user
  * @returns The final options that can be used by the rest of the library
  */
-export const createFinalOptions = (userOptions: IOptions): Required<IOptions> => {
+export const createFinalOptions = (userOptions: RevealOptions): Required<RevealOptions> => {
 	return Object.assign({}, defOpts, userOptions);
 };

@@ -15,7 +15,7 @@ import {
 	getUpdatedStyles,
 	getRevealClassNames
 } from '../src/internal/styling';
-import type { Responsive, IOptions, Transitions, CustomEasing } from '../src/internal/types';
+import type { Responsive, RevealOptions, Transitions, CustomEasing } from '../src/internal/types';
 import { clean } from '../src/internal/utils';
 
 beforeEach(() => {
@@ -500,7 +500,7 @@ describe('Media queries behave correctly', () => {
 
 describe('CSS rules', () => {
 	describe('Have the correct properties', () => {
-		let options: IOptions = {};
+		let options: RevealOptions = {};
 		describe('fly', () => {
 			test('With default values', () => {
 				options = {};
@@ -589,7 +589,7 @@ describe('CSS rules', () => {
 	});
 
 	test(`Catch errors`, () => {
-		const options: IOptions = {};
+		const options: RevealOptions = {};
 
 		expect(() => getCSSRules('randomCssClass' as Transitions, options)).toThrow('Invalid CSS class name');
 	});

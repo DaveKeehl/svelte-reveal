@@ -14,7 +14,7 @@ import {
 	setConfig,
 	setDefaultOptions
 } from '../src/internal/API';
-import type { IConfig, IOptions } from '../src/internal/types';
+import type { IConfig, RevealOptions } from '../src/internal/types';
 import { clone, createObserverConfig, getConfigClone } from '../src/internal/utils';
 
 beforeEach(() => {
@@ -331,14 +331,14 @@ describe('setDefaultOptions', () => {
 	});
 
 	test('Should throw an error when some options are invalid', () => {
-		const invalidOptions: IOptions = {
+		const invalidOptions: RevealOptions = {
 			blur: -20
 		};
 		expect(() => setDefaultOptions(invalidOptions)).toThrow('Invalid options');
 	});
 
 	test('Passing new valid options override the default ones', () => {
-		const newOptions: IOptions = {
+		const newOptions: RevealOptions = {
 			blur: 20,
 			x: 50,
 			y: 100

@@ -1,5 +1,5 @@
 import { createFinalOptions } from '../src/internal/config';
-import type { IOptions } from '../src/internal/types';
+import type { RevealOptions } from '../src/internal/types';
 import { hasValidRange, isPositive, isPositiveInteger } from '../src/internal/validations';
 
 test('hasValidRange', () => {
@@ -23,7 +23,7 @@ test('isPositiveInteger', () => {
 });
 
 test('checkOptions', () => {
-	const userOptions: IOptions = {
+	const userOptions: RevealOptions = {
 		transition: 'fly',
 		debug: true,
 		ref: 'a',

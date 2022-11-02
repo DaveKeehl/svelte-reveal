@@ -1,6 +1,6 @@
 import { config } from './config';
 import { createTransitionPropertiesCSS, createTransitionDeclarationCSS, getUpdatedStyles } from './styling';
-import type { IOptions } from './types';
+import type { RevealOptions } from './types';
 import { clean, createObserverConfig } from './utils';
 
 /**
@@ -25,7 +25,7 @@ export const activateRevealNode = (
 	revealNode: HTMLElement,
 	className: string,
 	baseClassName: string,
-	options: Required<IOptions>
+	options: Required<RevealOptions>
 ): HTMLElement => {
 	markRevealNode(revealNode);
 
@@ -69,7 +69,7 @@ export const createObserver = (
 	canDebug: boolean,
 	highlightText: string,
 	revealNode: HTMLElement,
-	options: Required<IOptions>,
+	options: Required<RevealOptions>,
 	className: string
 ): IntersectionObserver => {
 	const { ref, reset, duration, delay, threshold, onResetStart, onResetEnd, onRevealEnd } = options;
@@ -114,7 +114,7 @@ export const createObserver = (
  * @param revealNode - The DOM element to be revealed
  * @returns A tuple consisting of canDebug and highlightText
  */
-export const logInfo = (finalOptions: Required<IOptions>, revealNode: HTMLElement): [boolean, string] => {
+export const logInfo = (finalOptions: Required<RevealOptions>, revealNode: HTMLElement): [boolean, string] => {
 	const { debug, ref, highlightLogs, highlightColor } = finalOptions;
 
 	const canDebug = config.dev && debug && ref !== '';
