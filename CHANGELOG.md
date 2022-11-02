@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - README: Add instruction for pnpm
 - README: Changed badges order for better information order
 - README: Updated text to match updated code documentation
+- README: Improved content
 - Removed validation steps in pre-commit hook
 - Updated dependencies
 - Fixed wrong options passed to the intersection observer
