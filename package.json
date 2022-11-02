@@ -3,7 +3,7 @@
 	"version": "0.6.0",
 	"description": "Svelte action that leverages the Intersection Observer API to trigger reveal on scroll transitions",
 	"main": "dist/index.js",
-	"types": "dist/types/index.d.ts",
+	"types": "dist/types/src/index.d.ts",
 	"scripts": {
 		"clean": "rm -rf dist/ && npm run format",
 		"prebuild": "npm run clean && npm run build:types",
