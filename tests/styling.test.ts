@@ -101,10 +101,6 @@ describe('getUpdatedStyles', () => {
 	test('Has no media queries by default', () => {
 		expect((updatedStyles.match(/@media/g) || []).length).toBe(0);
 	});
-
-	test('Has only one media query when responsiveness is applied', () => {
-		// TODO
-	});
 });
 
 describe('createStylesheet', () => {
