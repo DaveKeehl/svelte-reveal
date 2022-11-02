@@ -14,7 +14,7 @@ import {
 	setConfig,
 	setDefaultOptions
 } from '../src/internal/API';
-import type { IConfig, RevealOptions } from '../src/internal/types';
+import type { RevealConfig, RevealOptions } from '../src/internal/types';
 import { clone, createObserverConfig, getConfigClone } from '../src/internal/utils';
 
 beforeEach(() => {
@@ -174,7 +174,7 @@ describe('setDevice', () => {
 
 describe('setResponsive', () => {
 	test('Checking default config', () => {
-		const defaultConfig: IConfig = getConfigClone();
+		const defaultConfig: RevealConfig = getConfigClone();
 		expect(setResponsive(defaultConfig.responsive)).toStrictEqual(defaultConfig);
 	});
 

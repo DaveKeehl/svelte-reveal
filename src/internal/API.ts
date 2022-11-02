@@ -2,14 +2,14 @@ import { config, createFinalOptions, defOpts } from './config';
 import { hasValidBreakpoints } from './styling';
 import { createObserverConfig, getConfigClone } from './utils';
 import { areOptionsValid, hasValidRange } from './validations';
-import type { IConfig, Device, IDevice, Responsive, RevealOptions, IObserverOptions } from './types';
+import type { RevealConfig, Device, IDevice, Responsive, RevealOptions, IObserverOptions } from './types';
 
 /**
  * Toggles on/off the development mode.
  * @param dev - The development mode
  * @returns The config object with the updated dev property
  */
-export const setDev = (dev: boolean): IConfig => {
+export const setDev = (dev: boolean): RevealConfig => {
 	config.dev = dev;
 	return config;
 };
@@ -19,7 +19,7 @@ export const setDev = (dev: boolean): IConfig => {
  * @param once - Run on page reload status
  * @returns The config object with the updated dev property
  */
-export const setOnce = (once: boolean): IConfig => {
+export const setOnce = (once: boolean): RevealConfig => {
 	config.once = once;
 	return config;
 };
@@ -30,7 +30,7 @@ export const setOnce = (once: boolean): IConfig => {
  * @param status The new status
  * @returns The config object with the updated device enabled property
  */
-export const setDeviceStatus = (device: Device, status: boolean): IConfig => {
+export const setDeviceStatus = (device: Device, status: boolean): RevealConfig => {
 	return setDevicesStatus([device], status);
 };
 
@@ -40,7 +40,7 @@ export const setDeviceStatus = (device: Device, status: boolean): IConfig => {
  * @param status The new status
  * @returns The config object with the updated devices enabled property
  */
-export const setDevicesStatus = (devices: Device[], status: boolean): IConfig => {
+export const setDevicesStatus = (devices: Device[], status: boolean): RevealConfig => {
 	if (devices.length > 0) {
 		const uniqueDevices = [...new Set(devices)];
 		uniqueDevices.forEach((device) => (config.responsive[device].enabled = status));
@@ -55,8 +55,8 @@ export const setDevicesStatus = (devices: Device[], status: boolean): IConfig =>
  * @param breakpoint The new breakpoint
  * @returns The config object with the updated device breakpoint property
  */
-export const setDeviceBreakpoint = (device: Device, breakpoint: number): IConfig => {
-	const configClone: IConfig = getConfigClone();
+export const setDeviceBreakpoint = (device: Device, breakpoint: number): RevealConfig => {
+	const configClone: RevealConfig = getConfigClone();
 	configClone.responsive[device].breakpoint = breakpoint;
 
 	if (!hasValidBreakpoints(configClone.responsive)) {
@@ -73,8 +73,8 @@ export const setDeviceBreakpoint = (device: Device, breakpoint: number): IConfig
  * @param settings The new settings
  * @returns The config object with the updated device settings
  */
-export const setDevice = (device: Device, settings: IDevice): IConfig => {
-	const configClone: IConfig = getConfigClone();
+export const setDevice = (device: Device, settings: IDevice): RevealConfig => {
+	const configClone: RevealConfig = getConfigClone();
 	configClone.responsive[device] = settings;
 
 	if (!hasValidBreakpoints(configClone.responsive)) {
@@ -90,7 +90,7 @@ export const setDevice = (device: Device, settings: IDevice): IConfig => {
  * @param responsive An object that instructs the library how to handle responsiveness
  * @returns The config object with the updated responsive property
  */
-export const setResponsive = (responsive: Responsive): IConfig => {
+export const setResponsive = (responsive: Responsive): RevealConfig => {
 	if (!hasValidBreakpoints(responsive)) {
 		throw new Error('Invalid breakpoints');
 	}
@@ -161,7 +161,7 @@ export const setObserverThreshold = (threshold: number): IObserverOptions => {
  * @param userConfig - Your custom global configurations
  * @returns The config object with the updated dev property
  */
-export const setConfig = (userConfig: IConfig): IConfig => {
+export const setConfig = (userConfig: RevealConfig): RevealConfig => {
 	setDev(userConfig.dev);
 	setOnce(userConfig.once);
 	setResponsive(userConfig.responsive);

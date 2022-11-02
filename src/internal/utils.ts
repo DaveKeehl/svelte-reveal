@@ -1,5 +1,5 @@
 import { config, defOpts } from './config';
-import type { IConfig } from './types';
+import type { RevealConfig } from './types';
 
 /**
  * Deep clone a given data structure.
@@ -23,7 +23,7 @@ export const clean = (styles: string): string =>
  * Get a clone of the global configuration used by the library.
  * @returns The clone of the config
  */
-export const getConfigClone = (): IConfig => clone(config);
+export const getConfigClone = (): RevealConfig => clone(config);
 
 /**
  * TODO

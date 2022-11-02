@@ -250,7 +250,7 @@ interface IObserverOptions {
   threshold: number;
 }
 
-interface IConfig {
+interface RevealConfig {
   dev: boolean;
   once: boolean;
   responsive: Responsive;
@@ -273,45 +273,45 @@ interface RevealConfig {
 
 ### setDev
 
-| Args             | Return    | Description                         |
-| ---------------- | --------- | ----------------------------------- |
-| `(dev: boolean)` | `IConfig` | Globally enables/disables all logs. |
+| Args             | Return         | Description                         |
+| ---------------- | -------------- | ----------------------------------- |
+| `(dev: boolean)` | `RevealConfig` | Globally enables/disables all logs. |
 
 ### setOnce
 
-| Args              | Return    | Description                                                                                     |
-| ----------------- | --------- | ----------------------------------------------------------------------------------------------- |
-| `(once: boolean)` | `IConfig` | Runs the scroll animations only once when set to true. Refreshing the page doesn't re-run them. |
+| Args              | Return         | Description                                                  |
+| ----------------- | -------------- | ------------------------------------------------------------ |
+| `(once: boolean)` | `RevealConfig` | Runs the scroll animations only once when set to true. Refreshing the page doesn't re-run them. |
 
 ### setDeviceStatus
 
-| Args                                | Return    | Description                  |
-| ----------------------------------- | --------- | ---------------------------- |
-| `(device: Device, status: boolean)` | `IConfig` | Sets the status of a device. |
+| Args                                | Return         | Description                  |
+| ----------------------------------- | -------------- | ---------------------------- |
+| `(device: Device, status: boolean)` | `RevealConfig` | Sets the status of a device. |
 
 ### setDevicesStatus
 
-| Args                                   | Return    | Description                          |
-| -------------------------------------- | --------- | ------------------------------------ |
-| `(devices: Device[], status: boolean)` | `IConfig` | Sets the status of multiple devices. |
+| Args                                   | Return         | Description                          |
+| -------------------------------------- | -------------- | ------------------------------------ |
+| `(devices: Device[], status: boolean)` | `RevealConfig` | Sets the status of multiple devices. |
 
 ### setDeviceBreakpoint
 
-| Args                                   | Return    | Description                      |
-| -------------------------------------- | --------- | -------------------------------- |
-| `(device: Device, breakpoint: number)` | `IConfig` | Sets the breakpoint of a device. |
+| Args                                   | Return         | Description                      |
+| -------------------------------------- | -------------- | -------------------------------- |
+| `(device: Device, breakpoint: number)` | `RevealConfig` | Sets the breakpoint of a device. |
 
 ### setDevice
 
-| Args                                  | Return    | Description                               |
-| ------------------------------------- | --------- | ----------------------------------------- |
-| `(device: Device, settings: IDevice)` | `IConfig` | Updates the settings of a type of device. |
+| Args                                  | Return         | Description                               |
+| ------------------------------------- | -------------- | ----------------------------------------- |
+| `(device: Device, settings: IDevice)` | `RevealConfig` | Updates the settings of a type of device. |
 
 ### setResponsive
 
-| Args                       | Return    | Description                                            |
-| -------------------------- | --------- | ------------------------------------------------------ |
-| `(responsive: Responsive)` | `IConfig` | Sets the responsive property within the config object. |
+| Args                       | Return         | Description                                            |
+| -------------------------- | -------------- | ------------------------------------------------------ |
+| `(responsive: Responsive)` | `RevealConfig` | Sets the responsive property within the config object. |
 
 ### setObserverRoot
 
@@ -339,15 +339,15 @@ interface RevealConfig {
 
 ### setConfig
 
-| Args                    | Return    | Description                                                                                        |
-| ----------------------- | --------- | -------------------------------------------------------------------------------------------------- |
-| `(userConfig: IConfig)` | `IConfig` | By passing an object of type `IConfig` you can have full control over all the internal properties. |
+| Args                         | Return         | Description                                                  |
+| ---------------------------- | -------------- | ------------------------------------------------------------ |
+| `(userConfig: RevealConfig)` | `RevealConfig` | By passing an object of type `RevealConfig` you can have full control over all the internal properties. |
 
 ### setDefaultOptions
 
-| Args                  | Return     | Description                                                                                                                                                                                                                    |
-| --------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `(options: IOptions)` | `IOptions` | You can use this function to override the global default options of the reveal effect. It can be useful when you want a specific option for many elements, so that you don't have to change it for every element individually. |
+| Args                       | Return          | Description                                                                                                                                                                                                                    |
+| -------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `(options: RevealOptions)` | `RevealOptions` | You can use this function to override the global default options of the reveal effect. It can be useful when you want a specific option for many elements, so that you don't have to change it for every element individually. |
 
 ## Suggestions
 

@@ -173,7 +173,7 @@ export type Responsive = {
 /**
  * Object containing global configurations. They apply to all instances of this library.
  */
-export interface IConfig {
+export interface RevealConfig {
 	/**
 	 * Globally enables/disables all logs.
 	 */

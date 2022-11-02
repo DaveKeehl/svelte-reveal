@@ -1,4 +1,4 @@
-import type { RevealOptions, IConfig } from './types';
+import type { RevealOptions, RevealConfig } from './types';
 
 /**
  * Object containing the default options used by the library for the scroll effect.
@@ -36,7 +36,7 @@ export const defOpts: Required<RevealOptions> = {
 /**
  * Object containing global configurations that apply to all instances of this library.
  */
-export const config: IConfig = {
+export const config: RevealConfig = {
 	dev: true,
 	once: false,
 	responsive: {
