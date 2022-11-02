@@ -105,7 +105,7 @@ export const setResponsive = (responsive: Responsive): IConfig => {
  * @returns The config object with the updated dev property
  */
 export const setObserverConfig = (observerConfig: IObserverOptions): IObserverOptions => {
-	setObserverRoot(observerConfig.root || null);
+	setObserverRoot(observerConfig.root);
 	setObserverRootMargin(observerConfig.rootMargin);
 	setObserverThreshold(observerConfig.threshold);
 	return observerConfig;
@@ -117,7 +117,7 @@ export const setObserverConfig = (observerConfig: IObserverOptions): IObserverOp
  * @returns The config object with the updated dev property
  */
 export const setObserverRoot = (root: IntersectionObserver['root']): IObserverOptions => {
-	defOpts.root = root || null;
+	defOpts.root = root;
 	return createObserverConfig();
 };
 
