@@ -9,13 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - README: Fixed broken links
 - README: Fixed indentation in code blocks
-- README: Renamed $app/env into $app/environment
-- README: Fixed typo in ToC
+- README: Renamed `$app/env` into `$app/environment`
+- README: Fixed typo in table of contents
 - README: Added badge for NPM weekly downloads
 - Removed validation steps in pre-commit hook
 - Updated dependencies
 - Fixed wrong options passed to the intersection observer
-- Plenty of refactoring and little quality of life improvements
+- Plenty of core code refactoring
+- Ref option now accepts whitespaces
+- BREAKING: options `marginTop`, `marginRight`, `marginBottom` and `marginLeft` have been deprecated in favour of `rootMargin` to better align with the Intersetion Observer API
 
 ## [0.6.0] - 2022-04-22
 ### Added
