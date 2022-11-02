@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - README: Renamed `$app/env` into `$app/environment`
 - README: Fixed typo in table of contents
 - README: Added badge for NPM weekly downloads
+- README: Add instruction for pnpm
+- README: Changed badges order for better information order
+- README: Updated text to match updated code documentation
 - Removed validation steps in pre-commit hook
 - Updated dependencies
 - Fixed wrong options passed to the intersection observer

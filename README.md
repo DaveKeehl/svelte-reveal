@@ -2,7 +2,7 @@
 
 # svelte-reveal
 
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/DaveKeehl/svelte-reveal/tree/develop) ![npm](https://img.shields.io/npm/v/svelte-reveal)![npm](https://img.shields.io/npm/dw/svelte-reveal) [![CI/CD](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml/badge.svg)](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml) ![GitHub](https://img.shields.io/github/license/davekeehl/svelte-reveal) [![codecov](https://codecov.io/gh/DaveKeehl/svelte-reveal/branch/develop/graph/badge.svg?token=AL1KI5XRDF)](https://codecov.io/gh/DaveKeehl/svelte-reveal)
+[![CI/CD](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml/badge.svg)](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml) ![npm](https://img.shields.io/npm/v/svelte-reveal) ![npm](https://img.shields.io/npm/dw/svelte-reveal) ![GitHub](https://img.shields.io/github/license/davekeehl/svelte-reveal) [![codecov](https://codecov.io/gh/DaveKeehl/svelte-reveal/branch/develop/graph/badge.svg?token=AL1KI5XRDF)](https://codecov.io/gh/DaveKeehl/svelte-reveal)[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/DaveKeehl/svelte-reveal/tree/develop)
 
 > ⚠️&nbsp;&nbsp;svelte-reveal is currently in beta. Do you want to [contribute](https://github.com/DaveKeehl/svelte-reveal/issues)? Do you want to [report a bug](https://github.com/DaveKeehl/svelte-reveal/issues/new?assignees=&labels=bug&template=bug_report.yml&title=%5BBug%5D%3A+)?
 
@@ -39,10 +39,16 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
    npm install -D svelte-reveal
    ```
 
-   or [yarn](https://yarnpkg.com/):
+   [yarn](https://yarnpkg.com/):
 
    ```bash
    yarn add -D svelte-reveal
+   ```
+
+   or [pnpm](https://pnpm.io/):
+
+   ```bash
+   pnpm add -D svelte-reveal
    ```
 
 2. Import the library within your Svelte component:
@@ -133,31 +139,28 @@ Depending on the use case, you can either use this library as-is (which applies 
 
 Keep in mind that these options are applied to the single DOM element you add svelte-reveal to. For global and more in-depth settings, go to the [API](#api) section.
 
-| Name           | Type           | Default                  | Description                                                                                                                                                                                                                                                                                                                                                                                                                |
-| -------------- | -------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| disable        | `boolean`      | `false`                  | It enables/disables the transition.                                                                                                                                                                                                                                                                                                                                                                                        |
-| debug          | `boolean`      | `false`                  | It enables/disables debugging mode for the targeted DOM element. This will log all options and configs to the console.<br />In order to be able to use this mode, you are required to also set the `ref` property.                                                                                                                                                                                                         |
-| ref            | `string`       | `""`                     | When `debug` is set to `true`, you are required to specificy a `ref` string. When multiple DOM nodes have `debug` mode enabled, `ref` strings allow you to know to which DOM node a console log statement belongs to.                                                                                                                                                                                                      |
-| highlightLogs  | `boolean`      | `false`                  | When set to `true` the console logs of the target node get colored, making it easier to see them quicker among many other logs.                                                                                                                                                                                                                                                                                            |
-| highlightColor | `string`       | `"tomato"`               | You can use this option to tweak the console logs color when `highlightLogs` is set to `true`.                                                                                                                                                                                                                                                                                                                             |
-| root           | `ObserverRoot` | `null`                   | The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer API.                                                                                                                                                                                                                                                                                      |
-| marginTop      | `number`       | `0`                      | Top margin (in `px` or `%`) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API.                                                                                                                                                                                                                                               |
-| marginBottom   | `number`       | `0`                      | Bottom margin (in `px` or `%`) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API.                                                                                                                                                                                                                                            |
-| marginLeft     | `number`       | `0`                      | Left margin (in `px` or `%`) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API.                                                                                                                                                                                                                                              |
-| marginRight    | `number`       | `0`                      | Right margin (in `px` or `%`) of the [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer API.                                                                                                                                                                                                                                             |
-| threshold      | `number`       | `0.6`                    | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver) (in percentage from `0.0` to `1.0`) property used by the Intersection Observer API to know when its target element is considered visible or not.                                                                                                                                                               |
-| transition     | `string`       | `"fly"`                  | The animation that will be triggered when your target node becomes visible.<br />Read more [in this subsection](#transitions) for a comprehensive explanation of the full list of available transitions.                                                                                                                                                                                                                   |
-| reset          | `boolean`      | `false`                  | When set to true, the node transitions out when it's out of view.<br /><br />⚠️ Be careful not to overuse this option, as it prevents the Intersection Observer to stop observing the target node. Performance is therefore not guaranteed when many elements have reset set to `true`.                                                                                                                                    |
-| delay          | `number`       | `0`                      | The amount of milliseconds (_ms_) you want to delay a given transition.                                                                                                                                                                                                                                                                                                                                                    |
-| duration       | `number`       | `800`                    | The amount of milliseconds (_ms_) you want a given transition to last.                                                                                                                                                                                                                                                                                                                                                     |
-| easing         | `string`       | `"custom"`               | The type of easing function you want to apply to a given element.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/main/src/internal/types.ts#L231-L257) the full list of available easing functions.<br />The default easing function used by svelte-reveal corresponds to the [CSS ease transition timing function](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function#values). |
-| customEasing   | `CustomEasing` | `[0.25, 0.1, 0.25, 0.1]` | The individual weights of a custom cubic-bezier curve. [This website](https://cubic-bezier.com/) is great for previewing timing functions.                                                                                                                                                                                                                                                                                 |
-| x              | `number`       | `-20`                    | The starting offset position in pixels (_px_) on the x-axis of the `"slide"` transition.<br />If `x` is negative, the element will transition from the left, else from the right.                                                                                                                                                                                                                                          |
-| y              | `number`       | `-20`                    | The starting offset position in pixels (_px_) on the y-axis of the `"fly"` transition.<br />If `y` is negative, the element will transition from the top, else from the bottom.                                                                                                                                                                                                                                            |
-| rotate         | `number`       | `-360`                   | The starting rotation angle in degrees (_deg_) along the x-axis you want your node to rotate from when being revealed with the `"spin"` transition.<br />If `rotate` is positive, the element will spin clockwise, else counter-clockwise.                                                                                                                                                                                 |
-| opacity        | `number`       | `0`                      | The starting opacity value in percentage (_%_) of any transition. It can be a number between `0.0` and `1.0`.                                                                                                                                                                                                                                                                                                              |
-| blur           | `number`       | `16`                     | The starting blur value in pixels (_px_) of the `"blur"` transition.                                                                                                                                                                                                                                                                                                                                                       |
-| scale          | `number`       | `0`                      | The starting scale value in percentage (_%_) of the `"scale"` transition.                                                                                                                                                                                                                                                                                                                                                  |
+| Name           | Type                                 | Default                  | Description                                                                                                                                                                                                                                                                                                                                                                                                                |
+| -------------- | -------------------------------------| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| disable        | `boolean`                            | `false`                  | It enables/disables the transition.                                                                                                                                                                                                                                                                                                                                                                                        |
+| debug          | `boolean`                            | `false`                  | It enables/disables debugging mode for the targeted DOM element. This will log all options and configs to the console.<br />In order to be able to use this mode, you are required to also set the `ref` property.                                                                                                                                                                                                         |
+| ref            | `string`                             | `""`                     | When `debug` is set to `true`, you are required to specificy a `ref` string. When multiple DOM nodes have `debug` mode enabled, `ref` strings allow you to know to which DOM node a console log statement belongs to.                                                                                                                                                                                                      |
+| highlightLogs  | `boolean`                            | `false`                  | When set to `true` the console logs of the target node get colored, making it easier to see them quicker among many other logs.                                                                                                                                                                                                                                                                                            |
+| highlightColor | `string`                             | `"tomato"`               | You can use this option to tweak the console logs color when `highlightLogs` is set to `true`.                                                                                                                                                                                                                                                                                                                             |
+| root           | `IntersectionObserver['root']`       | `null`                   | The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer API.                                                                                                                                                                                                                                                                                      |
+| rootMargin     | `IntersectionObserver['rootMargin']` | `0px 0px 0px 0px`        | The [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property used by the Intersection Observer API.                                                                                                                                                                                                                                                                                      |
+| threshold      | `number`                             | `0.6`                    | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver) (in percentage from `0.0` to `1.0`) property used by the Intersection Observer API to know when its target element is considered visible or not.                                                                                                                                                               |
+| transition     | `string`                             | `"fly"`                  | The animation that will be triggered when your target node becomes visible.<br />Read more [in this subsection](#transitions) for a comprehensive explanation of the full list of available transitions.                                                                                                                                                                                                                   |
+| reset          | `boolean`                            | `false`                  | When set to true, the node transitions out when it's out of view.<br /><br />⚠️ Be careful not to overuse this option, as it prevents the Intersection Observer to stop observing the target node. Performance is therefore not guaranteed when many elements have reset set to `true`.                                                                                                                                    |
+| delay          | `number`                             | `0`                      | The amount of milliseconds (_ms_) you want to delay a given transition.                                                                                                                                                                                                                                                                                                                                                    |
+| duration       | `number`                             | `800`                    | The amount of milliseconds (_ms_) you want a given transition to last.                                                                                                                                                                                                                                                                                                                                                     |
+| easing         | `string`                             | `"custom"`               | The type of easing function you want to apply to a given element.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/main/src/internal/types.ts#L231-L257) the full list of available easing functions.<br />The default easing function used by svelte-reveal corresponds to the [CSS ease transition timing function](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function#values). |
+| customEasing   | `CustomEasing`                       | `[0.25, 0.1, 0.25, 0.1]` | The individual weights of a custom cubic-bezier curve. [This website](https://cubic-bezier.com/) is great for previewing timing functions.                                                                                                                                                                                                                                                                                 |
+| x              | `number`                             | `-20`                    | The starting offset position in pixels (_px_) on the x-axis of the `"slide"` transition.<br />If `x` is negative, the element will transition from the left, else from the right.                                                                                                                                                                                                                                          |
+| y              | `number`                             | `-20`                    | The starting offset position in pixels (_px_) on the y-axis of the `"fly"` transition.<br />If `y` is negative, the element will transition from the top, else from the bottom.                                                                                                                                                                                                                                            |
+| rotate         | `number`                             | `-360`                   | The starting rotation angle in degrees (_deg_) along the x-axis you want your node to rotate from when being revealed with the `"spin"` transition.<br />If `rotate` is positive, the element will spin clockwise, else counter-clockwise.                                                                                                                                                                                 |
+| opacity        | `number`                             | `0`                      | The starting opacity value in percentage (_%_) of any transition. It can be a number between `0.0` and `1.0`.                                                                                                                                                                                                                                                                                                              |
+| blur           | `number`                             | `16`                     | The starting blur value in pixels (_px_) of the `"blur"` transition.                                                                                                                                                                                                                                                                                                                                                       |
+| scale          | `number`                             | `0`                      | The starting scale value in percentage (_%_) of the `"scale"` transition.                                                                                                                                                                                                                                                                                                                                                  |
 
 ### Transitions
 
@@ -207,18 +210,12 @@ This library is globally configured as follows right of out the box:
 |            | desktop    |            | `IDevice`          |                     | Object containing information about responsiveness on desktop devices.                                                              |
 |            |            | enabled    | `boolean`          | `true`              | Whether the device supports the scroll effect on desktop devices.                                                                   |
 |            |            | breakpoint | `number`           | `2560`              | The viewport width upper limit that a desktop device can be targeted to work in.                                                    |
-| observer   |            |            | `IObserverOptions` |                     | The Intersection Observer API options.                                                                                              |
-|            | root       |            | `ObserverRoot`     | `null`              | The Intersection Observer API root element.                                                                                         |
-|            | rootMargin |            | `string`           | `"0px 0px 0px 0px"` | The Intersection Observer API rootMargin property.                                                                                  |
-|            | threshold  |            | `number`           | `0.6`               | The Intersection Observer API threshold property.                                                                                   |
 
 ## API
 
-> 💡&nbsp;&nbsp;All API functions return the global config object with the updated properties.
+svelte-reveal also exposes several functions you can call to change the [default options]() and [global configuration](#global-config) of this library.
 
-svelte-reveal also exposes several functions you can call to change the [global configuration](#global-config) of this library.
-
-Since these functions operate on a global level across all components using svelte-reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the global options from multiple points. If you need/want to considerably customize the behavior of this library, I suggest you to create a dedicated file (e.g. [reveal.config.js](https://github.com/DaveKeehl/svelte-reveal/blob/main/example/reveal.config.js)) and to import it from the top-most component in the hierarchy tree of your project. Within that file you can then call the API to set global settings or shared transition properties.
+Since these functions operate on a global level across all components using svelte-reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the default options and global options from multiple points. If you need/want to considerably customize the behavior of this library, I suggest you to create a dedicated file (e.g. [reveal.config.js](https://github.com/DaveKeehl/svelte-reveal/blob/main/example/reveal.config.js)) and to import it from the top-most component in the hierarchy tree of your project. Within that file you can then call the API to set global settings or shared transition properties.
 
 ```html
 // App.svelte
@@ -246,11 +243,9 @@ interface Responsive {
   [P in Device]: IDevice;
 }
 
-type ObserverRoot = HTMLElement | null | undefined;
-
 interface IObserverOptions {
-  root?: ObserverRoot;
-  rootMargin: string;
+  root: IntersectionObserver['root'];
+  rootMargin: IntersectionObserver['rootMargin'];
   threshold: number;
 }
 
@@ -258,7 +253,6 @@ interface IConfig {
   dev: boolean;
   once: boolean;
   responsive: Responsive;
-  observer: IObserverOptions;
 }
 
 interface IOptions {
@@ -267,8 +261,9 @@ interface IOptions {
   ref?: string;
   highlightLogs?: boolean;
   highlightColor?: string;
-  root?: ObserverRoot;
-  marginTop?: number;
+  root?: IntersectionObserver['root'];
+  rootMargin?: IntersectionObserver['rootMargin'];
+  threshold?: number;
   ...
   onUpdate?: (node: HTMLElement) => void;
   onDestroy?: (node: HTMLElement) => void;
@@ -319,27 +314,27 @@ interface IOptions {
 
 ### setObserverRoot
 
-| Args                   | Return    | Description                                               |
-| ---------------------- | --------- | --------------------------------------------------------- |
-| `(root: ObserverRoot)` | `IConfig` | Globally sets the Intersection Observer API root element. |
+| Args                                   | Return             | Description                                               |
+| -------------------------------------- | ------------------ | --------------------------------------------------------- |
+| `(root: IntersectionObserver['root'])` | `IObserverOptions` | Globally sets the Intersection Observer API root element. |
 
 ### setObserverRootMargin
 
-| Args                   | Return    | Description                                                      |
-| ---------------------- | --------- | ---------------------------------------------------------------- |
-| `(rootMargin: string)` | `IConfig` | Globally sets the Intersection Observer API rootMargin property. |
+| Args                                               | Return             | Description                                                  |
+| -------------------------------------------------- | ------------------ | ------------------------------------------------------------ |
+| `(rootMargin: IntersectionObserver['rootMargin'])` | `IObserverOptions` | Globally sets the Intersection Observer API rootMargin property. |
 
 ### setObserverThreshold
 
-| Args                  | Return    | Description                                                     |
-| --------------------- | --------- | --------------------------------------------------------------- |
-| `(threshold: number)` | `IConfig` | Globally sets the Intersection Observer API threshold property. |
+| Args                  | Return             | Description                                                  |
+| --------------------- | ------------------ | ------------------------------------------------------------ |
+| `(threshold: number)` | `IObserverOptions` | Globally sets the Intersection Observer API threshold property. |
 
 ### setObserverConfig
 
-| Args                                 | Return    | Description                                      |
-| ------------------------------------ | --------- | ------------------------------------------------ |
-| `(observerConfig: IObserverOptions)` | `IConfig` | Globally sets the Intersection Observer options. |
+| Args                                 | Return             | Description                                      |
+| ------------------------------------ | ------------------ | ------------------------------------------------ |
+| `(observerConfig: IObserverOptions)` | `IObserverOptions` | Globally sets the Intersection Observer options. |
 
 ### setConfig
 
