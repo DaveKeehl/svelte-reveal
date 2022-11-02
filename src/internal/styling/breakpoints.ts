@@ -1,4 +1,4 @@
-import type { Responsive, IDevice } from '../types';
+import type { Responsive } from '../types';
 import { isPositiveInteger } from '../validations';
 
 /**

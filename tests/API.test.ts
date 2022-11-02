@@ -39,11 +39,6 @@ beforeEach(() => {
 				breakpoint: 2560
 			}
 		}
-		// observer: {
-		// 	root: null,
-		// 	rootMargin: '0px 0px 0px 0px',
-		// 	threshold: 0.6
-		// }
 	});
 	setObserverConfig({
 		root: null,
@@ -204,15 +199,6 @@ describe('setObserverConfig', () => {
 		const observerConfig = createObserverConfig();
 		expect(setObserverConfig(observerConfig)).toStrictEqual(observerConfig);
 	});
-
-	/**
-	 * @todo test the root property with invalid value
-	 */
-
-	// test('Should throw an error when root margin is invalid', () => {
-	// 	defOpts.rootMargin = '0px 00px 0px 0px';
-	// 	expect(() => setObserverConfig(observerConfig)).toThrow('Invalid rootMargin syntax');
-	// });
 
 	test('Should throw an error when threshold is invalid', () => {
 		defOpts.threshold = 1.2;

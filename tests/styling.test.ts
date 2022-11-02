@@ -40,11 +40,6 @@ beforeEach(() => {
 				breakpoint: 2560
 			}
 		}
-		// observer: {
-		// 	root: null,
-		// 	rootMargin: '0px 0px 0px 0px',
-		// 	threshold: 0.6
-		// }
 	});
 	setObserverConfig({
 		root: null,

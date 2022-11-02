@@ -11,10 +11,6 @@ export const defOpts: Required<IOptions> = {
 	highlightColor: 'tomato',
 	root: null,
 	rootMargin: '0px 0px 0px 0px',
-	// marginTop: 0,
-	// marginBottom: 0,
-	// marginLeft: 0,
-	// marginRight: 0,
 	threshold: 0.6,
 	transition: 'fly',
 	reset: false,
@@ -36,12 +32,6 @@ export const defOpts: Required<IOptions> = {
 	onUpdate: () => null,
 	onDestroy: () => null
 };
-
-// export const observerConfig: IObserverOptions = {
-// 	root: defOpts.root,
-// 	rootMargin: defOpts.rootMargin,
-// 	threshold: defOpts.threshold
-// };
 
 /**
  * Object containing global configurations that apply to all instances of this library.
@@ -67,7 +57,6 @@ export const config: IConfig = {
 			breakpoint: 2560
 		}
 	}
-	// observer: observerConfig
 };
 
 /**

@@ -35,25 +35,9 @@ export interface IOptions {
 	 */
 	root?: IntersectionObserver['root'];
 	/**
-	 * TODO: Write docs
+	 * Root margin property of the Intersection Observer API.
 	 */
 	rootMargin?: IntersectionObserver['rootMargin'];
-	/**
-	 * Top margin (in px or %) of the rootMargin property of the Intersection Observer API.
-	 */
-	// marginTop?: number;
-	/**
-	 * Bottom margin  (in px or %)of the rootMargin property of the Intersection Observer API.
-	 */
-	// marginBottom?: number;
-	/**
-	 * Left margin (in px or %) of the rootMargin property of the Intersection Observer API.
-	 */
-	// marginLeft?: number;
-	/**
-	 * Right margin (in px or %) of the rootMargin property of the Intersection Observer API.
-	 */
-	// marginRight?: number;
 	/**
 	 * The threshold (in percentage from 0.0 to 1.0) property used by the Intersection
 	 * Observer API to know when its target element is considered visible or not.
@@ -140,23 +124,6 @@ export interface IOptions {
 	onDestroy?: (node: HTMLElement) => void;
 }
 
-/**
- * The root element used by the Intersection Observer API.
- * It can either be an HTML element or nothing.
- */
-export type ObserverRoot = HTMLElement | null | undefined;
-
-/**
- * An object containing the exact margin values as numbers for the
- * intersection observer
- */
-export interface ObserverRootMargin {
-	top: number;
-	right: number;
-	bottom: number;
-	left: number;
-}
-
 export interface IObserverOptions {
 	/**
 	 * The Intersection Observer API root element.
@@ -221,10 +188,6 @@ export interface IConfig {
 	 * It can be used to enable/disable the scroll effect on some devices.
 	 */
 	responsive: Responsive;
-	/**
-	 * The Intersection Observer API options.
-	 */
-	// observer: IObserverOptions;
 }
 
 /**

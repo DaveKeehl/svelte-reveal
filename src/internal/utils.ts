@@ -26,14 +26,10 @@ export const clean = (styles: string): string =>
 export const getConfigClone = (): IConfig => clone(config);
 
 /**
- * Format the root margin string needed by the intersection observer.
- * @param rootMargin - An object containing the four margin values as number
- * @returns The formatted root margin string
+ * TODO
+ * @param observerConfig
+ * @returns
  */
-// export const createObserverRootMargin = ({ top, right, bottom, left }: ObserverRootMargin) => {
-// 	return `${top}px ${right}px ${bottom}px ${left}px`;
-// };
-
 export const createObserverConfig = (observerConfig?: {
 	root?: IntersectionObserver['root'];
 	rootMargin?: IntersectionObserver['rootMargin'];

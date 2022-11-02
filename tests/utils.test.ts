@@ -1,7 +1,7 @@
 import { createFinalOptions, defOpts } from '../src/internal/config';
 import { setConfig, setObserverConfig } from '../src/internal/API';
 import { getRevealClassNames, createStylesheet } from '../src/internal/styling';
-import type { IObserverOptions, IOptions } from '../src/internal/types';
+import type { IOptions } from '../src/internal/types';
 import { clean, createObserverConfig } from '../src/internal/utils';
 import { markRevealNode, activateRevealNode, getRevealNode } from '../src/internal/DOM';
 import { areOptionsValid } from '../src/internal/validations';
@@ -28,11 +28,6 @@ beforeEach(() => {
 				breakpoint: 2560
 			}
 		}
-		// observer: {
-		// 	root: null,
-		// 	rootMargin: '0px 0px 0px 0px',
-		// 	threshold: 0.6
-		// }
 	});
 	setObserverConfig({
 		root: null,
@@ -181,16 +176,4 @@ test('createObserverConfig', () => {
 	expect(observerConfig.threshold).toBe(observerOverrides.threshold);
 	expect(observerConfig.rootMargin).toBe(defOpts.rootMargin);
 	expect(observerConfig.root).toBe(defOpts.root);
-	// const margins = createObserverRootMargin(rootMargin).split(' ');
-	// expect(margins.length).toBe(4);
-	// margins.forEach((margin, idx) => {
-	// 	expect(margin.endsWith('px')).toBe(true);
-
-	// 	const extractedMarginValue = margin.split('px')[0];
-	// 	const rootMarginValue = Object.entries(rootMargin)[idx];
-
-	// 	if (extractedMarginValue && rootMarginValue) {
-	// 		expect(parseInt(extractedMarginValue)).toBe(rootMarginValue[1]);
-	// 	}
-	// });
 });

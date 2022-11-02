@@ -165,7 +165,6 @@ export const setConfig = (userConfig: IConfig): IConfig => {
 	setDev(userConfig.dev);
 	setOnce(userConfig.once);
 	setResponsive(userConfig.responsive);
-	// setObserverConfig(userConfig.observer);
 	return config;
 };
 
