@@ -33,7 +33,12 @@ export const activateRevealNode = (
 	const transitionProperties = createTransitionPropertiesCSS(transitionPropertiesCSSClass, options);
 	const stylesheet = document.querySelector('style[data-action="reveal"]');
 
-	// Since I want to have only one svelte-reveal stylesheet for all the elements in the page, I need to check whether a svelte-reveal stylesheet has already been created when previous elements have been "activated" by this library. Hence, the stylesheet content is the concatenation of the styles of all elements on which svelte-reveal has been activated on the page.
+	/**
+	 * Since I want to have only one Svelte Reveal stylesheet for all the elements in the page,
+	 * I need to check whether a Svelte Reveal stylesheet has already been created when previous
+	 * elements have been "activated" by this library. Hence, the stylesheet content is the
+	 * concatenation of the styles of all elements on which Svelte Reveal has been activated on the page.
+	 */
 	if (stylesheet) {
 		const existingRevealStyles = stylesheet.innerHTML;
 		const nodeRevealStyles = clean([transitionProperties, transitionDeclaration].join(' '));

@@ -7,20 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- README: Fixed broken links
-- README: Fixed indentation in code blocks
-- README: Renamed `$app/env` into `$app/environment`
-- README: Fixed typo in table of contents
+- README: Fixed and improved content 
 - README: Added badge for NPM weekly downloads
-- README: Add instruction for pnpm
 - README: Changed badges order for better information order
-- README: Updated text to match updated code documentation
-- README: Improved content
+- README: New cover image
+- Rebranded from svelte-reveal to Svelte Reveal (the package name stays the same though)
 - Removed validation steps in pre-commit hook
 - Updated dependencies
 - Fixed wrong options passed to the intersection observer
 - Plenty of core code refactoring
 - Ref option now accepts whitespaces
+- Updated and improved all the code documentation
 - BREAKING: options `marginTop`, `marginRight`, `marginBottom` and `marginLeft` have been deprecated in favour of `rootMargin` to better align with the Intersetion Observer API
 
 ## [0.6.0] - 2022-04-22

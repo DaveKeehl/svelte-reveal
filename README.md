@@ -1,12 +1,12 @@
 ![](assets/readme_cover.png)
 
-# svelte-reveal
+# Svelte Reveal
 
 [![CI/CD](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml/badge.svg)](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml) ![npm](https://img.shields.io/npm/v/svelte-reveal) ![npm](https://img.shields.io/npm/dw/svelte-reveal) ![GitHub](https://img.shields.io/github/license/davekeehl/svelte-reveal) [![codecov](https://codecov.io/gh/DaveKeehl/svelte-reveal/branch/develop/graph/badge.svg?token=AL1KI5XRDF)](https://codecov.io/gh/DaveKeehl/svelte-reveal)[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/DaveKeehl/svelte-reveal/tree/develop)
 
-> ⚠️&nbsp;&nbsp;svelte-reveal is currently in beta. Do you want to [contribute](https://github.com/DaveKeehl/svelte-reveal/issues)? Do you want to [report a bug](https://github.com/DaveKeehl/svelte-reveal/issues/new?assignees=&labels=bug&template=bug_report.yml&title=%5BBug%5D%3A+)?
+> ⚠️&nbsp;&nbsp;Svelte Reveal is currently in beta. Do you want to [contribute](https://github.com/DaveKeehl/svelte-reveal/issues)? Do you want to [report a bug](https://github.com/DaveKeehl/svelte-reveal/issues/new?assignees=&labels=bug&template=bug_report.yml&title=%5BBug%5D%3A+)?
 
-svelte-reveal is a library created with the purpose of helping [Svelte](https://svelte.dev/) users add reveal on scroll animations to their web applications in the easiest way possible. This library leverages the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) in order to know when to trigger the animations.
+Svelte Reveal is a library created with the purpose of helping [Svelte](https://svelte.dev/) users add reveal on scroll animations to their web applications in the easiest way possible. This library leverages the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) in order to know when to trigger the animations.
 
 ## Features
 
@@ -19,7 +19,7 @@ svelte-reveal is a library created with the purpose of helping [Svelte](https://
 
 1. [Usage](#usage)
 1. [Demo](#demo)
-1. [Why svelte-reveal](#why-svelte-reveal)
+1. [Why Svelte Reveal](#why-svelte-reveal)
 1. [SvelteKit](#sveltekit)
 1. [Options](#options)
 1. [Global config](#global-config)
@@ -102,9 +102,9 @@ You can also use the provided Dockerfile in the repository as a development envi
 
 ## Demo
 
-In this [Svelte REPL](https://svelte.dev/repl/1cf37b0947ac46b8ae9cc791abda7159?version=3.44.1) I created you can see svelte-reveal in action.
+In this [Svelte REPL](https://svelte.dev/repl/1cf37b0947ac46b8ae9cc791abda7159?version=3.44.1) I created you can see Svelte Reveal in action.
 
-## Why svelte-reveal
+## Why Svelte Reveal
 
 If you happened to scout the internet for other similar libraries, you would have noticed that other authors have decided to create their own library using Svelte [slots](https://svelte.dev/docs#template-syntax-slot) (similar to [React children](https://reactjs.org/docs/composition-vs-inheritance.html)). There is nothing wrong with that approach, but in my opinion it goes a bit against one of Svelte's core purpose: writing more concise code. Having to wrap every to-be-transitioned component adds at least 2 extra lines of code each time, making your files unnecessarily bloated for such a simple add-on.
 
@@ -114,7 +114,7 @@ Instead, I decided to use Svelte [actions](https://svelte.dev/docs#template-synt
 
 ## SvelteKit
 
-The way svelte-reveal transitions the elements does not work well with [SSR](https://kit.svelte.dev/docs/page-options#ssr), which is enabled by default on SvelteKit. One way to get around this issue, is to wrap your top-most element or component in your app inside an if-block that is evaluated to `true` only when its context has been updated, as in the following example.
+The way Svelte Reveal transitions the elements does not work well with [SSR](https://kit.svelte.dev/docs/page-options#ssr), which is enabled by default on SvelteKit. One way to get around this issue, is to wrap your top-most element or component in your app inside an if-block that is evaluated to `true` only when its context has been updated, as in the following example.
 
 ```html
 <script>
@@ -138,7 +138,7 @@ Please [create a new issue](https://github.com/DaveKeehl/svelte-reveal/issues/ne
 
 Depending on the use case, you can either use this library as-is (which applies some [default styles](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/internal/config.ts#L6-L34)), or customize it to your liking. If you choose to do so, you can pass an object to this action containing your own options to be applied.
 
-Keep in mind that these options are applied to the single DOM element you add svelte-reveal to. For global and more in-depth settings, refer to the [API](#api) section.
+Keep in mind that these options are applied to the single DOM element you add Svelte Reveal to. For global and more in-depth settings, refer to the [API](#api) section.
 
 | Name           | Type                                 | Default                  | Description                                                  |
 | -------------- | ------------------------------------ | ------------------------ | ------------------------------------------------------------ |
@@ -154,7 +154,7 @@ Keep in mind that these options are applied to the single DOM element you add sv
 | reset          | `boolean`                            | `false`                  | When set to true, the node transitions out when out of view, and is revealed again when back in view.<br /><br />⚠️ Be careful not to overuse this option, as it prevents the Intersection Observer to stop observing the target node. Performance is therefore not guaranteed when many elements have reset set to `true`. |
 | duration       | `number`                             | `800`                    | How long the transition lasts (in milliseconds).             |
 | delay          | `number`                             | `0`                      | How long the transition is delayed (in milliseconds) before being triggered. |
-| easing         | `Easing`                             | `"custom"`               | The type of easing function applied to the `transition`.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/main/src/internal/types.ts#L231-L257) the full list of available easing functions.<br />The default easing function used by svelte-reveal corresponds to the [CSS ease transition timing function](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function#values). |
+| easing         | `Easing`                             | `"custom"`               | The type of easing function applied to the `transition`.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/main/src/internal/types.ts#L231-L257) the full list of available easing functions.<br />The default easing function used by Svelte Reveal corresponds to the [CSS ease transition timing function](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function#values). |
 | customEasing   | `CustomEasing`                       | `[0.25, 0.1, 0.25, 0.1]` | The individual weights of a custom cubic-bezier curve. This option is necessary when `easing` is set to `custom`. [This website](https://cubic-bezier.com/) is great for previewing timing functions. |
 | x              | `number`                             | `-20`                    | The starting offset position in pixels on the x-axis of the `"slide"` transition.<br />If `x` is negative, the element will transition from the left, else from the right. |
 | y              | `number`                             | `-20`                    | The starting offset position in pixels on the y-axis of the `"fly"` transition.<br />If `y` is negative, the element will transition from the top, else from the bottom. |
@@ -216,7 +216,7 @@ This library is globally configured as follows right of out the box:
 
 > ⚠️ If you want to customise the behavior of a single DOM node, you are supposed to use the [options](#options).
 
-svelte-reveal also exposes several functions you can call to change the [default options](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/internal/config.ts#L6-L34) and [global configuration](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/internal/config.ts#L39-L60) of this library. Since these functions operate on a global level across all components using svelte-reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the default options and global config from multiple points. 
+Svelte Reveal also exposes several functions you can call to change the [default options](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/internal/config.ts#L6-L34) and [global configuration](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/internal/config.ts#L39-L60) of this library. Since these functions operate on a global level across all components using Svelte Reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the default options and global config from multiple points. 
 
 If you need/want to considerably customize the behavior of this library, I suggest creating a dedicated file (e.g. [reveal.config.js](https://github.com/DaveKeehl/svelte-reveal/blob/main/example/reveal.config.js)) and to import it from the top-most component in the components tree of your project. Within that file you can then call the API functions to set global settings or shared transition properties.
 

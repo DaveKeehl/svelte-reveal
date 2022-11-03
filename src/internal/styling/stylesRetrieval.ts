@@ -6,9 +6,9 @@ import { addVendorPrefixes } from './stylesGeneration';
 
 /**
  * Merges any existing reveal styles with the new ones for the current DOM node that is being "activated". This process is necessary because one CSS stylesheet is shared among all the elements in the page.
- * @param existingRevealStyles Any existing reveal styles in the svelte-reveal stylesheet.
+ * @param existingRevealStyles Any existing reveal styles in the Svelte Reveal stylesheet.
  * @param nodeRevealStyles The CSS of the DOM node to be revealed.
- * @returns The merged CSS reveal styles to be used to update the svelte-reveal stylesheet.
+ * @returns The merged CSS reveal styles to be used to update the Svelte Reveal stylesheet.
  */
 export const mergeRevealStyles = (existingRevealStyles: string, nodeRevealStyles: string): string => {
 	const combinedRevealStyles = [getMinifiedStylesFromQuery(existingRevealStyles), nodeRevealStyles].join(' ');

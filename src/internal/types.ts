@@ -1,5 +1,5 @@
 /**
- * Object containing options to tweak the behavior of svelte-reveal at the element level.
+ * Object containing options to tweak the behavior of Svelte Reveal at the element level.
  */
 export interface RevealOptions {
 	/**
@@ -186,7 +186,7 @@ export type Responsive = {
 
 /**
  * Object containing configuration properties to change the behavior
- * of svelte-reveal on a global level for all instances of this library.
+ * of Svelte Reveal on a global level for all instances of this library.
  */
 export interface RevealConfig {
 	/**
