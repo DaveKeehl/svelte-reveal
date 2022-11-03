@@ -4,12 +4,12 @@ import { clean } from '../utils';
 import { hasValidBreakpoints } from './breakpoints';
 
 /**
- * Creates the query of a sequence of consecutive enabled devices.
- * @param devices The devices supported by this library
- * @param previousDevice The device right before the one that starts at the `start` breakpoint
- * @param start The breakpoint that started the sequence of consecutive enabled devices
- * @param end The breakpoint that ended the sequence of consecutive enabled devices
- * @returns The final optimal query
+ * Creates the query for a set of devices whose breakpoints are within the range defined by the `start` and `end` breakpoints.
+ * @param devices The devices used to generate the queries from.
+ * @param previousDevice The (smaller) device right before the range defined by the `start` and `end` breakpoints. In other words: previousDevice --> startDevice (@start) --> endDevice(@end).
+ * @param start The breakpoint that starts the range to consider to generate the query.
+ * @param end The breakpoint that ends the range to consider to generate the query.
+ * @returns The final optimal query to target the devices found within the [`start`-`end`] breakpoints range.
  */
 const createQuery = (
 	devices: Devices,
@@ -32,9 +32,9 @@ const createQuery = (
 };
 
 /**
- * Find a sequence of optimal media queries, given a list of devices.
- * @param devices The devices to be analyzed
- * @returns A list of optimal queries to be combined and use to create responsiveness
+ * Generate a set of optimal queries, given a list of supported devices.
+ * @param devices The devices to analyze to create the queries from.
+ * @returns A list of optimal queries that can be combined together to create a final media query to provide responsiveness to the elements to transition.
  */
 const getOptimalQueries = (devices: Devices): string[] => {
 	const queries: string[] = [];
@@ -69,10 +69,10 @@ const getOptimalQueries = (devices: Devices): string[] => {
 };
 
 /**
- * Decorate a set of CSS rules with configurable media queries.
- * @param styles The CSS rules to be decorated
- * @param responsive The object containing the info about how to create the media queries
- * @returns The decorated CSS ruleset
+ * Decorates a set of CSS rules with media queries.
+ * @param styles The CSS rules to be decorated.
+ * @param responsive An object containing all the info on how to create the media queries.
+ * @returns The CSS ruleset decorated with the media queries generated from the analysis of the `responsive` object.
  */
 export const addMediaQueries = (styles: string, responsive: Responsive = config.responsive): string => {
 	if (!hasValidBreakpoints(responsive)) {

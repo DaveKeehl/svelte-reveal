@@ -46,7 +46,7 @@ export interface RevealOptions {
 	/**
 	 * The animation that will be triggered when your target node becomes visible.
 	 */
-	transition?: Transitions;
+	transition?: Transition;
 	/**
 	 * When set to true, the node transitions out when it's out of view from the
 	 * Intersection Observer.
@@ -201,7 +201,7 @@ export interface IReturnAction {
 /**
  * The animations that can be used by the library users.
  */
-export type Transitions = 'fly' | 'fade' | 'blur' | 'scale' | 'slide' | 'spin';
+export type Transition = 'fly' | 'fade' | 'blur' | 'scale' | 'slide' | 'spin';
 
 /**
  * The easing functions that can be specified by the user to tweak the animation timing.

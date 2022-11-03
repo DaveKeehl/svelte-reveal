@@ -1,5 +1,5 @@
 import { config } from './config';
-import { createTransitionPropertiesCSS, createTransitionDeclarationCSS, getUpdatedStyles } from './styling';
+import { createTransitionPropertiesCSS, createTransitionDeclarationCSS, mergeRevealStyles } from './styling';
 import type { RevealOptions } from './types';
 import { clean, createObserverConfig } from './utils';
 
@@ -16,28 +16,33 @@ export const markRevealNode = (revealNode: HTMLElement): HTMLElement => {
 /**
  * Activates the reveal effect on the target element.
  * @param revealNode - The element to be revealed
- * @param className - The CSS class to be used for the target element
- * @param baseClassName - The CSS class to be used for the target element transitions
+ * @param transitionPropertiesCSSClass - The CSS class to be used for the target element
+ * @param transitionDeclarationCSSClass - The CSS class to be used for the target element transitions
  * @param options - The options to be applied to the reveal effect
  * @returns The element to be revealed
  */
 export const activateRevealNode = (
 	revealNode: HTMLElement,
-	className: string,
-	baseClassName: string,
+	transitionPropertiesCSSClass: string,
+	transitionDeclarationCSSClass: string,
 	options: Required<RevealOptions>
 ): HTMLElement => {
 	markRevealNode(revealNode);
 
-	const mainCss = createTransitionPropertiesCSS(className, options);
-	const transitionCss = createTransitionDeclarationCSS(baseClassName, options);
+	const transitionDeclaration = createTransitionDeclarationCSS(transitionDeclarationCSSClass, options);
+	const transitionProperties = createTransitionPropertiesCSS(transitionPropertiesCSSClass, options);
 	const stylesheet = document.querySelector('style[data-action="reveal"]');
 
+	// Since I want to have only one svelte-reveal stylesheet for all the elements in the page, I need to check whether a svelte-reveal stylesheet has already been created when previous elements have been "activated" by this library. Hence, the stylesheet content is the concatenation of the styles of all elements on which svelte-reveal has been activated on the page.
 	if (stylesheet) {
-		const newStyles = getUpdatedStyles(stylesheet.innerHTML, clean(mainCss), clean(transitionCss));
-		stylesheet.innerHTML = newStyles;
-		revealNode.classList.add(className);
-		revealNode.classList.add(baseClassName);
+		const existingRevealStyles = stylesheet.innerHTML;
+		const nodeRevealStyles = clean([transitionProperties, transitionDeclaration].join(' '));
+
+		const updatedRevealStyles = mergeRevealStyles(existingRevealStyles, nodeRevealStyles);
+
+		stylesheet.innerHTML = updatedRevealStyles;
+		revealNode.classList.add(transitionPropertiesCSSClass);
+		revealNode.classList.add(transitionDeclarationCSSClass);
 	}
 
 	return revealNode;

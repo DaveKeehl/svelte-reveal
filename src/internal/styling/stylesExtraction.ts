@@ -1,11 +1,11 @@
 import { clean } from '../utils';
 
 /**
- * Extract the CSS rules of a given style
- * @param styles - The styles to extract the rules from
- * @returns An array of CSS properties
+ * Extracts the CSS rules of a given style.
+ * @param styles The styles to extract the rules from.
+ * @returns An array of CSS properties.
  */
-export const extractCssRules = (styles: string): string[] => {
+export const extractCSSRules = (styles: string): string[] => {
 	return clean(styles)
 		.split(';')
 		.filter((rule) => rule !== '')
@@ -13,10 +13,10 @@ export const extractCssRules = (styles: string): string[] => {
 };
 
 /**
- * Clean and minify your CSS styles
- * @param styles - The styles to be sanitized
- * @returns The minified and sanitized styles
+ * Cleans and minifies CSS styles.
+ * @param styles The CSS styles to be sanitized.
+ * @returns The sanitized CSS styles.
  */
 export const sanitizeStyles = (styles: string): string => {
-	return extractCssRules(styles).join('; ').concat('; ');
+	return extractCSSRules(styles).join('; ').concat('; ');
 };

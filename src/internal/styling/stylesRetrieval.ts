@@ -1,27 +1,24 @@
 import { defOpts } from '../config';
-import type { Transitions, RevealOptions, Easing, CustomEasing } from '../types';
+import type { Transition, RevealOptions, Easing, CustomEasing } from '../types';
 import { clean } from '../utils';
 import { addMediaQueries } from './mediaQueries';
-import { addVendors } from './stylesGeneration';
+import { addVendorPrefixes } from './stylesGeneration';
 
 /**
- * Get the new updated styles to work both on the previously activated elements and the currently target element.
- * @param oldStyles - The previous styles present in the stylesheet
- * @param mainCss - The name of the main CSS class of the current target element
- * @param transitionCss - The name of the CSS class used for the transitioning of the current target element
- * @returns The final updated styles to be injected into the stylesheet
+ * Merges any existing reveal styles with the new ones for the current DOM node that is being "activated". This process is necessary because one CSS stylesheet is shared among all the elements in the page.
+ * @param existingRevealStyles Any existing reveal styles in the svelte-reveal stylesheet.
+ * @param nodeRevealStyles The CSS of the DOM node to be revealed.
+ * @returns The merged CSS reveal styles to be used to update the svelte-reveal stylesheet.
  */
-export const getUpdatedStyles = (oldStyles: string, mainCss: string, transitionCss: string): string => {
-	const prevStyles = getMinifiedStylesFromQuery(oldStyles);
-	const newStyles = clean([mainCss, transitionCss].join(' '));
-	const decoratedStyles = addMediaQueries([prevStyles, newStyles].join(' '));
-	return decoratedStyles.trim();
+export const mergeRevealStyles = (existingRevealStyles: string, nodeRevealStyles: string): string => {
+	const combinedRevealStyles = [getMinifiedStylesFromQuery(existingRevealStyles), nodeRevealStyles].join(' ');
+	return addMediaQueries(combinedRevealStyles).trim();
 };
 
 /**
  * Extracts and minifies styles nested inside a media query.
- * @param query - The query to extract the styles from
- * @returns The nested styles
+ * @param query The media query to extract the styles from.
+ * @returns The nested styles.
  */
 export const getMinifiedStylesFromQuery = (query: string): string => {
 	const cleanQuery = clean(query.trim());
@@ -42,15 +39,15 @@ export const getMinifiedStylesFromQuery = (query: string): string => {
 };
 
 /**
- * Get the CSS rules of a given transition.
- * @param transition - The name of the transition
- * @param options - The options used by the transition
- * @returns The assembled rules of a given transition
+ * Get the transition properties CSS rules of a given transition.
+ * @param transition The name of the transition.
+ * @param options The options used by the transition.
+ * @returns The CSS rules to be used to create the given transition.
  */
-export const getCSSRules = (transition: Transitions, options: RevealOptions): string => {
+export const getTransitionPropertiesCSSRules = (transition: Transition, options: RevealOptions): string => {
 	const { x, y, rotate, opacity, blur, scale } = Object.assign({}, defOpts, options);
 
-	const transitions = {
+	const transitions: Record<Transition, string> = {
 		fly: `
 			opacity: ${opacity};
 			transform: translateY(${y}px);
@@ -81,16 +78,20 @@ export const getCSSRules = (transition: Transitions, options: RevealOptions): st
 	}
 
 	const styles = transitions[transition];
-	return addVendors(styles);
+	return addVendorPrefixes(styles);
 };
 
 /**
- * Get a valid CSS easing function
- * @param easing - The easing function to be applied
- * @param customEasing - Custom values of cubic-bezier easing function
- * @returns A CSS valid easing function value
+ * Creates a valid CSS easing function.
+ * @param easing The easing function to be applied.
+ * @param customEasing Optional tuple to create a custom cubic-bezier easing function.
+ * @returns A valid CSS easing function.
  */
-export const getEasing = (easing: Easing, customEasing?: CustomEasing): string => {
+export const getEasingFunction = (easing: Easing, customEasing?: CustomEasing): string => {
+	if (easing === 'custom' && customEasing) {
+		return `cubic-bezier(${customEasing.join(', ')})`;
+	}
+
 	const weights = {
 		linear: [0, 0, 1, 1],
 		easeInSine: [0.12, 0, 0.39, 0],
@@ -118,10 +119,6 @@ export const getEasing = (easing: Easing, customEasing?: CustomEasing): string =
 		easeOutBack: [0.34, 1.56, 0.64, 1],
 		easeInOutBack: [0.68, -0.6, 0.32, 1.6]
 	};
-
-	if (easing === 'custom' && customEasing) {
-		return `cubic-bezier(${customEasing.join(', ')})`;
-	}
 
 	if (easing !== 'custom' && Object.keys(weights).includes(easing)) {
 		return `cubic-bezier(${weights[easing].join(', ')})`;

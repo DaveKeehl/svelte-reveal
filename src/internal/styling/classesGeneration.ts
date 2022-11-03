@@ -1,14 +1,14 @@
 import seedrandom from 'seedrandom';
-import type { RevealOptions, Transitions } from '../types';
-import { getCSSRules, getEasing } from './stylesRetrieval';
+import type { RevealOptions, Transition } from '../types';
+import { getTransitionPropertiesCSSRules, getEasingFunction } from './stylesRetrieval';
 
 /**
- * Create a unique CSS class name for the target element.
- * @param ref - An optional reference name that will be prefixed in the class name
- * @param transition - The transition name to be prefixed in the class name
- * @returns A tuple with the final CSS classes in the form of: [transitionDeclaration, transitionProperties]
+ * Creates the CSS classes needed to add the transitions to the target element.
+ * @param ref A reference name that will be prefixed in the class name.
+ * @param transition The transition name to be prefixed in the class name.
+ * @returns A tuple with the final CSS classes in the form of: [transitionDeclaration, transitionProperties]. The transition declaration class is used to declare a transition css rule to the target element. The transition properties class is used to create the actual transition.
  */
-export const getRevealClassNames = (ref: string, transition: Transitions): [string, string] => {
+export const getRevealClassNames = (ref: string, transition: Transition): [string, string] => {
 	const createClassNameTokens = (tokensArray: string[]) =>
 		tokensArray
 			.filter((token) => token && token !== '')
@@ -35,35 +35,36 @@ export const getRevealClassNames = (ref: string, transition: Transitions): [stri
 };
 
 /**
- * Generate the CSS rules that declares all the transition properties to transition from.
- * @param className - The main CSS class of the target element
- * @param options - The options to be used when creating the CSS
- * @returns The CSS with the transition properties for the target element
+ * Generates the CSS rule for the transition declaration of the target element.
+ * @param className - The transition declaration CSS class of the target element.
+ * @param options - The options to be used when creating the CSS for the transition declaration.
+ * @returns The transition declaration CSS for the target element.
  */
-export const createTransitionPropertiesCSS = (className: string, options: Required<RevealOptions>) => {
-	const { transition } = options;
+export const createTransitionDeclarationCSS = (className: string, options: Required<RevealOptions>) => {
+	const duration = options.duration / 1000;
+	const delay = options.delay / 1000;
+	const easingFunction = getEasingFunction(options.easing, options.customEasing);
 
 	return `
 		.${className} {
-			${getCSSRules(transition, options)}
+			transition: all ${duration}s ${delay}s ${easingFunction};
 		}
 	`;
 };
 
 /**
- * Generate the transition CSS for the target element.
- * @param className - The transition CSS class of the target element
- * @param options - The options to be used when creating the CSS
- * @returns The transition CSS for the target element
+ * Generates the CSS rules for the start of the transition of the target element.
+ * @param className - The transition properties CSS class of the target element.
+ * @param options - The options to be used when creating the CSS for the transition properties.
+ * @returns The transition properties CSS for the target element.
  */
-export const createTransitionDeclarationCSS = (className: string, options: Required<RevealOptions>) => {
-	const duration = options.duration / 1000;
-	const delay = options.delay / 1000;
-	const easingFunction = getEasing(options.easing, options.customEasing);
+export const createTransitionPropertiesCSS = (className: string, options: Required<RevealOptions>) => {
+	const { transition } = options;
+	const transitionPropertiesRules = getTransitionPropertiesCSSRules(transition, options);
 
 	return `
 		.${className} {
-			transition: all ${duration}s ${delay}s ${easingFunction};
+			${transitionPropertiesRules}
 		}
 	`;
 };

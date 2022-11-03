@@ -1,8 +1,8 @@
 import { markRevealNode } from '../DOM';
-import { extractCssRules, sanitizeStyles } from './stylesExtraction';
+import { extractCSSRules, sanitizeStyles } from './stylesExtraction';
 
 /**
- * Creates the stylesheet for the reveal animation styles.
+ * Creates the CSS stylesheet where all the reveal styles are added to.
  */
 export const createStylesheet = (): void => {
 	const style = document.createElement('style');
@@ -15,12 +15,12 @@ export const createStylesheet = (): void => {
 };
 
 /**
- * Decorate a set of CSS rules with browser-vendors prefixes.
- * @param unprefixedStyles - The unprefixed styles
- * @returns The prefixed CSS styles
+ * Decorate CSS rules with vendor prefixes.
+ * @param unprefixedStyles The unprefixed styles.
+ * @returns The prefixed CSS styles.
  */
-export const addVendors = (unprefixedStyles: string): string => {
-	const rules = extractCssRules(unprefixedStyles);
+export const addVendorPrefixes = (unprefixedStyles: string): string => {
+	const rules = extractCSSRules(unprefixedStyles);
 
 	const prefixedStyles = rules.reduce((styles, rule) => {
 		const [property, value] = rule
