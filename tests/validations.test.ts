@@ -1,4 +1,4 @@
-import { createFinalOptions } from '../src/internal/config';
+import { createFinalOptions } from '../src/internal/utils';
 import type { RevealOptions } from '../src/internal/types';
 import { hasValidRange, isPositive, isPositiveInteger } from '../src/internal/validations';
 

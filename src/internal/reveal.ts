@@ -1,15 +1,16 @@
 import { getRevealClassNames, createStylesheet } from './styling';
-import { config, createFinalOptions, defOpts } from './config';
+import { config, defOpts } from './config';
 import { isStyleTagCreated, hasPageReloaded } from './stores';
 import type { RevealOptions, IReturnAction } from './types';
 import { getRevealNode, activateRevealNode, createObserver, logInfo } from './DOM';
 import { areOptionsValid } from './validations';
+import { createFinalOptions } from './utils';
 
 /**
- * Reveals a given node element on scroll
- * @param node - The DOM node you want to reveal on scroll
- * @param options - The custom options that will be used to tweak the behavior of the animation of the node element
- * @returns An object containing the update and/or destroy functions
+ * Reveals a given HTML node element on scroll.
+ * @param node The DOM node element to apply the reveal on scroll effect to.
+ * @param options User-provided options to tweak the scroll animation behavior for `node`.
+ * @returns The action object containing the update and destroy functions for `node`.
  */
 export const reveal = (node: HTMLElement, options: RevealOptions = defOpts): IReturnAction => {
 	const finalOptions = createFinalOptions(options);
@@ -56,8 +57,8 @@ export const reveal = (node: HTMLElement, options: RevealOptions = defOpts): IRe
 	onRevealStart(revealNode);
 	activateRevealNode(revealNode, transitionDeclaration, transitionProperties, finalOptions);
 
-	const ObserverInstance = createObserver(canDebug, highlightText, revealNode, finalOptions, transitionDeclaration);
-	ObserverInstance.observe(revealNode);
+	const observerInstance = createObserver(canDebug, highlightText, revealNode, finalOptions, transitionDeclaration);
+	observerInstance.observe(revealNode);
 
 	console.groupEnd();
 
@@ -70,6 +71,7 @@ export const reveal = (node: HTMLElement, options: RevealOptions = defOpts): IRe
 			onDestroy(revealNode);
 			unsubscribeStyleTag();
 			unsubscribeReloaded();
+			observerInstance.disconnect();
 		}
 	};
 };

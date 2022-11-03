@@ -235,9 +235,6 @@ describe('setObserverRootMargin', () => {
 
 	test('Should throw an error when rootMargin is invalid', () => {
 		expect(() => setObserverRootMargin('0px 0px 0px 0px 0px')).toThrow('Invalid rootMargin syntax');
-		expect(() => setObserverRootMargin('0px 0 0px')).toThrow('Invalid rootMargin syntax');
-		expect(() => setObserverRootMargin('')).toThrow('Invalid rootMargin syntax');
-		expect(() => setObserverRootMargin('0')).toThrow('Invalid rootMargin syntax');
 	});
 });
 
@@ -289,18 +286,6 @@ describe('setConfig', () => {
 	});
 
 	describe('rootMargin', () => {
-		test('Invalid with empty string', () => {
-			defOpts.rootMargin = '';
-			const observerConfig = createObserverConfig();
-			expect(() => setObserverConfig(observerConfig)).toThrow('Invalid rootMargin syntax');
-		});
-
-		test('Invalid with missing units', () => {
-			defOpts.rootMargin = '0 0 0 0';
-			const observerConfig = createObserverConfig();
-			expect(() => setObserverConfig(observerConfig)).toThrow('Invalid rootMargin syntax');
-		});
-
 		test('Invalid with unknown units', () => {
 			defOpts.rootMargin = '0px 0px 0this 0that';
 			const observerConfig = createObserverConfig();

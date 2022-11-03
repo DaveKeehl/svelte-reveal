@@ -1,8 +1,8 @@
-import { createFinalOptions, defOpts } from '../src/internal/config';
+import { defOpts } from '../src/internal/config';
 import { setConfig, setObserverConfig } from '../src/internal/API';
 import { getRevealClassNames, createStylesheet } from '../src/internal/styling';
 import type { RevealOptions } from '../src/internal/types';
-import { clean, createObserverConfig } from '../src/internal/utils';
+import { clean, createFinalOptions, createObserverConfig } from '../src/internal/utils';
 import { markRevealNode, activateRevealNode, getRevealNode } from '../src/internal/DOM';
 import { areOptionsValid } from '../src/internal/validations';
 

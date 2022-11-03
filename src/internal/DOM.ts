@@ -4,9 +4,9 @@ import type { RevealOptions } from './types';
 import { clean, createObserverConfig } from './utils';
 
 /**
- * Marks a DOM node as part of reveal process.
- * @param revealNode - The element to be marked
- * @returns The marked element
+ * Marks a DOM node as part of the reveal process.
+ * @param revealNode The element to be marked.
+ * @returns The marked DOM element.
  */
 export const markRevealNode = (revealNode: HTMLElement): HTMLElement => {
 	revealNode.setAttribute('data-action', 'reveal');
@@ -15,11 +15,11 @@ export const markRevealNode = (revealNode: HTMLElement): HTMLElement => {
 
 /**
  * Activates the reveal effect on the target element.
- * @param revealNode - The element to be revealed
- * @param transitionPropertiesCSSClass - The CSS class to be used for the target element
- * @param transitionDeclarationCSSClass - The CSS class to be used for the target element transitions
- * @param options - The options to be applied to the reveal effect
- * @returns The element to be revealed
+ * @param revealNode The element to be revealed.
+ * @param transitionPropertiesCSSClass The CSS class to be used to create the transition properties on the target element.
+ * @param transitionDeclarationCSSClass The CSS class to be used to declare the transition on the target element.
+ * @param options The options to be applied to the reveal effect.
+ * @returns The element to be revealed.
  */
 export const activateRevealNode = (
 	revealNode: HTMLElement,
@@ -50,8 +50,8 @@ export const activateRevealNode = (
 
 /**
  * Get the HTML element to be revealed.
- * @param node - The HTML element passed by the svelte action
- * @returns The element to be revealed
+ * @param node The HTML element passed by the svelte action.
+ * @returns The HTML element to be revealed.
  */
 export const getRevealNode = (node: HTMLElement): HTMLElement => {
 	if (node.style.length === 0) return node;
@@ -62,13 +62,13 @@ export const getRevealNode = (node: HTMLElement): HTMLElement => {
 };
 
 /**
- * Creates a custom Intersection Observer for the reveal effect.
- * @param canDebug - Enables/disabled logging the observer notifications
- * @param highlightText - The color hex code to be used to color the logs
- * @param revealNode - The HTML node to observe
- * @param options - The reveal options
- * @param className - The CSS class to add/remove from/to the target element
- * @returns The custom Intersection Observer
+ * Creates an Intersection Observer for the reveal node.
+ * @param canDebug Toggles logging for the Intersection Observer notifications.
+ * @param highlightText The color hex code to be used to color the logs.
+ * @param revealNode The HTML node to observe.
+ * @param options The reveal options.
+ * @param className The CSS class to add/remove from/to the target element.
+ * @returns The created Intersection Observer.
  */
 export const createObserver = (
 	canDebug: boolean,
@@ -114,10 +114,10 @@ export const createObserver = (
 };
 
 /**
- * Logging initial options and configurations info
- * @param finalOptions - The options used to log
- * @param revealNode - The DOM element to be revealed
- * @returns A tuple consisting of canDebug and highlightText
+ * Logs data about the reveal node, the default options and the global configuration.
+ * @param finalOptions The library options merged with the ones provided by the user.
+ * @param revealNode The DOM element to be revealed.
+ * @returns A tuple consisting of canDebug and highlightText.
  */
 export const logInfo = (finalOptions: Required<RevealOptions>, revealNode: HTMLElement): [boolean, string] => {
 	const { debug, ref, highlightLogs, highlightColor } = finalOptions;
