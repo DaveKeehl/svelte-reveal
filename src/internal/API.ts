@@ -87,7 +87,7 @@ export const setDevice = (device: Device, settings: IDevice): RevealConfig => {
 };
 
 /**
- * To update how responsiveness is handled by the library.
+ * Updates how responsiveness is handled by the library.
  * @param responsive An object that instructs the library how to handle responsiveness.
  * @returns The config object with the updated responsive property.
  */
@@ -98,18 +98,6 @@ export const setResponsive = (responsive: Responsive): RevealConfig => {
 
 	config.responsive = responsive;
 	return config;
-};
-
-/**
- * Sets the Intersection Observer configuration.
- * @param observerConfig The new Intersection Observer configuration.
- * @returns The updated configuration used to manage the Intersection Observer behavior.
- */
-export const setObserverConfig = (observerConfig: IObserverOptions): IObserverOptions => {
-	setObserverRoot(observerConfig.root);
-	setObserverRootMargin(observerConfig.rootMargin);
-	setObserverThreshold(observerConfig.threshold);
-	return observerConfig;
 };
 
 /**
@@ -150,6 +138,18 @@ export const setObserverThreshold = (threshold: number): IObserverOptions => {
 
 	defOpts.threshold = threshold;
 	return createObserverConfig();
+};
+
+/**
+ * Sets the Intersection Observer configuration.
+ * @param observerConfig The new Intersection Observer configuration.
+ * @returns The updated configuration used to manage the Intersection Observer behavior.
+ */
+export const setObserverConfig = (observerConfig: IObserverOptions): IObserverOptions => {
+	setObserverRoot(observerConfig.root);
+	setObserverRootMargin(observerConfig.rootMargin);
+	setObserverThreshold(observerConfig.threshold);
+	return observerConfig;
 };
 
 /**

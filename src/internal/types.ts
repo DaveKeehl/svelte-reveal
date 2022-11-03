@@ -14,8 +14,9 @@ export interface RevealOptions {
 	 */
 	debug?: boolean;
 	/**
-	 * When `debug` is set to true, you are required to specificy a ref string.
-	 * When multiple DOM nodes have debug mode enabled, ref strings allow you to
+	 * When `debug` is set to `true`, you are required to specificy a `ref` string.
+	 *
+	 * When multiple DOM nodes have debug mode enabled, `ref` strings allow you to
 	 * know to which DOM node a console log statement belongs to.
 	 */
 	ref?: string;
@@ -49,6 +50,8 @@ export interface RevealOptions {
 	transition?: Transition;
 	/**
 	 * When set to true, the node transitions out when out of view, and is revealed again when back in view.
+	 *
+	 * ⚠️ Be careful not to overuse this option.
 	 */
 	reset?: boolean;
 	/**
@@ -65,34 +68,35 @@ export interface RevealOptions {
 	easing?: Easing;
 	/**
 	 * The individual weights of a custom cubic-bezier curve.
-	 *
 	 * This option is necessary when `easing` is set to `custom`.
 	 */
 	customEasing?: CustomEasing;
 	/**
-	 * The starting offset position in pixels on the x-axis of the "slide" transition.
+	 * The starting offset position in pixels on the x-axis of the `"slide"` transition.
+	 * If `x` is negative, the element will transition from the left, else from the right.
 	 */
 	x?: number;
 	/**
-	 * The starting offset position in pixels on the y-axis of the "fly" transition.
+	 * The starting offset position in pixels on the y-axis of the `"fly"` transition.
+	 * If `y` is negative, the element will transition from the top, else from the bottom.
 	 */
 	y?: number;
 	/**
-	 * The starting rotation offset in degrees of the "spin" transition.
+	 * The starting rotation offset in degrees of the `"spin"` transition.
+	 * If `rotate` is positive, the element will spin clockwise, else counter-clockwise.
 	 */
 	rotate?: number;
 	/**
 	 * The starting opacity value in percentage of any transition.
-	 *
-	 * It can be a number between 0.0 and 1.0.
+	 * It can be a number between `0.0` and `1.0`.
 	 */
 	opacity?: number;
 	/**
-	 * The starting blur value in pixels of the "blur" transition.
+	 * The starting blur value in pixels of the `"blur"` transition.
 	 */
 	blur?: number;
 	/**
-	 * The starting scale value in percentage of the "scale" transition.
+	 * The starting scale value in percentage of the `"scale"` transition.
 	 */
 	scale?: number;
 	/**
@@ -104,12 +108,12 @@ export interface RevealOptions {
 	 */
 	onRevealEnd?: (node: HTMLElement) => void;
 	/**
-	 * Function that gets fired when the reset option is set to true
+	 * Function that gets fired when the `reset` option is set to `true`
 	 * and the node starts transitioning out.
 	 */
 	onResetStart?: (node: HTMLElement) => void;
 	/**
-	 * Function that gets fired when the reset option is set to true
+	 * Function that gets fired when the `reset` option is set to `true`
 	 * and the node has fully transitioned out.
 	 */
 	onResetEnd?: (node: HTMLElement) => void;
@@ -190,8 +194,8 @@ export interface RevealConfig {
 	 */
 	dev: boolean;
 	/**
-	 * Performs the reveal effect only once when set to true.
-	 * When set to true, refreshing the page doesn't re-run them.
+	 * Performs the reveal effect only once when set to `true`.
+	 * When set to `true`, refreshing the page doesn't re-run them.
 	 */
 	once: boolean;
 	/**
