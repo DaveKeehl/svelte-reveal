@@ -136,7 +136,7 @@ Please [create a new issue](https://github.com/DaveKeehl/svelte-reveal/issues/ne
 
 ## Options
 
-Depending on the use case, you can either use this library as-is (which applies some [default styles](https://github.com/DaveKeehl/svelte-reveal/blob/main/src/internal/config.ts#L6-L37)), or customize it to your liking. If you choose to do so, you can pass an object to this action containing your own options to be applied.
+Depending on the use case, you can either use this library as-is (which applies some [default styles](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/internal/config.ts#L6-L34)), or customize it to your liking. If you choose to do so, you can pass an object to this action containing your own options to be applied.
 
 Keep in mind that these options are applied to the single DOM element you add svelte-reveal to. For global and more in-depth settings, refer to the [API](#api) section.
 
@@ -216,7 +216,7 @@ This library is globally configured as follows right of out the box:
 
 > ⚠️ If you want to customise the behavior of a single DOM node, you are supposed to use the [options](#options).
 
-svelte-reveal also exposes several functions you can call to change the [default options]() and [global configuration](#global-config) of this library. Since these functions operate on a global level across all components using svelte-reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the default options and global config from multiple points. 
+svelte-reveal also exposes several functions you can call to change the [default options](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/internal/config.ts#L6-L34) and [global configuration](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/internal/config.ts#L39-L60) of this library. Since these functions operate on a global level across all components using svelte-reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the default options and global config from multiple points. 
 
 If you need/want to considerably customize the behavior of this library, I suggest creating a dedicated file (e.g. [reveal.config.js](https://github.com/DaveKeehl/svelte-reveal/blob/main/example/reveal.config.js)) and to import it from the top-most component in the components tree of your project. Within that file you can then call the API functions to set global settings or shared transition properties.
 
