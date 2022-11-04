@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Better badges order in README
 - New cover image in README
 - Updated dependencies
+- Better test names
 - Plenty of core code refactoring to increase code quality and code readability
 - Updated and improved internal code documentation
 - `ref` option now accepts whitespaces
