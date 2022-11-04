@@ -7,18 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- README: Fixed and improved content 
-- README: Added badge for NPM weekly downloads
-- README: Changed badges order for better information order
-- README: New cover image
 - Rebranded from svelte-reveal to Svelte Reveal (the package name stays the same though)
-- Removed validation steps in pre-commit hook
+- Added badge for NPM weekly downloads in README
+- Better badges order in README
+- New cover image in README
 - Updated dependencies
-- Fixed wrong options passed to the intersection observer
-- Plenty of core code refactoring
-- Ref option now accepts whitespaces
-- Updated and improved all the code documentation
-- BREAKING: options `marginTop`, `marginRight`, `marginBottom` and `marginLeft` have been deprecated in favour of `rootMargin` to better align with the Intersetion Observer API
+- Plenty of core code refactoring to increase code quality and code readability
+- Updated and improved internal code documentation
+- `ref` option now accepts whitespaces
+
+### Fixed
+- Fixed wrong options passed to the intersection observer in the `createObserver` function in DOM.ts
+- Fixed and improved content in README
+
+### Removed
+- Removed validation steps in pre-commit hook
+- Options `marginTop`, `marginRight`, `marginBottom` and `marginLeft` have been deprecated in favour of `rootMargin` to better align with the Intersetion Observer API
 
 ## [0.6.0] - 2022-04-22
 ### Added
