@@ -1,107 +1,102 @@
 /**
- * Object containing options that tweak the behavior of a local svelte-reveal instance.
+ * Object containing options to tweak the behavior of Svelte Reveal at the element level.
  */
-export interface IOptions {
+export interface RevealOptions {
 	/**
-	 * It enables/disables the transition.
+	 * When set to false, the transition for the target element is disabled.
 	 */
 	disable?: boolean;
 	/**
-	 * It enables/disables debugging mode for the targeted DOM element.
-	 * This will log all options and configs to the console.
+	 * It enables/disables debugging mode for the target DOM element.
+	 * This will log to the console the target DOM element, along with the options and config.
 	 *
-	 * In order to be able to use this mode, you are required to also set the ref property.
+	 * In order to be able to use this mode, you are required to also set the `ref` property.
 	 */
 	debug?: boolean;
 	/**
-	 * When debug is set to true, you are required to specificy a ref string.
-	 * When multiple DOM nodes have debug mode enabled, ref strings allow you to
+	 * When `debug` is set to `true`, you are required to specificy a `ref` string.
+	 *
+	 * When multiple DOM nodes have debug mode enabled, `ref` strings allow you to
 	 * know to which DOM node a console log statement belongs to.
 	 */
 	ref?: string;
 	/**
-	 * When set to true the console logs of the target node get colored,
-	 * making it easier to see them quicker among many other logs.
+	 * When set to true, the console logs of the target node are colored,
+	 * making it easier to see them among many other logs.
 	 */
 	highlightLogs?: boolean;
 	/**
-	 * You can use this option to tweak the console logs when highlightLogs is set to true.
+	 * The color to use to color the console logs when the `highlightLogs` option is also set to true.
 	 *
 	 * Any valid CSS color can be used here.
 	 */
 	highlightColor?: string;
 	/**
-	 * The root element used by the Intersection Observer API.
+	 * The root element used by the Intersection Observer.
 	 */
-	root?: ObserverRoot;
+	root?: IntersectionObserver['root'];
 	/**
-	 * Top margin (in px or %) of the rootMargin property of the Intersection Observer API.
+	 * The root margin property of the Intersection Observer.
 	 */
-	marginTop?: number;
-	/**
-	 * Bottom margin  (in px or %)of the rootMargin property of the Intersection Observer API.
-	 */
-	marginBottom?: number;
-	/**
-	 * Left margin (in px or %) of the rootMargin property of the Intersection Observer API.
-	 */
-	marginLeft?: number;
-	/**
-	 * Right margin (in px or %) of the rootMargin property of the Intersection Observer API.
-	 */
-	marginRight?: number;
+	rootMargin?: IntersectionObserver['rootMargin'];
 	/**
 	 * The threshold (in percentage from 0.0 to 1.0) property used by the Intersection
-	 * Observer API to know when its target element is considered visible or not.
+	 * Observer to know when its target element is considered visible.
 	 */
 	threshold?: number;
 	/**
-	 * The animation that will be triggered when your target node becomes visible.
+	 * The type of transition that is triggered when the target node becomes visible.
 	 */
-	transition?: Transitions;
+	transition?: Transition;
 	/**
-	 * When set to true, the node transitions out when it's out of view from the
-	 * Intersection Observer.
+	 * When set to true, the node transitions out when out of view, and is revealed again when back in view.
+	 *
+	 * ⚠️ Be careful not to overuse this option.
 	 */
 	reset?: boolean;
 	/**
-	 * The amount of milliseconds (ms) you want a given transition to last.
+	 * How long the transition lasts (in milliseconds).
 	 */
 	duration?: number;
 	/**
-	 * The amount of milliseconds (ms) you want to delay a given transition.
+	 * How long the transition is delayed (in milliseconds) before being triggered.
 	 */
 	delay?: number;
 	/**
-	 * The type of easing function you want to apply to a given element.
+	 * The type of easing function applied to the `transition`.
 	 */
 	easing?: Easing;
 	/**
 	 * The individual weights of a custom cubic-bezier curve.
+	 * This option is necessary when `easing` is set to `custom`.
 	 */
 	customEasing?: CustomEasing;
 	/**
-	 * The starting offset position in pixels (px) on the x-axis of the "slide" transition.
+	 * The starting offset position in pixels on the x-axis of the `"slide"` transition.
+	 * If `x` is negative, the element will transition from the left, else from the right.
 	 */
 	x?: number;
 	/**
-	 * The starting offset position in pixels (px) on the y-axis of the "fly" transition.
+	 * The starting offset position in pixels on the y-axis of the `"fly"` transition.
+	 * If `y` is negative, the element will transition from the top, else from the bottom.
 	 */
 	y?: number;
 	/**
-	 * The starting rotation offset in degrees (deg) you want your node to rotate from when being revealed with the "spin" transition.
+	 * The starting rotation offset in degrees of the `"spin"` transition.
+	 * If `rotate` is positive, the element will spin clockwise, else counter-clockwise.
 	 */
 	rotate?: number;
 	/**
-	 * The starting opacity value in percentage (%) of any transition. It can be a number between 0.0 and 1.0.
+	 * The starting opacity value in percentage of any transition.
+	 * It can be a number between `0.0` and `1.0`.
 	 */
 	opacity?: number;
 	/**
-	 * The starting blur value in pixels (px) of the "blur" transition.
+	 * The starting blur value in pixels of the `"blur"` transition.
 	 */
 	blur?: number;
 	/**
-	 * The starting scale value in percentage (%) of the "scale" transition.
+	 * The starting scale value in percentage of the `"scale"` transition.
 	 */
 	scale?: number;
 	/**
@@ -113,12 +108,12 @@ export interface IOptions {
 	 */
 	onRevealEnd?: (node: HTMLElement) => void;
 	/**
-	 * Function that gets fired when the reset option is set to true
+	 * Function that gets fired when the `reset` option is set to `true`
 	 * and the node starts transitioning out.
 	 */
 	onResetStart?: (node: HTMLElement) => void;
 	/**
-	 * Function that gets fired when the reset option is set to true
+	 * Function that gets fired when the `reset` option is set to `true`
 	 * and the node has fully transitioned out.
 	 */
 	onResetEnd?: (node: HTMLElement) => void;
@@ -137,37 +132,34 @@ export interface IOptions {
 }
 
 /**
- * The root element used by the Intersection Observer API.
- * It can either be an HTML element or nothing.
+ * Object containing the Intersection Observer options.
  */
-export type ObserverRoot = HTMLElement | null | undefined;
-
 export interface IObserverOptions {
 	/**
-	 * The Intersection Observer API root element.
+	 * The Intersection Observer root element.
 	 */
-	root?: ObserverRoot;
+	root: IntersectionObserver['root'];
 	/**
-	 * The Intersection Observer API rootMargin property.
+	 * The Intersection Observer rootMargin property.
 	 */
-	rootMargin: string;
+	rootMargin: IntersectionObserver['rootMargin'];
 	/**
-	 * The Intersection Observer API threshold property.
+	 * The Intersection Observer threshold property.
 	 */
 	threshold: number;
 }
 
 /**
- * List of devices where {string} is the name and {IDevice} are the settings.
+ * List of devices where `string` is the name and `IDevice` are the settings.
  */
 export type Devices = [string, IDevice][];
 
 /**
- * An object containing information about a specific type of device
+ * Object containing information about a specific type of device.
  */
 export interface IDevice {
 	/**
-	 * Whether the device supports the scroll effect.
+	 * Whether the reveal effect is performed on a device.
 	 */
 	enabled: boolean;
 	/**
@@ -181,6 +173,10 @@ export interface IDevice {
  */
 export type Device = 'mobile' | 'tablet' | 'laptop' | 'desktop';
 
+/**
+ * Information about how the library handles responsiveness.
+ * It can be used to enable/disable the reveal effect on some devices.
+ */
 export type Responsive = {
 	/**
 	 * Object containing information about the responsiveness of a device.
@@ -189,44 +185,47 @@ export type Responsive = {
 };
 
 /**
- * Object containing global configurations. They apply to all instances of this library.
+ * Object containing configuration properties to change the behavior
+ * of Svelte Reveal on a global level for all instances of this library.
  */
-export interface IConfig {
+export interface RevealConfig {
 	/**
 	 * Globally enables/disables all logs.
 	 */
 	dev: boolean;
 	/**
-	 * Runs the scroll animations only once when set to true.
-	 * When set to true, refreshing the page doesn't re-run them.
+	 * Performs the reveal effect only once when set to `true`.
+	 * When set to `true`, refreshing the page doesn't re-run them.
 	 */
 	once: boolean;
 	/**
-	 * Information about how the library should handle responsiveness.
-	 * It can be used to enable/disable the scroll effect on some devices.
+	 * Information about how the library handles responsiveness.
+	 * It can be used to enable/disable the reveal effect on some devices.
 	 */
 	responsive: Responsive;
-	/**
-	 * The Intersection Observer API options.
-	 */
-	observer: IObserverOptions;
 }
 
 /**
  * The return type of the Svelte action.
  */
 export interface IReturnAction {
-	update?: (options?: IOptions) => void;
+	/**
+	 * Lifecycle function that is triggered when the action options are updated.
+	 */
+	update?: () => void;
+	/**
+	 * Lifecycle function that is triggered when the node is unmounted from the DOM.
+	 */
 	destroy?: () => void;
 }
 
 /**
- * The animations that can be used by the library users.
+ * The types of supported transitions.
  */
-export type Transitions = 'fly' | 'fade' | 'blur' | 'scale' | 'slide' | 'spin';
+export type Transition = 'fly' | 'fade' | 'blur' | 'scale' | 'slide' | 'spin';
 
 /**
- * The easing functions that can be specified by the user to tweak the animation timing.
+ * The types of supported easing functions that can be used to tweak the timing of a transition.
  */
 export type Easing =
 	| 'linear'

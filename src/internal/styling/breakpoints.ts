@@ -1,10 +1,10 @@
-import type { Responsive, IDevice } from '../types';
+import type { Responsive } from '../types';
 import { isPositiveInteger } from '../validations';
 
 /**
  * Checks whether the breakpoints overlap.
- * @param responsive An object that instructs the library how to handle responsiveness
- * @returns Whether the breapoints overlap
+ * @param responsive An object that instructs the library how to handle responsiveness for a given set of devices.
+ * @returns Whether the breapoints overlap.
  */
 export const hasOverlappingBreakpoints = (responsive: Responsive): boolean => {
 	const { mobile, tablet, laptop, desktop } = responsive;
@@ -18,22 +18,14 @@ export const hasOverlappingBreakpoints = (responsive: Responsive): boolean => {
 
 /**
  * Checks whether the breakpoints are valid or not.
- * @param responsive An object that instructs the library how to handle responsiveness
- * @returns Returns true if the breakpoints are valid, otherwise it throws errors
+ * @param responsive An object that instructs the library how to handle responsiveness for a given set of devices.
+ * @returns Whether the breakpoints are valid.
  */
 export const hasValidBreakpoints = (responsive: Responsive): boolean => {
-	const breakpoints: number[] = Object.values(responsive).map((device: IDevice) => device.breakpoint);
+	const breakpoints = Object.values(responsive).map((device) => device.breakpoint);
 
-	// Check if breakpoints are positive integers
-	breakpoints.forEach((breakpoint) => {
-		if (!isPositiveInteger(breakpoint)) {
-			throw new Error('Breakpoints must be positive integers');
-		}
-	});
+	const breakpointsOverlap = hasOverlappingBreakpoints(responsive);
+	const allBreakpointsPositive = breakpoints.every((breakpoint) => isPositiveInteger(breakpoint));
 
-	if (hasOverlappingBreakpoints(responsive)) {
-		throw new Error("Breakpoints can't overlap");
-	}
-
-	return true;
+	return !breakpointsOverlap && allBreakpointsPositive;
 };

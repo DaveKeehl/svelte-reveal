@@ -1,23 +1,28 @@
-import { createClassNames, createStylesheet } from './styling';
-import { config, init } from './config';
-import { styleTagStore, reloadStore } from './stores';
-import type { IOptions, IReturnAction } from './types';
+import { getRevealClassNames, createStylesheet } from './styling';
+import { config, defOpts } from './config';
+import { isStyleTagCreated, hasPageReloaded } from './stores';
+import type { RevealOptions, IReturnAction } from './types';
 import { getRevealNode, activateRevealNode, createObserver, logInfo } from './DOM';
-import { checkOptions } from './validations';
+import { areOptionsValid } from './validations';
+import { createFinalOptions } from './utils';
 
 /**
- * Reveals a given node element on scroll
- * @param node - The DOM node you want to reveal on scroll
- * @param options - The custom options that will be used to tweak the behavior of the animation of the node element
- * @returns An object containing the update and/or destroy functions
+ * Reveals a given HTML node element on scroll.
+ * @param node The DOM node element to apply the reveal on scroll effect to.
+ * @param options User-provided options to tweak the scroll animation behavior for `node`.
+ * @returns The action object containing the update and destroy functions for `node`.
  */
-export const reveal = (node: HTMLElement, options: IOptions = init): IReturnAction => {
-	const finalOptions = checkOptions(options);
+export const reveal = (node: HTMLElement, options: RevealOptions = defOpts): IReturnAction => {
+	const finalOptions = createFinalOptions(options);
+
+	if (!areOptionsValid(finalOptions)) {
+		throw new Error('Invalid options');
+	}
+
 	const { transition, disable, ref, onRevealStart, onMount, onUpdate, onDestroy } = finalOptions;
 
 	const revealNode = getRevealNode(node);
-	const className = createClassNames(ref, false, transition); // The CSS class responsible for the animation
-	const baseClassName = createClassNames(ref, true, transition); // The CSS class responsible for transitioning the properties
+	const [transitionDeclaration, transitionProperties] = getRevealClassNames(ref, transition);
 
 	onMount(revealNode);
 
@@ -25,7 +30,7 @@ export const reveal = (node: HTMLElement, options: IOptions = init): IReturnActi
 
 	// Checking if page was reloaded
 	let reloaded = false;
-	const unsubscribeReloaded = reloadStore.subscribe((value: boolean) => (reloaded = value));
+	const unsubscribeReloaded = hasPageReloaded.subscribe((value: boolean) => (reloaded = value));
 	const navigation = window.performance.getEntriesByType('navigation');
 
 	let navigationType: string | number = '';
@@ -37,23 +42,23 @@ export const reveal = (node: HTMLElement, options: IOptions = init): IReturnActi
 		// Using deprecated navigation object as a last resort to detect a page reload
 		navigationType = window.performance.navigation.type; // NOSONAR
 	}
-	if (navigationType === 'reload' || navigationType === 1) reloadStore.set(true);
+	if (navigationType === 'reload' || navigationType === 1) hasPageReloaded.set(true);
 	if (disable || (config.once && reloaded)) return {};
 
 	// Setting up the styles
 	let styleTagExists = false;
-	const unsubscribeStyleTag = styleTagStore.subscribe((value: boolean) => (styleTagExists = value));
+	const unsubscribeStyleTag = isStyleTagCreated.subscribe((value: boolean) => (styleTagExists = value));
 
 	if (!styleTagExists) {
 		createStylesheet();
-		styleTagStore.set(true);
+		isStyleTagCreated.set(true);
 	}
 
 	onRevealStart(revealNode);
-	activateRevealNode(revealNode, className, baseClassName, finalOptions);
+	activateRevealNode(revealNode, transitionDeclaration, transitionProperties, finalOptions);
 
-	const ObserverInstance = createObserver(canDebug, highlightText, revealNode, finalOptions, className);
-	ObserverInstance.observe(revealNode);
+	const observerInstance = createObserver(canDebug, highlightText, revealNode, finalOptions, transitionDeclaration);
+	observerInstance.observe(revealNode);
 
 	console.groupEnd();
 
@@ -66,6 +71,7 @@ export const reveal = (node: HTMLElement, options: IOptions = init): IReturnActi
 			onDestroy(revealNode);
 			unsubscribeStyleTag();
 			unsubscribeReloaded();
+			observerInstance.disconnect();
 		}
 	};
 };

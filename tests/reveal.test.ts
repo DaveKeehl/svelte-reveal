@@ -1,10 +1,10 @@
 import { reveal } from '../src/internal/reveal';
-import type { IOptions } from '../src/internal/types';
+import type { RevealOptions } from '../src/internal/types';
 
 describe('reveal', () => {
 	test('Should throw an error when using invalid options', () => {
 		const node = document.createElement('p');
-		const invalidOptions: IOptions = {
+		const invalidOptions: RevealOptions = {
 			threshold: 1.2,
 			opacity: 0,
 			delay: -200,

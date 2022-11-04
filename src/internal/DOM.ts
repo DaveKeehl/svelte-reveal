@@ -1,12 +1,12 @@
 import { config } from './config';
-import { createMainCss, createTransitionCss, getUpdatedStyles } from './styling';
-import type { IOptions } from './types';
-import { clean } from './utils';
+import { createTransitionPropertiesCSS, createTransitionDeclarationCSS, mergeRevealStyles } from './styling';
+import type { RevealOptions } from './types';
+import { clean, createObserverConfig } from './utils';
 
 /**
- * Adds a "watermark" to the element to be revealed. It sets the data attribute to "reveal".
- * @param revealNode - The element to be marked
- * @returns The marked element
+ * Marks a DOM node as part of the reveal process.
+ * @param revealNode The element to be marked.
+ * @returns The marked DOM element.
  */
 export const markRevealNode = (revealNode: HTMLElement): HTMLElement => {
 	revealNode.setAttribute('data-action', 'reveal');
@@ -15,27 +15,39 @@ export const markRevealNode = (revealNode: HTMLElement): HTMLElement => {
 
 /**
  * Activates the reveal effect on the target element.
- * @param revealNode - The element to be revealed
- * @param className - The CSS class to be used for the target element
- * @param options - The options to be applied to the reveal effect
- * @returns The element to be revealed
+ * @param revealNode The element to be revealed.
+ * @param transitionPropertiesCSSClass The CSS class to be used to create the transition properties on the target element.
+ * @param transitionDeclarationCSSClass The CSS class to be used to declare the transition on the target element.
+ * @param options The options to be applied to the reveal effect.
+ * @returns The element to be revealed.
  */
 export const activateRevealNode = (
 	revealNode: HTMLElement,
-	className: string,
-	baseClassName: string,
-	options: Required<IOptions>
+	transitionPropertiesCSSClass: string,
+	transitionDeclarationCSSClass: string,
+	options: Required<RevealOptions>
 ): HTMLElement => {
 	markRevealNode(revealNode);
-	const mainCss = createMainCss(className, options);
-	const transitionCss = createTransitionCss(baseClassName, options);
+
+	const transitionDeclaration = createTransitionDeclarationCSS(transitionDeclarationCSSClass, options);
+	const transitionProperties = createTransitionPropertiesCSS(transitionPropertiesCSSClass, options);
 	const stylesheet = document.querySelector('style[data-action="reveal"]');
 
+	/**
+	 * Since I want to have only one Svelte Reveal stylesheet for all the elements in the page,
+	 * I need to check whether a Svelte Reveal stylesheet has already been created when previous
+	 * elements have been "activated" by this library. Hence, the stylesheet content is the
+	 * concatenation of the styles of all elements on which Svelte Reveal has been activated on the page.
+	 */
 	if (stylesheet) {
-		const newStyles = getUpdatedStyles(stylesheet.innerHTML, clean(mainCss), clean(transitionCss));
-		stylesheet.innerHTML = newStyles;
-		revealNode.classList.add(className);
-		revealNode.classList.add(baseClassName);
+		const existingRevealStyles = stylesheet.innerHTML;
+		const nodeRevealStyles = clean([transitionProperties, transitionDeclaration].join(' '));
+
+		const updatedRevealStyles = mergeRevealStyles(existingRevealStyles, nodeRevealStyles);
+
+		stylesheet.innerHTML = updatedRevealStyles;
+		revealNode.classList.add(transitionPropertiesCSSClass);
+		revealNode.classList.add(transitionDeclarationCSSClass);
 	}
 
 	return revealNode;
@@ -43,49 +55,51 @@ export const activateRevealNode = (
 
 /**
  * Get the HTML element to be revealed.
- * @param node - The HTML element passed by the svelte action
- * @returns The element to be revealed
+ * @param node The HTML element passed by the svelte action.
+ * @returns The HTML element to be revealed.
  */
 export const getRevealNode = (node: HTMLElement): HTMLElement => {
-	let revealNode: HTMLElement;
+	if (node.style.length === 0) return node;
 
-	if (node.style.length === 0) {
-		revealNode = node;
-	} else {
-		const wrapper = document.createElement('div');
-		wrapper.appendChild(node);
-		revealNode = wrapper;
-	}
-
-	return revealNode;
+	const wrapper = document.createElement('div');
+	wrapper.appendChild(node);
+	return wrapper;
 };
 
 /**
- * Creates a custom Intersection Observer for the reveal effect.
- * @param canDebug - Enables/disabled logging the observer notifications
- * @param highlightText - The color hex code to be used to color the logs
- * @param revealNode - The HTML node to observe
- * @param options - The reveal options
- * @param className - The CSS class to add/remove from/to the target element
- * @returns The custom Intersection Observer
+ * Creates an Intersection Observer for the reveal node.
+ * @param canDebug Toggles logging for the Intersection Observer notifications.
+ * @param highlightText The color hex code to be used to color the logs.
+ * @param revealNode The HTML node to observe.
+ * @param options The reveal options.
+ * @param className The CSS class to add/remove from/to the target element.
+ * @returns The created Intersection Observer.
  */
 export const createObserver = (
 	canDebug: boolean,
 	highlightText: string,
 	revealNode: HTMLElement,
-	options: Required<IOptions>,
+	options: Required<RevealOptions>,
 	className: string
 ): IntersectionObserver => {
 	const { ref, reset, duration, delay, threshold, onResetStart, onResetEnd, onRevealEnd } = options;
 
+	const observerConfig = createObserverConfig();
+
 	return new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
 		if (canDebug) {
 			const entry = entries[0];
+
+			if (!entry) {
+				throw new Error('Intersection Observer entry is undefined');
+			}
+
 			const entryTarget = entry.target;
 
 			if (entryTarget === revealNode) {
 				console.groupCollapsed(`%cRef: ${ref} (Intersection Observer Callback)`, highlightText);
 				console.log(entry);
+				console.log(observerConfig);
 				console.groupEnd();
 			}
 		}
@@ -101,16 +115,16 @@ export const createObserver = (
 				if (!reset) observer.unobserve(revealNode);
 			}
 		});
-	}, config.observer);
+	}, observerConfig);
 };
 
 /**
- * Logging initial options and configurations info
- * @param finalOptions - The options used to log
- * @param revealNode - The DOM element to be revealed
- * @returns A tuple consisting of canDebug and highlightText
+ * Logs data about the reveal node, the default options and the global configuration.
+ * @param finalOptions The library options merged with the ones provided by the user.
+ * @param revealNode The DOM element to be revealed.
+ * @returns A tuple consisting of canDebug and highlightText.
  */
-export const logInfo = (finalOptions: Required<IOptions>, revealNode: HTMLElement): [boolean, string] => {
+export const logInfo = (finalOptions: Required<RevealOptions>, revealNode: HTMLElement): [boolean, string] => {
 	const { debug, ref, highlightLogs, highlightColor } = finalOptions;
 
 	const canDebug = config.dev && debug && ref !== '';

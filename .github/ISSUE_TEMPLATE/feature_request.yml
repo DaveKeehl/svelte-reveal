@@ -36,7 +36,7 @@ body:
       options:
         - Nice to have
         - Would make my life easier
-        - I cannot use svelte-reveal without it
+        - I cannot use Svelte Reveal without it
     validations:
       required: true
   - type: textarea

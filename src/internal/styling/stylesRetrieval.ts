@@ -1,94 +1,98 @@
-import { init } from '../config';
-import type { Transitions, IOptions, Easing, CustomEasing } from '../types';
+import { defOpts } from '../config';
+import type { Transition, RevealOptions, Easing, CustomEasing } from '../types';
 import { clean } from '../utils';
 import { addMediaQueries } from './mediaQueries';
-import { addVendors } from './stylesGeneration';
+import { addVendorPrefixes } from './stylesGeneration';
 
 /**
- * Get the new updated styles to work both on the previously activated elements and the currently target element.
- * @param oldStyles - The previous styles present in the stylesheet
- * @param mainCss - The name of the main CSS class of the current target element
- * @param transitionCss - The name of the CSS class used for the transitioning of the current target element
- * @returns The final updated styles to be injected into the stylesheet
+ * Merges any existing reveal styles with the new ones for the current DOM node that is being "activated". This process is necessary because one CSS stylesheet is shared among all the elements in the page.
+ * @param existingRevealStyles Any existing reveal styles in the Svelte Reveal stylesheet.
+ * @param nodeRevealStyles The CSS of the DOM node to be revealed.
+ * @returns The merged CSS reveal styles to be used to update the Svelte Reveal stylesheet.
  */
-export const getUpdatedStyles = (oldStyles: string, mainCss: string, transitionCss: string): string => {
-	const prevStyles = getMinifiedStylesFromQuery(oldStyles);
-	const newStyles = clean([mainCss, transitionCss].join(' '));
-	const decorated = addMediaQueries([prevStyles, newStyles].join(' '));
-	return decorated.trim();
+export const mergeRevealStyles = (existingRevealStyles: string, nodeRevealStyles: string): string => {
+	const combinedRevealStyles = [getMinifiedStylesFromQuery(existingRevealStyles), nodeRevealStyles].join(' ');
+	return addMediaQueries(combinedRevealStyles).trim();
 };
 
 /**
  * Extracts and minifies styles nested inside a media query.
- * @param query - The query to extract the styles from
- * @returns The nested styles
+ * @param query The media query to extract the styles from.
+ * @returns The nested styles.
  */
 export const getMinifiedStylesFromQuery = (query: string): string => {
-	const cleaned = clean(query.trim());
-	if (cleaned === '' || !cleaned.startsWith('@media')) return cleaned;
-	return clean(cleaned.replace(/{/, '___').split('___')[1].slice(0, -1).trim());
+	const cleanQuery = clean(query.trim());
+	const isMediaQuery = cleanQuery.startsWith('@media');
+
+	if (!isMediaQuery) return cleanQuery;
+
+	const separator = '<opening_media_query_brace>';
+	const queryFromOpeningBrace = cleanQuery.replace(/{/, separator).split(separator)[1];
+
+	if (!queryFromOpeningBrace) {
+		throw new Error('Invalid media query');
+	}
+
+	const queryContent = queryFromOpeningBrace.slice(0, -1);
+
+	return queryContent.trim();
 };
 
 /**
- * Get the CSS rules of a given transition.
- * @param transition - The name of the transition
- * @param init - The options default values
- * @param options - The options used by the transition
- * @returns The assembled rules of a given transition
+ * Get the transition properties CSS rules of a given transition.
+ * @param transition The name of the transition.
+ * @param options The options used by the transition.
+ * @returns The CSS rules to be used to create the given transition.
  */
-export const getCssRules = (transition: Transitions, options: IOptions): string => {
-	const { x, y, rotate, opacity, blur, scale } = Object.assign({}, init, options);
+export const getTransitionPropertiesCSSRules = (transition: Transition, options: RevealOptions): string => {
+	const { x, y, rotate, opacity, blur, scale } = Object.assign({}, defOpts, options);
 
-	let styles = '';
-
-	if (transition === 'fly') {
-		styles = `
+	const transitions: Record<Transition, string> = {
+		fly: `
 			opacity: ${opacity};
 			transform: translateY(${y}px);
-		`;
-	} else if (transition === 'fade') {
-		styles = `
+		`,
+		fade: `
 			opacity: ${opacity};
-		`;
-	} else if (transition === 'blur') {
-		styles = `
+		`,
+		blur: `
 			opacity: ${opacity};
 			filter: blur(${blur}px);
-		`;
-	} else if (transition === 'scale') {
-		styles = `
+		`,
+		scale: `
 			opacity: ${opacity};
 			transform: scale(${scale});
-		`;
-	} else if (transition === 'slide') {
-		styles = `
+		`,
+		slide: `
 			opacity: ${opacity};
 			transform: translateX(${x}px);
-		`;
-	} else if (transition === 'spin') {
-		styles = `
+		`,
+		spin: `
 			opacity: ${opacity};
 			transform: rotate(${rotate}deg);
-		`;
-	} else {
+		`
+	};
+
+	if (!Object.keys(transitions).includes(transition)) {
 		throw new Error('Invalid CSS class name');
 	}
 
-	return addVendors(styles);
+	const styles = transitions[transition];
+	return addVendorPrefixes(styles);
 };
 
 /**
- * Get a valid CSS easing function
- * @param easing - The easing function to be applied
- * @param customEase - Custom values of cubic-bezier easing function
- * @returns A CSS valid easing function value
+ * Creates a valid CSS easing function.
+ * @param easing The easing function to be applied.
+ * @param customEasing Optional tuple to create a custom cubic-bezier easing function.
+ * @returns A valid CSS easing function.
  */
-export const getEasing = (easing: Easing, customEasing?: CustomEasing): string => {
-	interface IWeight {
-		[P: string]: CustomEasing;
+export const getEasingFunction = (easing: Easing, customEasing?: CustomEasing): string => {
+	if (easing === 'custom' && customEasing) {
+		return `cubic-bezier(${customEasing.join(', ')})`;
 	}
 
-	const weightsObj: IWeight = {
+	const weights = {
 		linear: [0, 0, 1, 1],
 		easeInSine: [0.12, 0, 0.39, 0],
 		easeOutSine: [0.61, 1, 0.88, 1],
@@ -116,15 +120,9 @@ export const getEasing = (easing: Easing, customEasing?: CustomEasing): string =
 		easeInOutBack: [0.68, -0.6, 0.32, 1.6]
 	};
 
-	let weights: CustomEasing;
-
-	if (easing === 'custom' && customEasing !== undefined) {
-		weights = customEasing;
-	} else if (easing !== 'custom' && Object.keys(weightsObj).includes(easing)) {
-		weights = weightsObj[easing];
-	} else {
-		throw new Error('Invalid easing function');
+	if (easing !== 'custom' && Object.keys(weights).includes(easing)) {
+		return `cubic-bezier(${weights[easing].join(', ')})`;
 	}
 
-	return `cubic-bezier(${weights.join(', ')})`;
+	throw new Error('Invalid easing function');
 };
