@@ -1,15 +1,6 @@
 name: CI/CD
 
-on:
-  push:
-    branches:
-      - develop
-      - main
-
-  pull_request:
-    types: [opened, synchronize, reopened]
-    branches:
-      - develop
+on: [push, pull_request]
 
 jobs:
   CI:
