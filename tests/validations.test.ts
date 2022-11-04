@@ -1,6 +1,6 @@
 import { createFinalOptions } from '../src/internal/utils';
 import type { RevealOptions } from '../src/internal/types';
-import { hasValidRange, isPositive, isPositiveInteger } from '../src/internal/validations';
+import { areOptionsValid, hasValidRange, isPositive, isPositiveInteger } from '../src/internal/validations';
 
 test('hasValidRange', () => {
 	expect(hasValidRange(100, 0, 200)).toBe(true);
@@ -22,7 +22,7 @@ test('isPositiveInteger', () => {
 	expect(isPositiveInteger(-5.5)).toBe(false);
 });
 
-test('checkOptions', () => {
+test('createFinalOptions', () => {
 	const userOptions: RevealOptions = {
 		transition: 'fly',
 		debug: true,
@@ -52,4 +52,19 @@ test('checkOptions', () => {
 	expect(options.opacity).toBe(0);
 	expect(options.blur).toBe(16);
 	expect(options.scale).toBe(0);
+});
+
+describe('areOptionsValid', () => {
+	test('Should return false when using invalid options', () => {
+		const invalidOptions: RevealOptions = {
+			threshold: 1.2,
+			opacity: 0,
+			delay: -200,
+			duration: 2000,
+			blur: -5,
+			scale: 0
+		};
+		const finalOptions = createFinalOptions(invalidOptions);
+		expect(areOptionsValid(finalOptions)).toBe(false);
+	});
 });

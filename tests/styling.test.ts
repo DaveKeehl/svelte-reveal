@@ -48,7 +48,7 @@ beforeEach(() => {
 	});
 });
 
-describe('getMinifiedStylesFromQueries', () => {
+describe('getMinifiedStylesFromQuery', () => {
 	test('Throw an error when using invalid media queries', () => {
 		const invalidQuery = `
 			@media (min-width: 320px) and (max-width: 1080px) {`;
@@ -156,7 +156,7 @@ describe('hasValidBreakpoints', () => {
 	});
 });
 
-describe('CSS browser-vendors', () => {
+describe('addVendorPrefixes', () => {
 	test('Correctly added to the rule sets', () => {
 		const unprefixed = `
 			opacity: 0;
@@ -175,7 +175,7 @@ describe('CSS browser-vendors', () => {
 	});
 });
 
-describe('Media queries behave correctly', () => {
+describe('addMediaQueries', () => {
 	const styles = '.class { opacity: 0; transform: translateY(-20px); }';
 
 	test('No media queries when all devices are enabled', () => {
@@ -499,7 +499,7 @@ describe('Media queries behave correctly', () => {
 	});
 });
 
-describe('CSS rules', () => {
+describe('getTransitionPropertiesCSSRules', () => {
 	describe('Have the correct properties', () => {
 		let options: RevealOptions = {};
 		describe('fly', () => {
@@ -598,7 +598,7 @@ describe('CSS rules', () => {
 	});
 });
 
-describe('Easing functions', () => {
+describe('getEasingFunction', () => {
 	describe('Have correct weights', () => {
 		test('linear', () => {
 			expect(getEasingFunction('linear')).toBe('cubic-bezier(0, 0, 1, 1)');

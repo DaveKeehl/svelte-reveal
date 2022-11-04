@@ -1,6 +1,6 @@
 import { defOpts } from '../src/internal/config';
 
-test('Checking init values', () => {
+test('Checking default options', () => {
 	expect(defOpts.disable).toBe(false);
 	expect(defOpts.debug).toBe(false);
 	expect(defOpts.ref).toBe('');

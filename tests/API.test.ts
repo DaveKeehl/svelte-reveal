@@ -109,7 +109,7 @@ describe('setDeviceStatus', () => {
 	});
 });
 
-describe('setDeviceStatus', () => {
+describe('setDevicesStatus', () => {
 	test('No devices provided', () => {
 		expect(() => setDevicesStatus([], true)).toThrow('At least one device required');
 	});
