@@ -1,5 +1,5 @@
 import { config, defOpts } from './config';
-import type { RevealConfig, RevealOptions } from './types';
+import type { IObserverOptions, RevealConfig, RevealOptions } from './types';
 
 /**
  * Deep clones a given item.
@@ -30,11 +30,7 @@ export const getConfigClone = (): RevealConfig => clone(config);
  * @param observerConfig The Intersection Observer config.
  * @returns The provided Intersection Observer config, with default values applied in case of unspecified properties.
  */
-export const createObserverConfig = (observerConfig?: {
-	root?: IntersectionObserver['root'];
-	rootMargin?: IntersectionObserver['rootMargin'];
-	threshold?: number;
-}) => {
+export const createObserverConfig = (observerConfig?: Partial<IObserverOptions>) => {
 	return {
 		root: observerConfig?.root || defOpts.root,
 		rootMargin: observerConfig?.rootMargin || defOpts.rootMargin,

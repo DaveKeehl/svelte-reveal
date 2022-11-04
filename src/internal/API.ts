@@ -145,11 +145,12 @@ export const setObserverThreshold = (threshold: number): IObserverOptions => {
  * @param observerConfig The new Intersection Observer configuration.
  * @returns The updated configuration used to manage the Intersection Observer behavior.
  */
-export const setObserverConfig = (observerConfig: IObserverOptions): IObserverOptions => {
-	setObserverRoot(observerConfig.root);
-	setObserverRootMargin(observerConfig.rootMargin);
-	setObserverThreshold(observerConfig.threshold);
-	return observerConfig;
+export const setObserverConfig = (observerConfig: Partial<IObserverOptions>): IObserverOptions => {
+	const newObserverConfig = createObserverConfig(observerConfig);
+	setObserverRoot(newObserverConfig.root);
+	setObserverRootMargin(newObserverConfig.rootMargin);
+	setObserverThreshold(newObserverConfig.threshold);
+	return newObserverConfig;
 };
 
 /**
