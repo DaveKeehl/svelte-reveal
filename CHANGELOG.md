@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+### Changed
+- Open Graph image does not contain version number anymore
+
 ## [0.7.0] - 2022-11-04
 ### Changed
 - Rebranded svelte-reveal to Svelte Reveal (the package name stays the same though)
@@ -23,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 - Removed validation steps in pre-commit hook
-- Options `marginTop`, `marginRight`, `marginBottom` and `marginLeft` have been deprecated in favour of `rootMargin` to better align with the Intersetion Observer API
+- Options `marginTop`, `marginRight`, `marginBottom` and `marginLeft` have been deprecated in favour of `rootMargin` to better align with the Intersection Observer API
 
 ## [0.6.0] - 2022-04-22
 ### Added
