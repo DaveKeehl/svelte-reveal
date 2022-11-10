@@ -13,32 +13,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
+          fetch-depth: 2
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-dependencies
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
+          node-version: 16
+          cache: 'npm'
 
       - name: Installing dependencies
-        run: npm install -g prettier eslint && npm install
+        run: npm install
 
       - name: Linting
         run: npm run lint
 
       - name: Testing
         run: npm run test
+
+      - name: Building
+        run: npm run build
 
       - name: Upload code coverage
         uses: codecov/codecov-action@v3
@@ -80,22 +73,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Required due to the weg Git works, without it this action won't be able to find any or the correct tags
+          fetch-depth: 2
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-dependencies
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
+          node-version: 16
+          cache: 'npm'
 
       - name: Extract release notes
         id: extract-release-notes
