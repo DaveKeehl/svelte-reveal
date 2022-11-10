@@ -2,13 +2,13 @@
 > svelte-reveal@0.7.0 test
 > jest
 
-PASS tests/config.test.ts (6.587 s)
-PASS tests/validations.test.ts (6.921 s)
-PASS tests/utils.test.ts (7.348 s)
-PASS tests/reveal.test.ts (7.452 s)
-PASS tests/DOM.test.ts (7.476 s)
-PASS tests/API.test.ts (7.472 s)
-PASS tests/styling.test.ts (7.518 s)
+PASS tests/config.test.ts
+PASS tests/validations.test.ts
+PASS tests/DOM.test.ts
+PASS tests/utils.test.ts
+PASS tests/reveal.test.ts
+PASS tests/API.test.ts
+PASS tests/styling.test.ts
 -----------------------|---------|----------|---------|---------|-------------------
 File                   | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 -----------------------|---------|----------|---------|---------|-------------------
@@ -35,5 +35,5 @@ All files              |   83.62 |    76.28 |   89.18 |   82.54 |
 Test Suites: 7 passed, 7 total
 Tests:       126 passed, 126 total
 Snapshots:   0 total
-Time:        9.182 s
+Time:        5.247 s
 Ran all test suites.

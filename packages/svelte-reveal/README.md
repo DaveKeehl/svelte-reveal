@@ -55,7 +55,7 @@ Svelte Reveal is a library created with the purpose of helping [Svelte](https://
 
    ```html
    <script>
-     import { reveal } from 'svelte-reveal';
+   	import { reveal } from 'svelte-reveal';
    </script>
    ```
 
@@ -73,21 +73,21 @@ Svelte Reveal is a library created with the purpose of helping [Svelte](https://
    <script>
      import Heading from './Heading.svelte';
    </script>
-   
+
    <Heading useReveal={{ transition: "fade" }}>Hello world</Heading>
-   
+
    // Heading.svelte
    <script lang="ts">
      import { reveal } from 'svelte-reveal';
      import type { RevealOptions } from 'svelte-reveal';
      export let useReveal: RevealOptions;
    </script>
-   
+
    <h1 use:reveal={ useReveal }>
      <slot />
    </h1>
    ```
-   
+
    Using [SvelteKit](https://kit.svelte.dev/)? Please read [section "SvelteKit"](#sveltekit)
 
 ### Docker
@@ -118,17 +118,17 @@ The way Svelte Reveal transitions the elements does not work well with [SSR](htt
 
 ```html
 <script>
-  import { afterUpdate } from 'svelte';
+	import { afterUpdate } from 'svelte';
 
-  let show = false;
+	let show = false;
 
-  afterUpdate(() => {
-    show = true;
-  });
+	afterUpdate(() => {
+		show = true;
+	});
 </script>
 
 {#if show}
-  <your-element-or-component />
+<your-element-or-component />
 {/if}
 ```
 
@@ -140,83 +140,83 @@ Depending on the use case, you can either use this library as-is (which applies 
 
 Keep in mind that these options are applied to the single DOM element you add Svelte Reveal to. For global and more in-depth settings, refer to the [API](#api) section.
 
-| Name           | Type                                 | Default                  | Description                                                  |
-| -------------- | ------------------------------------ | ------------------------ | ------------------------------------------------------------ |
-| disable        | `boolean`                            | `false`                  | When set to false, the transition for the target element is disabled. |
-| debug          | `boolean`                            | `false`                  | It enables/disables debugging mode for the target DOM element. This will log to the console the target DOM element, along with the options and config.<br />In order to be able to use this mode, you are required to also set the `ref` property. |
-| ref            | `string`                             | `""`                     | When `debug` is set to `true`, you are required to specificy a `ref` string. <br />When multiple DOM nodes have debug mode enabled, `ref` strings allow you to know to which DOM node a console log statement belongs to. |
-| highlightLogs  | `boolean`                            | `false`                  | When set to `true`, the console logs of the target node are colored, making it easier to see them among many other logs. |
-| highlightColor | `string`                             | `"tomato"`               | The color to use to color the console logs when the `highlightLogs` option is also set to true.<br />Any valid CSS color can be used here. |
-| root           | `IntersectionObserver['root']`       | `null`                   | The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer. |
-| rootMargin     | `IntersectionObserver['rootMargin']` | `"0px 0px 0px 0px"`      | The [root margin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer. |
-| threshold      | `number`                             | `0.6`                    | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/thresholds) (in percentage from `0.0` to `1.0`) property used by the Intersection Observer to know when its target element is considered visible. |
-| transition     | `Transition`                         | `"fly"`                  | The type of transition that is triggered when the target node becomes visible.<br />Read more [in this subsection](#transitions) for a comprehensive explanation of the full list of available transitions. |
-| reset          | `boolean`                            | `false`                  | When set to true, the node transitions out when out of view, and is revealed again when back in view.<br /><br />⚠️ Be careful not to overuse this option, as it prevents the Intersection Observer to stop observing the target node. Performance is therefore not guaranteed when many elements have reset set to `true`. |
-| duration       | `number`                             | `800`                    | How long the transition lasts (in milliseconds).             |
-| delay          | `number`                             | `0`                      | How long the transition is delayed (in milliseconds) before being triggered. |
+| Name           | Type                                 | Default                  | Description                                                                                                                                                                                                                                                                                                                                                                                                       |
+| -------------- | ------------------------------------ | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| disable        | `boolean`                            | `false`                  | When set to false, the transition for the target element is disabled.                                                                                                                                                                                                                                                                                                                                             |
+| debug          | `boolean`                            | `false`                  | It enables/disables debugging mode for the target DOM element. This will log to the console the target DOM element, along with the options and config.<br />In order to be able to use this mode, you are required to also set the `ref` property.                                                                                                                                                                |
+| ref            | `string`                             | `""`                     | When `debug` is set to `true`, you are required to specificy a `ref` string. <br />When multiple DOM nodes have debug mode enabled, `ref` strings allow you to know to which DOM node a console log statement belongs to.                                                                                                                                                                                         |
+| highlightLogs  | `boolean`                            | `false`                  | When set to `true`, the console logs of the target node are colored, making it easier to see them among many other logs.                                                                                                                                                                                                                                                                                          |
+| highlightColor | `string`                             | `"tomato"`               | The color to use to color the console logs when the `highlightLogs` option is also set to true.<br />Any valid CSS color can be used here.                                                                                                                                                                                                                                                                        |
+| root           | `IntersectionObserver['root']`       | `null`                   | The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer.                                                                                                                                                                                                                                                                                 |
+| rootMargin     | `IntersectionObserver['rootMargin']` | `"0px 0px 0px 0px"`      | The [root margin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer.                                                                                                                                                                                                                                                                        |
+| threshold      | `number`                             | `0.6`                    | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/thresholds) (in percentage from `0.0` to `1.0`) property used by the Intersection Observer to know when its target element is considered visible.                                                                                                                                                                           |
+| transition     | `Transition`                         | `"fly"`                  | The type of transition that is triggered when the target node becomes visible.<br />Read more [in this subsection](#transitions) for a comprehensive explanation of the full list of available transitions.                                                                                                                                                                                                       |
+| reset          | `boolean`                            | `false`                  | When set to true, the node transitions out when out of view, and is revealed again when back in view.<br /><br />⚠️ Be careful not to overuse this option, as it prevents the Intersection Observer to stop observing the target node. Performance is therefore not guaranteed when many elements have reset set to `true`.                                                                                       |
+| duration       | `number`                             | `800`                    | How long the transition lasts (in milliseconds).                                                                                                                                                                                                                                                                                                                                                                  |
+| delay          | `number`                             | `0`                      | How long the transition is delayed (in milliseconds) before being triggered.                                                                                                                                                                                                                                                                                                                                      |
 | easing         | `Easing`                             | `"custom"`               | The type of easing function applied to the `transition`.<br />[Check out](https://github.com/DaveKeehl/svelte-reveal/blob/main/src/internal/types.ts#L231-L257) the full list of available easing functions.<br />The default easing function used by Svelte Reveal corresponds to the [CSS ease transition timing function](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function#values). |
-| customEasing   | `CustomEasing`                       | `[0.25, 0.1, 0.25, 0.1]` | The individual weights of a custom cubic-bezier curve. This option is necessary when `easing` is set to `custom`. [This website](https://cubic-bezier.com/) is great for previewing timing functions. |
-| x              | `number`                             | `-20`                    | The starting offset position in pixels on the x-axis of the `"slide"` transition.<br />If `x` is negative, the element will transition from the left, else from the right. |
-| y              | `number`                             | `-20`                    | The starting offset position in pixels on the y-axis of the `"fly"` transition.<br />If `y` is negative, the element will transition from the top, else from the bottom. |
-| rotate         | `number`                             | `-360`                   | The starting rotation offset in degrees of the `"spin"` transition.<br />If `rotate` is positive, the element will spin clockwise, else counter-clockwise. |
-| opacity        | `number`                             | `0`                      | The starting opacity value in percentage of any transition. It can be a number between `0.0` and `1.0`. |
-| blur           | `number`                             | `16`                     | The starting blur value in pixels of the `"blur"` transition. |
-| scale          | `number`                             | `0`                      | The starting scale value in percentage of the `"scale"` transition. |
+| customEasing   | `CustomEasing`                       | `[0.25, 0.1, 0.25, 0.1]` | The individual weights of a custom cubic-bezier curve. This option is necessary when `easing` is set to `custom`. [This website](https://cubic-bezier.com/) is great for previewing timing functions.                                                                                                                                                                                                             |
+| x              | `number`                             | `-20`                    | The starting offset position in pixels on the x-axis of the `"slide"` transition.<br />If `x` is negative, the element will transition from the left, else from the right.                                                                                                                                                                                                                                        |
+| y              | `number`                             | `-20`                    | The starting offset position in pixels on the y-axis of the `"fly"` transition.<br />If `y` is negative, the element will transition from the top, else from the bottom.                                                                                                                                                                                                                                          |
+| rotate         | `number`                             | `-360`                   | The starting rotation offset in degrees of the `"spin"` transition.<br />If `rotate` is positive, the element will spin clockwise, else counter-clockwise.                                                                                                                                                                                                                                                        |
+| opacity        | `number`                             | `0`                      | The starting opacity value in percentage of any transition. It can be a number between `0.0` and `1.0`.                                                                                                                                                                                                                                                                                                           |
+| blur           | `number`                             | `16`                     | The starting blur value in pixels of the `"blur"` transition.                                                                                                                                                                                                                                                                                                                                                     |
+| scale          | `number`                             | `0`                      | The starting scale value in percentage of the `"scale"` transition.                                                                                                                                                                                                                                                                                                                                               |
 
 ### Transitions
 
 The following are all the transitions available. The names listed in the table below match the ones available in your source code. All transitions have the fade transition backed in.
 
-| Name  | Description                                                  |
-| ----- | ------------------------------------------------------------ |
-| fade  | The element fades in gracefully.<br />In practice: `opacity: 0 -> 1` |
-| fly   | The element fades in and performs a translation on the y-axis (vertical).<br />In practice: `opacity: 0 -> 1` and `transform: translateY(-20px -> 0px) ` |
-| slide | The element fades in and performs a translation on the x-axis (horizontal).<br />In practice: `opacity: 0 -> 1` and `transform: translateX(-20px -> 0px)` |
-| blur  | The element fades in and becomes unblurred.<br />In practice: `opacity: 0 -> 1` and `filter: blur(8px -> 0px)` |
-| scale | The element fades in and gets to the original size.<br />In practice: `opacity: 0 -> 1` and `transform: scale(0 -> 1)`<br /><br />⚠️ In order to use this transition it is required to use the `width` CSS property on the element to reveal. If you are not already using this property for other things, you can set it to `width: fit-content` . |
+| Name  | Description                                                                                                                                                                                                                                                                                                                                                            |
+| ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| fade  | The element fades in gracefully.<br />In practice: `opacity: 0 -> 1`                                                                                                                                                                                                                                                                                                   |
+| fly   | The element fades in and performs a translation on the y-axis (vertical).<br />In practice: `opacity: 0 -> 1` and `transform: translateY(-20px -> 0px) `                                                                                                                                                                                                               |
+| slide | The element fades in and performs a translation on the x-axis (horizontal).<br />In practice: `opacity: 0 -> 1` and `transform: translateX(-20px -> 0px)`                                                                                                                                                                                                              |
+| blur  | The element fades in and becomes unblurred.<br />In practice: `opacity: 0 -> 1` and `filter: blur(8px -> 0px)`                                                                                                                                                                                                                                                         |
+| scale | The element fades in and gets to the original size.<br />In practice: `opacity: 0 -> 1` and `transform: scale(0 -> 1)`<br /><br />⚠️ In order to use this transition it is required to use the `width` CSS property on the element to reveal. If you are not already using this property for other things, you can set it to `width: fit-content` .                    |
 | spin  | The element fades in and gets to the original rotation degree.<br />In practice: `opacity: 0 -> 1` and `transform: rotate(-360 -> 0)`<br /><br />⚠️ In order to use this transition it is required to use the `width` CSS property on the element to reveal. If you are not already using this property for other things, you can use set it to `width: fit-content` . |
 
 ### Callbacks
 
 Among the available options, there are also some callback functions you can leverage to inject code during specific moments of the lifecycle of the DOM node attached to this action.
 
-| Name          | Args                  | Return | Description                                                  |
-| ------------- | --------------------- | ------ | ------------------------------------------------------------ |
-| onRevealStart | `(node: HTMLElement)` | `void` | Function that gets fired when the node starts being revealed. |
-| onRevealEnd   | `(node: HTMLElement)` | `void` | Function that gets fired when the node is fully revealed.    |
-| onResetStart  | `(node: HTMLElement)` | `void` | Function that gets fired when the` reset` option is set to `true` and the node starts transitioning out. |
+| Name          | Args                  | Return | Description                                                                                                |
+| ------------- | --------------------- | ------ | ---------------------------------------------------------------------------------------------------------- |
+| onRevealStart | `(node: HTMLElement)` | `void` | Function that gets fired when the node starts being revealed.                                              |
+| onRevealEnd   | `(node: HTMLElement)` | `void` | Function that gets fired when the node is fully revealed.                                                  |
+| onResetStart  | `(node: HTMLElement)` | `void` | Function that gets fired when the` reset` option is set to `true` and the node starts transitioning out.   |
 | onResetEnd    | `(node: HTMLElement)` | `void` | Function that gets fired when the `reset` option is set to `true` and the node has fully transitioned out. |
-| onMount       | `(node: HTMLElement)` | `void` | Function that gets fired when the node is mounted on the DOM. |
-| onUpdate      | `(node: HTMLElement)` | `void` | Function that gets fired when the action options are updated. |
-| onDestroy     | `(node: HTMLElement)` | `void` | Function that gets fired when the node is unmounted from the DOM. |
+| onMount       | `(node: HTMLElement)` | `void` | Function that gets fired when the node is mounted on the DOM.                                              |
+| onUpdate      | `(node: HTMLElement)` | `void` | Function that gets fired when the action options are updated.                                              |
+| onDestroy     | `(node: HTMLElement)` | `void` | Function that gets fired when the node is unmounted from the DOM.                                          |
 
 ## Global config
 
 This library is globally configured as follows right of out the box:
 
-| Parameter  | (children) | (children) | Type         | Default | Description                                                  |
-| ---------- | ---------- | ---------- | ------------ | ------- | ------------------------------------------------------------ |
-| dev        |            |            | `boolean`    | `true`  | Globally enables/disables all logs.                          |
-| once       |            |            | `boolean`    | `false` | Performs the reveal effect only once when set to `true`. When set to `true`, refreshing the page doesn't re-run them. |
+| Parameter  | (children) | (children) | Type         | Default | Description                                                                                                                   |
+| ---------- | ---------- | ---------- | ------------ | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| dev        |            |            | `boolean`    | `true`  | Globally enables/disables all logs.                                                                                           |
+| once       |            |            | `boolean`    | `false` | Performs the reveal effect only once when set to `true`. When set to `true`, refreshing the page doesn't re-run them.         |
 | responsive |            |            | `Responsive` |         | Information about how the library handles responsiveness. It can be used to enable/disable the reveal effect on some devices. |
-|            | mobile     |            | `IDevice`    |         | Object containing information about responsiveness on mobile devices. |
-|            |            | enabled    | `boolean`    | `true`  | Whether the device supports the reveal effect on mobile devices. |
-|            |            | breakpoint | `number`     | `425`   | The viewport width upper limit that a mobile device can be targeted to work in. |
-|            | tablet     |            | `IDevice`    |         | Object containing information about responsiveness on tablet devices. |
-|            |            | enabled    | `boolean`    | `true`  | Whether the device supports the reveal effect on tablet devices. |
-|            |            | breakpoint | `number`     | `768`   | The viewport width upper limit that a tablet device can be targeted to work in. |
-|            | laptop     |            | `IDevice`    |         | Object containing information about responsiveness on laptop devices. |
-|            |            | enabled    | `boolean`    | `true`  | Whether the device supports the reveal effect on laptop devices. |
-|            |            | breakpoint | `number`     | `1440`  | The viewport width upper limit that a laptop device can be targeted to work in. |
-|            | desktop    |            | `IDevice`    |         | Object containing information about responsiveness on desktop devices. |
-|            |            | enabled    | `boolean`    | `true`  | Whether the device supports the reveal effect on desktop devices. |
-|            |            | breakpoint | `number`     | `2560`  | The viewport width upper limit that a desktop device can be targeted to work in. |
+|            | mobile     |            | `IDevice`    |         | Object containing information about responsiveness on mobile devices.                                                         |
+|            |            | enabled    | `boolean`    | `true`  | Whether the device supports the reveal effect on mobile devices.                                                              |
+|            |            | breakpoint | `number`     | `425`   | The viewport width upper limit that a mobile device can be targeted to work in.                                               |
+|            | tablet     |            | `IDevice`    |         | Object containing information about responsiveness on tablet devices.                                                         |
+|            |            | enabled    | `boolean`    | `true`  | Whether the device supports the reveal effect on tablet devices.                                                              |
+|            |            | breakpoint | `number`     | `768`   | The viewport width upper limit that a tablet device can be targeted to work in.                                               |
+|            | laptop     |            | `IDevice`    |         | Object containing information about responsiveness on laptop devices.                                                         |
+|            |            | enabled    | `boolean`    | `true`  | Whether the device supports the reveal effect on laptop devices.                                                              |
+|            |            | breakpoint | `number`     | `1440`  | The viewport width upper limit that a laptop device can be targeted to work in.                                               |
+|            | desktop    |            | `IDevice`    |         | Object containing information about responsiveness on desktop devices.                                                        |
+|            |            | enabled    | `boolean`    | `true`  | Whether the device supports the reveal effect on desktop devices.                                                             |
+|            |            | breakpoint | `number`     | `2560`  | The viewport width upper limit that a desktop device can be targeted to work in.                                              |
 
 ## API
 
 > ⚠️ If you want to customise the behavior of a single DOM node, you are supposed to use the [options](#options).
 
-Svelte Reveal also exposes several functions you can call to change the [default options](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/internal/config.ts#L6-L34) and [global configuration](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/internal/config.ts#L39-L60) of this library. Since these functions operate on a global level across all components using Svelte Reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the default options and global config from multiple points. 
+Svelte Reveal also exposes several functions you can call to change the [default options](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/internal/config.ts#L6-L34) and [global configuration](https://github.com/DaveKeehl/svelte-reveal/blob/develop/src/internal/config.ts#L39-L60) of this library. Since these functions operate on a global level across all components using Svelte Reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the default options and global config from multiple points.
 
 If you need/want to considerably customize the behavior of this library, I suggest creating a dedicated file (e.g. [reveal.config.js](https://github.com/DaveKeehl/svelte-reveal/blob/main/example/reveal.config.js)) and to import it from the top-most component in the components tree of your project. Within that file you can then call the API functions to set global settings or shared transition properties.
 
@@ -224,7 +224,7 @@ If you need/want to considerably customize the behavior of this library, I sugge
 // App.svelte
 
 <script>
-  import '../reveal.config';
+	import '../reveal.config';
 </script>
 
 <div>{ your markup goes here }</div>
@@ -345,8 +345,8 @@ interface RevealOptions {
 
 ### setDefaultOptions
 
-| Args                       | Return          | Description                                                  |
-| -------------------------- | --------------- | ------------------------------------------------------------ |
+| Args                       | Return          | Description                                                   |
+| -------------------------- | --------------- | ------------------------------------------------------------- |
 | `(options: RevealOptions)` | `RevealOptions` | Updates the default options to be used for the reveal effect. |
 
 ## Suggestions
