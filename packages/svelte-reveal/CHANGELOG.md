@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Open Graph image does not contain version number anymore
 - Updated dependencies
+- Restructured repository to monorepo
 
 ## [0.7.0] - 2022-11-04
 
