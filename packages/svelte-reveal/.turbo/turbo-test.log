@@ -1,0 +1,39 @@
+
+> svelte-reveal@0.7.0 test
+> jest
+
+PASS tests/config.test.ts (6.587 s)
+PASS tests/validations.test.ts (6.921 s)
+PASS tests/utils.test.ts (7.348 s)
+PASS tests/reveal.test.ts (7.452 s)
+PASS tests/DOM.test.ts (7.476 s)
+PASS tests/API.test.ts (7.472 s)
+PASS tests/styling.test.ts (7.518 s)
+-----------------------|---------|----------|---------|---------|-------------------
+File                   | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-----------------------|---------|----------|---------|---------|-------------------
+All files              |   83.62 |    76.28 |   89.18 |   82.54 |                   
+ internal              |   72.72 |    64.61 |   81.81 |   70.79 |                   
+  API.ts               |     100 |      100 |     100 |     100 |                   
+  DOM.ts               |   55.55 |    29.41 |   55.55 |   53.96 | 90-115,134-146    
+  config.ts            |     100 |      100 |     100 |     100 |                   
+  constants.ts         |     100 |      100 |     100 |     100 |                   
+  reveal.ts            |   24.44 |     8.33 |      20 |      25 | 22-74             
+  stores.ts            |     100 |      100 |     100 |     100 |                   
+  utils.ts             |     100 |      100 |     100 |     100 |                   
+  validations.ts       |     100 |      100 |     100 |     100 |                   
+ internal/styling      |     100 |      100 |     100 |     100 |                   
+  breakpoints.ts       |     100 |      100 |     100 |     100 |                   
+  classesGeneration.ts |     100 |      100 |     100 |     100 |                   
+  index.ts             |     100 |      100 |     100 |     100 |                   
+  mediaQueries.ts      |     100 |      100 |     100 |     100 |                   
+  stylesExtraction.ts  |     100 |      100 |     100 |     100 |                   
+  stylesGeneration.ts  |     100 |      100 |     100 |     100 |                   
+  stylesRetrieval.ts   |     100 |      100 |     100 |     100 |                   
+-----------------------|---------|----------|---------|---------|-------------------
+
+Test Suites: 7 passed, 7 total
+Tests:       126 passed, 126 total
+Snapshots:   0 total
+Time:        9.182 s
+Ran all test suites.

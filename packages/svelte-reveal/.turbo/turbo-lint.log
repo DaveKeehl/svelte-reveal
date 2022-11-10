@@ -1,0 +1,6 @@
+
+> svelte-reveal@0.7.0 lint
+> prettier --check --plugin-search-dir=. . && eslint --ignore-path ../../.gitignore .
+
+Checking formatting...
+All matched files use Prettier code style!
