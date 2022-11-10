@@ -25,6 +25,10 @@
     },
     "lint": {
       "outputs": []
+    },
+    "pack": {
+      "dependsOn": ["build"],
+      "outputs": ["*.tgz"]
     }
   }
 }

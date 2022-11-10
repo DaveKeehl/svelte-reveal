@@ -14,12 +14,11 @@
     "format": "turbo run format",
     "format:staged": "turbo run format:staged",
     "lint": "turbo run lint",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "pack": "turbo pack"
   },
   "devDependencies": {
     "husky": "^8.0.0",
-    "prettier": "^2.7.1",
-    "pretty-quick": "^3.1.3",
     "turbo": "latest"
   },
   "engines": {
