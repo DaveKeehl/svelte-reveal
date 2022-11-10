@@ -16,7 +16,7 @@
 		"prepack": "pinst --disable",
 		"pack": "npm pack",
 		"postpack": "pinst --enable",
-		"lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path ../../.gitignore .",
+		"lint": "eslint .",
 		"format": "prettier --write --plugin-search-dir=. .",
 		"format:staged": "pretty-quick --staged",
 		"test": "jest",

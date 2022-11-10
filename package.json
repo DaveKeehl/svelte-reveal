@@ -1,13 +1,12 @@
 {
-  "name": "svelte-reveal",
-  "version": "0.0.0",
+  "name": "svelte-reveal-monorepo",
   "private": true,
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
   "scripts": {
-    "clean": "turbo run clean && rm -rf node_modules && rm -rf package-lock.json",
+    "clean": "turbo run clean && rm -rf node_modules && rm -rf package-lock.json && rm -rf svelte-reveal-*.tgz",
     "build": "turbo run build",
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
