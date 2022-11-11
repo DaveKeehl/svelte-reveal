@@ -73,16 +73,16 @@ Svelte Reveal is a library created with the purpose of helping [Svelte](https://
    <script>
      import Heading from './Heading.svelte';
    </script>
-
+   
    <Heading useReveal={{ transition: "fade" }}>Hello world</Heading>
-
+   
    // Heading.svelte
    <script lang="ts">
      import { reveal } from 'svelte-reveal';
      import type { RevealOptions } from 'svelte-reveal';
      export let useReveal: RevealOptions;
    </script>
-
+   
    <h1 use:reveal={ useReveal }>
      <slot />
    </h1>

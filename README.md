@@ -1,4 +1,4 @@
-![](/Users/davideciulla/Repositories/Davide/svelte-reveal/assets/readme_cover.png)
+![](assets/readme_cover.png)
 
 # Svelte Reveal
 
@@ -19,9 +19,9 @@ Svelte Reveal is a library created with the purpose of helping [Svelte](https://
 
 ## Monorepo Structure
 
-| Name                                                                                                           | Purpose |
-| -------------------------------------------------------------------------------------------------------------- | ------- |
-| [svelte-reveal](https://github.com/DaveKeehl/svelte-reveal/tree/feature/setup-monorepo/packages/svelte-reveal) | package |
+| Name                                                         | Purpose | Description                                  |
+| ------------------------------------------------------------ | ------- | -------------------------------------------- |
+| [svelte-reveal](https://github.com/DaveKeehl/svelte-reveal/tree/feature/setup-monorepo/packages/svelte-reveal) | package | The Svelte action that gets published on NPM |
 
 ## Troubleshooting
 
