@@ -8,7 +8,7 @@
 
 Svelte Reveal is a library created with the purpose of helping [Svelte](https://svelte.dev/) users add reveal on scroll animations to their web applications in the easiest way possible. This library leverages the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) in order to know when to trigger the animations.
 
-[Read the docs to learn more.](https://github.com/DaveKeehl/svelte-reveal/blob/feature/setup-monorepo/packages/svelte-reveal/README.md)
+[Read the docs to learn more.](./packages/svelte-reveal/README.md)
 
 ## Features
 
@@ -19,9 +19,9 @@ Svelte Reveal is a library created with the purpose of helping [Svelte](https://
 
 ## Monorepo Structure
 
-| Name                                                                                                           | Purpose | Description                                  |
-| -------------------------------------------------------------------------------------------------------------- | ------- | -------------------------------------------- |
-| [svelte-reveal](https://github.com/DaveKeehl/svelte-reveal/tree/feature/setup-monorepo/packages/svelte-reveal) | package | The Svelte action that gets published on NPM |
+| Name                                      | Purpose | Description                                  |
+| ----------------------------------------- | ------- | -------------------------------------------- |
+| [svelte-reveal](./packages/svelte-reveal) | package | The Svelte action that gets published on NPM |
 
 ## Troubleshooting
 
@@ -37,8 +37,8 @@ This project uses [Semantic Versioning](https://semver.org/) to keep track of it
 
 ## Changelog
 
-[CHANGELOG](https://github.com/DaveKeehl/svelte-reveal/blob/feature/setup-monorepo/packages/svelte-reveal/CHANGELOG.md)
+[CHANGELOG](./packages/svelte-reveal/CHANGELOG.md)
 
 ## License
 
-[MIT](https://github.com/DaveKeehl/svelte-reveal/blob/develop/LICENSE)
+[MIT](./LICENSE)
