@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: 'npm'
+          cache: "npm"
 
       - name: Installing dependencies
         run: npm install
@@ -50,11 +50,11 @@ jobs:
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
         with:
-          path: 'packages/svelte-reveal'
+          path: "packages/svelte-reveal"
 
-      - name: 'Get Latest Tag'
+      - name: "Get Latest Tag"
         id: latest-tag
-        uses: 'WyriHaximus/github-action-get-previous-tag@v1'
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
 
       - name: Print CI output
         run: |
@@ -83,7 +83,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: 'npm'
+          cache: "npm"
 
       - name: Extract release notes
         id: extract-release-notes
