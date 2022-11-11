@@ -14,10 +14,10 @@ export const clone = <T>(item: T): T => JSON.parse(JSON.stringify(item));
  * @returns The cleaned string.
  */
 export const clean = (str: string): string =>
-	str
-		.trim()
-		.replace(/[\n|\t]/g, '')
-		.replace(/\s(\s+)/g, ' ');
+  str
+    .trim()
+    .replace(/[\n|\t]/g, '')
+    .replace(/\s(\s+)/g, ' ');
 
 /**
  * Creates a clone of the global configuration used by the library.
@@ -31,11 +31,11 @@ export const getConfigClone = (): RevealConfig => clone(config);
  * @returns The provided Intersection Observer config, with default values applied in case of unspecified properties.
  */
 export const createObserverConfig = (observerConfig?: Partial<IObserverOptions>) => {
-	return {
-		root: observerConfig?.root || defOpts.root,
-		rootMargin: observerConfig?.rootMargin || defOpts.rootMargin,
-		threshold: observerConfig?.threshold || defOpts.threshold
-	};
+  return {
+    root: observerConfig?.root || defOpts.root,
+    rootMargin: observerConfig?.rootMargin || defOpts.rootMargin,
+    threshold: observerConfig?.threshold || defOpts.threshold
+  };
 };
 
 /**
@@ -44,5 +44,5 @@ export const createObserverConfig = (observerConfig?: Partial<IObserverOptions>)
  * @returns The final options that can be used by the rest of the library.
  */
 export const createFinalOptions = (userOptions: RevealOptions): Required<RevealOptions> => {
-	return Object.assign({}, defOpts, userOptions);
+  return Object.assign({}, defOpts, userOptions);
 };

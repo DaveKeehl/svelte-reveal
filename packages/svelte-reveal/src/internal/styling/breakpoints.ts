@@ -7,13 +7,13 @@ import { isPositiveInteger } from '../validations';
  * @returns Whether the breapoints overlap.
  */
 export const hasOverlappingBreakpoints = (responsive: Responsive): boolean => {
-	const { mobile, tablet, laptop, desktop } = responsive;
+  const { mobile, tablet, laptop, desktop } = responsive;
 
-	return (
-		mobile.breakpoint > tablet.breakpoint ||
-		tablet.breakpoint > laptop.breakpoint ||
-		laptop.breakpoint > desktop.breakpoint
-	);
+  return (
+    mobile.breakpoint > tablet.breakpoint ||
+    tablet.breakpoint > laptop.breakpoint ||
+    laptop.breakpoint > desktop.breakpoint
+  );
 };
 
 /**
@@ -22,10 +22,10 @@ export const hasOverlappingBreakpoints = (responsive: Responsive): boolean => {
  * @returns Whether the breakpoints are valid.
  */
 export const hasValidBreakpoints = (responsive: Responsive): boolean => {
-	const breakpoints = Object.values(responsive).map((device) => device.breakpoint);
+  const breakpoints = Object.values(responsive).map((device) => device.breakpoint);
 
-	const breakpointsOverlap = hasOverlappingBreakpoints(responsive);
-	const allBreakpointsPositive = breakpoints.every((breakpoint) => isPositiveInteger(breakpoint));
+  const breakpointsOverlap = hasOverlappingBreakpoints(responsive);
+  const allBreakpointsPositive = breakpoints.every((breakpoint) => isPositiveInteger(breakpoint));
 
-	return !breakpointsOverlap && allBreakpointsPositive;
+  return !breakpointsOverlap && allBreakpointsPositive;
 };

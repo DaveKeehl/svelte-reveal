@@ -9,29 +9,29 @@ import { getTransitionPropertiesCSSRules, getEasingFunction } from './stylesRetr
  * @returns A tuple with the final CSS classes in the form of: [transitionDeclaration, transitionProperties]. The transition declaration class is used to declare a transition css rule to the target element. The transition properties class is used to create the actual transition.
  */
 export const getRevealClassNames = (ref: string, transition: Transition): [string, string] => {
-	const createClassNameTokens = (tokensArray: string[]) =>
-		tokensArray
-			.filter((token) => token && token !== '')
-			.map((token) => token.replace(/\s/g, '-'))
-			.join('__');
+  const createClassNameTokens = (tokensArray: string[]) =>
+    tokensArray
+      .filter((token) => token && token !== '')
+      .map((token) => token.replace(/\s/g, '-'))
+      .join('__');
 
-	const createClassName = (tokens: string, uid: string) => `sr__${tokens}__${uid}`;
+  const createClassName = (tokens: string, uid: string) => `sr__${tokens}__${uid}`;
 
-	const tokens = {
-		transition: [ref, 'transition', transition],
-		properties: [ref, 'properties', transition]
-	};
+  const tokens = {
+    transition: [ref, 'transition', transition],
+    properties: [ref, 'properties', transition]
+  };
 
-	const transitionClassTokens = createClassNameTokens(tokens.transition);
-	const propertiesClassTokens = createClassNameTokens(tokens.properties);
+  const transitionClassTokens = createClassNameTokens(tokens.transition);
+  const propertiesClassTokens = createClassNameTokens(tokens.properties);
 
-	const seed = document.querySelectorAll('[data-action="reveal"]').length.toString();
-	const uid = seedrandom(seed)().toString().slice(2);
+  const seed = document.querySelectorAll('[data-action="reveal"]').length.toString();
+  const uid = seedrandom(seed)().toString().slice(2);
 
-	const transitionDeclaration = createClassName(transitionClassTokens, uid);
-	const transitionProperties = createClassName(propertiesClassTokens, uid);
+  const transitionDeclaration = createClassName(transitionClassTokens, uid);
+  const transitionProperties = createClassName(propertiesClassTokens, uid);
 
-	return [transitionDeclaration, transitionProperties];
+  return [transitionDeclaration, transitionProperties];
 };
 
 /**
@@ -41,11 +41,11 @@ export const getRevealClassNames = (ref: string, transition: Transition): [strin
  * @returns The transition declaration CSS for the target element.
  */
 export const createTransitionDeclarationCSS = (className: string, options: Required<RevealOptions>) => {
-	const duration = options.duration / 1000;
-	const delay = options.delay / 1000;
-	const easingFunction = getEasingFunction(options.easing, options.customEasing);
+  const duration = options.duration / 1000;
+  const delay = options.delay / 1000;
+  const easingFunction = getEasingFunction(options.easing, options.customEasing);
 
-	return `
+  return `
 		.${className} {
 			transition: all ${duration}s ${delay}s ${easingFunction};
 		}
@@ -59,10 +59,10 @@ export const createTransitionDeclarationCSS = (className: string, options: Requi
  * @returns The transition properties CSS for the target element.
  */
 export const createTransitionPropertiesCSS = (className: string, options: Required<RevealOptions>) => {
-	const { transition } = options;
-	const transitionPropertiesRules = getTransitionPropertiesCSSRules(transition, options);
+  const { transition } = options;
+  const transitionPropertiesRules = getTransitionPropertiesCSSRules(transition, options);
 
-	return `
+  return `
 		.${className} {
 			${transitionPropertiesRules}
 		}

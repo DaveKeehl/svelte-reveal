@@ -9,8 +9,8 @@ import { clean, createObserverConfig } from './utils';
  * @returns The marked DOM element.
  */
 export const markRevealNode = (revealNode: HTMLElement): HTMLElement => {
-	revealNode.setAttribute('data-action', 'reveal');
-	return revealNode;
+  revealNode.setAttribute('data-action', 'reveal');
+  return revealNode;
 };
 
 /**
@@ -22,35 +22,35 @@ export const markRevealNode = (revealNode: HTMLElement): HTMLElement => {
  * @returns The element to be revealed.
  */
 export const activateRevealNode = (
-	revealNode: HTMLElement,
-	transitionPropertiesCSSClass: string,
-	transitionDeclarationCSSClass: string,
-	options: Required<RevealOptions>
+  revealNode: HTMLElement,
+  transitionPropertiesCSSClass: string,
+  transitionDeclarationCSSClass: string,
+  options: Required<RevealOptions>
 ): HTMLElement => {
-	markRevealNode(revealNode);
+  markRevealNode(revealNode);
 
-	const transitionDeclaration = createTransitionDeclarationCSS(transitionDeclarationCSSClass, options);
-	const transitionProperties = createTransitionPropertiesCSS(transitionPropertiesCSSClass, options);
-	const stylesheet = document.querySelector('style[data-action="reveal"]');
+  const transitionDeclaration = createTransitionDeclarationCSS(transitionDeclarationCSSClass, options);
+  const transitionProperties = createTransitionPropertiesCSS(transitionPropertiesCSSClass, options);
+  const stylesheet = document.querySelector('style[data-action="reveal"]');
 
-	/**
-	 * Since I want to have only one Svelte Reveal stylesheet for all the elements in the page,
-	 * I need to check whether a Svelte Reveal stylesheet has already been created when previous
-	 * elements have been "activated" by this library. Hence, the stylesheet content is the
-	 * concatenation of the styles of all elements on which Svelte Reveal has been activated on the page.
-	 */
-	if (stylesheet) {
-		const existingRevealStyles = stylesheet.innerHTML;
-		const nodeRevealStyles = clean([transitionProperties, transitionDeclaration].join(' '));
+  /**
+   * Since I want to have only one Svelte Reveal stylesheet for all the elements in the page,
+   * I need to check whether a Svelte Reveal stylesheet has already been created when previous
+   * elements have been "activated" by this library. Hence, the stylesheet content is the
+   * concatenation of the styles of all elements on which Svelte Reveal has been activated on the page.
+   */
+  if (stylesheet) {
+    const existingRevealStyles = stylesheet.innerHTML;
+    const nodeRevealStyles = clean([transitionProperties, transitionDeclaration].join(' '));
 
-		const updatedRevealStyles = mergeRevealStyles(existingRevealStyles, nodeRevealStyles);
+    const updatedRevealStyles = mergeRevealStyles(existingRevealStyles, nodeRevealStyles);
 
-		stylesheet.innerHTML = updatedRevealStyles;
-		revealNode.classList.add(transitionPropertiesCSSClass);
-		revealNode.classList.add(transitionDeclarationCSSClass);
-	}
+    stylesheet.innerHTML = updatedRevealStyles;
+    revealNode.classList.add(transitionPropertiesCSSClass);
+    revealNode.classList.add(transitionDeclarationCSSClass);
+  }
 
-	return revealNode;
+  return revealNode;
 };
 
 /**
@@ -59,11 +59,11 @@ export const activateRevealNode = (
  * @returns The HTML element to be revealed.
  */
 export const getRevealNode = (node: HTMLElement): HTMLElement => {
-	if (node.style.length === 0) return node;
+  if (node.style.length === 0) return node;
 
-	const wrapper = document.createElement('div');
-	wrapper.appendChild(node);
-	return wrapper;
+  const wrapper = document.createElement('div');
+  wrapper.appendChild(node);
+  return wrapper;
 };
 
 /**
@@ -76,46 +76,46 @@ export const getRevealNode = (node: HTMLElement): HTMLElement => {
  * @returns The created Intersection Observer.
  */
 export const createObserver = (
-	canDebug: boolean,
-	highlightText: string,
-	revealNode: HTMLElement,
-	options: Required<RevealOptions>,
-	className: string
+  canDebug: boolean,
+  highlightText: string,
+  revealNode: HTMLElement,
+  options: Required<RevealOptions>,
+  className: string
 ): IntersectionObserver => {
-	const { ref, reset, duration, delay, threshold, onResetStart, onResetEnd, onRevealEnd } = options;
+  const { ref, reset, duration, delay, threshold, onResetStart, onResetEnd, onRevealEnd } = options;
 
-	const observerConfig = createObserverConfig();
+  const observerConfig = createObserverConfig();
 
-	return new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
-		if (canDebug) {
-			const entry = entries[0];
+  return new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+    if (canDebug) {
+      const entry = entries[0];
 
-			if (!entry) {
-				throw new Error('Intersection Observer entry is undefined');
-			}
+      if (!entry) {
+        throw new Error('Intersection Observer entry is undefined');
+      }
 
-			const entryTarget = entry.target;
+      const entryTarget = entry.target;
 
-			if (entryTarget === revealNode) {
-				console.groupCollapsed(`%cRef: ${ref} (Intersection Observer Callback)`, highlightText);
-				console.log(entry);
-				console.log(observerConfig);
-				console.groupEnd();
-			}
-		}
+      if (entryTarget === revealNode) {
+        console.groupCollapsed(`%cRef: ${ref} (Intersection Observer Callback)`, highlightText);
+        console.log(entry);
+        console.log(observerConfig);
+        console.groupEnd();
+      }
+    }
 
-		entries.forEach((entry) => {
-			if (reset && !entry.isIntersecting) {
-				onResetStart(revealNode);
-				revealNode.classList.add(className);
-				setTimeout(() => onResetEnd(revealNode), duration + delay);
-			} else if (entry.intersectionRatio >= threshold) {
-				setTimeout(() => onRevealEnd(revealNode), duration + delay);
-				revealNode.classList.remove(className);
-				if (!reset) observer.unobserve(revealNode);
-			}
-		});
-	}, observerConfig);
+    entries.forEach((entry) => {
+      if (reset && !entry.isIntersecting) {
+        onResetStart(revealNode);
+        revealNode.classList.add(className);
+        setTimeout(() => onResetEnd(revealNode), duration + delay);
+      } else if (entry.intersectionRatio >= threshold) {
+        setTimeout(() => onRevealEnd(revealNode), duration + delay);
+        revealNode.classList.remove(className);
+        if (!reset) observer.unobserve(revealNode);
+      }
+    });
+  }, observerConfig);
 };
 
 /**
@@ -125,26 +125,26 @@ export const createObserver = (
  * @returns A tuple consisting of canDebug and highlightText.
  */
 export const logInfo = (finalOptions: Required<RevealOptions>, revealNode: HTMLElement): [boolean, string] => {
-	const { debug, ref, highlightLogs, highlightColor } = finalOptions;
+  const { debug, ref, highlightLogs, highlightColor } = finalOptions;
 
-	const canDebug = config.dev && debug && ref !== '';
-	const highlightText = `color: ${highlightLogs ? highlightColor : '#B4BEC8'}`;
+  const canDebug = config.dev && debug && ref !== '';
+  const highlightText = `color: ${highlightLogs ? highlightColor : '#B4BEC8'}`;
 
-	if (canDebug) {
-		console.groupCollapsed(`%cRef: ${ref}`, highlightText);
+  if (canDebug) {
+    console.groupCollapsed(`%cRef: ${ref}`, highlightText);
 
-		console.groupCollapsed('%cNode', highlightText);
-		console.log(revealNode);
-		console.groupEnd();
+    console.groupCollapsed('%cNode', highlightText);
+    console.log(revealNode);
+    console.groupEnd();
 
-		console.groupCollapsed('%cConfig', highlightText);
-		console.log(config);
-		console.groupEnd();
+    console.groupCollapsed('%cConfig', highlightText);
+    console.log(config);
+    console.groupEnd();
 
-		console.groupCollapsed('%cOptions', highlightText);
-		console.log(finalOptions);
-		console.groupEnd();
-	}
+    console.groupCollapsed('%cOptions', highlightText);
+    console.log(finalOptions);
+    console.groupEnd();
+  }
 
-	return [canDebug, highlightText];
+  return [canDebug, highlightText];
 };

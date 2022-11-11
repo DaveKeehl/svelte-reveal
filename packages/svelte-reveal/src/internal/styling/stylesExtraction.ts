@@ -6,10 +6,10 @@ import { clean } from '../utils';
  * @returns An array of CSS properties.
  */
 export const extractCSSRules = (styles: string): string[] => {
-	return clean(styles)
-		.split(';')
-		.filter((rule) => rule !== '')
-		.map((rule) => rule.trim());
+  return clean(styles)
+    .split(';')
+    .filter((rule) => rule !== '')
+    .map((rule) => rule.trim());
 };
 
 /**
@@ -18,5 +18,5 @@ export const extractCSSRules = (styles: string): string[] => {
  * @returns The sanitized CSS styles.
  */
 export const sanitizeStyles = (styles: string): string => {
-	return extractCSSRules(styles).join('; ').concat('; ');
+  return extractCSSRules(styles).join('; ').concat('; ');
 };

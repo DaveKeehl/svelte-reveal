@@ -12,23 +12,23 @@ import { hasValidBreakpoints } from './breakpoints';
  * @returns The final optimal query to target the devices found within the [`start`-`end`] breakpoints range.
  */
 const createQuery = (
-	devices: Devices,
-	previousDevice: [string, IDevice] | undefined,
-	start: number,
-	end: number
+  devices: Devices,
+  previousDevice: [string, IDevice] | undefined,
+  start: number,
+  end: number
 ): string => {
-	const smallest = Math.min(...devices.map(([, settings]) => settings.breakpoint));
-	const largest = Math.max(...devices.map(([, settings]) => settings.breakpoint));
+  const smallest = Math.min(...devices.map(([, settings]) => settings.breakpoint));
+  const largest = Math.max(...devices.map(([, settings]) => settings.breakpoint));
 
-	if (previousDevice === undefined || start === smallest) {
-		return `(max-width: ${end}px)`;
-	}
+  if (previousDevice === undefined || start === smallest) {
+    return `(max-width: ${end}px)`;
+  }
 
-	if (end === largest) {
-		return `(min-width: ${previousDevice[1].breakpoint + 1}px)`;
-	}
+  if (end === largest) {
+    return `(min-width: ${previousDevice[1].breakpoint + 1}px)`;
+  }
 
-	return `(min-width: ${previousDevice[1].breakpoint + 1}px) and (max-width: ${end}px)`;
+  return `(min-width: ${previousDevice[1].breakpoint + 1}px) and (max-width: ${end}px)`;
 };
 
 /**
@@ -37,35 +37,35 @@ const createQuery = (
  * @returns A list of optimal queries that can be combined together to create a final media query to provide responsiveness to the elements to transition.
  */
 const getOptimalQueries = (devices: Devices): string[] => {
-	const queries: string[] = [];
+  const queries: string[] = [];
 
-	for (let i = 0; i < devices.length; ) {
-		const startDevice = devices[i];
+  for (let i = 0; i < devices.length; ) {
+    const startDevice = devices[i];
 
-		if (!startDevice || !startDevice[1].enabled) {
-			i++;
-			continue;
-		}
+    if (!startDevice || !startDevice[1].enabled) {
+      i++;
+      continue;
+    }
 
-		let j = i;
-		let query = '';
-		let endDevice = startDevice;
+    let j = i;
+    let query = '';
+    let endDevice = startDevice;
 
-		while (j < devices.length && endDevice[1].enabled) {
-			const start = startDevice[1].breakpoint;
-			const end = endDevice[1].breakpoint;
-			const previous = devices[i - 1];
-			query = createQuery(devices, previous, start, end);
+    while (j < devices.length && endDevice[1].enabled) {
+      const start = startDevice[1].breakpoint;
+      const end = endDevice[1].breakpoint;
+      const previous = devices[i - 1];
+      query = createQuery(devices, previous, start, end);
 
-			j++;
-			endDevice = devices[j] || endDevice;
-		}
+      j++;
+      endDevice = devices[j] || endDevice;
+    }
 
-		queries.push(query);
-		i = j;
-	}
+    queries.push(query);
+    i = j;
+  }
 
-	return queries;
+  return queries;
 };
 
 /**
@@ -75,27 +75,27 @@ const getOptimalQueries = (devices: Devices): string[] => {
  * @returns The CSS ruleset decorated with the media queries generated from the analysis of the `responsive` object.
  */
 export const addMediaQueries = (styles: string, responsive: Responsive = config.responsive): string => {
-	if (!hasValidBreakpoints(responsive)) {
-		throw new Error('Cannot create media queries due to invalid breakpoints');
-	}
+  if (!hasValidBreakpoints(responsive)) {
+    throw new Error('Cannot create media queries due to invalid breakpoints');
+  }
 
-	const devices: Devices = Object.entries(responsive);
-	const allDevicesEnabled = devices.every(([, settings]) => settings.enabled);
-	const allDevicesDisabled = devices.every(([, settings]) => !settings.enabled);
+  const devices: Devices = Object.entries(responsive);
+  const allDevicesEnabled = devices.every(([, settings]) => settings.enabled);
+  const allDevicesDisabled = devices.every(([, settings]) => !settings.enabled);
 
-	if (allDevicesEnabled) return styles; // If styles are applied to every device, you don't need media queries
+  if (allDevicesEnabled) return styles; // If styles are applied to every device, you don't need media queries
 
-	if (allDevicesDisabled) {
-		return clean(`
+  if (allDevicesDisabled) {
+    return clean(`
 			@media not all {
 				${styles}
 			}
 		`);
-	}
+  }
 
-	const query = getOptimalQueries(devices).join(', ');
+  const query = getOptimalQueries(devices).join(', ');
 
-	return clean(`
+  return clean(`
 		@media ${query} {
 			${styles}
 		}

@@ -11,8 +11,8 @@ import { ROOT_MARGIN_REGEX } from './constants';
  * @returns The config object with the updated `dev` property.
  */
 export const setDev = (dev: boolean): RevealConfig => {
-	config.dev = dev;
-	return config;
+  config.dev = dev;
+  return config;
 };
 
 /**
@@ -21,8 +21,8 @@ export const setDev = (dev: boolean): RevealConfig => {
  * @returns The config object with the updated `once` property,
  */
 export const setOnce = (once: boolean): RevealConfig => {
-	config.once = once;
-	return config;
+  config.once = once;
+  return config;
 };
 
 /**
@@ -32,7 +32,7 @@ export const setOnce = (once: boolean): RevealConfig => {
  * @returns The config object with the updated corresponding device enabled property.
  */
 export const setDeviceStatus = (device: Device, status: boolean): RevealConfig => {
-	return setDevicesStatus([device], status);
+  return setDevicesStatus([device], status);
 };
 
 /**
@@ -42,12 +42,12 @@ export const setDeviceStatus = (device: Device, status: boolean): RevealConfig =
  * @returns The config object with the updated devices enabled property.
  */
 export const setDevicesStatus = (devices: Device[], status: boolean): RevealConfig => {
-	if (devices.length > 0) {
-		const uniqueDevices = [...new Set(devices)];
-		uniqueDevices.forEach((device) => (config.responsive[device].enabled = status));
-		return config;
-	}
-	throw new Error('At least one device required');
+  if (devices.length > 0) {
+    const uniqueDevices = [...new Set(devices)];
+    uniqueDevices.forEach((device) => (config.responsive[device].enabled = status));
+    return config;
+  }
+  throw new Error('At least one device required');
 };
 
 /**
@@ -57,15 +57,15 @@ export const setDevicesStatus = (devices: Device[], status: boolean): RevealConf
  * @returns The config object with the updated device breakpoint property.
  */
 export const setDeviceBreakpoint = (device: Device, breakpoint: number): RevealConfig => {
-	const configClone: RevealConfig = getConfigClone();
-	configClone.responsive[device].breakpoint = breakpoint;
+  const configClone: RevealConfig = getConfigClone();
+  configClone.responsive[device].breakpoint = breakpoint;
 
-	if (!hasValidBreakpoints(configClone.responsive)) {
-		throw new Error('Invalid breakpoints');
-	}
+  if (!hasValidBreakpoints(configClone.responsive)) {
+    throw new Error('Invalid breakpoints');
+  }
 
-	config.responsive[device].breakpoint = breakpoint;
-	return config;
+  config.responsive[device].breakpoint = breakpoint;
+  return config;
 };
 
 /**
@@ -75,15 +75,15 @@ export const setDeviceBreakpoint = (device: Device, breakpoint: number): RevealC
  * @returns The config object with the updated device settings.
  */
 export const setDevice = (device: Device, settings: IDevice): RevealConfig => {
-	const configClone: RevealConfig = getConfigClone();
-	configClone.responsive[device] = settings;
+  const configClone: RevealConfig = getConfigClone();
+  configClone.responsive[device] = settings;
 
-	if (!hasValidBreakpoints(configClone.responsive)) {
-		throw new Error('Invalid breakpoints');
-	}
+  if (!hasValidBreakpoints(configClone.responsive)) {
+    throw new Error('Invalid breakpoints');
+  }
 
-	config.responsive[device] = settings;
-	return config;
+  config.responsive[device] = settings;
+  return config;
 };
 
 /**
@@ -92,12 +92,12 @@ export const setDevice = (device: Device, settings: IDevice): RevealConfig => {
  * @returns The config object with the updated responsive property.
  */
 export const setResponsive = (responsive: Responsive): RevealConfig => {
-	if (!hasValidBreakpoints(responsive)) {
-		throw new Error('Invalid breakpoints');
-	}
+  if (!hasValidBreakpoints(responsive)) {
+    throw new Error('Invalid breakpoints');
+  }
 
-	config.responsive = responsive;
-	return config;
+  config.responsive = responsive;
+  return config;
 };
 
 /**
@@ -106,8 +106,8 @@ export const setResponsive = (responsive: Responsive): RevealConfig => {
  * @returns The Intersection Obsever configuration with the updated `root` property.
  */
 export const setObserverRoot = (root: IntersectionObserver['root']): IObserverOptions => {
-	defOpts.root = root;
-	return createObserverConfig();
+  defOpts.root = root;
+  return createObserverConfig();
 };
 
 /**
@@ -116,14 +116,14 @@ export const setObserverRoot = (root: IntersectionObserver['root']): IObserverOp
  * @returns The Intersection Observer configuration with the updated `rootMargin` property.
  */
 export const setObserverRootMargin = (rootMargin: IntersectionObserver['rootMargin']): IObserverOptions => {
-	const isValidMargin = ROOT_MARGIN_REGEX.test(rootMargin);
+  const isValidMargin = ROOT_MARGIN_REGEX.test(rootMargin);
 
-	if (!isValidMargin) {
-		throw new SyntaxError('Invalid rootMargin syntax');
-	}
+  if (!isValidMargin) {
+    throw new SyntaxError('Invalid rootMargin syntax');
+  }
 
-	defOpts.rootMargin = rootMargin;
-	return createObserverConfig();
+  defOpts.rootMargin = rootMargin;
+  return createObserverConfig();
 };
 
 /**
@@ -132,12 +132,12 @@ export const setObserverRootMargin = (rootMargin: IntersectionObserver['rootMarg
  * @returns The Intersection Observer configuration object with the updated `threshold` property.
  */
 export const setObserverThreshold = (threshold: number): IObserverOptions => {
-	if (!hasValidRange(threshold, 0, 1)) {
-		throw new RangeError('Threshold must be between 0.0 and 1.0');
-	}
+  if (!hasValidRange(threshold, 0, 1)) {
+    throw new RangeError('Threshold must be between 0.0 and 1.0');
+  }
 
-	defOpts.threshold = threshold;
-	return createObserverConfig();
+  defOpts.threshold = threshold;
+  return createObserverConfig();
 };
 
 /**
@@ -146,11 +146,11 @@ export const setObserverThreshold = (threshold: number): IObserverOptions => {
  * @returns The updated configuration used to manage the Intersection Observer behavior.
  */
 export const setObserverConfig = (observerConfig: Partial<IObserverOptions>): IObserverOptions => {
-	const newObserverConfig = createObserverConfig(observerConfig);
-	setObserverRoot(newObserverConfig.root);
-	setObserverRootMargin(newObserverConfig.rootMargin);
-	setObserverThreshold(newObserverConfig.threshold);
-	return newObserverConfig;
+  const newObserverConfig = createObserverConfig(observerConfig);
+  setObserverRoot(newObserverConfig.root);
+  setObserverRootMargin(newObserverConfig.rootMargin);
+  setObserverThreshold(newObserverConfig.threshold);
+  return newObserverConfig;
 };
 
 /**
@@ -159,10 +159,10 @@ export const setObserverConfig = (observerConfig: Partial<IObserverOptions>): IO
  * @returns The updated config object.
  */
 export const setConfig = (userConfig: RevealConfig): RevealConfig => {
-	setDev(userConfig.dev);
-	setOnce(userConfig.once);
-	setResponsive(userConfig.responsive);
-	return config;
+  setDev(userConfig.dev);
+  setOnce(userConfig.once);
+  setResponsive(userConfig.responsive);
+  return config;
 };
 
 /**
@@ -171,11 +171,11 @@ export const setConfig = (userConfig: RevealConfig): RevealConfig => {
  * @returns The updated default options.
  */
 export const setDefaultOptions = (options: RevealOptions): Required<RevealOptions> => {
-	const validOptions = createFinalOptions(options);
+  const validOptions = createFinalOptions(options);
 
-	if (!areOptionsValid(validOptions)) {
-		throw new Error('Invalid options');
-	}
+  if (!areOptionsValid(validOptions)) {
+    throw new Error('Invalid options');
+  }
 
-	return Object.assign(defOpts, validOptions);
+  return Object.assign(defOpts, validOptions);
 };

@@ -9,7 +9,7 @@ import type { RevealOptions } from './types';
  * @returns Whether the variable is within the range.
  */
 export const hasValidRange = (property: number, min: number, max: number) => {
-	return property >= min && property <= max;
+  return property >= min && property <= max;
 };
 
 /**
@@ -25,7 +25,7 @@ export const isPositive = (property: number) => property >= 0;
  * @returns Whether the variable is a positive integer.
  */
 export const isPositiveInteger = (property: number) => {
-	return isPositive(property) && Number.isInteger(property);
+  return isPositive(property) && Number.isInteger(property);
 };
 
 /**
@@ -34,14 +34,14 @@ export const isPositiveInteger = (property: number) => {
  * @returns Whether the provided options are valid.
  */
 export const areOptionsValid = (options: Required<RevealOptions>) => {
-	const { threshold, opacity, delay, duration, blur, scale, rootMargin } = options;
-	return (
-		ROOT_MARGIN_REGEX.test(rootMargin) &&
-		hasValidRange(threshold, 0, 1) &&
-		hasValidRange(opacity, 0, 1) &&
-		isPositive(delay) &&
-		isPositive(duration) &&
-		isPositive(blur) &&
-		isPositive(scale)
-	);
+  const { threshold, opacity, delay, duration, blur, scale, rootMargin } = options;
+  return (
+    ROOT_MARGIN_REGEX.test(rootMargin) &&
+    hasValidRange(threshold, 0, 1) &&
+    hasValidRange(opacity, 0, 1) &&
+    isPositive(delay) &&
+    isPositive(duration) &&
+    isPositive(blur) &&
+    isPositive(scale)
+  );
 };
