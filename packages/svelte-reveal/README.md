@@ -371,7 +371,7 @@ This project uses [Semantic Versioning](https://semver.org/) to keep track of it
 
 ## Changelog
 
-[CHANGELOG](https://github.com/DaveKeehl/svelte-reveal/blob/feature/setup-monorepo/packages/svelte-reveal/CHANGELOG.md)
+[CHANGELOG](./CHANGELOG.md)
 
 ## License
 
