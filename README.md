@@ -19,8 +19,8 @@ Svelte Reveal is a library created with the purpose of helping [Svelte](https://
 
 ## Monorepo Structure
 
-| Name                                                         | Purpose | Description                                  |
-| ------------------------------------------------------------ | ------- | -------------------------------------------- |
+| Name                                                                                                           | Purpose | Description                                  |
+| -------------------------------------------------------------------------------------------------------------- | ------- | -------------------------------------------- |
 | [svelte-reveal](https://github.com/DaveKeehl/svelte-reveal/tree/feature/setup-monorepo/packages/svelte-reveal) | package | The Svelte action that gets published on NPM |
 
 ## Troubleshooting
@@ -37,7 +37,7 @@ This project uses [Semantic Versioning](https://semver.org/) to keep track of it
 
 ## Changelog
 
-[CHANGELOG](https://github.com/DaveKeehl/svelte-reveal/blob/develop/CHANGELOG.md)
+[CHANGELOG](https://github.com/DaveKeehl/svelte-reveal/blob/feature/setup-monorepo/packages/svelte-reveal/CHANGELOG.md)
 
 ## License
 
