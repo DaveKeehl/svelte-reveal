@@ -55,7 +55,7 @@ Svelte Reveal is a library created with the purpose of helping [Svelte](https://
 
    ```html
    <script>
-   	import { reveal } from 'svelte-reveal';
+     import { reveal } from 'svelte-reveal';
    </script>
    ```
 
@@ -118,13 +118,13 @@ The way Svelte Reveal transitions the elements does not work well with [SSR](htt
 
 ```html
 <script>
-	import { afterUpdate } from 'svelte';
+  import { afterUpdate } from 'svelte';
 
-	let show = false;
+  let show = false;
 
-	afterUpdate(() => {
-		show = true;
-	});
+  afterUpdate(() => {
+    show = true;
+  });
 </script>
 
 {#if show}
@@ -224,7 +224,7 @@ If you need/want to considerably customize the behavior of this library, I sugge
 // App.svelte
 
 <script>
-	import '../reveal.config';
+  import '../reveal.config';
 </script>
 
 <div>{ your markup goes here }</div>
