@@ -19,7 +19,7 @@
   "devDependencies": {
     "husky": "^8.0.0",
     "turbo": "^1.6.3",
-    "turbo-cli": "latest"
+    "turbo-cli": "^0.39.6"
   },
   "engines": {
     "npm": ">=7.0.0",
