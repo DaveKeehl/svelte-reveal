@@ -6,10 +6,6 @@ COPY package*.json ./
 
 COPY packages/svelte-reveal/package.json ./packages/svelte-reveal/package.json
 
-# RUN npm install -g eslint prettier
-
-RUN npm install turbo-cli -g
-
 RUN npm install
 
 COPY . .
