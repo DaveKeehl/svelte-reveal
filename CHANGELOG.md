@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Open Graph image does not contain version number anymore
 - Updated dependencies
+- Fixed typo in README
 
 ## [0.7.0] - 2022-11-04
 ### Changed
