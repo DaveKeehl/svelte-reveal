@@ -1,6 +1,16 @@
-.DS_Store
-dist/
+# dependencies
 node_modules/
-svelte-reveal-*.tgz
+dist/
+
+# testing
 coverage/
+
+# misc
+.DS_Store
+svelte-reveal-*.tgz
+
+# debug
 debug.json
+
+# turbo
+.turbo
