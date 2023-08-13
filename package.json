@@ -6,7 +6,7 @@
     "packages/*"
   ],
   "scripts": {
-    "clean": "turbo run clean && rm -rf node_modules && rm -rf package-lock.json && rm -rf svelte-reveal-*.tgz",
+    "clean": "turbo run clean && rm -rf node_modules && rm -rf package-lock.json && rm -rf package && rm -rf svelte-reveal-*.tgz",
     "build": "turbo run build",
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
@@ -17,8 +17,8 @@
     "pack": "turbo pack"
   },
   "devDependencies": {
-    "husky": "^8.0.0",
-    "turbo": "^1.6.3",
+    "husky": "^8.0.3",
+    "turbo": "^1.10.12",
     "turbo-cli": "^0.39.6"
   },
   "engines": {

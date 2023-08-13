@@ -1,12 +1,11 @@
-import { build } from 'esbuild';
+import * as esbuild from 'esbuild';
 
-build({
+await esbuild.build({
   entryPoints: ['src/index.ts'],
   outfile: 'dist/index.js',
   bundle: true,
   minify: false,
   sourcemap: false,
   format: 'esm',
-  tsconfig: 'tsconfig.build.json',
-  watch: process.argv[2] === '--watch'
+  tsconfig: 'tsconfig.build.json'
 });
