@@ -13,32 +13,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-dependencies
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
+          node-version: 16
+          cache: "npm"
 
       - name: Installing dependencies
-        run: npm install -g prettier eslint && npm install
+        run: npm install
 
       - name: Linting
         run: npm run lint
 
       - name: Testing
         run: npm run test
+
+      - name: Building
+        run: npm run build
 
       - name: Upload code coverage
         uses: codecov/codecov-action@v3
@@ -50,14 +43,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: packages/svelte-reveal
 
       - name: Get Package Version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
+        with:
+          path: "packages/svelte-reveal"
 
-      - name: 'Get Latest Tag'
+      - name: "Get Latest Tag"
         id: latest-tag
-        uses: 'WyriHaximus/github-action-get-previous-tag@v1'
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
 
       - name: Print CI output
         run: |
@@ -80,22 +77,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Required due to the weg Git works, without it this action won't be able to find any or the correct tags
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-dependencies
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
+          node-version: 16
+          cache: "npm"
 
       - name: Extract release notes
         id: extract-release-notes
@@ -153,3 +141,4 @@ jobs:
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
+          package: ./packages/svelte-reveal/package.json

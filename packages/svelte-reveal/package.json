@@ -1,0 +1,82 @@
+{
+  "name": "svelte-reveal",
+  "version": "0.7.0",
+  "description": "Svelte action that leverages the Intersection Observer API to trigger reveal on scroll transitions",
+  "main": "dist/index.js",
+  "types": "dist/types/src/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist && rm -rf .turbo && rm -rf coverage && rm -rf node_modules",
+    "prebuild": "npm run build:types",
+    "build": "node esbuild.config.js",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:watch": "npm run build -- --watch",
+    "prepack": "pinst --disable",
+    "pack": "npm pack",
+    "postpack": "pinst --enable",
+    "lint": "TIMING=1 eslint .",
+    "format": "prettier --write --plugin-search-dir=. .",
+    "format:staged": "pretty-quick --staged",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "prepublishOnly": "pinst --disable && npm pack",
+    "postpublish": "pinst --enable"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaveKeehl/svelte-reveal.git"
+  },
+  "author": {
+    "name": "Davide Ciulla",
+    "email": "davide.ciulla@hotmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DaveKeehl/svelte-reveal/issues"
+  },
+  "homepage": "https://github.com/DaveKeehl/svelte-reveal#readme",
+  "keywords": [
+    "svelte-reveal",
+    "svelte",
+    "reveal",
+    "scroll",
+    "intersection",
+    "observer",
+    "transition",
+    "animation"
+  ],
+  "devDependencies": {
+    "@types/babel__core": "7.1.19",
+    "@types/jest": "27.5.2",
+    "@types/seedrandom": "3.0.2",
+    "@typescript-eslint/eslint-plugin": "5.42.0",
+    "@typescript-eslint/parser": "5.42.0",
+    "esbuild": "0.15.13",
+    "eslint": "8.27.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-config-turbo": "^0.0.4",
+    "eslint-plugin-prettier": "4.2.1",
+    "husky": "8.0.1",
+    "jest": "27.5.1",
+    "jest-sonar-reporter": "2.0.0",
+    "pinst": "3.0.0",
+    "prettier": "2.7.1",
+    "pretty-quick": "3.1.3",
+    "seedrandom": "3.0.5",
+    "svelte": "3.52.0",
+    "ts-jest": "27.1.5",
+    "typescript": "4.8.4"
+  },
+  "type": "module",
+  "jestSonar": {
+    "reportPath": "coverage",
+    "reportFile": "test-report.xml",
+    "indent": 4
+  },
+  "funding": {
+    "type": "ko-fi",
+    "url": "https://ko-fi.com/davekeehl"
+  }
+}

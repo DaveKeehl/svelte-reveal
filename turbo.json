@@ -1,0 +1,34 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "pipeline": {
+    "clean": {
+      "cache": false
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "test": {
+      "dependsOn": ["^test"],
+      "outputs": ["coverage/**"]
+    },
+    "test:watch": {
+      "dependsOn": ["^test"],
+      "outputs": ["coverage/**"],
+      "cache": false
+    },
+    "format": {
+      "outputs": []
+    },
+    "format:staged": {
+      "outputs": []
+    },
+    "lint": {
+      "outputs": []
+    },
+    "pack": {
+      "dependsOn": ["build"],
+      "outputs": ["*.tgz"]
+    }
+  }
+}
