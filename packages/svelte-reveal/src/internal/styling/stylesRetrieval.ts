@@ -1,5 +1,5 @@
 import { defOpts } from '../config';
-import type { Transition, RevealOptions, Easing, CustomEasing } from '../types';
+import type { Transition, RevealOptions, Easing, CustomEasing } from '../types/reveal';
 import { clean } from '../utils';
 import { addMediaQueries } from './mediaQueries';
 import { addVendorPrefixes } from './stylesGeneration';

@@ -1,7 +1,7 @@
 import { getRevealClassNames, createStylesheet } from './styling';
 import { config, defOpts } from './config';
 import { isStyleTagCreated, hasPageReloaded } from './stores';
-import type { RevealOptions, IReturnAction } from './types';
+import type { RevealOptions, IReturnAction } from './types/reveal';
 import { getRevealNode, activateRevealNode, createObserver, logInfo } from './DOM';
 import { areOptionsValid } from './validations';
 import { createFinalOptions } from './utils';

@@ -14,7 +14,7 @@ import {
   setConfig,
   setDefaultOptions
 } from '../src/internal/API';
-import type { RevealConfig, RevealOptions } from '../src/internal/types';
+import type { RevealConfig, RevealOptions } from '../src/internal/types/reveal';
 import { clone, createObserverConfig, getConfigClone } from '../src/internal/utils';
 
 beforeEach(() => {

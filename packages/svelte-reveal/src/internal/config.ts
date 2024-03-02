@@ -1,4 +1,4 @@
-import type { RevealOptions, RevealConfig } from './types';
+import type { RevealOptions, RevealConfig } from './types/reveal';
 
 /**
  * Object containing the default options used by the library for the reveal effect.

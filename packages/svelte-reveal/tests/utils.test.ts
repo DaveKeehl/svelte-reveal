@@ -1,6 +1,6 @@
 import { defOpts } from '../src/internal/config';
 import { setConfig, setObserverConfig } from '../src/internal/API';
-import type { RevealOptions } from '../src/internal/types';
+import type { RevealOptions } from '../src/internal/types/reveal';
 import { clean, createFinalOptions, createObserverConfig } from '../src/internal/utils';
 
 beforeEach(() => {

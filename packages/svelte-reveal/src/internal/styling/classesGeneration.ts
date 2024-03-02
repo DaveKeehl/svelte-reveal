@@ -1,5 +1,5 @@
 import seedrandom from 'seedrandom';
-import type { RevealOptions, Transition } from '../types';
+import type { RevealOptions, Transition } from '../types/reveal';
 import { getTransitionPropertiesCSSRules, getEasingFunction } from './stylesRetrieval';
 
 /**

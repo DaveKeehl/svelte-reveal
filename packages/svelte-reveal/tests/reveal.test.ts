@@ -1,5 +1,5 @@
 import { reveal } from '../src/internal/reveal';
-import type { RevealOptions } from '../src/internal/types';
+import type { RevealOptions } from '../src/internal/types/reveal';
 
 describe('reveal', () => {
   test('Should throw an error when using invalid options', () => {

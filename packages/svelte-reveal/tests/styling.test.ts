@@ -15,7 +15,7 @@ import {
   mergeRevealStyles,
   getRevealClassNames
 } from '../src/internal/styling';
-import type { Responsive, RevealOptions, Transition, CustomEasing } from '../src/internal/types';
+import type { Responsive, RevealOptions, Transition, CustomEasing } from '../src/internal/types/reveal';
 import { clean } from '../src/internal/utils';
 
 beforeEach(() => {

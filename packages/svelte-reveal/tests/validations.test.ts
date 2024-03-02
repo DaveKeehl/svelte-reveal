@@ -1,5 +1,5 @@
 import { createFinalOptions } from '../src/internal/utils';
-import type { RevealOptions } from '../src/internal/types';
+import type { RevealOptions } from '../src/internal/types/reveal';
 import { areOptionsValid, hasValidRange, isPositive, isPositiveInteger } from '../src/internal/validations';
 
 test('hasValidRange', () => {

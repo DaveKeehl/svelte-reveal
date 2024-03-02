@@ -1,6 +1,6 @@
 import { config } from './config';
 import { createTransitionPropertiesCSS, createTransitionDeclarationCSS, mergeRevealStyles } from './styling';
-import type { RevealOptions } from './types';
+import type { RevealOptions } from './types/reveal';
 import { clean, createObserverConfig } from './utils';
 
 /**

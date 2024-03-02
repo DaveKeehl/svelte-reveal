@@ -2,7 +2,7 @@ import { config, defOpts } from './config';
 import { hasValidBreakpoints } from './styling';
 import { createFinalOptions, createObserverConfig, getConfigClone } from './utils';
 import { areOptionsValid, hasValidRange } from './validations';
-import type { RevealConfig, Device, IDevice, Responsive, RevealOptions, IObserverOptions } from './types';
+import type { RevealConfig, Device, IDevice, Responsive, RevealOptions, IObserverOptions } from './types/reveal';
 import { ROOT_MARGIN_REGEX } from './constants';
 
 /**

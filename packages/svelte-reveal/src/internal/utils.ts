@@ -1,5 +1,5 @@
 import { config, defOpts } from './config';
-import type { IObserverOptions, RevealConfig, RevealOptions } from './types';
+import type { IObserverOptions, RevealConfig, RevealOptions } from './types/reveal';
 
 /**
  * Deep clones a given item.
