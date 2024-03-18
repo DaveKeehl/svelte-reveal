@@ -3,7 +3,7 @@ import { config } from './default/config';
 import { isStyleTagCreated, hasPageReloaded } from './stores';
 import { getNodeToReveal, activateRevealNode, createObserver, logInfo } from './DOM';
 import { createFinalOptions } from './utils';
-import type { ReturnAction } from './types/events';
+import type { ActionReturn } from './types/events';
 import type { RevealOptions } from './types/options';
 
 /**
@@ -12,7 +12,7 @@ import type { RevealOptions } from './types/options';
  * @param options User-provided options to tweak the scroll animation behavior for `node`.
  * @returns The action object containing the update and destroy functions for `node`.
  */
-export const reveal = (node: HTMLElement, options: Partial<RevealOptions>): Partial<ReturnAction> => {
+export const reveal = (node: HTMLElement, options: Partial<RevealOptions>): Partial<ActionReturn> => {
   const finalOptions = createFinalOptions(options);
   const { transition, disable, ref, onRevealStart, onMount, onUpdate, onDestroy } = finalOptions;
 

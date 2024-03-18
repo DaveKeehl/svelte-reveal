@@ -89,17 +89,6 @@ export type ScaleRevealTransition = BaseRevealTransition & {
   scale: number;
 };
 
-/**
- * The types of supported transitions.
- */
-export type Transition =
-  | FadeRevealTransition['transition']
-  | SlideRevealTransition['transition']
-  | FlyRevealTransition['transition']
-  | SpinRevealTransition['transition']
-  | BlurRevealTransition['transition']
-  | ScaleRevealTransition['transition'];
-
 export type RevealTransition =
   | FadeRevealTransition
   | SlideRevealTransition
@@ -107,3 +96,8 @@ export type RevealTransition =
   | SpinRevealTransition
   | BlurRevealTransition
   | ScaleRevealTransition;
+
+/**
+ * The types of supported transitions.
+ */
+export type Transition = RevealTransition['transition'];

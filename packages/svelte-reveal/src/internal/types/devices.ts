@@ -1,7 +1,7 @@
 /**
- * List of devices where `string` is the name and `Device` are the settings.
+ * The types of device.
  */
-export type Devices = [string, DeviceConfig][];
+export type Device = 'mobile' | 'tablet' | 'laptop' | 'desktop';
 
 /**
  * Object containing information about a specific type of device.
@@ -18,9 +18,9 @@ export type DeviceConfig = {
 };
 
 /**
- * The types of device.
+ * List of devices where `string` is the name and `Device` are the settings.
  */
-export type Device = 'mobile' | 'tablet' | 'laptop' | 'desktop';
+export type Devices = [Device, DeviceConfig][];
 
 /**
  * Information about how the library handles responsiveness.

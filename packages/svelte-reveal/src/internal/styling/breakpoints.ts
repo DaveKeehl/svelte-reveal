@@ -24,8 +24,8 @@ export const hasOverlappingBreakpoints = (responsive: Responsive): boolean => {
 export const hasValidBreakpoints = (responsive: Responsive): boolean => {
   const breakpoints = Object.values(responsive).map((device) => device.breakpoint);
 
-  const breakpointsOverlap = hasOverlappingBreakpoints(responsive);
+  const doBreakpointsOverlap = hasOverlappingBreakpoints(responsive);
   const allBreakpointsPositive = breakpoints.every((breakpoint) => isPositiveInteger(breakpoint));
 
-  return !breakpointsOverlap && allBreakpointsPositive;
+  return !doBreakpointsOverlap && allBreakpointsPositive;
 };

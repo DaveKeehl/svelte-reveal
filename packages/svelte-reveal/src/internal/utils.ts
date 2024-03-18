@@ -19,7 +19,7 @@ export const cleanString = (str: string): string =>
  * Creates a clone of the global configuration used by the library.
  * @returns The configuration clone.
  */
-export const getConfigClone = (): RevealConfig => structuredClone(config);
+export const cloneConfig = (): RevealConfig => structuredClone(config);
 
 /**
  * Creates an object containing all the options needed to configure an Intersection Observer.

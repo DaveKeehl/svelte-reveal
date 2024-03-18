@@ -34,7 +34,7 @@ export type RevealEvents = {
 /**
  * The return type of the Svelte action.
  */
-export type ReturnAction = {
+export type ActionReturn = {
   /**
    * Lifecycle function that is triggered when the action options are updated.
    */

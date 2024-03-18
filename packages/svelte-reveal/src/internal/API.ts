@@ -1,8 +1,8 @@
-import { config, defOpts } from './default/config';
+import { config } from './default/config';
 import { hasValidBreakpoints } from './styling';
-import { createFinalOptions, createObserverConfig, getConfigClone } from './utils';
+import { createFinalOptions, createObserverConfig, cloneConfig } from './utils';
 import { areOptionsValid, inRange } from './validations';
-import type { RevealConfig, RevealOptions } from './types/config';
+import type { RevealConfig } from './types/config';
 import { ROOT_MARGIN_REGEX } from './constants';
 import type { Device, DeviceConfig, Responsive } from './types/devices';
 import type { IntersectionObserverConfig } from './types/intersection-observer';
@@ -59,7 +59,7 @@ export const setDevicesStatus = (devices: Device[], status: boolean): RevealConf
  * @returns The config object with the updated device breakpoint property.
  */
 export const setDeviceBreakpoint = (device: Device, breakpoint: number): RevealConfig => {
-  const configClone: RevealConfig = getConfigClone();
+  const configClone: RevealConfig = cloneConfig();
   configClone.responsive[device].breakpoint = breakpoint;
 
   if (!hasValidBreakpoints(configClone.responsive)) {
@@ -77,7 +77,7 @@ export const setDeviceBreakpoint = (device: Device, breakpoint: number): RevealC
  * @returns The config object with the updated device settings.
  */
 export const setDevice = (device: Device, settings: DeviceConfig): RevealConfig => {
-  const configClone: RevealConfig = getConfigClone();
+  const configClone: RevealConfig = cloneConfig();
   configClone.responsive[device] = settings;
 
   if (!hasValidBreakpoints(configClone.responsive)) {

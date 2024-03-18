@@ -16,22 +16,22 @@ export const markRevealNode = (revealNode: HTMLElement): HTMLElement => {
 /**
  * Activates the reveal effect on the target element.
  * @param nodeToReveal The element to be revealed.
- * @param transitionPropertiesCssClass The CSS class to be used to create the transition properties on the target element.
- * @param transitionDeclarationCssClass The CSS class to be used to declare the transition on the target element.
+ * @param transitionPropertiesClassName The CSS class to be used to create the transition properties on the target element.
+ * @param transitionDeclarationClassName The CSS class to be used to declare the transition on the target element.
  * @param options The options to be applied to the reveal effect.
  * @returns The element to be revealed.
  */
 export const activateRevealNode = (
   nodeToReveal: HTMLElement,
-  transitionPropertiesCssClass: string,
-  transitionDeclarationCssClass: string,
+  transitionPropertiesClassName: string,
+  transitionDeclarationClassName: string,
   options: RevealOptions
 ): HTMLElement => {
   markRevealNode(nodeToReveal);
 
-  const transitionProperties = createCssTransitionProperties({ className: transitionPropertiesCssClass, options });
-  const transitionDeclaration = createCssTransitionDeclaration({
-    className: transitionDeclarationCssClass,
+  const cssTransitionProperties = createCssTransitionProperties({ className: transitionPropertiesClassName, options });
+  const cssTransitionDeclaration = createCssTransitionDeclaration({
+    className: transitionDeclarationClassName,
     duration: options.duration,
     delay: options.delay,
     easing: options.easing
@@ -45,11 +45,11 @@ export const activateRevealNode = (
    * concatenation of the styles of all elements on which Svelte Reveal has been activated on the page.
    */
   if (stylesheet) {
-    const nodeToRevealStyles = cleanString([transitionProperties, transitionDeclaration].join(' '));
+    const nodeToRevealStyles = cleanString([cssTransitionProperties, cssTransitionDeclaration].join(' '));
     const updatedRevealStyles = mergeRevealStyles(stylesheet.innerHTML, nodeToRevealStyles);
 
     stylesheet.innerHTML = updatedRevealStyles;
-    nodeToReveal.classList.add(transitionPropertiesCssClass, transitionDeclarationCssClass);
+    nodeToReveal.classList.add(transitionPropertiesClassName, transitionDeclarationClassName);
   }
 
   return nodeToReveal;
@@ -86,14 +86,12 @@ export const createObserver = (
   const { ref, reset, duration, delay, threshold, onResetStart, onResetEnd, onRevealEnd } = options;
 
   const observerConfig = createObserverConfig();
+  const sleep = duration + delay;
 
   return new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
     if (canDebug) {
       const entry = entries[0];
-
-      if (!entry) {
-        throw new Error('Intersection Observer entry is undefined');
-      }
+      if (!entry) throw new Error('Intersection Observer entry is undefined');
 
       const entryTarget = entry.target;
 
@@ -109,9 +107,9 @@ export const createObserver = (
       if (reset && !entry.isIntersecting) {
         onResetStart(revealNode);
         revealNode.classList.add(className);
-        setTimeout(() => onResetEnd(revealNode), duration + delay);
+        setTimeout(() => onResetEnd(revealNode), sleep);
       } else if (entry.intersectionRatio >= threshold) {
-        setTimeout(() => onRevealEnd(revealNode), duration + delay);
+        setTimeout(() => onRevealEnd(revealNode), sleep);
         revealNode.classList.remove(className);
         if (!reset) observer.unobserve(revealNode);
       }

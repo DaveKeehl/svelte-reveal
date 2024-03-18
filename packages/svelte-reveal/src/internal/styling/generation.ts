@@ -20,8 +20,8 @@ export const createStylesheet = (): void => {
   if (head !== null) head.appendChild(style);
 };
 
-const createClassName = (tokensArray: string[], uid: string) => {
-  const tokens = tokensArray
+const createRevealClassName = (ref: string, type: 'transition' | 'properties', transition: Transition, uid: string) => {
+  const tokens = [ref, type, transition]
     .filter((token) => token !== '')
     .map((token) => token.replace(/\s/g, '-'))
     .join('__');
@@ -39,8 +39,8 @@ export const getRevealClassNames = (ref: string, transition: Transition): [strin
   const seed = document.querySelectorAll('[data-action="reveal"]').length.toString();
   const uid = seedrandom(seed)().toString().slice(2);
 
-  const transitionDeclaration = createClassName([ref, 'transition', transition], uid);
-  const transitionProperties = createClassName([ref, 'properties', transition], uid);
+  const transitionDeclaration = createRevealClassName(ref, 'transition', transition, uid);
+  const transitionProperties = createRevealClassName(ref, 'properties', transition, uid);
 
   return [transitionDeclaration, transitionProperties];
 };
@@ -51,7 +51,7 @@ export const getRevealClassNames = (ref: string, transition: Transition): [strin
  * @param options The options used by the transition.
  * @returns The CSS rules to be used to create the given transition.
  */
-export const getTransitionPropertiesCssRules = (options: RevealOptions): string => {
+export const createTransitionPropertyRules = (options: RevealOptions): string => {
   const finalOptions = createFinalOptions(options);
   const { opacity } = finalOptions;
 
@@ -101,8 +101,8 @@ export const createCssTransitionDeclaration = ({
   easing
 }: {
   className: string;
-  duration: NonNullable<RevealOptions['duration']>;
-  delay: NonNullable<RevealOptions['delay']>;
+  duration: RevealOptions['duration'];
+  delay: RevealOptions['delay'];
   easing: Easing;
 }) => {
   return `
@@ -125,7 +125,7 @@ export const createCssTransitionProperties = ({
   className: string;
   options: RevealOptions;
 }) => {
-  const transitionPropertiesRules = getTransitionPropertiesCssRules(options);
+  const transitionPropertiesRules = createTransitionPropertyRules(options);
 
   return `
 		.${className} {
