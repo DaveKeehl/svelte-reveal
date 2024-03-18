@@ -33,7 +33,7 @@ export const isPositiveInteger = (value: number) => {
  * @param options The options to be checked.
  * @returns Whether the provided options are valid.
  */
-export const areOptionsValid = (options: Required<RevealOptions>) => {
+export const areOptionsValid = (options: RevealOptions) => {
   const isRootMarginValid = ROOT_MARGIN_REGEX.test(options.rootMargin);
   const isThresholdValid = inRange(options.threshold, 0, 1);
   const isOpacityValid = inRange(options.opacity, 0, 1);

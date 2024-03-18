@@ -1,11 +1,13 @@
 import { config } from './default/config';
 import { hasValidBreakpoints } from './styling';
 import { createFinalOptions, createObserverConfig, cloneConfig } from './utils';
-import { areOptionsValid, inRange } from './validations';
+import { inRange } from './validations';
 import type { RevealConfig } from './types/config';
 import { ROOT_MARGIN_REGEX } from './constants';
 import type { Device, DeviceConfig, Responsive } from './types/devices';
 import type { IntersectionObserverConfig } from './types/intersection-observer';
+import { defaultOptions } from './default/options';
+import type { RevealOptions } from './types/options';
 
 /**
  * Sets the development mode status.
@@ -44,12 +46,11 @@ export const setDeviceStatus = (device: Device, status: boolean): RevealConfig =
  * @returns The config object with the updated devices enabled property.
  */
 export const setDevicesStatus = (devices: Device[], status: boolean): RevealConfig => {
-  if (devices.length > 0) {
-    const uniqueDevices = [...new Set(devices)];
-    uniqueDevices.forEach((device) => (config.responsive[device].enabled = status));
-    return config;
-  }
-  throw new Error('At least one device required');
+  if (devices.length === 0) throw new Error('At least one device required');
+
+  const uniqueDevices = [...new Set(devices)];
+  uniqueDevices.forEach((device) => (config.responsive[device].enabled = status));
+  return config;
 };
 
 /**
@@ -59,12 +60,10 @@ export const setDevicesStatus = (devices: Device[], status: boolean): RevealConf
  * @returns The config object with the updated device breakpoint property.
  */
 export const setDeviceBreakpoint = (device: Device, breakpoint: number): RevealConfig => {
-  const configClone: RevealConfig = cloneConfig();
+  const configClone = cloneConfig();
   configClone.responsive[device].breakpoint = breakpoint;
 
-  if (!hasValidBreakpoints(configClone.responsive)) {
-    throw new Error('Invalid breakpoints');
-  }
+  if (!hasValidBreakpoints(configClone.responsive)) throw new Error('Invalid breakpoints');
 
   config.responsive[device].breakpoint = breakpoint;
   return config;
@@ -80,9 +79,7 @@ export const setDevice = (device: Device, settings: DeviceConfig): RevealConfig 
   const configClone: RevealConfig = cloneConfig();
   configClone.responsive[device] = settings;
 
-  if (!hasValidBreakpoints(configClone.responsive)) {
-    throw new Error('Invalid breakpoints');
-  }
+  if (!hasValidBreakpoints(configClone.responsive)) throw new Error('Invalid breakpoints');
 
   config.responsive[device] = settings;
   return config;
@@ -94,9 +91,7 @@ export const setDevice = (device: Device, settings: DeviceConfig): RevealConfig 
  * @returns The config object with the updated responsive property.
  */
 export const setResponsive = (responsive: Responsive): RevealConfig => {
-  if (!hasValidBreakpoints(responsive)) {
-    throw new Error('Invalid breakpoints');
-  }
+  if (!hasValidBreakpoints(responsive)) throw new Error('Invalid breakpoints');
 
   config.responsive = responsive;
   return config;
@@ -108,7 +103,7 @@ export const setResponsive = (responsive: Responsive): RevealConfig => {
  * @returns The Intersection Obsever configuration with the updated `root` property.
  */
 export const setObserverRoot = (root: IntersectionObserver['root']): IntersectionObserverConfig => {
-  defOpts.root = root;
+  defaultOptions.root = root;
   return createObserverConfig();
 };
 
@@ -120,11 +115,9 @@ export const setObserverRoot = (root: IntersectionObserver['root']): Intersectio
 export const setObserverRootMargin = (rootMargin: IntersectionObserver['rootMargin']): IntersectionObserverConfig => {
   const isValidMargin = ROOT_MARGIN_REGEX.test(rootMargin);
 
-  if (!isValidMargin) {
-    throw new SyntaxError('Invalid rootMargin syntax');
-  }
+  if (!isValidMargin) throw new SyntaxError('Invalid rootMargin syntax');
 
-  defOpts.rootMargin = rootMargin;
+  defaultOptions.rootMargin = rootMargin;
   return createObserverConfig();
 };
 
@@ -134,11 +127,9 @@ export const setObserverRootMargin = (rootMargin: IntersectionObserver['rootMarg
  * @returns The Intersection Observer configuration object with the updated `threshold` property.
  */
 export const setObserverThreshold = (threshold: number): IntersectionObserverConfig => {
-  if (!inRange(threshold, 0, 1)) {
-    throw new RangeError('Threshold must be between 0.0 and 1.0');
-  }
+  if (!inRange(threshold, 0, 1)) throw new RangeError('Threshold must be between 0.0 and 1.0');
 
-  defOpts.threshold = threshold;
+  defaultOptions.threshold = threshold;
   return createObserverConfig();
 };
 
@@ -169,15 +160,9 @@ export const setConfig = (userConfig: RevealConfig): RevealConfig => {
 
 /**
  * Updates the default options to be used for the reveal effect.
- * @param options The new default options.
+ * @param userOptions The new default options.
  * @returns The updated default options.
  */
-export const setDefaultOptions = (options: RevealOptions): Required<RevealOptions> => {
-  const validOptions = createFinalOptions(options);
-
-  if (!areOptionsValid(validOptions)) {
-    throw new Error('Invalid options');
-  }
-
-  return Object.assign(defOpts, validOptions);
+export const setDefaultOptions = (userOptions: Partial<RevealOptions>): RevealOptions => {
+  return createFinalOptions(userOptions);
 };
