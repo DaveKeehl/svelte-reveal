@@ -11,15 +11,16 @@ jobs:
       new-version: ${{ toJSON(steps.package-version.outputs.current-version != steps.latest-tag.outputs.tag) }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
           cache: "npm"
+          cache-dependency-path: "package-lock.json"
 
       - name: Installing dependencies
         run: npm ci
@@ -56,12 +57,6 @@ jobs:
         id: latest-tag
         uses: "WyriHaximus/github-action-get-previous-tag@v1"
 
-      - name: Print CI output
-        run: |
-          echo "Current version: ${{ steps.package-version.outputs.current-version }}" \
-          echo "Latest tag: ${{ steps.latest-tag.outputs.tag }}" \
-          echo "New version: ${{ toJSON(steps.package-version.outputs.current-version != steps.latest-tag.outputs.tag) }}"
-
   CD:
     needs: [CI]
     runs-on: ubuntu-latest
@@ -75,15 +70,16 @@ jobs:
           echo "New version: ${{ fromJSON(needs.CI.outputs.new-version) }}"
 
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
           cache: "npm"
+          cache-dependency-path: "package-lock.json"
 
       - name: Extract release notes
         id: extract-release-notes
