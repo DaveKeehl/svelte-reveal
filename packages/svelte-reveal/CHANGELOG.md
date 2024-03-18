@@ -9,11 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Open Graph image does not contain version number anymore
+- Now using a monorepo
+- Open Graph image and readme cover do not contain version number anymore
 - Updated dependencies
-- Tweaked some package.json scripts
+- Updated package.json scripts
 - Dropped TypeScript `importsNotUsedAsValues` option as deprecated, in favor of `verbatimModuleSyntax`
-- Using `.mjs` file extension for the esbuild config file
+- Using esbuild via its cli
 - Removed `build:watch` script
 - Dropped support for gitpod
 - Dropped support for docker
