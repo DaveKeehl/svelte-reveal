@@ -2,7 +2,7 @@
 
 # Svelte Reveal
 
-[![CI/CD](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml/badge.svg)](https://github.com/DaveKeehl/svelte-reveal/actions/workflows/main.yml) ![npm](https://img.shields.io/npm/v/svelte-reveal) ![npm](https://img.shields.io/npm/dw/svelte-reveal) ![GitHub](https://img.shields.io/github/license/davekeehl/svelte-reveal) [![codecov](https://codecov.io/gh/DaveKeehl/svelte-reveal/branch/develop/graph/badge.svg?token=AL1KI5XRDF)](https://codecov.io/gh/DaveKeehl/svelte-reveal) [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/DaveKeehl/svelte-reveal/tree/develop)
+![npm](https://img.shields.io/npm/v/svelte-reveal) ![npm](https://img.shields.io/npm/dw/svelte-reveal) ![GitHub](https://img.shields.io/github/license/davekeehl/svelte-reveal)
 
 > ⚠️&nbsp;&nbsp;Svelte Reveal is currently in beta. Do you want to [contribute](https://github.com/DaveKeehl/svelte-reveal/issues)? Do you want to [report a bug](https://github.com/DaveKeehl/svelte-reveal/issues/new?assignees=&labels=bug&template=bug_report.yml&title=%5BBug%5D%3A+)?
 
@@ -90,16 +90,6 @@ Svelte Reveal is a library created with the purpose of helping [Svelte](https://
 
    Using [SvelteKit](https://kit.svelte.dev/)? Please read [section "SvelteKit"](#sveltekit)
 
-### Docker
-
-A Docker image is also available on [DockerHub](https://hub.docker.com/):
-
-```bash
-docker pull davekeehl/svelte-reveal:latest
-```
-
-You can also use the provided Dockerfile in the repository as a development environment. You can read more [here](https://code.visualstudio.com/docs/remote/containers).
-
 ## Demo
 
 In this [Svelte REPL](https://svelte.dev/repl/1cf37b0947ac46b8ae9cc791abda7159?version=3.44.1) I created you can see Svelte Reveal in action.
@@ -128,7 +118,7 @@ The way Svelte Reveal transitions the elements does not work well with [SSR](htt
 </script>
 
 {#if show}
-  <your-element-or-component />
+<your-element-or-component />
 {/if}
 ```
 
