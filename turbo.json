@@ -6,16 +6,7 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
-    },
-    "test": {
-      "dependsOn": ["^test"],
-      "outputs": ["coverage/**"]
-    },
-    "test:watch": {
-      "dependsOn": ["^test"],
-      "outputs": ["coverage/**"],
-      "cache": false
+      "outputs": ["packages/svelte-reveal/dist/**"]
     },
     "format": {
       "outputs": []
@@ -25,10 +16,6 @@
     },
     "lint": {
       "outputs": []
-    },
-    "pack": {
-      "dependsOn": ["build"],
-      "outputs": ["*.tgz"]
     }
   }
 }

@@ -16,7 +16,7 @@
   "devDependencies": {
     "husky": "^9.0.11",
     "pretty-quick": "^4.0.0",
-    "turbo": "^1.12.4"
+    "turbo": "^1.12.5"
   },
   "engines": {
     "npm": ">=7.0.0",
