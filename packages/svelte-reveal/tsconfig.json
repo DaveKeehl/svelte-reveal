@@ -22,5 +22,5 @@
     "strict": true,
     "noUncheckedIndexedAccess": true
   },
-  "include": ["./src", "./tests"]
+  "include": ["./src"]
 }
