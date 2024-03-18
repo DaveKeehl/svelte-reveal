@@ -208,7 +208,19 @@ This library is globally configured as follows right of out the box:
 
 Svelte Reveal also exposes several functions you can call to change the [default options](./src/internal/config.ts#L6-L34) and [global configuration](./src/internal/config.ts#L39-L60) of this library. Since these functions operate on a global level across all components using Svelte Reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the default options and global config from multiple points.
 
-If you need/want to considerably customize the behavior of this library, I suggest creating a dedicated file (e.g. [reveal.config.js](./example/reveal.config.js)) and to import it from the top-most component in the components tree of your project. Within that file you can then call the API functions to set global settings or shared transition properties.
+If you need/want to considerably customize the behavior of this library, I suggest creating a dedicated file and to import it from the top-most component in the components tree of your project. Within that file you can then call the API functions to set global settings or shared transition properties.
+
+```typescript
+// reveal.config.js
+
+import { setDefaultOptions } from 'svelte-reveal';
+
+setDefaultOptions({
+  blur: 20,
+  x: -50,
+  duration: 3000
+});
+```
 
 ```html
 // App.svelte
