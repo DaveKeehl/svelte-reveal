@@ -1,5 +1,5 @@
 import { config } from '../default/config';
-import type { Device, Devices, Responsive } from '../types/devices';
+import type { Device, DeviceConfig, Devices, Responsive } from '../types/devices';
 import { cleanString } from '../utils';
 import { hasValidBreakpoints } from './breakpoints';
 
@@ -13,20 +13,15 @@ import { hasValidBreakpoints } from './breakpoints';
  */
 const createQuery = (
   devices: Devices,
-  previousDevice: [string, Device] | undefined,
+  previousDevice: [Device, DeviceConfig] | undefined,
   start: number,
   end: number
 ): string => {
   const smallest = Math.min(...devices.map(([, settings]) => settings.breakpoint));
   const largest = Math.max(...devices.map(([, settings]) => settings.breakpoint));
 
-  if (previousDevice === undefined || start === smallest) {
-    return `(max-width: ${end}px)`;
-  }
-
-  if (end === largest) {
-    return `(min-width: ${previousDevice[1].breakpoint + 1}px)`;
-  }
+  if (previousDevice === undefined || start === smallest) return `(max-width: ${end}px)`;
+  if (end === largest) return `(min-width: ${previousDevice[1].breakpoint + 1}px)`;
 
   return `(min-width: ${previousDevice[1].breakpoint + 1}px) and (max-width: ${end}px)`;
 };
@@ -75,11 +70,9 @@ const getOptimalQueries = (devices: Devices): string[] => {
  * @returns The CSS ruleset decorated with the media queries generated from the analysis of the `responsive` object.
  */
 export const addMediaQueries = (styles: string, responsive: Responsive = config.responsive): string => {
-  if (!hasValidBreakpoints(responsive)) {
-    throw new Error('Cannot create media queries due to invalid breakpoints');
-  }
+  if (!hasValidBreakpoints(responsive)) throw new Error('Cannot create media queries due to invalid breakpoints');
 
-  const devices: Devices = Object.entries(responsive);
+  const devices = Object.entries(responsive) as Devices;
   const allDevicesEnabled = devices.every(([, settings]) => settings.enabled);
   const allDevicesDisabled = devices.every(([, settings]) => !settings.enabled);
 
