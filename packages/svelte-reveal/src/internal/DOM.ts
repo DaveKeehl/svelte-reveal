@@ -1,7 +1,7 @@
-import { config } from './config';
-import { createTransitionPropertiesCSS, createTransitionDeclarationCSS, mergeRevealStyles } from './styling';
-import type { RevealOptions } from './types/reveal';
-import { clean, createObserverConfig } from './utils';
+import { config } from './default/config';
+import { createCssTransitionProperties, createCssTransitionDeclaration, mergeRevealStyles } from './styling';
+import type { RevealOptions } from './types/options';
+import { cleanString, createObserverConfig } from './utils';
 
 /**
  * Marks a DOM node as part of the reveal process.
@@ -29,8 +29,13 @@ export const activateRevealNode = (
 ): HTMLElement => {
   markRevealNode(revealNode);
 
-  const transitionDeclaration = createTransitionDeclarationCSS(transitionDeclarationCSSClass, options);
-  const transitionProperties = createTransitionPropertiesCSS(transitionPropertiesCSSClass, options);
+  const transitionDeclaration = createCssTransitionDeclaration({
+    className: transitionDeclarationCSSClass,
+    duration: options.duration,
+    delay: options.delay,
+    easing: options.easing
+  });
+  const transitionProperties = createCssTransitionProperties({ className: transitionPropertiesCSSClass, options });
   const stylesheet = document.querySelector('style[data-action="reveal"]');
 
   /**
@@ -40,10 +45,8 @@ export const activateRevealNode = (
    * concatenation of the styles of all elements on which Svelte Reveal has been activated on the page.
    */
   if (stylesheet) {
-    const existingRevealStyles = stylesheet.innerHTML;
-    const nodeRevealStyles = clean([transitionProperties, transitionDeclaration].join(' '));
-
-    const updatedRevealStyles = mergeRevealStyles(existingRevealStyles, nodeRevealStyles);
+    const nodeRevealStyles = cleanString([transitionProperties, transitionDeclaration].join(' '));
+    const updatedRevealStyles = mergeRevealStyles(stylesheet.innerHTML, nodeRevealStyles);
 
     stylesheet.innerHTML = updatedRevealStyles;
     revealNode.classList.add(transitionPropertiesCSSClass);
@@ -58,9 +61,8 @@ export const activateRevealNode = (
  * @param node The HTML element passed by the svelte action.
  * @returns The HTML element to be revealed.
  */
-export const getRevealNode = (node: HTMLElement): HTMLElement => {
+export const getNodeToReveal = (node: HTMLElement): HTMLElement => {
   if (node.style.length === 0) return node;
-
   const wrapper = document.createElement('div');
   wrapper.appendChild(node);
   return wrapper;

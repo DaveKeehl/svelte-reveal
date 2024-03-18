@@ -1,4 +1,4 @@
-import { config, defOpts } from '../src/internal/config';
+import { config, defOpts } from '../src/internal/default/config';
 import {
   setDev,
   setOnce,
@@ -14,7 +14,7 @@ import {
   setConfig,
   setDefaultOptions
 } from '../src/internal/API';
-import type { RevealConfig, RevealOptions } from '../src/internal/types/reveal';
+import type { RevealConfig, RevealOptions } from '../src/internal/types/config';
 import { clone, createObserverConfig, getConfigClone } from '../src/internal/utils';
 
 beforeEach(() => {

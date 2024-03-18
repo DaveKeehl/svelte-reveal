@@ -1,4 +1,4 @@
-import { defOpts } from '../src/internal/config';
+import { defOpts } from '../src/internal/default/config';
 
 test('Checking default options', () => {
   expect(defOpts.disable).toBe(false);

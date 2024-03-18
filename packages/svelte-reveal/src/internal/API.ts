@@ -1,9 +1,11 @@
-import { config, defOpts } from './config';
+import { config, defOpts } from './default/config';
 import { hasValidBreakpoints } from './styling';
 import { createFinalOptions, createObserverConfig, getConfigClone } from './utils';
-import { areOptionsValid, hasValidRange } from './validations';
-import type { RevealConfig, Device, IDevice, Responsive, RevealOptions, IObserverOptions } from './types/reveal';
+import { areOptionsValid, inRange } from './validations';
+import type { RevealConfig, RevealOptions } from './types/config';
 import { ROOT_MARGIN_REGEX } from './constants';
+import type { Device, DeviceConfig, Responsive } from './types/devices';
+import type { IntersectionObserverConfig } from './types/intersection-observer';
 
 /**
  * Sets the development mode status.
@@ -74,7 +76,7 @@ export const setDeviceBreakpoint = (device: Device, breakpoint: number): RevealC
  * @param settings The new settings for `device`.
  * @returns The config object with the updated device settings.
  */
-export const setDevice = (device: Device, settings: IDevice): RevealConfig => {
+export const setDevice = (device: Device, settings: DeviceConfig): RevealConfig => {
   const configClone: RevealConfig = getConfigClone();
   configClone.responsive[device] = settings;
 
@@ -105,7 +107,7 @@ export const setResponsive = (responsive: Responsive): RevealConfig => {
  * @param root The new Intersection Observer root element.
  * @returns The Intersection Obsever configuration with the updated `root` property.
  */
-export const setObserverRoot = (root: IntersectionObserver['root']): IObserverOptions => {
+export const setObserverRoot = (root: IntersectionObserver['root']): IntersectionObserverConfig => {
   defOpts.root = root;
   return createObserverConfig();
 };
@@ -115,7 +117,7 @@ export const setObserverRoot = (root: IntersectionObserver['root']): IObserverOp
  * @param rootMargin The new rootMargin used by the Intersection Observer.
  * @returns The Intersection Observer configuration with the updated `rootMargin` property.
  */
-export const setObserverRootMargin = (rootMargin: IntersectionObserver['rootMargin']): IObserverOptions => {
+export const setObserverRootMargin = (rootMargin: IntersectionObserver['rootMargin']): IntersectionObserverConfig => {
   const isValidMargin = ROOT_MARGIN_REGEX.test(rootMargin);
 
   if (!isValidMargin) {
@@ -131,8 +133,8 @@ export const setObserverRootMargin = (rootMargin: IntersectionObserver['rootMarg
  * @param threshold The new threshold used by the Intersection Observer.
  * @returns The Intersection Observer configuration object with the updated `threshold` property.
  */
-export const setObserverThreshold = (threshold: number): IObserverOptions => {
-  if (!hasValidRange(threshold, 0, 1)) {
+export const setObserverThreshold = (threshold: number): IntersectionObserverConfig => {
+  if (!inRange(threshold, 0, 1)) {
     throw new RangeError('Threshold must be between 0.0 and 1.0');
   }
 
@@ -145,7 +147,7 @@ export const setObserverThreshold = (threshold: number): IObserverOptions => {
  * @param observerConfig The new Intersection Observer configuration.
  * @returns The updated configuration used to manage the Intersection Observer behavior.
  */
-export const setObserverConfig = (observerConfig: Partial<IObserverOptions>): IObserverOptions => {
+export const setObserverConfig = (observerConfig: Partial<IntersectionObserverConfig>): IntersectionObserverConfig => {
   const newObserverConfig = createObserverConfig(observerConfig);
   setObserverRoot(newObserverConfig.root);
   setObserverRootMargin(newObserverConfig.rootMargin);

@@ -1,4 +1,4 @@
-export type RevealDebugOptions = {
+export type DebugOptions = {
   /**
    * It enables/disables debugging mode for the target DOM element.
    * This will log to the console the target DOM element, along with the options and config.

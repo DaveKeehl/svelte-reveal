@@ -1,6 +1,6 @@
-import { config } from '../config';
-import type { Devices, IDevice, Responsive } from '../types/reveal';
-import { clean } from '../utils';
+import { config } from '../default/config';
+import type { Device, Devices } from '../types/devices';
+import { cleanString } from '../utils';
 import { hasValidBreakpoints } from './breakpoints';
 
 /**
@@ -13,7 +13,7 @@ import { hasValidBreakpoints } from './breakpoints';
  */
 const createQuery = (
   devices: Devices,
-  previousDevice: [string, IDevice] | undefined,
+  previousDevice: [string, Device] | undefined,
   start: number,
   end: number
 ): string => {
@@ -86,7 +86,7 @@ export const addMediaQueries = (styles: string, responsive: Responsive = config.
   if (allDevicesEnabled) return styles; // If styles are applied to every device, you don't need media queries
 
   if (allDevicesDisabled) {
-    return clean(`
+    return cleanString(`
 			@media not all {
 				${styles}
 			}
@@ -95,7 +95,7 @@ export const addMediaQueries = (styles: string, responsive: Responsive = config.
 
   const query = getOptimalQueries(devices).join(', ');
 
-  return clean(`
+  return cleanString(`
 		@media ${query} {
 			${styles}
 		}

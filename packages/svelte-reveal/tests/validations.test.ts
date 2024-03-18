@@ -1,11 +1,11 @@
 import { createFinalOptions } from '../src/internal/utils';
-import type { RevealOptions } from '../src/internal/types/reveal';
-import { areOptionsValid, hasValidRange, isPositive, isPositiveInteger } from '../src/internal/validations';
+import type { RevealOptions } from '../src/internal/types/config';
+import { areOptionsValid, inRange, isPositive, isPositiveInteger } from '../src/internal/validations';
 
 test('hasValidRange', () => {
-  expect(hasValidRange(100, 0, 200)).toBe(true);
-  expect(hasValidRange(0, 0, 0)).toBe(true);
-  expect(hasValidRange(100, 101, 150)).toBe(false);
+  expect(inRange(100, 0, 200)).toBe(true);
+  expect(inRange(0, 0, 0)).toBe(true);
+  expect(inRange(100, 101, 150)).toBe(false);
 });
 
 test('isPositive', () => {

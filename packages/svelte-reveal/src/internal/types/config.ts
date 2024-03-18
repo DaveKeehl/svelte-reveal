@@ -1,13 +1,4 @@
-import type { RevealDebugOptions } from './debug';
 import type { Responsive } from './devices';
-import type { RevealEvents } from './events';
-import type { IntersectionObserverConfig } from './intersection-observer';
-import type { RevealTransition } from './transitions';
-
-/**
- * Object containing options to tweak the behavior of Svelte Reveal at the element level.
- */
-export type RevealOptions = RevealDebugOptions & IntersectionObserverConfig & RevealTransition & RevealEvents;
 
 /**
  * Object containing configuration properties to change the behavior

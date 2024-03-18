@@ -1,18 +1,14 @@
-enum TransitionType {
-  FLY = 'fly',
-  FADE = 'fade',
-  BLUR = 'blur',
-  SCALE = 'scale',
-  SLIDE = 'slide',
-  SPIN = 'spin'
-}
-
 /**
  * The types of supported transitions.
  */
-export type Transition = keyof typeof TransitionType;
+export type Transition =
+  | SlideRevealTransition['transition']
+  | FlyRevealTransition['transition']
+  | SpinRevealTransition['transition']
+  | BlurRevealTransition['transition']
+  | ScaleRevealTransition['transition'];
 
-type BaseRevealTransition = {
+export type BaseRevealTransition = {
   /**
    * When set to false, the transition for the target element is disabled.
    */
@@ -38,11 +34,18 @@ type BaseRevealTransition = {
   opacity?: number;
 };
 
-type SlideRevealTransition = BaseRevealTransition & {
+export type FadeRevealTransition = BaseRevealTransition & {
   /**
    * The type of transition that is triggered when the target node becomes visible.
    */
-  transition: TransitionType.SLIDE;
+  transition: 'fade';
+};
+
+export type SlideRevealTransition = BaseRevealTransition & {
+  /**
+   * The type of transition that is triggered when the target node becomes visible.
+   */
+  transition: 'slide';
   /**
    * The starting offset position in pixels on the x-axis of the `"slide"` transition.
    * If `x` is negative, the element will transition from the left, else from the right.
@@ -50,11 +53,11 @@ type SlideRevealTransition = BaseRevealTransition & {
   x?: number;
 };
 
-type FlyRevealTransition = BaseRevealTransition & {
+export type FlyRevealTransition = BaseRevealTransition & {
   /**
    * The type of transition that is triggered when the target node becomes visible.
    */
-  transition: TransitionType.FLY;
+  transition: 'fly';
   /**
    * The starting offset position in pixels on the y-axis of the `"fly"` transition.
    * If `y` is negative, the element will transition from the top, else from the bottom.
@@ -62,11 +65,11 @@ type FlyRevealTransition = BaseRevealTransition & {
   y?: number;
 };
 
-type SpinRevealTransition = BaseRevealTransition & {
+export type SpinRevealTransition = BaseRevealTransition & {
   /**
    * The type of transition that is triggered when the target node becomes visible.
    */
-  transition: TransitionType.SPIN;
+  transition: 'spin';
   /**
    * The starting rotation offset in degrees of the `"spin"` transition.
    * If `rotate` is positive, the element will spin clockwise, else counter-clockwise.
@@ -74,22 +77,22 @@ type SpinRevealTransition = BaseRevealTransition & {
   rotate?: number;
 };
 
-type BlurRevealTransition = BaseRevealTransition & {
+export type BlurRevealTransition = BaseRevealTransition & {
   /**
    * The type of transition that is triggered when the target node becomes visible.
    */
-  transition: TransitionType.BLUR;
+  transition: 'blur';
   /**
    * The starting blur value in pixels of the `"blur"` transition.
    */
   blur?: number;
 };
 
-type ScaleRevealTransition = BaseRevealTransition & {
+export type ScaleRevealTransition = BaseRevealTransition & {
   /**
    * The type of transition that is triggered when the target node becomes visible.
    */
-  transition: TransitionType.SCALE;
+  transition: 'scale';
   /**
    * The starting scale value in percentage of the `"scale"` transition.
    */
@@ -97,6 +100,7 @@ type ScaleRevealTransition = BaseRevealTransition & {
 };
 
 export type RevealTransition =
+  | FadeRevealTransition
   | SlideRevealTransition
   | FlyRevealTransition
   | SpinRevealTransition

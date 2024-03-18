@@ -1,5 +1,5 @@
 /**
- * List of devices where `string` is the name and `IDevice` are the settings.
+ * List of devices where `string` is the name and `Device` are the settings.
  */
 export type Devices = [string, DeviceConfig][];
 
@@ -18,7 +18,7 @@ export type DeviceConfig = {
 };
 
 /**
- * The types of devices.
+ * The types of device.
  */
 export type Device = 'mobile' | 'tablet' | 'laptop' | 'desktop';
 

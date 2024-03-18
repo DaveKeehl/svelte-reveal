@@ -1,7 +1,7 @@
-import { defOpts } from '../src/internal/config';
+import { defOpts } from '../src/internal/default/config';
 import { setConfig, setObserverConfig } from '../src/internal/API';
-import type { RevealOptions } from '../src/internal/types/reveal';
-import { clean, createFinalOptions, createObserverConfig } from '../src/internal/utils';
+import type { RevealOptions } from '../src/internal/types/config';
+import { cleanString, createFinalOptions, createObserverConfig } from '../src/internal/utils';
 
 beforeEach(() => {
   setConfig({
@@ -38,8 +38,8 @@ test('clean', () => {
 							hello world
 	`;
 
-  expect(clean(longString)).toBe('hello world');
-  expect(clean('')).toBe('');
+  expect(cleanString(longString)).toBe('hello world');
+  expect(cleanString('')).toBe('');
 });
 
 describe('createFinalOptions', () => {

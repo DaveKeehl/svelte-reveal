@@ -1,4 +1,4 @@
-import { defOpts, config } from '../src/internal/config';
+import { defOpts, config } from '../src/internal/default/config';
 import { setConfig, setObserverConfig } from '../src/internal/API';
 import {
   createStylesheet,
@@ -8,15 +8,15 @@ import {
   addVendorPrefixes,
   addMediaQueries,
   getTransitionPropertiesCSSRules,
-  getEasingFunction,
+  getCssEasingFunction,
   getMinifiedStylesFromQuery,
-  createTransitionPropertiesCSS,
-  createTransitionDeclarationCSS,
+  createCssTransitionProperties,
+  createCssTransitionDeclaration,
   mergeRevealStyles,
   getRevealClassNames
 } from '../src/internal/styling';
-import type { Responsive, RevealOptions, Transition, CustomEasing } from '../src/internal/types/reveal';
-import { clean } from '../src/internal/utils';
+import type { Responsive, RevealOptions, Transition, CustomEasing } from '../src/internal/types/config';
+import { cleanString } from '../src/internal/utils';
 
 beforeEach(() => {
   setConfig({
@@ -94,9 +94,9 @@ describe('mergeRevealStyles', () => {
 		}
 	`;
   const [transitionDeclarationClass, transitionPropertiesClass] = getRevealClassNames('', 'fly');
-  const transitionProperties = createTransitionPropertiesCSS(transitionDeclarationClass, defOpts);
-  const transitionDeclaration = createTransitionDeclarationCSS(transitionPropertiesClass, defOpts);
-  const nodeRevealStyles = clean([transitionProperties, transitionDeclaration].join(' '));
+  const transitionProperties = createCssTransitionProperties(transitionDeclarationClass, defOpts);
+  const transitionDeclaration = createCssTransitionDeclaration(transitionPropertiesClass, defOpts);
+  const nodeRevealStyles = cleanString([transitionProperties, transitionDeclaration].join(' '));
   const updatedStyles = mergeRevealStyles(existingStyles, nodeRevealStyles);
 
   test('Has no media queries by default', () => {
@@ -232,7 +232,7 @@ describe('addMediaQueries', () => {
 			}
 		`;
 
-    expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+    expect(addMediaQueries(styles, custom)).toBe(cleanString(decorated));
   });
 
   describe('Combine queries', () => {
@@ -262,7 +262,7 @@ describe('addMediaQueries', () => {
 				}
 			`;
 
-      expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+      expect(addMediaQueries(styles, custom)).toBe(cleanString(decorated));
     });
 
     test('With only consecutive devices starting from the largest one', () => {
@@ -291,7 +291,7 @@ describe('addMediaQueries', () => {
 				}
 			`;
 
-      expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+      expect(addMediaQueries(styles, custom)).toBe(cleanString(decorated));
     });
 
     test('With multiple single spaced devices (1)', () => {
@@ -320,7 +320,7 @@ describe('addMediaQueries', () => {
 				}
 			`;
 
-      expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+      expect(addMediaQueries(styles, custom)).toBe(cleanString(decorated));
     });
 
     test('With multiple single spaced devices (2)', () => {
@@ -349,7 +349,7 @@ describe('addMediaQueries', () => {
 				}
 			`;
 
-      expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+      expect(addMediaQueries(styles, custom)).toBe(cleanString(decorated));
     });
 
     test('With pairs of consecutive enabled devices (1)', () => {
@@ -378,7 +378,7 @@ describe('addMediaQueries', () => {
 				}
 			`;
 
-      expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+      expect(addMediaQueries(styles, custom)).toBe(cleanString(decorated));
     });
 
     test('With pairs of consecutive enabled devices (2)', () => {
@@ -407,7 +407,7 @@ describe('addMediaQueries', () => {
 				}
 			`;
 
-      expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+      expect(addMediaQueries(styles, custom)).toBe(cleanString(decorated));
     });
 
     test('With pairs of consecutive enabled devices (3)', () => {
@@ -436,7 +436,7 @@ describe('addMediaQueries', () => {
 				}
 			`;
 
-      expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+      expect(addMediaQueries(styles, custom)).toBe(cleanString(decorated));
     });
 
     test('With pairs and single enabled devices (1)', () => {
@@ -465,7 +465,7 @@ describe('addMediaQueries', () => {
 				}
 			`;
 
-      expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+      expect(addMediaQueries(styles, custom)).toBe(cleanString(decorated));
     });
 
     test('With pairs and single enabled devices (2)', () => {
@@ -494,7 +494,7 @@ describe('addMediaQueries', () => {
 				}
 			`;
 
-      expect(addMediaQueries(styles, custom)).toBe(clean(decorated));
+      expect(addMediaQueries(styles, custom)).toBe(cleanString(decorated));
     });
   });
 });
@@ -601,114 +601,114 @@ describe('getTransitionPropertiesCSSRules', () => {
 describe('getEasingFunction', () => {
   describe('Have correct weights', () => {
     test('linear', () => {
-      expect(getEasingFunction('linear')).toBe('cubic-bezier(0, 0, 1, 1)');
+      expect(getCssEasingFunction('linear')).toBe('cubic-bezier(0, 0, 1, 1)');
     });
 
     test('easeInSine', () => {
-      expect(getEasingFunction('easeInSine')).toBe('cubic-bezier(0.12, 0, 0.39, 0)');
+      expect(getCssEasingFunction('easeInSine')).toBe('cubic-bezier(0.12, 0, 0.39, 0)');
     });
 
     test('easeOutSine', () => {
-      expect(getEasingFunction('easeOutSine')).toBe('cubic-bezier(0.61, 1, 0.88, 1)');
+      expect(getCssEasingFunction('easeOutSine')).toBe('cubic-bezier(0.61, 1, 0.88, 1)');
     });
 
     test('easeInOutSine', () => {
-      expect(getEasingFunction('easeInOutSine')).toBe('cubic-bezier(0.37, 0, 0.63, 1)');
+      expect(getCssEasingFunction('easeInOutSine')).toBe('cubic-bezier(0.37, 0, 0.63, 1)');
     });
 
     test('easeInQuad', () => {
-      expect(getEasingFunction('easeInQuad')).toBe('cubic-bezier(0.11, 0, 0.5, 0)');
+      expect(getCssEasingFunction('easeInQuad')).toBe('cubic-bezier(0.11, 0, 0.5, 0)');
     });
 
     test('easeOutQuad', () => {
-      expect(getEasingFunction('easeOutQuad')).toBe('cubic-bezier(0.5, 1, 0.89, 1)');
+      expect(getCssEasingFunction('easeOutQuad')).toBe('cubic-bezier(0.5, 1, 0.89, 1)');
     });
 
     test('easeInOutQuad', () => {
-      expect(getEasingFunction('easeInOutQuad')).toBe('cubic-bezier(0.45, 0, 0.55, 1)');
+      expect(getCssEasingFunction('easeInOutQuad')).toBe('cubic-bezier(0.45, 0, 0.55, 1)');
     });
 
     test('easeInCubic', () => {
-      expect(getEasingFunction('easeInCubic')).toBe('cubic-bezier(0.32, 0, 0.67, 0)');
+      expect(getCssEasingFunction('easeInCubic')).toBe('cubic-bezier(0.32, 0, 0.67, 0)');
     });
 
     test('easeOutCubic', () => {
-      expect(getEasingFunction('easeOutCubic')).toBe('cubic-bezier(0.33, 1, 0.68, 1)');
+      expect(getCssEasingFunction('easeOutCubic')).toBe('cubic-bezier(0.33, 1, 0.68, 1)');
     });
 
     test('easeInOutCubic', () => {
-      expect(getEasingFunction('easeInOutCubic')).toBe('cubic-bezier(0.65, 0, 0.35, 1)');
+      expect(getCssEasingFunction('easeInOutCubic')).toBe('cubic-bezier(0.65, 0, 0.35, 1)');
     });
 
     test('easeInQuart', () => {
-      expect(getEasingFunction('easeInQuart')).toBe('cubic-bezier(0.5, 0, 0.75, 0)');
+      expect(getCssEasingFunction('easeInQuart')).toBe('cubic-bezier(0.5, 0, 0.75, 0)');
     });
 
     test('easeOutQuart', () => {
-      expect(getEasingFunction('easeOutQuart')).toBe('cubic-bezier(0.25, 1, 0.5, 1)');
+      expect(getCssEasingFunction('easeOutQuart')).toBe('cubic-bezier(0.25, 1, 0.5, 1)');
     });
 
     test('easeInOutQuart', () => {
-      expect(getEasingFunction('easeInOutQuart')).toBe('cubic-bezier(0.76, 0, 0.24, 1)');
+      expect(getCssEasingFunction('easeInOutQuart')).toBe('cubic-bezier(0.76, 0, 0.24, 1)');
     });
 
     test('easeInQuint', () => {
-      expect(getEasingFunction('easeInQuint')).toBe('cubic-bezier(0.64, 0, 0.78, 0)');
+      expect(getCssEasingFunction('easeInQuint')).toBe('cubic-bezier(0.64, 0, 0.78, 0)');
     });
 
     test('easeOutQuint', () => {
-      expect(getEasingFunction('easeOutQuint')).toBe('cubic-bezier(0.22, 1, 0.36, 1)');
+      expect(getCssEasingFunction('easeOutQuint')).toBe('cubic-bezier(0.22, 1, 0.36, 1)');
     });
 
     test('easeInOutQuint', () => {
-      expect(getEasingFunction('easeInOutQuint')).toBe('cubic-bezier(0.83, 0, 0.17, 1)');
+      expect(getCssEasingFunction('easeInOutQuint')).toBe('cubic-bezier(0.83, 0, 0.17, 1)');
     });
 
     test('easeInExpo', () => {
-      expect(getEasingFunction('easeInExpo')).toBe('cubic-bezier(0.7, 0, 0.84, 0)');
+      expect(getCssEasingFunction('easeInExpo')).toBe('cubic-bezier(0.7, 0, 0.84, 0)');
     });
 
     test('easeOutExpo', () => {
-      expect(getEasingFunction('easeOutExpo')).toBe('cubic-bezier(0.16, 1, 0.3, 1)');
+      expect(getCssEasingFunction('easeOutExpo')).toBe('cubic-bezier(0.16, 1, 0.3, 1)');
     });
 
     test('easeInOutExpo', () => {
-      expect(getEasingFunction('easeInOutExpo')).toBe('cubic-bezier(0.87, 0, 0.13, 1)');
+      expect(getCssEasingFunction('easeInOutExpo')).toBe('cubic-bezier(0.87, 0, 0.13, 1)');
     });
 
     test('easeInCirc', () => {
-      expect(getEasingFunction('easeInCirc')).toBe('cubic-bezier(0.55, 0, 1, 0.45)');
+      expect(getCssEasingFunction('easeInCirc')).toBe('cubic-bezier(0.55, 0, 1, 0.45)');
     });
 
     test('easeOutCirc', () => {
-      expect(getEasingFunction('easeOutCirc')).toBe('cubic-bezier(0, 0.55, 0.45, 1)');
+      expect(getCssEasingFunction('easeOutCirc')).toBe('cubic-bezier(0, 0.55, 0.45, 1)');
     });
 
     test('easeInOutCirc', () => {
-      expect(getEasingFunction('easeInOutCirc')).toBe('cubic-bezier(0.85, 0, 0.15, 1)');
+      expect(getCssEasingFunction('easeInOutCirc')).toBe('cubic-bezier(0.85, 0, 0.15, 1)');
     });
 
     test('easeInBack', () => {
-      expect(getEasingFunction('easeInBack')).toBe('cubic-bezier(0.36, 0, 0.66, -0.56)');
+      expect(getCssEasingFunction('easeInBack')).toBe('cubic-bezier(0.36, 0, 0.66, -0.56)');
     });
 
     test('easeOutBack', () => {
-      expect(getEasingFunction('easeOutBack')).toBe('cubic-bezier(0.34, 1.56, 0.64, 1)');
+      expect(getCssEasingFunction('easeOutBack')).toBe('cubic-bezier(0.34, 1.56, 0.64, 1)');
     });
 
     test('easeInOutBack', () => {
-      expect(getEasingFunction('easeInOutBack')).toBe('cubic-bezier(0.68, -0.6, 0.32, 1.6)');
+      expect(getCssEasingFunction('easeInOutBack')).toBe('cubic-bezier(0.68, -0.6, 0.32, 1.6)');
     });
 
     test('custom', () => {
       const customEasing: CustomEasing = [0.2, 0.8, 1, 0.2];
-      expect(getEasingFunction('custom', customEasing)).toBe(`cubic-bezier(${customEasing.join(', ')})`);
+      expect(getCssEasingFunction('custom', customEasing)).toBe(`cubic-bezier(${customEasing.join(', ')})`);
     });
   });
 
   describe('Catch invalid values', () => {
     test('Throws error', () => {
-      expect(() => getEasingFunction('custom')).toThrow('Invalid easing function');
+      expect(() => getCssEasingFunction('custom')).toThrow('Invalid easing function');
     });
   });
 });

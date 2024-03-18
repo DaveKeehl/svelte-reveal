@@ -1,5 +1,5 @@
-import { activateRevealNode, createObserver, getRevealNode, logInfo, markRevealNode } from '../src/internal/DOM';
-import { defOpts } from '../src/internal/config';
+import { activateRevealNode, createObserver, getNodeToReveal, logInfo, markRevealNode } from '../src/internal/DOM';
+import { defOpts } from '../src/internal/default/config';
 import { createStylesheet, getRevealClassNames } from '../src/internal/styling';
 
 export function setupIntersectionObserverMock({
@@ -117,7 +117,7 @@ describe('getRevealNode', () => {
 
   test('The reveal node did not have any inline styles already', () => {
     expect(node.style.length).toBe(0);
-    expect(getRevealNode(node)).toBe(node);
+    expect(getNodeToReveal(node)).toBe(node);
   });
 
   test('The reveal node already had inline styles', () => {
@@ -125,8 +125,8 @@ describe('getRevealNode', () => {
     node.style.top = '0';
 
     expect(node.style.length).toBe(2);
-    expect(getRevealNode(node).children.length).toBe(1);
-    expect(getRevealNode(node).children[0]).toBe(node);
+    expect(getNodeToReveal(node).children.length).toBe(1);
+    expect(getNodeToReveal(node).children[0]).toBe(node);
   });
 });
 

@@ -1,10 +1,10 @@
 import { getRevealClassNames, createStylesheet } from './styling';
-import { config, defOpts } from './config';
+import { config, defOpts } from './default/config';
 import { isStyleTagCreated, hasPageReloaded } from './stores';
-import type { RevealOptions, IReturnAction } from './types/reveal';
-import { getRevealNode, activateRevealNode, createObserver, logInfo } from './DOM';
-import { areOptionsValid } from './validations';
+import { getNodeToReveal, activateRevealNode, createObserver, logInfo } from './DOM';
 import { createFinalOptions } from './utils';
+import type { ReturnAction } from './types/events';
+import type { RevealOptions } from './types/options';
 
 /**
  * Reveals a given HTML node element on scroll.
@@ -12,21 +12,16 @@ import { createFinalOptions } from './utils';
  * @param options User-provided options to tweak the scroll animation behavior for `node`.
  * @returns The action object containing the update and destroy functions for `node`.
  */
-export const reveal = (node: HTMLElement, options: RevealOptions = defOpts): IReturnAction => {
+export const reveal = (node: HTMLElement, options: RevealOptions = defOpts): ReturnAction => {
   const finalOptions = createFinalOptions(options);
-
-  if (!areOptionsValid(finalOptions)) {
-    throw new Error('Invalid options');
-  }
-
   const { transition, disable, ref, onRevealStart, onMount, onUpdate, onDestroy } = finalOptions;
 
-  const revealNode = getRevealNode(node);
+  const nodeToReveal = getNodeToReveal(node);
   const [transitionDeclaration, transitionProperties] = getRevealClassNames(ref, transition);
 
-  onMount(revealNode);
+  onMount(nodeToReveal);
 
-  const [canDebug, highlightText] = logInfo(finalOptions, revealNode);
+  const [canDebug, highlightText] = logInfo(finalOptions, nodeToReveal);
 
   // Checking if page was reloaded
   let reloaded = false;
@@ -54,21 +49,20 @@ export const reveal = (node: HTMLElement, options: RevealOptions = defOpts): IRe
     isStyleTagCreated.set(true);
   }
 
-  onRevealStart(revealNode);
-  activateRevealNode(revealNode, transitionDeclaration, transitionProperties, finalOptions);
+  onRevealStart(nodeToReveal);
+  activateRevealNode(nodeToReveal, transitionDeclaration, transitionProperties, finalOptions);
 
-  const observerInstance = createObserver(canDebug, highlightText, revealNode, finalOptions, transitionDeclaration);
-  observerInstance.observe(revealNode);
+  const observerInstance = createObserver(canDebug, highlightText, nodeToReveal, finalOptions, transitionDeclaration);
+  observerInstance.observe(nodeToReveal);
 
   console.groupEnd();
 
   return {
     update() {
-      onUpdate(revealNode);
+      onUpdate(nodeToReveal);
     },
-
     destroy() {
-      onDestroy(revealNode);
+      onDestroy(nodeToReveal);
       unsubscribeStyleTag();
       unsubscribeReloaded();
       observerInstance.disconnect();
