@@ -1,5 +1,5 @@
 import { getRevealClassNames, createStylesheet } from './styling';
-import { config, defOpts } from './default/config';
+import { config } from './default/config';
 import { isStyleTagCreated, hasPageReloaded } from './stores';
 import { getNodeToReveal, activateRevealNode, createObserver, logInfo } from './DOM';
 import { createFinalOptions } from './utils';
@@ -12,7 +12,7 @@ import type { RevealOptions } from './types/options';
  * @param options User-provided options to tweak the scroll animation behavior for `node`.
  * @returns The action object containing the update and destroy functions for `node`.
  */
-export const reveal = (node: HTMLElement, options: RevealOptions = defOpts): ReturnAction => {
+export const reveal = (node: HTMLElement, options: Partial<RevealOptions>): Partial<ReturnAction> => {
   const finalOptions = createFinalOptions(options);
   const { transition, disable, ref, onRevealStart, onMount, onUpdate, onDestroy } = finalOptions;
 

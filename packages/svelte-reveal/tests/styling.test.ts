@@ -7,7 +7,7 @@ import {
   sanitizeStyles,
   addVendorPrefixes,
   addMediaQueries,
-  getTransitionPropertiesCSSRules,
+  getTransitionPropertiesCssRules,
   getCssEasingFunction,
   getMinifiedStylesFromQuery,
   createCssTransitionProperties,
@@ -509,7 +509,7 @@ describe('getTransitionPropertiesCSSRules', () => {
 					opacity: 0;
 					transform: translateY(${defOpts.y}px);
 				`;
-        expect(getTransitionPropertiesCSSRules('fly', options)).toBe(addMediaQueries(addVendorPrefixes(styles)));
+        expect(getTransitionPropertiesCssRules('fly', options)).toBe(addMediaQueries(addVendorPrefixes(styles)));
       });
 
       test('With custom values', () => {
@@ -520,7 +520,7 @@ describe('getTransitionPropertiesCSSRules', () => {
 					opacity: 0;
 					transform: translateY(${options.y}px);
 				`;
-        expect(getTransitionPropertiesCSSRules('fly', options)).toBe(addMediaQueries(addVendorPrefixes(styles)));
+        expect(getTransitionPropertiesCssRules('fly', options)).toBe(addMediaQueries(addVendorPrefixes(styles)));
       });
     });
 
@@ -528,7 +528,7 @@ describe('getTransitionPropertiesCSSRules', () => {
       const styles = `
 				opacity: 0;
 			`;
-      expect(getTransitionPropertiesCSSRules('fade', options)).toBe(addMediaQueries(addVendorPrefixes(styles)));
+      expect(getTransitionPropertiesCssRules('fade', options)).toBe(addMediaQueries(addVendorPrefixes(styles)));
     });
 
     test('blur', () => {
@@ -536,7 +536,7 @@ describe('getTransitionPropertiesCSSRules', () => {
 				opacity: 0;
 				filter: blur(16px);
 			`;
-      expect(getTransitionPropertiesCSSRules('blur', options)).toBe(addMediaQueries(addVendorPrefixes(styles)));
+      expect(getTransitionPropertiesCssRules('blur', options)).toBe(addMediaQueries(addVendorPrefixes(styles)));
     });
 
     test('scale', () => {
@@ -544,7 +544,7 @@ describe('getTransitionPropertiesCSSRules', () => {
 				opacity: 0;
 				transform: scale(0);
 			`;
-      expect(getTransitionPropertiesCSSRules('scale', options)).toBe(addMediaQueries(addVendorPrefixes(styles)));
+      expect(getTransitionPropertiesCssRules('scale', options)).toBe(addMediaQueries(addVendorPrefixes(styles)));
     });
 
     describe('slide', () => {
@@ -554,7 +554,7 @@ describe('getTransitionPropertiesCSSRules', () => {
 					opacity: 0;
 					transform: translateX(${defOpts.x}px);			
 				`;
-        expect(getTransitionPropertiesCSSRules('slide', options)).toBe(addMediaQueries(addVendorPrefixes(styles)));
+        expect(getTransitionPropertiesCssRules('slide', options)).toBe(addMediaQueries(addVendorPrefixes(styles)));
       });
 
       test('With custom values', () => {
@@ -565,7 +565,7 @@ describe('getTransitionPropertiesCSSRules', () => {
 					opacity: 0;
 					transform: translateX(${options.x}px);			
 				`;
-        expect(getTransitionPropertiesCSSRules('slide', options)).toBe(addMediaQueries(addVendorPrefixes(styles)));
+        expect(getTransitionPropertiesCssRules('slide', options)).toBe(addMediaQueries(addVendorPrefixes(styles)));
       });
     });
 
@@ -575,7 +575,7 @@ describe('getTransitionPropertiesCSSRules', () => {
 					opacity: 0;
 					transform: rotate(-360deg);
 				`;
-        expect(getTransitionPropertiesCSSRules('spin', options)).toBe(addMediaQueries(addVendorPrefixes(styles)));
+        expect(getTransitionPropertiesCssRules('spin', options)).toBe(addMediaQueries(addVendorPrefixes(styles)));
       });
 
       test('With custom styles', () => {
@@ -584,7 +584,7 @@ describe('getTransitionPropertiesCSSRules', () => {
 					opacity: 0;
 					transform: rotate(${options.rotate}deg);
 				`;
-        expect(getTransitionPropertiesCSSRules('spin', options)).toBe(addMediaQueries(addVendorPrefixes(styles)));
+        expect(getTransitionPropertiesCssRules('spin', options)).toBe(addMediaQueries(addVendorPrefixes(styles)));
       });
     });
   });
@@ -592,7 +592,7 @@ describe('getTransitionPropertiesCSSRules', () => {
   test(`Catch errors`, () => {
     const options: RevealOptions = {};
 
-    expect(() => getTransitionPropertiesCSSRules('randomCssClass' as Transition, options)).toThrow(
+    expect(() => getTransitionPropertiesCssRules('randomCssClass' as Transition, options)).toThrow(
       'Invalid CSS class name'
     );
   });

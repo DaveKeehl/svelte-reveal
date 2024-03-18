@@ -1,5 +1,5 @@
 import { ROOT_MARGIN_REGEX } from './constants';
-import type { RevealOptions } from './types/config';
+import type { RevealOptions } from './types/options';
 
 /**
  * Checks whether a numeric variable is within a specific range.

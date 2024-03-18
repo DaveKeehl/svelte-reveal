@@ -1,16 +1,7 @@
 import { config } from './default/config';
-import {
-  defaultIntersectionObserverConfig,
-  defaultSlideRevealTransition,
-  defaultFlyRevealTransition,
-  defaultSpinRevealTransition,
-  defaultBlurRevealTransition,
-  defaultScaleRevealTransition,
-  defaultOptions
-} from './default/options';
+import { defaultIntersectionObserverConfig, defaultOptions } from './default/options';
 import type { IntersectionObserverConfig } from './types/intersection-observer';
 import type { RevealConfig } from './types/config';
-import { areOptionsValid } from './validations';
 import type { RevealOptions } from './types/options';
 
 /**
@@ -48,31 +39,11 @@ export const createObserverConfig = (observerConfig?: IntersectionObserverConfig
  * @param userOptions The options provided by the user.
  * @returns The final options that can be used by the rest of the library.
  */
-export const createFinalOptions = (userOptions: RevealOptions): Required<RevealOptions> => {
-  let baseOptions: Required<RevealOptions> = defaultOptions;
+export const createFinalOptions = (userOptions: Partial<RevealOptions>): RevealOptions => {
+  const cleanUserOptions = Object.fromEntries(Object.entries(userOptions).filter(([, value]) => value !== undefined));
 
-  const tmp: Required<RevealOptions> = {
-    disable: userOptions.disable ?? defaultOptions.disable,
-    reset: userOptions.reset ?? defaultOptions.reset,
-    duration: userOptions.duration ?? defaultOptions.duration,
-    delay: userOptions.delay ?? defaultOptions.delay,
-    opacity: userOptions.opacity ?? defaultOptions.opacity,
-    transition: userOptions.transition
+  return {
+    ...defaultOptions,
+    ...cleanUserOptions
   };
-
-  if (transition === 'slide') {
-    baseOptions = {
-      ...defaultOptions,
-      ...defaultSlideRevealTransition,
-      transition: 'slide'
-    };
-  }
-
-  if (transition === 'fly') baseOptions = { ...defaultOptions, ...defaultFlyRevealTransition };
-  if (transition === 'spin') baseOptions = { ...defaultOptions, ...defaultSpinRevealTransition };
-  if (transition === 'blur') baseOptions = { ...defaultOptions, ...defaultBlurRevealTransition };
-  if (transition === 'scale') baseOptions = { ...defaultOptions, ...defaultScaleRevealTransition };
-
-  if (!areOptionsValid(baseOptions)) throw new Error('Invalid options');
-  return baseOptions;
 };

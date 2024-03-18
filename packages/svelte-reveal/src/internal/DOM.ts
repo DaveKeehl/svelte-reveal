@@ -15,27 +15,27 @@ export const markRevealNode = (revealNode: HTMLElement): HTMLElement => {
 
 /**
  * Activates the reveal effect on the target element.
- * @param revealNode The element to be revealed.
- * @param transitionPropertiesCSSClass The CSS class to be used to create the transition properties on the target element.
- * @param transitionDeclarationCSSClass The CSS class to be used to declare the transition on the target element.
+ * @param nodeToReveal The element to be revealed.
+ * @param transitionPropertiesCssClass The CSS class to be used to create the transition properties on the target element.
+ * @param transitionDeclarationCssClass The CSS class to be used to declare the transition on the target element.
  * @param options The options to be applied to the reveal effect.
  * @returns The element to be revealed.
  */
 export const activateRevealNode = (
-  revealNode: HTMLElement,
-  transitionPropertiesCSSClass: string,
-  transitionDeclarationCSSClass: string,
-  options: Required<RevealOptions>
+  nodeToReveal: HTMLElement,
+  transitionPropertiesCssClass: string,
+  transitionDeclarationCssClass: string,
+  options: RevealOptions
 ): HTMLElement => {
-  markRevealNode(revealNode);
+  markRevealNode(nodeToReveal);
 
+  const transitionProperties = createCssTransitionProperties({ className: transitionPropertiesCssClass, options });
   const transitionDeclaration = createCssTransitionDeclaration({
-    className: transitionDeclarationCSSClass,
+    className: transitionDeclarationCssClass,
     duration: options.duration,
     delay: options.delay,
     easing: options.easing
   });
-  const transitionProperties = createCssTransitionProperties({ className: transitionPropertiesCSSClass, options });
   const stylesheet = document.querySelector('style[data-action="reveal"]');
 
   /**
@@ -45,15 +45,14 @@ export const activateRevealNode = (
    * concatenation of the styles of all elements on which Svelte Reveal has been activated on the page.
    */
   if (stylesheet) {
-    const nodeRevealStyles = cleanString([transitionProperties, transitionDeclaration].join(' '));
-    const updatedRevealStyles = mergeRevealStyles(stylesheet.innerHTML, nodeRevealStyles);
+    const nodeToRevealStyles = cleanString([transitionProperties, transitionDeclaration].join(' '));
+    const updatedRevealStyles = mergeRevealStyles(stylesheet.innerHTML, nodeToRevealStyles);
 
     stylesheet.innerHTML = updatedRevealStyles;
-    revealNode.classList.add(transitionPropertiesCSSClass);
-    revealNode.classList.add(transitionDeclarationCSSClass);
+    nodeToReveal.classList.add(transitionPropertiesCssClass, transitionDeclarationCssClass);
   }
 
-  return revealNode;
+  return nodeToReveal;
 };
 
 /**
@@ -126,7 +125,7 @@ export const createObserver = (
  * @param revealNode The DOM element to be revealed.
  * @returns A tuple consisting of canDebug and highlightText.
  */
-export const logInfo = (finalOptions: Required<RevealOptions>, revealNode: HTMLElement): [boolean, string] => {
+export const logInfo = (finalOptions: RevealOptions, revealNode: HTMLElement): [boolean, string] => {
   const { debug, ref, highlightLogs, highlightColor } = finalOptions;
 
   const canDebug = config.dev && debug && ref !== '';

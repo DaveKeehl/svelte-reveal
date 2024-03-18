@@ -1,37 +1,27 @@
-/**
- * The types of supported transitions.
- */
-export type Transition =
-  | SlideRevealTransition['transition']
-  | FlyRevealTransition['transition']
-  | SpinRevealTransition['transition']
-  | BlurRevealTransition['transition']
-  | ScaleRevealTransition['transition'];
-
 export type BaseRevealTransition = {
   /**
    * When set to false, the transition for the target element is disabled.
    */
-  disable?: boolean;
+  disable: boolean;
   /**
    * When set to true, the node transitions out when out of view, and is revealed again when back in view.
    *
    * ⚠️ Be careful not to overuse this option.
    */
-  reset?: boolean;
+  reset: boolean;
   /**
    * How long the transition lasts (in milliseconds).
    */
-  duration?: number;
+  duration: number;
   /**
    * How long the transition is delayed (in milliseconds) before being triggered.
    */
-  delay?: number;
+  delay: number;
   /**
    * The starting opacity value in percentage of any transition.
    * It can be a number between `0.0` and `1.0`.
    */
-  opacity?: number;
+  opacity: number;
 };
 
 export type FadeRevealTransition = BaseRevealTransition & {
@@ -50,7 +40,7 @@ export type SlideRevealTransition = BaseRevealTransition & {
    * The starting offset position in pixels on the x-axis of the `"slide"` transition.
    * If `x` is negative, the element will transition from the left, else from the right.
    */
-  x?: number;
+  x: number;
 };
 
 export type FlyRevealTransition = BaseRevealTransition & {
@@ -62,7 +52,7 @@ export type FlyRevealTransition = BaseRevealTransition & {
    * The starting offset position in pixels on the y-axis of the `"fly"` transition.
    * If `y` is negative, the element will transition from the top, else from the bottom.
    */
-  y?: number;
+  y: number;
 };
 
 export type SpinRevealTransition = BaseRevealTransition & {
@@ -74,7 +64,7 @@ export type SpinRevealTransition = BaseRevealTransition & {
    * The starting rotation offset in degrees of the `"spin"` transition.
    * If `rotate` is positive, the element will spin clockwise, else counter-clockwise.
    */
-  rotate?: number;
+  rotate: number;
 };
 
 export type BlurRevealTransition = BaseRevealTransition & {
@@ -85,7 +75,7 @@ export type BlurRevealTransition = BaseRevealTransition & {
   /**
    * The starting blur value in pixels of the `"blur"` transition.
    */
-  blur?: number;
+  blur: number;
 };
 
 export type ScaleRevealTransition = BaseRevealTransition & {
@@ -96,8 +86,19 @@ export type ScaleRevealTransition = BaseRevealTransition & {
   /**
    * The starting scale value in percentage of the `"scale"` transition.
    */
-  scale?: number;
+  scale: number;
 };
+
+/**
+ * The types of supported transitions.
+ */
+export type Transition =
+  | FadeRevealTransition['transition']
+  | SlideRevealTransition['transition']
+  | FlyRevealTransition['transition']
+  | SpinRevealTransition['transition']
+  | BlurRevealTransition['transition']
+  | ScaleRevealTransition['transition'];
 
 export type RevealTransition =
   | FadeRevealTransition
