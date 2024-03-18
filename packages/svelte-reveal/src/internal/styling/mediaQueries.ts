@@ -1,5 +1,5 @@
 import { config } from '../default/config';
-import type { Device, Devices } from '../types/devices';
+import type { Device, Devices, Responsive } from '../types/devices';
 import { cleanString } from '../utils';
 import { hasValidBreakpoints } from './breakpoints';
 
