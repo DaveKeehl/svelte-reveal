@@ -12,7 +12,7 @@
     "build:ts": "esbuild src/index.ts --bundle --format=esm --tsconfig=tsconfig.build.json --outfile=dist/index.js",
     "prebuild": "npm run clean",
     "build": "run-p build:*",
-    "lint": "TIMING=1 eslint .",
+    "lint": "eslint .",
     "format": "prettier . --write",
     "clean": "rm -rf dist && rm -rf .turbo && rm -rf coverage && rm -rf node_modules && rm -rf package && rm -rf svelte-reveal-*.tgz"
   },

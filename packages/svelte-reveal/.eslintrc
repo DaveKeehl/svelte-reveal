@@ -1,25 +1,11 @@
 {
   "$schema": "https://json.schemastore.org/eslintrc.json",
   "root": true,
-  "extends": [
-    "plugin:@typescript-eslint/recommended",
-    // "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "turbo",
-    "plugin:prettier/recommended"
-  ],
+  "extends": ["plugin:@typescript-eslint/recommended", "turbo", "plugin:prettier/recommended"],
   "plugins": ["@typescript-eslint"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    // "ecmaVersion": "latest",
-    // "sourceType": "module"
-    // "tsconfigRootDir": "",
-    // "project": ["./tsconfig.json"]
-  },
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".ts"]
-      }
-    }
+    "ecmaVersion": "latest",
+    "sourceType": "module"
   }
 }
