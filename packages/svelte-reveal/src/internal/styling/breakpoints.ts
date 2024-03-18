@@ -1,5 +1,5 @@
-import type { Responsive } from '../types/devices';
-import { isPositiveInteger } from '../validations';
+import type { Responsive } from '../types/devices.ts';
+import { isPositiveInteger } from '../validations.ts';
 
 /**
  * Checks whether the breakpoints overlap.

@@ -1,7 +1,11 @@
-import { config } from './default/config';
-import { createCssTransitionProperties, createCssTransitionDeclaration, mergeRevealStyles } from './styling';
-import type { RevealOptions } from './types/options';
-import { cleanString, createObserverConfig } from './utils';
+import { config } from './default/config.ts';
+import {
+  createCssTransitionProperties,
+  createCssTransitionDeclaration,
+  mergeRevealStyles
+} from './styling/generation.ts';
+import type { RevealOptions } from './types/options.ts';
+import { cleanString, createObserverConfig } from './utils.ts';
 
 /**
  * Marks a DOM node as part of the reveal process.

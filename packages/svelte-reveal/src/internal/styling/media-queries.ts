@@ -1,7 +1,7 @@
-import { config } from '../default/config';
-import type { Device, DeviceConfig, Devices, Responsive } from '../types/devices';
-import { cleanString } from '../utils';
-import { hasValidBreakpoints } from './breakpoints';
+import { config } from '../default/config.ts';
+import type { Device, DeviceConfig, Devices, Responsive } from '../types/devices.ts';
+import { cleanString } from '../utils.ts';
+import { hasValidBreakpoints } from './breakpoints.ts';
 
 /**
  * Creates the query for a set of devices whose breakpoints are within the range defined by the `start` and `end` breakpoints.

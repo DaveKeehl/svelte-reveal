@@ -1,8 +1,8 @@
-import type { DebugOptions } from '../types/debug';
-import type { Easing } from '../types/easing';
-import type { RevealEvents } from '../types/events';
-import type { IntersectionObserverConfig } from '../types/intersection-observer';
-import type { RevealOptions } from '../types/options';
+import type { DebugOptions } from '../types/debug.ts';
+import type { Easing } from '../types/easing.ts';
+import type { RevealEvents } from '../types/events.ts';
+import type { IntersectionObserverConfig } from '../types/intersection-observer.ts';
+import type { RevealOptions } from '../types/options.ts';
 import type {
   BaseRevealTransition,
   SlideRevealTransition,
@@ -11,8 +11,8 @@ import type {
   BlurRevealTransition,
   ScaleRevealTransition,
   FadeRevealTransition
-} from '../types/transitions';
-import { customEasingWeights } from './easing';
+} from '../types/transitions.ts';
+import { customEasingWeights } from './easing.ts';
 
 export const defaultDebugOptions: DebugOptions = {
   debug: false,

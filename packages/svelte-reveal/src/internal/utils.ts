@@ -1,9 +1,9 @@
-import { config } from './default/config';
-import { defaultIntersectionObserverConfig, defaultOptions } from './default/options';
-import type { IntersectionObserverConfig } from './types/intersection-observer';
-import type { RevealConfig } from './types/config';
-import type { RevealOptions } from './types/options';
-import { areOptionsValid } from './validations';
+import { config } from './default/config.ts';
+import { defaultIntersectionObserverConfig, defaultOptions } from './default/options.ts';
+import type { IntersectionObserverConfig } from './types/intersection-observer.ts';
+import type { RevealConfig } from './types/config.ts';
+import type { RevealOptions } from './types/options.ts';
+import { areOptionsValid } from './validations.ts';
 
 /**
  * Removes trailing whitespace, newlines and tabs from a string.

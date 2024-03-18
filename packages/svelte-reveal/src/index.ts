@@ -1,4 +1,4 @@
-export { reveal } from './internal/reveal';
+export { reveal } from './internal/reveal.ts';
 export {
   setDev,
   setOnce,
@@ -13,6 +13,6 @@ export {
   setObserverThreshold,
   setConfig,
   setDefaultOptions
-} from './internal/API';
-export type { RevealConfig } from './internal/types/config';
-export type { RevealOptions } from './internal/types/options';
+} from './internal/API.ts';
+export type { RevealConfig } from './internal/types/config.ts';
+export type { RevealOptions } from './internal/types/options.ts';

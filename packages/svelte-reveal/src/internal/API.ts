@@ -1,13 +1,13 @@
-import { config } from './default/config';
-import { hasValidBreakpoints } from './styling';
-import { createFinalOptions, createObserverConfig, cloneConfig } from './utils';
-import { inRange } from './validations';
-import type { RevealConfig } from './types/config';
-import { ROOT_MARGIN_REGEX } from './constants';
-import type { Device, DeviceConfig, Responsive } from './types/devices';
-import type { IntersectionObserverConfig } from './types/intersection-observer';
-import { defaultOptions } from './default/options';
-import type { RevealOptions } from './types/options';
+import { config } from './default/config.ts';
+import { hasValidBreakpoints } from './styling/breakpoints.ts';
+import { createFinalOptions, createObserverConfig, cloneConfig } from './utils.ts';
+import { inRange } from './validations.ts';
+import type { RevealConfig } from './types/config.ts';
+import { ROOT_MARGIN_REGEX } from './constants.ts';
+import type { Device, DeviceConfig, Responsive } from './types/devices.ts';
+import type { IntersectionObserverConfig } from './types/intersection-observer.ts';
+import { defaultOptions } from './default/options.ts';
+import type { RevealOptions } from './types/options.ts';
 
 /**
  * Sets the development mode status.

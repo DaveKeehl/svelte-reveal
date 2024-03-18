@@ -1,4 +1,4 @@
-import type { EasingWeights, StandardEasingFunction } from '../types/easing';
+import type { EasingWeights, StandardEasingFunction } from '../types/easing.ts';
 
 export const standardEasingWeights: Record<StandardEasingFunction, EasingWeights> = {
   linear: [0, 0, 1, 1],

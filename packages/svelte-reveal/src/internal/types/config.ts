@@ -1,4 +1,4 @@
-import type { Responsive } from './devices';
+import type { Responsive } from './devices.ts';
 
 /**
  * Object containing configuration properties to change the behavior

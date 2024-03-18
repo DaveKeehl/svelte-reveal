@@ -1,11 +1,12 @@
 import seedrandom from 'seedrandom';
-import type { Transition } from '../types/transitions';
-import type { Easing, EasingWeights } from '../types/easing';
-import type { RevealOptions } from '../types/options';
-import { markRevealNode } from '../DOM';
-import { createFinalOptions } from '../utils';
-import { addMediaQueries } from './media-queries';
-import { standardEasingWeights } from '../default/easing';
+
+import type { Transition } from '../types/transitions.ts';
+import type { Easing, EasingWeights } from '../types/easing.ts';
+import type { RevealOptions } from '../types/options.ts';
+import { markRevealNode } from '../DOM.ts';
+import { createFinalOptions } from '../utils.ts';
+import { addMediaQueries } from './media-queries.ts';
+import { standardEasingWeights } from '../default/easing.ts';
 
 /**
  * Creates the CSS stylesheet where all the reveal styles are added to.
