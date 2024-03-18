@@ -1,15 +1,11 @@
 import { config } from './default/config';
 import {
-  defaultDebugOptions,
   defaultIntersectionObserverConfig,
-  defaultBaseRevealTransition,
   defaultSlideRevealTransition,
   defaultFlyRevealTransition,
   defaultSpinRevealTransition,
   defaultBlurRevealTransition,
   defaultScaleRevealTransition,
-  defaultRevealEvents,
-  defaultRevealEasing,
   defaultOptions
 } from './default/options';
 import type { IntersectionObserverConfig } from './types/intersection-observer';
