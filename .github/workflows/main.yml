@@ -19,8 +19,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm"
-          cache-dependency-path: "package-lock.json"
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
 
       - name: Installing dependencies
         run: npm ci
@@ -51,11 +51,11 @@ jobs:
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
         with:
-          path: "packages/svelte-reveal"
+          path: 'packages/svelte-reveal'
 
-      - name: "Get Latest Tag"
+      - name: 'Get Latest Tag'
         id: latest-tag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        uses: 'WyriHaximus/github-action-get-previous-tag@v1'
 
   CD:
     needs: [CI]
@@ -78,8 +78,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm"
-          cache-dependency-path: "package-lock.json"
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
 
       - name: Extract release notes
         id: extract-release-notes
