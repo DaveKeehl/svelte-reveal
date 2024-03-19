@@ -1,12 +1,11 @@
 name: 'Publish to NPM'
 
 on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
-    branches:
-      - main
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: ./packages/svelte-reveal
 
 jobs:
   publish:
@@ -28,10 +27,10 @@ jobs:
         run: npm ci
 
       - name: Building package
-        run: npm run build -- --filter=svelte-reveal
+        run: npm run build
 
       - name: Inspecting
-        run: cd packages/svelte-reveal && ls -l
+        run: ls -l
 
       # - name: Publish to NPM
       #   uses: JS-DevTools/npm-publish@v1
