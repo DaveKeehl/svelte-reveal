@@ -1,14 +1,10 @@
-name: CI/CD
+name: CI
 
 on: [push, pull_request]
 
 jobs:
   CI:
     runs-on: ubuntu-latest
-    outputs:
-      current-version: ${{ steps.package-version.outputs.current-version }}
-      latest-tag: ${{ steps.latest-tag.outputs.tag }}
-      new-version: ${{ toJSON(steps.package-version.outputs.current-version != steps.latest-tag.outputs.tag) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -31,9 +27,6 @@ jobs:
       # - name: Testing
       #   run: npm run test
 
-      - name: Building
-        run: npm run build
-
       # - name: SonarCloud Scan
       #   uses: sonarsource/sonarcloud-github-action@master
       #   env:
@@ -41,61 +34,3 @@ jobs:
       #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       #   with:
       #     projectBaseDir: packages/svelte-reveal
-
-      - name: Get Package Version
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@master
-        with:
-          path: 'packages/svelte-reveal'
-
-      - name: 'Get Latest Tag'
-        id: latest-tag
-        uses: 'WyriHaximus/github-action-get-previous-tag@v1'
-
-  CD:
-    needs: [CI]
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && fromJSON(needs.CI.outputs.new-version)
-
-    steps:
-      - name: Print CI output
-        run: |
-          echo "Current version: ${{ needs.CI.outputs.current-version }}" \
-          echo "Latest tag: ${{ needs.CI.outputs.latest-tag }}" \
-          echo "New version: ${{ fromJSON(needs.CI.outputs.new-version) }}"
-
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-          cache-dependency-path: 'package-lock.json'
-
-      - name: Extract release notes
-        id: extract-release-notes
-        uses: ffurrer2/extract-release-notes@v1
-
-      - name: Create new release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ needs.CI.outputs.current-version }}
-          release_name: ${{ needs.CI.outputs.current-version }}
-          draft: false
-          prerelease: false
-          body: ${{ steps.extract-release-notes.outputs.release_notes }}
-
-      - name: Installing dependencies
-        run: npm ci
-
-      - name: Publish package on NPM
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          package: ./packages/svelte-reveal/package.json

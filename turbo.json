@@ -5,7 +5,8 @@
       "cache": false
     },
     "dev": {
-      "outputs": []
+      "cache": false,
+      "persistent": true
     },
     "build": {
       "dependsOn": ["^build"],
