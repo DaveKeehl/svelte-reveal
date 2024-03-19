@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: Building package
-        run: npm run build -- filter=svelte-reveal
+        run: npm run build -- --filter=svelte-reveal
 
       - name: Inspecting
         run: cd packages/svelte-reveal && ls -l
