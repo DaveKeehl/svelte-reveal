@@ -1,7 +1,12 @@
 name: 'Publish to NPM'
 
 on:
-  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - main
 
 jobs:
   publish:
@@ -23,7 +28,7 @@ jobs:
         run: npm ci
 
       - name: Building package
-        run: turbo run build --filter=svelte-reveal
+        run: npm run build -- --filter=svelte-reveal
 
       - name: Inspecting
         run: cd packages/svelte-reveal && ls -l
