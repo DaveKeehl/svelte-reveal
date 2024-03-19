@@ -21,8 +21,8 @@ jobs:
       - name: Installing dependencies
         run: npm ci
 
-      - name: Linting
-        run: npm run lint
+      - name: Build
+        run: npm run build -- --filter=svelte-reveal
 
       # - name: Testing
       #   run: npm run test
