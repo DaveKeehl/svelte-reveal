@@ -33,10 +33,10 @@ jobs:
         run: ls -l
 
       # - name: Publish to NPM
-      #   uses: JS-DevTools/npm-publish@v1
+      #   uses: JS-DevTools/npm-publish@v3
       #   with:
       #     token: ${{ secrets.NPM_TOKEN }}
-      #     package: ./packages/svelte-reveal/package.json
+      #     strategy: upgrade
 
       - name: Get Package Version
         id: package-version
