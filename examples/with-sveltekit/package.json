@@ -9,7 +9,8 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"clean": "rm -rf .svelte-kit && rm -rf .turbo && rm -rf node_modules && rm -rf package-lock.json"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",

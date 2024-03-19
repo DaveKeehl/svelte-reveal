@@ -4,6 +4,9 @@
     "clean": {
       "cache": false
     },
+    "dev": {
+      "outputs": []
+    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["packages/svelte-reveal/dist/**"]

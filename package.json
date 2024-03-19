@@ -2,19 +2,21 @@
   "name": "svelte-reveal-monorepo",
   "private": true,
   "workspaces": [
-    "apps/*",
+    "examples/*",
     "packages/*"
   ],
   "scripts": {
+    "dev": "turbo run dev",
     "build": "turbo run build",
     "format": "turbo run format",
     "format:staged": "pretty-quick --staged",
     "lint": "turbo run lint",
     "prepare": "husky",
-    "clean": "turbo run clean && rm -rf node_modules && rm -rf package-lock.json && rm -rf package && rm -rf svelte-reveal-*.tgz"
+    "clean": "turbo run clean && rm -rf .turbo && rm -rf node_modules && rm -rf package-lock.json"
   },
   "devDependencies": {
     "husky": "^9.0.11",
+    "prettier": "^3.2.5",
     "pretty-quick": "^4.0.0",
     "turbo": "^1.12.5"
   },

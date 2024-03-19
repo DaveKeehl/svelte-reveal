@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "clean": "rm -rf dist && rm -rf .turbo && rm -rf node_modules && rm -rf package-lock.json"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.0.2",
