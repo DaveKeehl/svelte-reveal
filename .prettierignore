@@ -5,20 +5,21 @@ node_modules
 *-lock.json
 .pnp
 .pnp.js
-dist/
 
 # testing
 coverage/
 
-# next.js
+# outputs
 .next/
+.svelte-kit
 out/
+dist/
 build
+svelte-reveal-*.tgz
 
 # misc
 .DS_Store
 *.pem
-svelte-reveal-*.tgz
 *.md
 
 # debug

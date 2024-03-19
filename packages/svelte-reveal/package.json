@@ -13,7 +13,6 @@
     "prebuild": "npm run clean",
     "build": "run-p build:*",
     "lint": "eslint .",
-    "format": "prettier . --write",
     "clean": "rm -rf dist && rm -rf .turbo && rm -rf node_modules && rm -rf package-lock.json && rm -rf svelte-reveal-*.tgz"
   },
   "repository": {
