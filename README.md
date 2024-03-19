@@ -21,11 +21,11 @@ The documentation is available [here](./packages/svelte-reveal/README.md).
 
 ## Monorepo
 
-| Name                                        | Purpose | Description                                                  |
-| ------------------------------------------- | ------- | ------------------------------------------------------------ |
-| [svelte-reveal](./packages/svelte-reveal)   | package | The Svelte action that gets published on NPM                 |
-| [with-svelte](./examples/with-svelte)       | example | Basic example project on how to use Svelte Reveal with Svelte |
-| [with-sveltekit](./examples/with-sveltekit) | example | Basic example project on how to use Svelte Reveal with SvelteKit |
+| Name                                            | Purpose | Description                                                  |
+| ----------------------------------------------- | ------- | ------------------------------------------------------------ |
+| [svelte-reveal](./packages/svelte-reveal)       | package | The Svelte action that gets published on NPM                 |
+| [with-svelte-vite](./examples/with-svelte-vite) | example | Basic example project on how to use Svelte Reveal with Svelte + Vite |
+| [with-sveltekit](./examples/with-sveltekit)     | example | Basic example project on how to use Svelte Reveal with SvelteKit |
 
 ## Troubleshooting
 
