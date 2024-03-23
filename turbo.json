@@ -12,6 +12,9 @@
       "dependsOn": ["^build"],
       "outputs": ["packages/svelte-reveal/dist/**"]
     },
+    "pack": {
+      "dependsOn": ["build"]
+    },
     "format": {
       "outputs": []
     },
