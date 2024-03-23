@@ -36,7 +36,7 @@ jobs:
         run: npm run pack -- --filter=svelte-reveal
 
       - name: Inspect
-        run: ls -l
+        run: cd packages/svelte-reveal && ls -l
 
       # - name: Publish to NPM
       #   uses: JS-DevTools/npm-publish@v3
