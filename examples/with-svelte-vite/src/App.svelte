@@ -2,10 +2,11 @@
   import svelteLogo from './assets/svelte.svg';
   import viteLogo from '/vite.svg';
   import Counter from './lib/Counter.svelte';
+  import { reveal } from 'svelte-reveal';
 </script>
 
 <main>
-  <div>
+  <div use:reveal>
     <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
       <img src={viteLogo} class="logo" alt="Vite Logo" />
     </a>
