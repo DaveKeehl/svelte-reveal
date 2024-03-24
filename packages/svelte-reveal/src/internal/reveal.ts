@@ -5,6 +5,7 @@ import { getNodeToReveal, activateRevealNode, createObserver, logInfo } from './
 import { createFinalOptions } from './utils.ts';
 import type { ActionReturn } from './types/events.ts';
 import type { RevealOptions } from './types/options.ts';
+import { defaultOptions } from './default/options.ts';
 
 /**
  * Reveals a given HTML node element on scroll.
@@ -12,7 +13,7 @@ import type { RevealOptions } from './types/options.ts';
  * @param options User-provided options to tweak the scroll animation behavior for `node`.
  * @returns The action object containing the update and destroy functions for `node`.
  */
-export const reveal = (node: HTMLElement, options: Partial<RevealOptions>): Partial<ActionReturn> => {
+export const reveal = (node: HTMLElement, options: Partial<RevealOptions> = defaultOptions): Partial<ActionReturn> => {
   const finalOptions = createFinalOptions(options);
   const { transition, disable, ref, onRevealStart, onMount, onUpdate, onDestroy } = finalOptions;
 
