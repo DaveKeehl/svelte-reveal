@@ -1,17 +1,15 @@
 name: 'Publish to NPM'
 
-# on:
-#   pull_request:
-#     types:
-#       - closed
-#     branches:
-#       - main
-
-on: workflow_dispatch
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
 
 jobs:
   release:
-    # if: github.event.pull_request.merged == true && github.ref == 'refs/heads/main'
+    if: github.event.pull_request.merged == true && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -32,36 +30,30 @@ jobs:
       - name: Building package
         run: npm run build -- --filter=svelte-reveal
 
-      - name: Pack
-        run: npm run pack -- --filter=svelte-reveal
+      - name: Publish to NPM
+        uses: JS-DevTools/npm-publish@v3
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          package: ./packages/svelte-reveal/package.json
+          strategy: upgrade
 
-      - name: Inspect
-        run: cd packages/svelte-reveal && ls -l
+      - name: Get Package Version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+        with:
+          path: 'packages/svelte-reveal'
 
-      # - name: Publish to NPM
-      #   uses: JS-DevTools/npm-publish@v3
-      #   with:
-      #     token: ${{ secrets.NPM_TOKEN }}
-      #     package: ./packages/svelte-reveal/package.json
-      #     strategy: upgrade
+      - name: Extract release notes
+        id: extract-release-notes
+        uses: ffurrer2/extract-release-notes@v1
 
-      # - name: Get Package Version
-      #   id: package-version
-      #   uses: martinbeentjes/npm-get-version-action@master
-      #   with:
-      #     path: 'packages/svelte-reveal'
-
-      # - name: Extract release notes
-      #   id: extract-release-notes
-      #   uses: ffurrer2/extract-release-notes@v1
-
-      # - name: Create new release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag_name: ${{ steps.package-version.outputs.current-version }}
-      #     release_name: ${{ steps.package-version.outputs.current-version }}
-      #     draft: false
-      #     prerelease: false
-      #     body: ${{ steps.extract-release-notes.outputs.release_notes }}
+      - name: Create new release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.package-version.outputs.current-version }}
+          release_name: ${{ steps.package-version.outputs.current-version }}
+          draft: false
+          prerelease: false
+          body: ${{ steps.extract-release-notes.outputs.release_notes }}

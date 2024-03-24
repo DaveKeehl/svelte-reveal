@@ -1,26 +1,28 @@
 {
   "compilerOptions": {
+    /* Base Options */
     "esModuleInterop": true,
     "skipLibCheck": true,
     "target": "es2022",
+    "lib": ["es2022", "DOM", "DOM.Iterable"],
     "allowJs": true,
     "resolveJsonModule": true,
     "moduleDetection": "force",
     "isolatedModules": true,
+
+    /* Strictness */
     "strict": true,
     "noUncheckedIndexedAccess": true,
+
+    /* Transpiling with TypeScript */
     "moduleResolution": "NodeNext",
-    "allowImportingTsExtensions": true,
     "module": "NodeNext",
     "outDir": "dist",
-    "declaration": true,
-    "declarationDir": "dist/types",
-    "emitDeclarationOnly": true,
-    "noEmitOnError": true,
-    "composite": true,
+    // "declarationDir": "dist/types",
     "sourceMap": true,
-    "declarationMap": true,
-    "lib": ["es2022", "DOM", "DOM.Iterable"]
+    "allowImportingTsExtensions": true,
+    "emitDeclarationOnly": true,
+    "declaration": true
   },
   "include": ["./src"]
 }

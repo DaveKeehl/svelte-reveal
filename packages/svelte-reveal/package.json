@@ -3,18 +3,20 @@
   "version": "0.7.0",
   "description": "Svelte action that leverages the Intersection Observer API to trigger reveal on scroll transitions",
   "main": "dist/index.js",
-  "types": "dist/types/src/index.d.ts",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/"
   ],
   "scripts": {
     "build:types": "tsc --emitDeclarationOnly",
-    "build:ts": "esbuild src/index.ts --bundle --format=esm --tsconfig=tsconfig.build.json --outfile=dist/index.js",
-    "prebuild": "npm run clean",
+    "build:ts": "esbuild src/index.ts --bundle --minify --format=esm --outdir=dist",
+    "prebuild": "npm run clean:build",
     "build": "run-p build:*",
     "pack": "npm pack",
     "lint": "eslint .",
-    "clean": "rm -rf dist && rm -rf .turbo && rm -rf node_modules && rm -rf package-lock.json && rm -rf svelte-reveal-*.tgz"
+    "clean:build": "rm -rf dist && rm -f svelte-reveal-*.tgz",
+    "clean:deps": "rm -rf .turbo && rm -rf node_modules && rm -f package-lock.json",
+    "clean": "run-p clean:*"
   },
   "repository": {
     "type": "git",

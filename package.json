@@ -13,7 +13,8 @@
     "format:staged": "pretty-quick --staged",
     "lint": "turbo run lint",
     "prepare": "husky",
-    "clean": "turbo run clean && rm -rf .turbo && rm -rf node_modules && rm -rf package-lock.json"
+    "clean": "turbo run clean",
+    "postclean": "rm -rf .turbo && rm -rf node_modules && rm -f package-lock.json"
   },
   "devDependencies": {
     "husky": "^9.0.11",
