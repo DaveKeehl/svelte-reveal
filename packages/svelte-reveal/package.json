@@ -2,17 +2,22 @@
   "name": "svelte-reveal",
   "version": "0.7.0",
   "description": "Svelte action that leverages the Intersection Observer API to trigger reveal on scroll transitions",
-  "main": "dist/index.js",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    }
+  },
   "files": [
     "dist/"
   ],
   "scripts": {
-    "build:types": "tsc --emitDeclarationOnly",
-    "build:ts": "esbuild src/index.ts --bundle --minify --format=esm --outdir=dist",
-    "prebuild": "npm run clean:build",
-    "build": "run-p build:*",
-    "dev": "npm run build:ts -- --watch",
+    "build": "tsup src/index.ts --clean --minify --dts --format esm,cjs",
+    "dev": "npm run build -- --watch",
     "predev": "npm run clean:build",
     "pack": "npm pack",
     "lint": "eslint .",
@@ -43,6 +48,10 @@
     "transition",
     "animation"
   ],
+  "funding": {
+    "type": "ko-fi",
+    "url": "https://ko-fi.com/davekeehl"
+  },
   "devDependencies": {
     "@types/seedrandom": "^3.0.8",
     "@typescript-eslint/eslint-plugin": "^7.3.0",
@@ -55,11 +64,7 @@
     "prettier": "^3.2.5",
     "seedrandom": "^3.0.5",
     "svelte": "^4.2.12",
+    "tsup": "^8.0.2",
     "typescript": "^5.4.2"
-  },
-  "type": "module",
-  "funding": {
-    "type": "ko-fi",
-    "url": "https://ko-fi.com/davekeehl"
   }
 }
