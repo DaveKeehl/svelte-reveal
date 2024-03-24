@@ -12,6 +12,8 @@
     "build:ts": "esbuild src/index.ts --bundle --minify --format=esm --outdir=dist",
     "prebuild": "npm run clean:build",
     "build": "run-p build:*",
+    "dev": "npm run build:ts -- --watch",
+    "predev": "npm run clean:build",
     "pack": "npm pack",
     "lint": "eslint .",
     "clean:build": "rm -rf dist && rm -f svelte-reveal-*.tgz",
