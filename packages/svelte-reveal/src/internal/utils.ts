@@ -1,9 +1,17 @@
 import { config } from './default/config.ts';
-import { defaultIntersectionObserverConfig, defaultOptions } from './default/options.ts';
+import {
+  defaultIntersectionObserverConfig,
+  defaultOptions,
+  defaultFlyRevealTransition,
+  defaultSlideRevealTransition,
+  defaultBlurRevealTransition,
+  defaultScaleRevealTransition,
+  defaultSpinRevealTransition
+} from './default/options.ts';
 import type { IntersectionObserverConfig } from './types/intersection-observer.ts';
 import type { RevealConfig } from './types/config.ts';
 import type { RevealOptions } from './types/options.ts';
-import { areOptionsValid } from './validations.ts';
+import { validateOptions } from './validations.ts';
 
 /**
  * Removes trailing whitespace, newlines and tabs from a string.
@@ -42,8 +50,54 @@ export const createObserverConfig = (observerConfig?: Partial<IntersectionObserv
  */
 export const createFinalOptions = (userOptions: Partial<RevealOptions>): RevealOptions => {
   const cleanUserOptions = Object.fromEntries(Object.entries(userOptions).filter(([, value]) => value !== undefined));
-  const finalOptions = { ...defaultOptions, ...cleanUserOptions };
-  if (!areOptionsValid(finalOptions)) throw new Error('Invalid options');
 
-  return finalOptions;
+  switch (userOptions.transition) {
+    case 'fade': {
+      return validateOptions({
+        ...defaultOptions,
+        ...cleanUserOptions
+      });
+    }
+    case 'fly': {
+      return validateOptions({
+        ...defaultOptions,
+        ...defaultFlyRevealTransition,
+        ...cleanUserOptions
+      });
+    }
+    case 'slide': {
+      return validateOptions({
+        ...defaultOptions,
+        ...defaultSlideRevealTransition,
+        ...cleanUserOptions
+      });
+    }
+    case 'blur': {
+      return validateOptions({
+        ...defaultOptions,
+        ...defaultBlurRevealTransition,
+        ...cleanUserOptions
+      });
+    }
+    case 'spin': {
+      return validateOptions({
+        ...defaultOptions,
+        ...defaultSpinRevealTransition,
+        ...cleanUserOptions
+      });
+    }
+    case 'scale': {
+      return validateOptions({
+        ...defaultOptions,
+        ...defaultScaleRevealTransition,
+        ...cleanUserOptions
+      });
+    }
+    case undefined: {
+      return validateOptions({
+        ...defaultOptions,
+        ...cleanUserOptions
+      });
+    }
+  }
 };

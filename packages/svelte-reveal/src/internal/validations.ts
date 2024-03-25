@@ -33,25 +33,23 @@ export const isPositiveInteger = (value: number) => {
  * @param options The options to be checked.
  * @returns Whether the provided options are valid.
  */
-export const areOptionsValid = (options: RevealOptions) => {
+export const validateOptions = (options: RevealOptions) => {
   const isRootMarginValid = ROOT_MARGIN_REGEX.test(options.rootMargin);
   const isThresholdValid = inRange(options.threshold, 0, 1);
   const isOpacityValid = inRange(options.opacity, 0, 1);
   const isDelayValid = isPositive(options.delay);
   const isDurationValid = isPositive(options.duration);
 
-  const areBaseOptionsValid =
-    isRootMarginValid && isThresholdValid && isOpacityValid && isDelayValid && isDurationValid;
+  let areOptionsValid = isRootMarginValid && isThresholdValid && isOpacityValid && isDelayValid && isDurationValid;
 
   if (options.transition === 'blur') {
     const isBlurValid = options.transition === 'blur' && isPositive(options.blur);
-    return areBaseOptionsValid && isBlurValid;
-  }
-
-  if (options.transition === 'scale') {
+    areOptionsValid &&= isBlurValid;
+  } else if (options.transition === 'scale') {
     const isScaleValid = isPositive(options.scale);
-    return areBaseOptionsValid && isScaleValid;
+    areOptionsValid &&= isScaleValid;
   }
 
-  return areBaseOptionsValid;
+  if (!areOptionsValid) throw new Error('Invalid options');
+  return options;
 };
