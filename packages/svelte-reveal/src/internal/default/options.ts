@@ -12,7 +12,6 @@ import type {
   ScaleRevealTransition,
   FadeRevealTransition
 } from '../types/transitions.ts';
-import { customEasingWeights } from './easing.ts';
 
 export const defaultDebugOptions: DebugOptions = {
   debug: false,
@@ -71,8 +70,7 @@ export const defaultScaleRevealTransition: ScaleRevealTransition = {
 };
 
 export const defaultRevealEasing: Easing = {
-  type: 'custom',
-  weights: customEasingWeights
+  type: 'easeInOutCubic'
 };
 
 export const defaultRevealEvents: RevealEvents = {
