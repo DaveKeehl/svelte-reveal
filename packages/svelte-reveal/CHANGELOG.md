@@ -9,16 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Now using a monorepo
-- Open Graph image and readme cover do not contain version number anymore
+- Repository is now a monorepo (managed with Turborepo), containing both the published package and some example projects
+- Open Graph image and README cover do not contain version number anymore
 - Updated dependencies
-- Updated package.json scripts
-- Dropped TypeScript `importsNotUsedAsValues` option as deprecated, in favor of `verbatimModuleSyntax`
-- Using esbuild via its cli
-- Removed `build:watch` script
-- Dropped support for gitpod
-- Dropped support for docker
-- Updated .gitignore
+- Using tsup instead of raw esbuild
+- Dropped support for Gitpod
+- Dropped support for Docker
+- Improved documentation in README
+- Updated JSDoc comments
+- Restructured and simplified a ton the core code
+- Improved TypeScript types with discriminated unions to avoid showing out of scope properties
+- Massively simplified CI/CD pipelines
+- Removed testing suite (temporarily, but without rush to be re-introduced)
 
 ## [0.7.0] - 2022-11-04
 
