@@ -52,12 +52,6 @@ export const createFinalOptions = (userOptions: Partial<RevealOptions>): RevealO
   const cleanUserOptions = Object.fromEntries(Object.entries(userOptions).filter(([, value]) => value !== undefined));
 
   switch (userOptions.transition) {
-    case 'fade': {
-      return validateOptions({
-        ...defaultOptions,
-        ...cleanUserOptions
-      });
-    }
     case 'fly': {
       return validateOptions({
         ...defaultOptions,
@@ -93,6 +87,7 @@ export const createFinalOptions = (userOptions: Partial<RevealOptions>): RevealO
         ...cleanUserOptions
       });
     }
+    case 'fade':
     case undefined: {
       return validateOptions({
         ...defaultOptions,
