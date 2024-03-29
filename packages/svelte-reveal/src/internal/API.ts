@@ -75,7 +75,7 @@ export const setDeviceBreakpoint = (device: Device, breakpoint: number): RevealC
  * @returns The config object with the updated device settings.
  */
 export const setDevice = (device: Device, settings: DeviceConfig): RevealConfig => {
-  const configClone: RevealConfig = cloneConfig();
+  const configClone = cloneConfig();
   configClone.responsive[device] = settings;
 
   if (!hasValidBreakpoints(configClone.responsive)) throw new Error('Invalid breakpoints');
