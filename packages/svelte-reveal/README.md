@@ -178,23 +178,23 @@ The following table shows all the callback functions we provide to you.
 
 The following table shows how this library is globally configured right of out the box.
 
-| Parameter    | (children) | (children)   | Type         | Default | Description                                                  |
-| ------------ | ---------- | ------------ | ------------ | ------- | ------------------------------------------------------------ |
-| `dev`        |            |              | `boolean`    | `true`  | Globally enables/disables all logs.                          |
-| `once`       |            |              | `boolean`    | `false` | Performs the reveal effect only once when set to `true`. When set to `true`, refreshing the page doesn't re-run them. |
-| `responsive` |            |              | `Responsive` |         | Information about how the library handles responsiveness. It can be used to enable/disable the reveal effect on some devices. |
-|              | `mobile`   |              | `IDevice`    |         | Object containing information about responsiveness on mobile devices. |
-|              |            | `enabled`    | `boolean`    | `true`  | Whether the device supports the reveal effect on mobile devices. |
-|              |            | `breakpoint` | `number`     | `425`   | The viewport width upper limit that a mobile device can be targeted to work in. |
-|              | `tablet`   |              | `IDevice`    |         | Object containing information about responsiveness on tablet devices. |
-|              |            | `enabled`    | `boolean`    | `true`  | Whether the device supports the reveal effect on tablet devices. |
-|              |            | `breakpoint` | `number`     | `768`   | The viewport width upper limit that a tablet device can be targeted to work in. |
-|              | `laptop`   |              | `IDevice`    |         | Object containing information about responsiveness on laptop devices. |
-|              |            | `enabled`    | `boolean`    | `true`  | Whether the device supports the reveal effect on laptop devices. |
-|              |            | `breakpoint` | `number`     | `1440`  | The viewport width upper limit that a laptop device can be targeted to work in. |
-|              | `desktop`  |              | `IDevice`    |         | Object containing information about responsiveness on desktop devices. |
-|              |            | `enabled`    | `boolean`    | `true`  | Whether the device supports the reveal effect on desktop devices. |
-|              |            | `breakpoint` | `number`     | `2560`  | The viewport width upper limit that a desktop device can be targeted to work in. |
+| Parameter    | (children) | (children)   | Type           | Default | Description                                                  |
+| ------------ | ---------- | ------------ | -------------- | ------- | ------------------------------------------------------------ |
+| `dev`        |            |              | `boolean`      | `true`  | Globally enables/disables all logs.                          |
+| `once`       |            |              | `boolean`      | `false` | Performs the reveal effect only once when set to `true`. When set to `true`, refreshing the page doesn't re-run them. |
+| `responsive` |            |              | `Responsive`   |         | Information about how the library handles responsiveness. It can be used to enable/disable the reveal effect on some devices. |
+|              | `mobile`   |              | `DeviceConfig` |         | Object containing information about responsiveness on mobile devices. |
+|              |            | `enabled`    | `boolean`      | `true`  | Whether the device supports the reveal effect on mobile devices. |
+|              |            | `breakpoint` | `number`       | `425`   | The viewport width upper limit that a mobile device can be targeted to work in. |
+|              | `tablet`   |              | `DeviceConfig` |         | Object containing information about responsiveness on tablet devices. |
+|              |            | `enabled`    | `boolean`      | `true`  | Whether the device supports the reveal effect on tablet devices. |
+|              |            | `breakpoint` | `number`       | `768`   | The viewport width upper limit that a tablet device can be targeted to work in. |
+|              | `laptop`   |              | `DeviceConfig` |         | Object containing information about responsiveness on laptop devices. |
+|              |            | `enabled`    | `boolean`      | `true`  | Whether the device supports the reveal effect on laptop devices. |
+|              |            | `breakpoint` | `number`       | `1440`  | The viewport width upper limit that a laptop device can be targeted to work in. |
+|              | `desktop`  |              | `DeviceConfig` |         | Object containing information about responsiveness on desktop devices. |
+|              |            | `enabled`    | `boolean`      | `true`  | Whether the device supports the reveal effect on desktop devices. |
+|              |            | `breakpoint` | `number`       | `2560`  | The viewport width upper limit that a desktop device can be targeted to work in. |
 
 ## API
 
@@ -202,21 +202,21 @@ The following table shows how this library is globally configured right of out t
 
 Svelte Reveal also exposes several functions you can call to change the [default options](./src/internal/config.ts#L6-L34) and [global configuration](./src/internal/config.ts#L39-L60) of this library. Since these functions operate on a global level across all components using Svelte Reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the default options and global config from multiple points.
 
-| Name                    | Args                                               | Return             | Description                                                  |
-| ----------------------- | -------------------------------------------------- | ------------------ | ------------------------------------------------------------ |
-| `setDev`                | `(dev: boolean)`                                   | `RevealConfig`     | Sets the development mode.                                   |
-| `setOnce`               | `(once: boolean)`                                  | `RevealConfig`     | Sets the reveal animations activation status on page reload. |
-| `setDeviceStatus`       | `(device: Device, status: boolean)`                | `RevealConfig`     | Sets the status of a device.                                 |
-| `setDevicesStatus`      | `(devices: Device[], status: boolean)`             | `RevealConfig`     | Sets the status of multiple devices.                         |
-| `setDeviceBreakpoint`   | `(device: Device, breakpoint: number)`             | `RevealConfig`     | Sets the breakpoint of a device.                             |
-| `setDevice`             | `(device: Device, settings: IDevice)`              | `RevealConfig`     | Sets the settings of a device.                               |
-| `setResponsive`         | `(responsive: Responsive)`                         | `RevealConfig`     | Updates how responsiveness is handled by the library.        |
-| `setObserverRoot`       | `(root: IntersectionObserver['root'])`             | `IObserverOptions` | Sets the Intersection Observer root element.                 |
-| `setObserverRootMargin` | `(rootMargin: IntersectionObserver['rootMargin'])` | `IObserverOptions` | Sets the Intersection Observer rootMargin property.          |
-| `setObserverThreshold`  | `(threshold: number)`                              | `IObserverOptions` | Sets the Intersection Observer threshold property.           |
-| `setObserverConfig`     | `(observerConfig: IObserverOptions)`               | `IObserverOptions` | Sets the Intersection Observer configuration.                |
-| `setConfig`             | `(userConfig: RevealConfig)`                       | `RevealConfig`     | Updates the global configuration of this library.            |
-| `setDefaultOptions`     | `(options: RevealOptions)`                         | `RevealOptions`    | Updates the default options to be used for the reveal effect. |
+| Name                    | Args                                               | Return                       | Description                                                  |
+| ----------------------- | -------------------------------------------------- | ---------------------------- | ------------------------------------------------------------ |
+| `setDev`                | `(dev: boolean)`                                   | `RevealConfig`               | Sets the development mode.                                   |
+| `setOnce`               | `(once: boolean)`                                  | `RevealConfig`               | Sets the reveal animations activation status on page reload. |
+| `setDeviceStatus`       | `(device: Device, status: boolean)`                | `RevealConfig`               | Sets the status of a device.                                 |
+| `setDevicesStatus`      | `(devices: Device[], status: boolean)`             | `RevealConfig`               | Sets the status of multiple devices.                         |
+| `setDeviceBreakpoint`   | `(device: Device, breakpoint: number)`             | `RevealConfig`               | Sets the breakpoint of a device.                             |
+| `setDevice`             | `(device: Device, settings: IDevice)`              | `RevealConfig`               | Sets the settings of a device.                               |
+| `setResponsive`         | `(responsive: Responsive)`                         | `RevealConfig`               | Updates how responsiveness is handled by the library.        |
+| `setObserverRoot`       | `(root: IntersectionObserver['root'])`             | `IObserverOptions`           | Sets the Intersection Observer root element.                 |
+| `setObserverRootMargin` | `(rootMargin: IntersectionObserver['rootMargin'])` | `IObserverOptions`           | Sets the Intersection Observer rootMargin property.          |
+| `setObserverThreshold`  | `(threshold: number)`                              | `IObserverOptions`           | Sets the Intersection Observer threshold property.           |
+| `setObserverConfig`     | `(observerConfig: IntersectionObserverConfig)`     | `IntersectionObserverConfig` | Sets the Intersection Observer configuration.                |
+| `setConfig`             | `(userConfig: RevealConfig)`                       | `RevealConfig`               | Updates the global configuration of this library.            |
+| `setDefaultOptions`     | `(options: RevealOptions)`                         | `RevealOptions`              | Updates the default options to be used for the reveal effect. |
 
 ## Suggestions
 
