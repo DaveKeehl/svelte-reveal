@@ -136,8 +136,7 @@ export const createCssTransitionProperties = ({
  * @returns The merged CSS reveal styles to be used to update the Svelte Reveal stylesheet.
  */
 export const mergeRevealStyles = (prevRevealStyles: string, newRevealStyles: string): string => {
-  const combinedRevealStyles = [prevRevealStyles, newRevealStyles].join(' ');
-  return addMediaQueries(combinedRevealStyles).trim();
+  return [prevRevealStyles, addMediaQueries(newRevealStyles).trim()].join(' ');
 };
 
 /**
