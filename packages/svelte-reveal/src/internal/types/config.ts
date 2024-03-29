@@ -6,10 +6,6 @@ import type { Responsive } from './devices.ts';
  */
 export interface RevealConfig {
   /**
-   * Globally enables/disables all logs.
-   */
-  dev: boolean;
-  /**
    * Performs the reveal effect only once when set to `true`.
    * When set to `true`, refreshing the page doesn't re-run them.
    */

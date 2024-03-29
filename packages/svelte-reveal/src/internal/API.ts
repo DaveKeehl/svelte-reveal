@@ -9,16 +9,6 @@ import type { IntersectionObserverConfig } from '@/types/intersection-observer.t
 import type { RevealOptions } from '@/types/options.ts';
 
 /**
- * Sets the development mode status.
- * @param dev The development mode status.
- * @returns The config object with the updated `dev` property.
- */
-export const setDev = (dev: boolean): RevealConfig => {
-  config.dev = dev;
-  return config;
-};
-
-/**
  * Sets the reveal animations activation status on page reload.
  * @param once Whether the reveal animations run only once (i.e. they do not re-run on page reload).
  * @returns The config object with the updated `once` property,
@@ -151,7 +141,6 @@ export const setObserverConfig = (observerConfig: Partial<IntersectionObserverCo
  * @returns The updated config object.
  */
 export const setConfig = (userConfig: RevealConfig): RevealConfig => {
-  setDev(userConfig.dev);
   setOnce(userConfig.once);
   setResponsive(userConfig.responsive);
   return config;

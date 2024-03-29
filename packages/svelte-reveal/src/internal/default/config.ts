@@ -1,10 +1,9 @@
 import type { RevealConfig } from '@/types/config.ts';
 
 /**
- * Object containing global configuration that apply to all instances of this library.
+ * Global configuration for all instances (every `use:reveal` in your code) of this library.
  */
 export const config: RevealConfig = {
-  dev: true,
   once: false,
   responsive: {
     mobile: {

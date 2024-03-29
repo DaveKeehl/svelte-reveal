@@ -181,7 +181,6 @@ The following table shows how this library is globally configured right of out t
 
 | Parameter    | (children) | (children)   | Type           | Default | Description                                                  |
 | ------------ | ---------- | ------------ | -------------- | ------- | ------------------------------------------------------------ |
-| `dev`        |            |              | `boolean`      | `true`  | Globally enables/disables all logs.                          |
 | `once`       |            |              | `boolean`      | `false` | Performs the reveal effect only once when set to `true`. When set to `true`, refreshing the page doesn't re-run them. |
 | `responsive` |            |              | `Responsive`   |         | Information about how the library handles responsiveness. It can be used to enable/disable the reveal effect on some devices. |
 |              | `mobile`   |              | `DeviceConfig` |         | Object containing information about responsiveness on mobile devices. |

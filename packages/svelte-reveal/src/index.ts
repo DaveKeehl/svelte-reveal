@@ -1,6 +1,5 @@
 export { reveal } from '@/reveal.ts';
 export {
-  setDev,
   setOnce,
   setDeviceStatus,
   setDevicesStatus,
