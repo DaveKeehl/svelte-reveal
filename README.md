@@ -10,10 +10,11 @@ Svelte Reveal is a library created with the purpose of helping [Svelte](https://
 
 ## Features
 
-- ⚡️ Zero config Svelte action
-- 🧩 Highly customizable transitions
-- 👀 Leverages the Intersection Observer API
-- 🔑 100% TypeScript
+- ⚡️ Near zero config
+- 🧩 Customizable transitions
+- 🔌 Extensive API
+- 👀 Intersection Observer API
+- 🔥 100% TypeScript
 
 ## Documentation
 
