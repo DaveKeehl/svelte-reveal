@@ -1,4 +1,3 @@
-import { config } from './default/config.ts';
 import {
   createCssTransitionProperties,
   createCssTransitionDeclaration,
@@ -81,32 +80,16 @@ export const getNodeToReveal = (node: HTMLElement): HTMLElement => {
  * @returns The created Intersection Observer.
  */
 export const createObserver = (
-  canDebug: boolean,
-  highlightText: string,
   revealNode: HTMLElement,
   options: Required<RevealOptions>,
   className: string
 ): IntersectionObserver => {
-  const { ref, reset, duration, delay, threshold, onResetStart, onResetEnd, onRevealEnd } = options;
+  const { reset, duration, delay, threshold, onResetStart, onResetEnd, onRevealEnd } = options;
 
   const observerConfig = createObserverConfig();
   const sleep = duration + delay;
 
   return new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
-    if (canDebug) {
-      const entry = entries[0];
-      if (!entry) throw new Error('Intersection Observer entry is undefined');
-
-      const entryTarget = entry.target;
-
-      if (entryTarget === revealNode) {
-        console.groupCollapsed(`%cRef: ${ref} (Intersection Observer Callback)`, highlightText);
-        console.log(entry);
-        console.log(observerConfig);
-        console.groupEnd();
-      }
-    }
-
     entries.forEach((entry) => {
       if (reset && !entry.isIntersecting) {
         onResetStart(revealNode);
@@ -119,35 +102,4 @@ export const createObserver = (
       }
     });
   }, observerConfig);
-};
-
-/**
- * Logs data about the reveal node, the default options and the global configuration.
- * @param finalOptions The library options merged with the ones provided by the user.
- * @param revealNode The DOM element to be revealed.
- * @returns A tuple consisting of canDebug and highlightText.
- */
-export const logInfo = (finalOptions: RevealOptions, revealNode: HTMLElement): [boolean, string] => {
-  const { debug, ref, highlightLogs, highlightColor } = finalOptions;
-
-  const canDebug = config.dev && debug && ref !== '';
-  const highlightText = `color: ${highlightLogs ? highlightColor : '#B4BEC8'}`;
-
-  if (canDebug) {
-    console.groupCollapsed(`%cRef: ${ref}`, highlightText);
-
-    console.groupCollapsed('%cNode', highlightText);
-    console.log(revealNode);
-    console.groupEnd();
-
-    console.groupCollapsed('%cConfig', highlightText);
-    console.log(config);
-    console.groupEnd();
-
-    console.groupCollapsed('%cOptions', highlightText);
-    console.log(finalOptions);
-    console.groupEnd();
-  }
-
-  return [canDebug, highlightText];
 };

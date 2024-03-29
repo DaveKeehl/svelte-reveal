@@ -1,7 +1,7 @@
 import { getRevealClassNames, createStylesheet } from './styling/generation.ts';
 import { config } from './default/config.ts';
 import { isStyleTagCreated, hasPageReloaded } from './stores.ts';
-import { getNodeToReveal, activateRevealNode, createObserver, logInfo } from './DOM.ts';
+import { getNodeToReveal, activateRevealNode, createObserver } from './DOM.ts';
 import { createFinalOptions } from './utils.ts';
 import type { ActionReturn } from './types/events.ts';
 import type { RevealOptions } from './types/options.ts';
@@ -15,14 +15,12 @@ import { defaultOptions } from './default/options.ts';
  */
 export const reveal = (node: HTMLElement, options: Partial<RevealOptions> = defaultOptions): Partial<ActionReturn> => {
   const finalOptions = createFinalOptions(options);
-  const { transition, disable, ref, onRevealStart, onMount, onUpdate, onDestroy } = finalOptions;
+  const { transition, disable, onRevealStart, onMount, onUpdate, onDestroy } = finalOptions;
 
   const nodeToReveal = getNodeToReveal(node);
-  const [transitionDeclaration, transitionProperties] = getRevealClassNames(ref, transition);
+  const [transitionDeclaration, transitionProperties] = getRevealClassNames(transition);
 
   onMount(nodeToReveal);
-
-  const [canDebug, highlightText] = logInfo(finalOptions, nodeToReveal);
 
   // Checking if page was reloaded
   let reloaded = false;
@@ -53,7 +51,7 @@ export const reveal = (node: HTMLElement, options: Partial<RevealOptions> = defa
   onRevealStart(nodeToReveal);
   activateRevealNode(nodeToReveal, transitionDeclaration, transitionProperties, finalOptions);
 
-  const observerInstance = createObserver(canDebug, highlightText, nodeToReveal, finalOptions, transitionDeclaration);
+  const observerInstance = createObserver(nodeToReveal, finalOptions, transitionDeclaration);
   observerInstance.observe(nodeToReveal);
 
   console.groupEnd();

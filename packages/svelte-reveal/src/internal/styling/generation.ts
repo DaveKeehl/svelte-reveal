@@ -21,12 +21,8 @@ export const createStylesheet = (): void => {
   if (head !== null) head.appendChild(style);
 };
 
-const createRevealClassName = (ref: string, type: 'transition' | 'properties', transition: Transition, uid: string) => {
-  const tokens = [ref, type, transition]
-    .filter((token) => token !== '')
-    .map((token) => token.replace(/\s/g, '-'))
-    .join('__');
-
+const createRevealClassName = (type: 'transition' | 'properties', transition: Transition, uid: string) => {
+  const tokens = [type, transition].map((token) => token.replace(/\s/g, '-')).join('__');
   return `sr__${tokens}__${uid}`;
 };
 
@@ -36,12 +32,12 @@ const createRevealClassName = (ref: string, type: 'transition' | 'properties', t
  * @param transition The transition name to be prefixed in the class name.
  * @returns A tuple with the final CSS classes in the form of: [transitionDeclaration, transitionProperties]. The transition declaration class is used to declare a transition css rule to the target element. The transition properties class is used to create the actual transition.
  */
-export const getRevealClassNames = (ref: string, transition: Transition): [string, string] => {
+export const getRevealClassNames = (transition: Transition): [string, string] => {
   const seed = document.querySelectorAll('[data-action="reveal"]').length.toString();
   const uid = seedrandom(seed)().toString().slice(2);
 
-  const transitionDeclaration = createRevealClassName(ref, 'transition', transition, uid);
-  const transitionProperties = createRevealClassName(ref, 'properties', transition, uid);
+  const transitionDeclaration = createRevealClassName('transition', transition, uid);
+  const transitionProperties = createRevealClassName('properties', transition, uid);
 
   return [transitionDeclaration, transitionProperties];
 };
