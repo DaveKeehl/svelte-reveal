@@ -1,8 +1,8 @@
 import { config } from '@/default/config.ts';
 import { defaultOptions } from '@/default/options.ts';
-import { createFinalOptions as mergeOptions } from '@/utils.ts';
+import { mergeOptions } from '@/utils.ts';
 import { isStyleTagCreatedStore, hasPageReloadedStore } from '@/stores.ts';
-import { getNodeToReveal, revealNode, createObserver } from '@/DOM.ts';
+import { getNodeToReveal, revealNode, createIntersectionObserver } from '@/DOM.ts';
 import { getRevealClassNames, createStylesheet } from '@/styling/generation.ts';
 import type { ActionReturn } from '@/types/events.ts';
 import type { RevealOptions } from '@/types/options.ts';
@@ -43,7 +43,7 @@ export const reveal = (
   onRevealStart(nodeToReveal);
   revealNode(nodeToReveal, transitionDeclaration, transitionProperties, options);
 
-  const observer = createObserver(nodeToReveal, options, transitionDeclaration);
+  const observer = createIntersectionObserver(nodeToReveal, options, transitionDeclaration);
   observer.observe(nodeToReveal);
 
   return {

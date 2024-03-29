@@ -132,7 +132,7 @@ Keep in mind that these options are applied to the single DOM element you add Sv
 
 | Name       | Type                        | Default             | Description                                                  |
 | ---------- | --------------------------- | ------------------- | ------------------------------------------------------------ |
-| disable    | `boolean`                   | `false`             | When set to `false`, the transition for the target element is disabled. |
+| disable    | `boolean`                   | `false`             | When set to false, the transition is disabled for the target element. |
 | root       | `Element | Document | null` | `null`              | The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer. |
 | rootMargin | `string`                    | `"0px 0px 0px 0px"` | The [root margin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer. |
 | threshold  | `number`                    | `0.6`               | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/thresholds) (in percentage from `0.0` to `1.0`) property used by the Intersection Observer to know when its target element is considered visible. |
@@ -140,7 +140,7 @@ Keep in mind that these options are applied to the single DOM element you add Sv
 | reset      | `boolean`                   | `false`             | When set to `true`, the node transitions out when out of view, and is revealed again when back in view.<br /><br />⚠️ Be careful not to overuse this option, as it prevents the Intersection Observer to stop observing the target node. Performance is therefore not guaranteed when many elements have `reset` set to `true`. |
 | duration   | `number`                    | `800`               | How long the transition lasts (in ms).                       |
 | delay      | `number`                    | `0`                 | How long the transition is delayed (in ms) before being triggered. |
-| easing     | `Easing`                    | `"easeInOutCubic"`  | The type of easing function applied to the transition. [Check out](./src/internal/types/easing.ts) the full list of available easing functions and [this other website](https://cubic-bezier.com/) to preview timing functions. |
+| easing     | `Easing`                    | `"easeInOutCubic"`  | The easing function to use. [Check out](./src/internal/types/easing.ts) the full list of available easing functions and [this other website](https://cubic-bezier.com/) to preview timing functions. |
 | x          | `number`                    | `-20`               | The starting offset position in pixels on the x-axis of the `"slide"` transition.<br />If `x` is negative, the element will transition from the left, else from the right. |
 | y          | `number`                    | `-20`               | The starting offset position in pixels on the y-axis of the `"fly"` transition.<br />If `y` is negative, the element will transition from the top, else from the bottom. |
 | rotate     | `number`                    | `-360`              | The starting rotation offset in degrees of the `"spin"` transition.<br />If `rotate` is positive, the element will spin clockwise, else counter-clockwise. |
@@ -181,20 +181,20 @@ The following table shows how this library is globally configured right of out t
 
 | Parameter    | (children) | (children)   | Type           | Default | Description                                                  |
 | ------------ | ---------- | ------------ | -------------- | ------- | ------------------------------------------------------------ |
-| `once`       |            |              | `boolean`      | `false` | Performs the reveal effect only once when set to `true`. When set to `true`, refreshing the page doesn't re-run them. |
-| `responsive` |            |              | `Responsive`   |         | Information about how the library handles responsiveness. It can be used to enable/disable the reveal effect on some devices. |
-|              | `mobile`   |              | `DeviceConfig` |         | Object containing information about responsiveness on mobile devices. |
-|              |            | `enabled`    | `boolean`      | `true`  | Whether the device supports the reveal effect on mobile devices. |
-|              |            | `breakpoint` | `number`       | `425`   | The viewport width upper limit that a mobile device can be targeted to work in. |
-|              | `tablet`   |              | `DeviceConfig` |         | Object containing information about responsiveness on tablet devices. |
-|              |            | `enabled`    | `boolean`      | `true`  | Whether the device supports the reveal effect on tablet devices. |
-|              |            | `breakpoint` | `number`       | `768`   | The viewport width upper limit that a tablet device can be targeted to work in. |
-|              | `laptop`   |              | `DeviceConfig` |         | Object containing information about responsiveness on laptop devices. |
-|              |            | `enabled`    | `boolean`      | `true`  | Whether the device supports the reveal effect on laptop devices. |
-|              |            | `breakpoint` | `number`       | `1440`  | The viewport width upper limit that a laptop device can be targeted to work in. |
-|              | `desktop`  |              | `DeviceConfig` |         | Object containing information about responsiveness on desktop devices. |
-|              |            | `enabled`    | `boolean`      | `true`  | Whether the device supports the reveal effect on desktop devices. |
-|              |            | `breakpoint` | `number`       | `2560`  | The viewport width upper limit that a desktop device can be targeted to work in. |
+| `once`       |            |              | `boolean`      | `false` | Whether the reveal effect runs only once (i.e. it doesn't re-run on page reload). |
+| `responsive` |            |              | `Responsive`   |         | Specifies how the library handles responsiveness. It can be used to enable/disable the reveal effect on some devices. |
+|              | `mobile`   |              | `DeviceConfig` |         | Configuration of mobile devices.                             |
+|              |            | `enabled`    | `boolean`      | `true`  | Whether the reveal effect is performed on mobile devices.    |
+|              |            | `breakpoint` | `number`       | `425`   | The max viewport width of mobile devices.                    |
+|              | `tablet`   |              | `DeviceConfig` |         | Configuration of tablet devices.                             |
+|              |            | `enabled`    | `boolean`      | `true`  | Whether the reveal effect is performed on tablet devices.    |
+|              |            | `breakpoint` | `number`       | `768`   | The max viewport width of tablet devices.                    |
+|              | `laptop`   |              | `DeviceConfig` |         | Configuration of laptop devices.                             |
+|              |            | `enabled`    | `boolean`      | `true`  | Whether the reveal effect is performed on laptop devices.    |
+|              |            | `breakpoint` | `number`       | `1440`  | The max viewport width of laptop devices.                    |
+|              | `desktop`  |              | `DeviceConfig` |         | Configuration of desktop devices.                            |
+|              |            | `enabled`    | `boolean`      | `true`  | Whether the reveal effect is performed on desktop devices.   |
+|              |            | `breakpoint` | `number`       | `2560`  | The max viewport width of desktop devices.                   |
 
 ## API
 
@@ -204,18 +204,17 @@ Svelte Reveal also exposes several functions you can call to change the [default
 
 | Name                    | Args                                           | Return                       | Description                                                  |
 | ----------------------- | ---------------------------------------------- | ---------------------------- | ------------------------------------------------------------ |
-| `setDev`                | `(dev: boolean)`                               | `RevealConfig`               | Sets the development mode.                                   |
 | `setOnce`               | `(once: boolean)`                              | `RevealConfig`               | Sets the reveal animations activation status on page reload. |
 | `setDeviceStatus`       | `(device: Device, status: boolean)`            | `RevealConfig`               | Sets the status of a device.                                 |
 | `setDevicesStatus`      | `(devices: Device[], status: boolean)`         | `RevealConfig`               | Sets the status of multiple devices.                         |
 | `setDeviceBreakpoint`   | `(device: Device, breakpoint: number)`         | `RevealConfig`               | Sets the breakpoint of a device.                             |
 | `setDevice`             | `(device: Device, settings: IDevice)`          | `RevealConfig`               | Sets the settings of a device.                               |
 | `setResponsive`         | `(responsive: Responsive)`                     | `RevealConfig`               | Updates how responsiveness is handled by the library.        |
-| `setObserverRoot`       | `(root: Element | Document | null)`            | `IntersectionObserverConfig` | Sets the Intersection Observer root element.                 |
-| `setObserverRootMargin` | `(rootMargin: string)`                         | `IntersectionObserverConfig` | Sets the Intersection Observer rootMargin property.          |
-| `setObserverThreshold`  | `(threshold: number)`                          | `IntersectionObserverConfig` | Sets the Intersection Observer threshold property.           |
+| `setObserverRoot`       | `(root: Element | Document | null)`            | `IntersectionObserverConfig` | Sets the Intersection Observer `root` element.               |
+| `setObserverRootMargin` | `(rootMargin: string)`                         | `IntersectionObserverConfig` | Sets the Intersection Observer `rootMargin` property.        |
+| `setObserverThreshold`  | `(threshold: number)`                          | `IntersectionObserverConfig` | Sets the Intersection Observer `threshold` property.         |
 | `setObserverConfig`     | `(observerConfig: IntersectionObserverConfig)` | `IntersectionObserverConfig` | Sets the Intersection Observer configuration.                |
-| `setConfig`             | `(userConfig: RevealConfig)`                   | `RevealConfig`               | Updates the global configuration of this library.            |
+| `setConfig`             | `(userConfig: RevealConfig)`                   | `RevealConfig`               | Updates the library global configuration.                    |
 | `setDefaultOptions`     | `(options: RevealOptions)`                     | `RevealOptions`              | Updates the default options to be used for the reveal effect. |
 
 ## Suggestions

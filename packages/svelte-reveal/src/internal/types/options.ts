@@ -4,6 +4,6 @@ import type { IntersectionObserverConfig } from './intersection-observer.ts';
 import type { RevealTransition } from './transitions.ts';
 
 /**
- * Object containing options to tweak the behavior of Svelte Reveal at the element level.
+ * Specifies how a single reveal instance behaves.
  */
 export type RevealOptions = IntersectionObserverConfig & RevealTransition & { easing: Easing } & RevealEvents;

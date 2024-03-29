@@ -14,7 +14,7 @@ import type { RevealConfig } from '@/types/config.ts';
 import type { RevealOptions } from '@/types/options.ts';
 
 /**
- * Removes trailing whitespace, newlines and tabs from a string.
+ * Removes trailing whitespaces, newlines and tabs from a string.
  * @param str The string to be cleaned.
  * @returns The cleaned string.
  */
@@ -35,7 +35,7 @@ export const cloneConfig = (): RevealConfig => structuredClone(config);
  * @param observerConfig The Intersection Observer config.
  * @returns The provided Intersection Observer config, with default values applied in case of unspecified properties.
  */
-export const createObserverConfig = (observerConfig?: Partial<IntersectionObserverConfig>) => {
+export const createIntersectionObserverConfig = (observerConfig?: Partial<IntersectionObserverConfig>) => {
   return {
     root: observerConfig?.root ?? defaultIntersectionObserverConfig.root,
     rootMargin: observerConfig?.rootMargin ?? defaultIntersectionObserverConfig.rootMargin,
@@ -44,11 +44,11 @@ export const createObserverConfig = (observerConfig?: Partial<IntersectionObserv
 };
 
 /**
- * Overrides the default options values with the ones provided by the user.
+ * Merges the default options with the ones provided by the user.
  * @param userOptions The options provided by the user.
- * @returns The final options that can be used by the rest of the library.
+ * @returns The final merged options that can be used by the rest of the library.
  */
-export const createFinalOptions = (userOptions: Partial<RevealOptions>): RevealOptions => {
+export const mergeOptions = (userOptions: Partial<RevealOptions>): RevealOptions => {
   const cleanUserOptions = Object.fromEntries(Object.entries(userOptions).filter(([, value]) => value !== undefined));
 
   switch (userOptions.transition) {

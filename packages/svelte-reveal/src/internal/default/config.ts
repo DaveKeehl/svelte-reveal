@@ -1,7 +1,7 @@
 import type { RevealConfig } from '@/types/config.ts';
 
 /**
- * Global configuration for all instances (every `use:reveal` in your code) of this library.
+ * Global configuration for all instances of this library.
  */
 export const config: RevealConfig = {
   once: false,

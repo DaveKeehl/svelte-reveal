@@ -1,7 +1,6 @@
 import seedrandom from 'seedrandom';
 
 import { markRevealNode } from '@/DOM.ts';
-import { createFinalOptions } from '@/utils.ts';
 import { standardEasingWeights } from '@/default/easing.ts';
 import { addMediaQueries } from '@/styling/media-queries.ts';
 import type { Transition } from '@/types/transitions.ts';
@@ -49,10 +48,9 @@ export const getRevealClassNames = (transition: Transition): [string, string] =>
  * @returns The CSS rules to be used to create the given transition.
  */
 export const createTransitionPropertyRules = (options: RevealOptions): string => {
-  const finalOptions = createFinalOptions(options);
-  const { opacity } = finalOptions;
+  const { opacity } = options;
 
-  switch (finalOptions.transition) {
+  switch (options.transition) {
     case 'fade':
       return `
 				opacity: ${opacity};
@@ -60,27 +58,27 @@ export const createTransitionPropertyRules = (options: RevealOptions): string =>
     case 'slide':
       return `
 				opacity: ${opacity};
-				transform: translateX(${finalOptions.x}px);
+				transform: translateX(${options.x}px);
 			`;
     case 'fly':
       return `
 				opacity: ${opacity};
-				transform: translateY(${finalOptions.y}px);
+				transform: translateY(${options.y}px);
 			`;
     case 'spin':
       return `
 				opacity: ${opacity};
-				transform: rotate(${finalOptions.rotate}deg);
+				transform: rotate(${options.rotate}deg);
 			`;
     case 'blur':
       return `
 				opacity: ${opacity};
-				filter: blur(${finalOptions.blur}px);
+				filter: blur(${options.blur}px);
 			`;
     case 'scale':
       return `
 				opacity: ${opacity};
-				transform: scale(${finalOptions.scale});
+				transform: scale(${options.scale});
 			`;
   }
 };

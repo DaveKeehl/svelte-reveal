@@ -31,7 +31,7 @@ export const isPositiveInteger = (value: number) => {
 
 /**
  * Checks whether the breakpoints overlap.
- * @param responsive An object that instructs the library how to handle responsiveness for a given set of devices.
+ * @param responsive Object that instructs the library how to handle responsiveness for a given set of devices.
  * @returns Whether the breapoints overlap.
  */
 export const hasOverlappingBreakpoints = (responsive: Responsive): boolean => {
@@ -45,8 +45,8 @@ export const hasOverlappingBreakpoints = (responsive: Responsive): boolean => {
 };
 
 /**
- * Checks whether the breakpoints are valid or not.
- * @param responsive An object that instructs the library how to handle responsiveness for a given set of devices.
+ * Checks whether the breakpoints are valid.
+ * @param responsive Object that instructs the library how to handle responsiveness for a given set of devices.
  * @returns Whether the breakpoints are valid.
  */
 export const hasValidBreakpoints = (responsive: Responsive): boolean => {

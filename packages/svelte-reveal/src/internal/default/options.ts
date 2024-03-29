@@ -73,6 +73,9 @@ export const defaultRevealEvents: RevealEvents = {
   onDestroy: () => null
 };
 
+/**
+ * The default options used by the library as fallback in case the user leaves some properties undefined.
+ */
 export const defaultOptions = {
   ...defaultIntersectionObserverConfig,
   ...defaultFadeRevealTransition,

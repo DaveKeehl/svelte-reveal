@@ -3,7 +3,7 @@ import {
   createCssTransitionDeclaration,
   mergeRevealStyles
 } from '@/styling/generation.ts';
-import { cleanString, createObserverConfig } from '@/utils.ts';
+import { cleanString, createIntersectionObserverConfig } from '@/utils.ts';
 import type { RevealOptions } from '@/types/options.ts';
 
 /**
@@ -60,7 +60,7 @@ export const revealNode = (
 
 /**
  * Get the HTML element to be revealed.
- * @param node The HTML element passed by the svelte action.
+ * @param node The HTML element passed by the Svelte action.
  * @returns The HTML element to be revealed.
  */
 export const getNodeToReveal = (node: HTMLElement): HTMLElement => {
@@ -71,22 +71,20 @@ export const getNodeToReveal = (node: HTMLElement): HTMLElement => {
 };
 
 /**
- * Creates an Intersection Observer for the reveal node.
- * @param canDebug Toggles logging for the Intersection Observer notifications.
- * @param highlightText The color hex code to be used to color the logs.
+ * Creates an Intersection Observer for the node to be revealed.
  * @param revealNode The HTML node to observe.
  * @param options The reveal options.
  * @param className The CSS class to add/remove from/to the target element.
- * @returns The created Intersection Observer.
+ * @returns The newly created Intersection Observer.
  */
-export const createObserver = (
+export const createIntersectionObserver = (
   revealNode: HTMLElement,
   options: Required<RevealOptions>,
   className: string
 ): IntersectionObserver => {
   const { reset, duration, delay, threshold, onResetStart, onResetEnd, onRevealEnd } = options;
 
-  const observerConfig = createObserverConfig();
+  const observerConfig = createIntersectionObserverConfig();
   const sleep = duration + delay;
 
   return new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {

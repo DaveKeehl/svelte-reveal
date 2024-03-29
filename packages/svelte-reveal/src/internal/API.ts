@@ -1,6 +1,6 @@
 import { config } from '@/default/config.ts';
 import { defaultOptions } from '@/default/options.ts';
-import { createFinalOptions, createObserverConfig, cloneConfig } from '@/utils.ts';
+import { mergeOptions, createIntersectionObserverConfig, cloneConfig } from '@/utils.ts';
 import { hasValidBreakpoints, inRange } from '@/validations.ts';
 import { ROOT_MARGIN_REGEX } from '@/constants.ts';
 import type { RevealConfig } from '@/types/config.ts';
@@ -9,8 +9,8 @@ import type { IntersectionObserverConfig } from '@/types/intersection-observer.t
 import type { RevealOptions } from '@/types/options.ts';
 
 /**
- * Sets the reveal animations activation status on page reload.
- * @param once Whether the reveal animations run only once (i.e. they do not re-run on page reload).
+ * Sets the value of the global `once` property.
+ * @param once Whether the reveal effect runs only once (i.e. it doesn't re-run on page reload).
  * @returns The config object with the updated `once` property,
  */
 export const setOnce = (once: boolean): RevealConfig => {
@@ -22,7 +22,7 @@ export const setOnce = (once: boolean): RevealConfig => {
  * Sets the status of a device.
  * @param device The device to enable/disable.
  * @param status The new status for `device`.
- * @returns The config object with the updated corresponding device enabled property.
+ * @returns The config object with the updated `enabled` property.
  */
 export const setDeviceStatus = (device: Device, status: boolean): RevealConfig => {
   return setDevicesStatus([device], status);
@@ -32,7 +32,7 @@ export const setDeviceStatus = (device: Device, status: boolean): RevealConfig =
  * Sets the status of multiple devices.
  * @param devices The devices to enabled/disable.
  * @param status The devices' new status.
- * @returns The config object with the updated devices enabled property.
+ * @returns The config object with the updated `enabled` properties.
  */
 export const setDevicesStatus = (devices: Device[], status: boolean): RevealConfig => {
   if (devices.length === 0) throw new Error('At least one device required');
@@ -46,7 +46,7 @@ export const setDevicesStatus = (devices: Device[], status: boolean): RevealConf
  * Sets the breakpoint of a device.
  * @param device The device to update with `breakpoint`.
  * @param breakpoint The new breakpoint for `device`.
- * @returns The config object with the updated device breakpoint property.
+ * @returns The config object with the updated `breakpoint` property.
  */
 export const setDeviceBreakpoint = (device: Device, breakpoint: number): RevealConfig => {
   const configClone = cloneConfig();
@@ -76,8 +76,8 @@ export const setDevice = (device: Device, settings: DeviceConfig): RevealConfig 
 
 /**
  * Updates how responsiveness is handled by the library.
- * @param responsive An object that instructs the library how to handle responsiveness.
- * @returns The config object with the updated responsive property.
+ * @param responsive Object that instructs the library how to handle responsiveness.
+ * @returns The config object with the updated `responsive` property.
  */
 export const setResponsive = (responsive: Responsive): RevealConfig => {
   if (!hasValidBreakpoints(responsive)) throw new Error('Invalid breakpoints');
@@ -87,18 +87,18 @@ export const setResponsive = (responsive: Responsive): RevealConfig => {
 };
 
 /**
- * Sets the Intersection Observer root element.
- * @param root The new Intersection Observer root element.
+ * Sets the Intersection Observer `root` element.
+ * @param root The new Intersection Observer `root` element.
  * @returns The Intersection Obsever configuration with the updated `root` property.
  */
 export const setObserverRoot = (root: IntersectionObserver['root']): IntersectionObserverConfig => {
   defaultOptions.root = root;
-  return createObserverConfig();
+  return createIntersectionObserverConfig();
 };
 
 /**
- * Sets the Intersection Observer rootMargin property.
- * @param rootMargin The new rootMargin used by the Intersection Observer.
+ * Sets the Intersection Observer `rootMargin` property.
+ * @param rootMargin The new `rootMargin` used by the Intersection Observer.
  * @returns The Intersection Observer configuration with the updated `rootMargin` property.
  */
 export const setObserverRootMargin = (rootMargin: IntersectionObserver['rootMargin']): IntersectionObserverConfig => {
@@ -107,19 +107,19 @@ export const setObserverRootMargin = (rootMargin: IntersectionObserver['rootMarg
   if (!isValidMargin) throw new SyntaxError('Invalid rootMargin syntax');
 
   defaultOptions.rootMargin = rootMargin;
-  return createObserverConfig();
+  return createIntersectionObserverConfig();
 };
 
 /**
- * Sets the Intersection Observer threshold property.
- * @param threshold The new threshold used by the Intersection Observer.
+ * Sets the Intersection Observer `threshold` property.
+ * @param threshold The new `threshold` used by the Intersection Observer.
  * @returns The Intersection Observer configuration object with the updated `threshold` property.
  */
 export const setObserverThreshold = (threshold: number): IntersectionObserverConfig => {
   if (!inRange(threshold, 0, 1)) throw new RangeError('Threshold must be between 0.0 and 1.0');
 
   defaultOptions.threshold = threshold;
-  return createObserverConfig();
+  return createIntersectionObserverConfig();
 };
 
 /**
@@ -128,7 +128,7 @@ export const setObserverThreshold = (threshold: number): IntersectionObserverCon
  * @returns The updated configuration used to manage the Intersection Observer behavior.
  */
 export const setObserverConfig = (observerConfig: Partial<IntersectionObserverConfig>): IntersectionObserverConfig => {
-  const newObserverConfig = createObserverConfig(observerConfig);
+  const newObserverConfig = createIntersectionObserverConfig(observerConfig);
   setObserverRoot(newObserverConfig.root);
   setObserverRootMargin(newObserverConfig.rootMargin);
   setObserverThreshold(newObserverConfig.threshold);
@@ -136,7 +136,7 @@ export const setObserverConfig = (observerConfig: Partial<IntersectionObserverCo
 };
 
 /**
- * Updates the global configuration of this library.
+ * Updates the library global configuration.
  * @param userConfig The new custom configuration.
  * @returns The updated config object.
  */
@@ -152,5 +152,5 @@ export const setConfig = (userConfig: RevealConfig): RevealConfig => {
  * @returns The updated default options.
  */
 export const setDefaultOptions = (userOptions: Partial<RevealOptions>): RevealOptions => {
-  return createFinalOptions(userOptions);
+  return mergeOptions(userOptions);
 };

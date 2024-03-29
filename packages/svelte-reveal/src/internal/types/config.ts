@@ -1,18 +1,15 @@
 import type { Responsive } from './devices.ts';
 
 /**
- * Object containing configuration properties to change the behavior
- * of Svelte Reveal on a global level for all instances of this library.
+ * Global configuration for all instances of this library.
  */
 export interface RevealConfig {
   /**
-   * Performs the reveal effect only once when set to `true`.
-   * When set to `true`, refreshing the page doesn't re-run them.
+   * Whether the reveal effect runs only once (i.e. it doesn't re-run on page reload).
    */
   once: boolean;
   /**
-   * Information about how the library handles responsiveness.
-   * It can be used to enable/disable the reveal effect on some devices.
+   * Specifies how the library handles responsiveness. It can be used to enable/disable the reveal effect on some devices.
    */
   responsive: Responsive;
 }

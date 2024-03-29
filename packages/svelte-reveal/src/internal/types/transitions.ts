@@ -1,6 +1,6 @@
 export type BaseRevealTransition = {
   /**
-   * When set to false, the transition for the target element is disabled.
+   * When set to false, the transition is disabled for the target element.
    */
   disable: boolean;
   /**
@@ -10,16 +10,15 @@ export type BaseRevealTransition = {
    */
   reset: boolean;
   /**
-   * How long the transition lasts (in milliseconds).
+   * How long the transition lasts (in ms).
    */
   duration: number;
   /**
-   * How long the transition is delayed (in milliseconds) before being triggered.
+   * How long the transition is delayed (in ms) before being triggered.
    */
   delay: number;
   /**
-   * The starting opacity value in percentage of any transition.
-   * It can be a number between `0.0` and `1.0`.
+   * The starting opacity value in percentage of any transition. It can be a number between `0.0` and `1.0`.
    */
   opacity: number;
 };
@@ -98,6 +97,6 @@ export type RevealTransition =
   | ScaleRevealTransition;
 
 /**
- * The types of supported transitions.
+ * The type of transition to use.
  */
 export type Transition = RevealTransition['transition'];

@@ -1,3 +1,6 @@
+/**
+ * The events fired by the Svelte action.
+ */
 export type RevealEvents = {
   /**
    * Function that gets fired when the node starts being revealed.
@@ -8,13 +11,11 @@ export type RevealEvents = {
    */
   onRevealEnd: (node: HTMLElement) => void;
   /**
-   * Function that gets fired when the `reset` option is set to `true`
-   * and the node starts transitioning out.
+   * Function that gets fired when the `reset` option is set to `true` and the node starts transitioning out.
    */
   onResetStart: (node: HTMLElement) => void;
   /**
-   * Function that gets fired when the `reset` option is set to `true`
-   * and the node has fully transitioned out.
+   * Function that gets fired when the `reset` option is set to `true` and the node has fully transitioned out.
    */
   onResetEnd: (node: HTMLElement) => void;
   /**
