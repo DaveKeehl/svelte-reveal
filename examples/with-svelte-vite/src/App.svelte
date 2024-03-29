@@ -3,15 +3,10 @@
 
   const config: Partial<RevealOptions>[] = [
     { transition: 'fade', duration: 2000 },
-    { transition: 'fly', y: -80, easing: { type: 'easeOutBack' } },
-    { transition: 'slide', x: -80, easing: { type: 'easeOutBack' } },
+    { transition: 'fly', y: -80, easing: 'easeOutBack' },
+    { transition: 'slide', x: -80, easing: 'easeOutBack' },
     { transition: 'blur', blur: 2, duration: 1000 },
-    {
-      transition: 'spin',
-      rotate: 10,
-      duration: 600,
-      easing: { type: 'easeOutCubic' }
-    },
+    { transition: 'spin', rotate: 10, duration: 600, easing: 'easeOutCubic' },
     { transition: 'scale', scale: 2 }
   ];
 </script>
