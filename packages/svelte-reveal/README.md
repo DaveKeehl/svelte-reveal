@@ -129,23 +129,23 @@ Depending on the use case, you can either use this library as-is (which applies 
 
 Keep in mind that these options are applied to the single DOM element you add Svelte Reveal to. For global and more in-depth settings, refer to the [API](#api) section.
 
-| Name       | Type                                 | Default             | Description                                                  |
-| ---------- | ------------------------------------ | ------------------- | ------------------------------------------------------------ |
-| disable    | `boolean`                            | `false`             | When set to `false`, the transition for the target element is disabled. |
-| root       | `IntersectionObserver['root']`       | `null`              | The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer. |
-| rootMargin | `IntersectionObserver['rootMargin']` | `"0px 0px 0px 0px"` | The [root margin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer. |
-| threshold  | `number`                             | `0.6`               | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/thresholds) (in percentage from `0.0` to `1.0`) property used by the Intersection Observer to know when its target element is considered visible. |
-| transition | `Transition`                         | `"fade"`            | The type of transition that is triggered when the target node becomes visible.<br />Read more [in this subsection](#transitions) for a comprehensive explanation of the full list of available transitions. |
-| reset      | `boolean`                            | `false`             | When set to `true`, the node transitions out when out of view, and is revealed again when back in view.<br /><br />⚠️ Be careful not to overuse this option, as it prevents the Intersection Observer to stop observing the target node. Performance is therefore not guaranteed when many elements have `reset` set to `true`. |
-| duration   | `number`                             | `800`               | How long the transition lasts (in ms).                       |
-| delay      | `number`                             | `0`                 | How long the transition is delayed (in ms) before being triggered. |
-| easing     | `Easing`                             | `easeInOutCubic`    | The type of easing function applied to the transition. [Check out](./src/internal/types.ts#L230-L256) the full list of available easing functions and [this other website](https://cubic-bezier.com/) to preview timing functions. |
-| x          | `number`                             | `-20`               | The starting offset position in pixels on the x-axis of the `"slide"` transition.<br />If `x` is negative, the element will transition from the left, else from the right. |
-| y          | `number`                             | `-20`               | The starting offset position in pixels on the y-axis of the `"fly"` transition.<br />If `y` is negative, the element will transition from the top, else from the bottom. |
-| rotate     | `number`                             | `-360`              | The starting rotation offset in degrees of the `"spin"` transition.<br />If `rotate` is positive, the element will spin clockwise, else counter-clockwise. |
-| opacity    | `number`                             | `0`                 | The starting opacity value in percentage of any transition. It can be a number between `0.0` and `1.0`. |
-| blur       | `number`                             | `16`                | The starting blur value in pixels of the `"blur"` transition. |
-| scale      | `number`                             | `0`                 | The starting scale value in percentage of the `"scale"` transition. |
+| Name       | Type                        | Default             | Description                                                  |
+| ---------- | --------------------------- | ------------------- | ------------------------------------------------------------ |
+| disable    | `boolean`                   | `false`             | When set to `false`, the transition for the target element is disabled. |
+| root       | `Element | Document | null` | `null`              | The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer. |
+| rootMargin | `string`                    | `"0px 0px 0px 0px"` | The [root margin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer. |
+| threshold  | `number`                    | `0.6`               | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/thresholds) (in percentage from `0.0` to `1.0`) property used by the Intersection Observer to know when its target element is considered visible. |
+| transition | `Transition`                | `"fade"`            | The type of transition that is triggered when the target node becomes visible.<br />Read more [in this subsection](#transitions) for a comprehensive explanation of the full list of available transitions. |
+| reset      | `boolean`                   | `false`             | When set to `true`, the node transitions out when out of view, and is revealed again when back in view.<br /><br />⚠️ Be careful not to overuse this option, as it prevents the Intersection Observer to stop observing the target node. Performance is therefore not guaranteed when many elements have `reset` set to `true`. |
+| duration   | `number`                    | `800`               | How long the transition lasts (in ms).                       |
+| delay      | `number`                    | `0`                 | How long the transition is delayed (in ms) before being triggered. |
+| easing     | `Easing`                    | `"easeInOutCubic"`  | The type of easing function applied to the transition. [Check out](./src/internal/types.ts#L230-L256) the full list of available easing functions and [this other website](https://cubic-bezier.com/) to preview timing functions. |
+| x          | `number`                    | `-20`               | The starting offset position in pixels on the x-axis of the `"slide"` transition.<br />If `x` is negative, the element will transition from the left, else from the right. |
+| y          | `number`                    | `-20`               | The starting offset position in pixels on the y-axis of the `"fly"` transition.<br />If `y` is negative, the element will transition from the top, else from the bottom. |
+| rotate     | `number`                    | `-360`              | The starting rotation offset in degrees of the `"spin"` transition.<br />If `rotate` is positive, the element will spin clockwise, else counter-clockwise. |
+| opacity    | `number`                    | `0`                 | The starting opacity value in percentage of any transition. It can be a number between `0.0` and `1.0`. |
+| blur       | `number`                    | `16`                | The starting blur value in pixels of the `"blur"` transition. |
+| scale      | `number`                    | `0`                 | The starting scale value in percentage of the `"scale"` transition. |
 
 ### Transitions
 
@@ -202,28 +202,28 @@ The following table shows how this library is globally configured right of out t
 
 Svelte Reveal also exposes several functions you can call to change the [default options](./src/internal/config.ts#L6-L34) and [global configuration](./src/internal/config.ts#L39-L60) of this library. Since these functions operate on a global level across all components using Svelte Reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the default options and global config from multiple points.
 
-| Name                    | Args                                               | Return                       | Description                                                  |
-| ----------------------- | -------------------------------------------------- | ---------------------------- | ------------------------------------------------------------ |
-| `setDev`                | `(dev: boolean)`                                   | `RevealConfig`               | Sets the development mode.                                   |
-| `setOnce`               | `(once: boolean)`                                  | `RevealConfig`               | Sets the reveal animations activation status on page reload. |
-| `setDeviceStatus`       | `(device: Device, status: boolean)`                | `RevealConfig`               | Sets the status of a device.                                 |
-| `setDevicesStatus`      | `(devices: Device[], status: boolean)`             | `RevealConfig`               | Sets the status of multiple devices.                         |
-| `setDeviceBreakpoint`   | `(device: Device, breakpoint: number)`             | `RevealConfig`               | Sets the breakpoint of a device.                             |
-| `setDevice`             | `(device: Device, settings: IDevice)`              | `RevealConfig`               | Sets the settings of a device.                               |
-| `setResponsive`         | `(responsive: Responsive)`                         | `RevealConfig`               | Updates how responsiveness is handled by the library.        |
-| `setObserverRoot`       | `(root: IntersectionObserver['root'])`             | `IObserverOptions`           | Sets the Intersection Observer root element.                 |
-| `setObserverRootMargin` | `(rootMargin: IntersectionObserver['rootMargin'])` | `IObserverOptions`           | Sets the Intersection Observer rootMargin property.          |
-| `setObserverThreshold`  | `(threshold: number)`                              | `IObserverOptions`           | Sets the Intersection Observer threshold property.           |
-| `setObserverConfig`     | `(observerConfig: IntersectionObserverConfig)`     | `IntersectionObserverConfig` | Sets the Intersection Observer configuration.                |
-| `setConfig`             | `(userConfig: RevealConfig)`                       | `RevealConfig`               | Updates the global configuration of this library.            |
-| `setDefaultOptions`     | `(options: RevealOptions)`                         | `RevealOptions`              | Updates the default options to be used for the reveal effect. |
+| Name                    | Args                                           | Return                       | Description                                                  |
+| ----------------------- | ---------------------------------------------- | ---------------------------- | ------------------------------------------------------------ |
+| `setDev`                | `(dev: boolean)`                               | `RevealConfig`               | Sets the development mode.                                   |
+| `setOnce`               | `(once: boolean)`                              | `RevealConfig`               | Sets the reveal animations activation status on page reload. |
+| `setDeviceStatus`       | `(device: Device, status: boolean)`            | `RevealConfig`               | Sets the status of a device.                                 |
+| `setDevicesStatus`      | `(devices: Device[], status: boolean)`         | `RevealConfig`               | Sets the status of multiple devices.                         |
+| `setDeviceBreakpoint`   | `(device: Device, breakpoint: number)`         | `RevealConfig`               | Sets the breakpoint of a device.                             |
+| `setDevice`             | `(device: Device, settings: IDevice)`          | `RevealConfig`               | Sets the settings of a device.                               |
+| `setResponsive`         | `(responsive: Responsive)`                     | `RevealConfig`               | Updates how responsiveness is handled by the library.        |
+| `setObserverRoot`       | `(root: Element | Document | null)`            | `IntersectionObserverConfig` | Sets the Intersection Observer root element.                 |
+| `setObserverRootMargin` | `(rootMargin: string)`                         | `IntersectionObserverConfig` | Sets the Intersection Observer rootMargin property.          |
+| `setObserverThreshold`  | `(threshold: number)`                          | `IntersectionObserverConfig` | Sets the Intersection Observer threshold property.           |
+| `setObserverConfig`     | `(observerConfig: IntersectionObserverConfig)` | `IntersectionObserverConfig` | Sets the Intersection Observer configuration.                |
+| `setConfig`             | `(userConfig: RevealConfig)`                   | `RevealConfig`               | Updates the global configuration of this library.            |
+| `setDefaultOptions`     | `(options: RevealOptions)`                     | `RevealOptions`              | Updates the default options to be used for the reveal effect. |
 
 ## Suggestions
 
 If you need/want to considerably customize the behavior of this library, I suggest creating a dedicated file and to import it from the top-most component in the components tree of your project. Within that file you can then call the API functions to set global settings or shared transition properties.
 
 ```typescript
-// reveal.config.js
+// reveal.config.ts
 
 import { setDefaultOptions } from 'svelte-reveal';
 
