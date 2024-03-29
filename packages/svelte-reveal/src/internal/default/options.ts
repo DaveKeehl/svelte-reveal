@@ -86,8 +86,7 @@ export const defaultRevealEvents: RevealEvents = {
 export const defaultOptions = {
   ...defaultDebugOptions,
   ...defaultIntersectionObserverConfig,
-  ...defaultBaseRevealTransition,
+  ...defaultFadeRevealTransition,
   ...defaultRevealEvents,
-  easing: defaultRevealEasing,
-  transition: 'fade'
+  easing: defaultRevealEasing
 } satisfies RevealOptions;
