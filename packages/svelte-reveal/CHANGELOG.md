@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Repository is now a monorepo (managed with Turborepo), containing both the published package and some example projects
+- Repository is now a monorepo containing both the published package and some example projects
 - Open Graph image and README cover do not contain version number anymore
 - Updated dependencies
 - Using tsup instead of raw esbuild
@@ -17,11 +17,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dropped support for Docker
 - Improved documentation in README
 - Updated JSDoc comments
-- Restructured and simplified a ton the core code
-- Modified some TypeScript types
-- Improved some TypeScript types with discriminated unions to avoid showing out of scope properties
-- Massively simplified CI/CD pipelines
+- Restructured and simplified the core code a ton
+- Improved and modified some TypeScript types
+- Massively simplified CI/CD pipeline
 - Removed testing suite (temporarily, but without rush to be re-introduced)
+
+### Fixed
+
+- Avoiding creating nested media queries when generating the styles
 
 ## [0.7.0] - 2022-11-04
 
