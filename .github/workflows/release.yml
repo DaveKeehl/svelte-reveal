@@ -31,6 +31,7 @@ jobs:
         run: npm run pack -- --filter=svelte-reveal
 
       - name: Publish to NPM
+        id: publish
         uses: JS-DevTools/npm-publish@v3
         with:
           token: ${{ secrets.NPM_TOKEN }}
@@ -48,6 +49,7 @@ jobs:
         uses: ffurrer2/extract-release-notes@v1
 
       - name: Create new release
+        id: create-release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -57,3 +59,14 @@ jobs:
           draft: false
           prerelease: false
           body: ${{ steps.extract-release-notes.outputs.release_notes }}
+
+      - name: Upload release asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          asset_path: ./packages/svelte-reveal/svelte-reveal-${{ steps.publish.outputs.id}}.tgz
+          asset_name: svelte-reveal-${{ steps.publish.outputs.id}}.tgz
+          asset_content_type: application/gzip
