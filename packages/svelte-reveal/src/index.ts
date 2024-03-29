@@ -1,4 +1,4 @@
-export { reveal } from './internal/reveal.ts';
+export { reveal } from '@/reveal.ts';
 export {
   setDev,
   setOnce,
@@ -14,5 +14,5 @@ export {
   setConfig,
   setDefaultOptions
 } from './internal/API.ts';
-export type { RevealConfig } from './internal/types/config.ts';
-export type { RevealOptions } from './internal/types/options.ts';
+export type { RevealConfig } from '@/types/config.ts';
+export type { RevealOptions } from '@/types/options.ts';

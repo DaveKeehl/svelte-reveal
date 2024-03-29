@@ -1,6 +1,6 @@
-import { ROOT_MARGIN_REGEX } from './constants.ts';
-import { Responsive } from './types/devices.ts';
-import type { RevealOptions } from './types/options.ts';
+import { ROOT_MARGIN_REGEX } from '@/constants.ts';
+import { Responsive } from '@/types/devices.ts';
+import type { RevealOptions } from '@/types/options.ts';
 
 /**
  * Checks whether a numeric variable is within a specific range.

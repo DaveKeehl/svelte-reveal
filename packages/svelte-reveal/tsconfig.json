@@ -22,7 +22,15 @@
     "sourceMap": true,
     "allowImportingTsExtensions": true,
     "emitDeclarationOnly": true,
-    "declaration": true
+    "declaration": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/internal/*"],
+      "@/types/*": ["./src/internal/types/*"],
+      "@/styling/*": ["./src/internal/styling/*"],
+      "@/default/*": ["./src/internal/default/*"]
+    }
   },
   "include": ["./src"]
 }

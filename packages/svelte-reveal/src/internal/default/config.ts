@@ -1,4 +1,4 @@
-import type { RevealConfig } from '../types/config.ts';
+import type { RevealConfig } from '@/types/config.ts';
 
 /**
  * Object containing global configuration that apply to all instances of this library.

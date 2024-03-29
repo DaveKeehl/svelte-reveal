@@ -1,11 +1,11 @@
-import { getRevealClassNames, createStylesheet } from './styling/generation.ts';
-import { config } from './default/config.ts';
-import { isStyleTagCreated, hasPageReloaded } from './stores.ts';
-import { getNodeToReveal, activateRevealNode, createObserver } from './DOM.ts';
-import { createFinalOptions } from './utils.ts';
-import type { ActionReturn } from './types/events.ts';
-import type { RevealOptions } from './types/options.ts';
-import { defaultOptions } from './default/options.ts';
+import { config } from '@/default/config.ts';
+import { defaultOptions } from '@/default/options.ts';
+import { createFinalOptions } from '@/utils.ts';
+import { isStyleTagCreated, hasPageReloaded } from '@/stores.ts';
+import { getNodeToReveal, activateRevealNode, createObserver } from '@/DOM.ts';
+import { getRevealClassNames, createStylesheet } from '@/styling/generation.ts';
+import type { ActionReturn } from '@/types/events.ts';
+import type { RevealOptions } from '@/types/options.ts';
 
 /**
  * Reveals a given HTML node element on scroll.

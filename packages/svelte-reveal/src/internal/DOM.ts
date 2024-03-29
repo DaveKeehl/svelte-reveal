@@ -2,9 +2,9 @@ import {
   createCssTransitionProperties,
   createCssTransitionDeclaration,
   mergeRevealStyles
-} from './styling/generation.ts';
-import type { RevealOptions } from './types/options.ts';
-import { cleanString, createObserverConfig } from './utils.ts';
+} from '@/styling/generation.ts';
+import { cleanString, createObserverConfig } from '@/utils.ts';
+import type { RevealOptions } from '@/types/options.ts';
 
 /**
  * Marks a DOM node as part of the reveal process.

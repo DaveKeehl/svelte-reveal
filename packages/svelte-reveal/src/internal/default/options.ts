@@ -1,7 +1,7 @@
-import type { Easing } from '../types/easing.ts';
-import type { RevealEvents } from '../types/events.ts';
-import type { IntersectionObserverConfig } from '../types/intersection-observer.ts';
-import type { RevealOptions } from '../types/options.ts';
+import type { Easing } from '@/types/easing.ts';
+import type { RevealEvents } from '@/types/events.ts';
+import type { IntersectionObserverConfig } from '@/types/intersection-observer.ts';
+import type { RevealOptions } from '@/types/options.ts';
 import type {
   BaseRevealTransition,
   SlideRevealTransition,
@@ -10,7 +10,7 @@ import type {
   BlurRevealTransition,
   ScaleRevealTransition,
   FadeRevealTransition
-} from '../types/transitions.ts';
+} from '@/types/transitions.ts';
 
 export const defaultIntersectionObserverConfig: IntersectionObserverConfig = {
   root: null,
