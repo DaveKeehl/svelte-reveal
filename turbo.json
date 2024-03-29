@@ -13,7 +13,7 @@
       "outputs": ["dist/**"]
     },
     "pack": {
-      "dependsOn": ["build"]
+      "outputs": ["svelte-reveal-*.tgz"]
     },
     "format": {
       "outputs": []
