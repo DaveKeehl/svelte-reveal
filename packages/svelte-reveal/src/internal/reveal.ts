@@ -1,8 +1,8 @@
 import { config } from '@/default/config.ts';
 import { defaultOptions } from '@/default/options.ts';
-import { createFinalOptions } from '@/utils.ts';
-import { isStyleTagCreated, hasPageReloaded } from '@/stores.ts';
-import { getNodeToReveal, activateRevealNode, createObserver } from '@/DOM.ts';
+import { createFinalOptions as mergeOptions } from '@/utils.ts';
+import { isStyleTagCreatedStore, hasPageReloadedStore } from '@/stores.ts';
+import { getNodeToReveal, revealNode, createObserver } from '@/DOM.ts';
 import { getRevealClassNames, createStylesheet } from '@/styling/generation.ts';
 import type { ActionReturn } from '@/types/events.ts';
 import type { RevealOptions } from '@/types/options.ts';
@@ -10,51 +10,41 @@ import type { RevealOptions } from '@/types/options.ts';
 /**
  * Reveals a given HTML node element on scroll.
  * @param node The DOM node element to apply the reveal on scroll effect to.
- * @param options User-provided options to tweak the scroll animation behavior for `node`.
+ * @param userOptions User-provided options to tweak the scroll animation behavior for `node`.
  * @returns The action object containing the update and destroy functions for `node`.
  */
-export const reveal = (node: HTMLElement, options: Partial<RevealOptions> = defaultOptions): Partial<ActionReturn> => {
-  const finalOptions = createFinalOptions(options);
-  const { transition, disable, onRevealStart, onMount, onUpdate, onDestroy } = finalOptions;
+export const reveal = (
+  node: HTMLElement,
+  userOptions: Partial<RevealOptions> = defaultOptions
+): Partial<ActionReturn> => {
+  const options = mergeOptions(userOptions);
+  const { transition, disable, onRevealStart, onMount, onUpdate, onDestroy } = options;
 
   const nodeToReveal = getNodeToReveal(node);
   const [transitionDeclaration, transitionProperties] = getRevealClassNames(transition);
 
   onMount(nodeToReveal);
 
-  // Checking if page was reloaded
-  let reloaded = false;
-  const unsubscribeReloaded = hasPageReloaded.subscribe((value: boolean) => (reloaded = value));
-  const navigation = window.performance.getEntriesByType('navigation');
+  let hasPageReloaded = false;
+  const unsubscribePageReloaded = hasPageReloadedStore.subscribe((val: boolean) => (hasPageReloaded = val));
 
-  let navigationType: string | number = '';
-  if (navigation.length > 0) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignoreq
-    navigationType = navigation[0].type;
-  } else {
-    // Using deprecated navigation object as a last resort to detect a page reload
-    navigationType = window.performance.navigation.type; // NOSONAR
-  }
-  if (navigationType === 'reload' || navigationType === 1) hasPageReloaded.set(true);
-  if (disable || (config.once && reloaded)) return {};
+  const navigation = window.performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
+  if (navigation?.type === 'reload') hasPageReloadedStore.set(true);
+  if (disable || (config.once && hasPageReloaded)) return {};
 
-  // Setting up the styles
-  let styleTagExists = false;
-  const unsubscribeStyleTag = isStyleTagCreated.subscribe((value: boolean) => (styleTagExists = value));
+  let isStyleTagCreated = false;
+  const unsubscribeStyleTagCreated = isStyleTagCreatedStore.subscribe((val: boolean) => (isStyleTagCreated = val));
 
-  if (!styleTagExists) {
+  if (!isStyleTagCreated) {
     createStylesheet();
-    isStyleTagCreated.set(true);
+    isStyleTagCreatedStore.set(true);
   }
 
   onRevealStart(nodeToReveal);
-  activateRevealNode(nodeToReveal, transitionDeclaration, transitionProperties, finalOptions);
+  revealNode(nodeToReveal, transitionDeclaration, transitionProperties, options);
 
-  const observerInstance = createObserver(nodeToReveal, finalOptions, transitionDeclaration);
-  observerInstance.observe(nodeToReveal);
-
-  console.groupEnd();
+  const observer = createObserver(nodeToReveal, options, transitionDeclaration);
+  observer.observe(nodeToReveal);
 
   return {
     update() {
@@ -62,9 +52,9 @@ export const reveal = (node: HTMLElement, options: Partial<RevealOptions> = defa
     },
     destroy() {
       onDestroy(nodeToReveal);
-      unsubscribeStyleTag();
-      unsubscribeReloaded();
-      observerInstance.disconnect();
+      unsubscribeStyleTagCreated();
+      unsubscribePageReloaded();
+      observer.disconnect();
     }
   };
 };

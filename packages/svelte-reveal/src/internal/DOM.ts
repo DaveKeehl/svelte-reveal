@@ -24,7 +24,7 @@ export const markRevealNode = (revealNode: HTMLElement): HTMLElement => {
  * @param options The options to be applied to the reveal effect.
  * @returns The element to be revealed.
  */
-export const activateRevealNode = (
+export const revealNode = (
   nodeToReveal: HTMLElement,
   transitionPropertiesClassName: string,
   transitionDeclarationClassName: string,
