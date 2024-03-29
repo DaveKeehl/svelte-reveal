@@ -28,7 +28,7 @@ jobs:
         run: npm ci
 
       - name: Building package
-        run: npm run build -- --filter=svelte-reveal
+        run: npm run pack -- --filter=svelte-reveal
 
       - name: Publish to NPM
         uses: JS-DevTools/npm-publish@v3
