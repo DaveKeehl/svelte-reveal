@@ -1,7 +1,6 @@
 import { config } from './default/config.ts';
-import { hasValidBreakpoints } from './styling/breakpoints.ts';
 import { createFinalOptions, createObserverConfig, cloneConfig } from './utils.ts';
-import { inRange } from './validations.ts';
+import { hasValidBreakpoints, inRange } from './validations.ts';
 import type { RevealConfig } from './types/config.ts';
 import { ROOT_MARGIN_REGEX } from './constants.ts';
 import type { Device, DeviceConfig, Responsive } from './types/devices.ts';
