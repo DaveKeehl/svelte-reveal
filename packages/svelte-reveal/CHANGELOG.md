@@ -18,7 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved documentation in README
 - Updated JSDoc comments
 - Restructured and simplified a ton the core code
-- Improved TypeScript types with discriminated unions to avoid showing out of scope properties
+- Modified some TypeScript types
+- Improved some TypeScript types with discriminated unions to avoid showing out of scope properties
 - Massively simplified CI/CD pipelines
 - Removed testing suite (temporarily, but without rush to be re-introduced)
 
