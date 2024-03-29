@@ -95,7 +95,7 @@ In this [Svelte REPL](https://svelte.dev/repl/1cf37b0947ac46b8ae9cc791abda7159?v
 
 ## Why Svelte Reveal
 
-If you happened to scout the internet for other similar libraries, you might have noticed that other authors have decided to create their own library using Svelte [slots](https://svelte.dev/docs#template-syntax-slot) (similar to [React children](https://reactjs.org/docs/composition-vs-inheritance.html)). There is nothing wrong with that approach, but in my opinion it goes a bit against one of Svelte's core purpose: writing more concise code. Having to wrap every to-be-transitioned component adds at least 2 extra lines of code each time, making your files unnecessarily bloated for such a simple add-on.
+If you happened to scout the internet for other similar libraries, you might have noticed that other authors have decided to create their own library using Svelte [slots](https://svelte.dev/docs#template-syntax-slot) (similar to [React children](https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children)). There is nothing wrong with that approach, but in my opinion it goes a bit against one of Svelte's core purpose: writing more concise code. Having to wrap every to-be-transitioned component adds at least 2 extra lines of code each time, making your files unnecessarily bloated for such a simple add-on.
 
 You might have also noticed people adding event listeners to the window object in order to transition elements, but in terms of performance it [doesn't scale very well](https://itnext.io/1v1-scroll-listener-vs-intersection-observers-469a26ab9eb6).
 
@@ -125,7 +125,7 @@ The way Svelte Reveal operates does not work well with [SSR](https://kit.svelte.
 
 ## Options
 
-Depending on the use case, you can either use this library as-is (which applies some [default styles](./src/internal/config.ts#L6-L34)), or customize it to your liking. If you choose to do so, you can pass an object to this action containing your own options to be applied.
+Depending on the use case, you can either use this library as-is (which applies some [default styles](./src/internal/default/options.ts)), or customize it to your liking. If you choose to do so, you can pass an object to this action containing your own options to be applied.
 
 Keep in mind that these options are applied to the single DOM element you add Svelte Reveal to. For global and more in-depth settings, refer to the [API](#api) section.
 
@@ -139,7 +139,7 @@ Keep in mind that these options are applied to the single DOM element you add Sv
 | reset      | `boolean`                   | `false`             | When set to `true`, the node transitions out when out of view, and is revealed again when back in view.<br /><br />⚠️ Be careful not to overuse this option, as it prevents the Intersection Observer to stop observing the target node. Performance is therefore not guaranteed when many elements have `reset` set to `true`. |
 | duration   | `number`                    | `800`               | How long the transition lasts (in ms).                       |
 | delay      | `number`                    | `0`                 | How long the transition is delayed (in ms) before being triggered. |
-| easing     | `Easing`                    | `"easeInOutCubic"`  | The type of easing function applied to the transition. [Check out](./src/internal/types.ts#L230-L256) the full list of available easing functions and [this other website](https://cubic-bezier.com/) to preview timing functions. |
+| easing     | `Easing`                    | `"easeInOutCubic"`  | The type of easing function applied to the transition. [Check out](./src/internal/types/easing.ts) the full list of available easing functions and [this other website](https://cubic-bezier.com/) to preview timing functions. |
 | x          | `number`                    | `-20`               | The starting offset position in pixels on the x-axis of the `"slide"` transition.<br />If `x` is negative, the element will transition from the left, else from the right. |
 | y          | `number`                    | `-20`               | The starting offset position in pixels on the y-axis of the `"fly"` transition.<br />If `y` is negative, the element will transition from the top, else from the bottom. |
 | rotate     | `number`                    | `-360`              | The starting rotation offset in degrees of the `"spin"` transition.<br />If `rotate` is positive, the element will spin clockwise, else counter-clockwise. |
@@ -200,7 +200,7 @@ The following table shows how this library is globally configured right of out t
 
 > ⚠️ If you want to customise the behavior of a single DOM node, you are supposed to use [options](#options).
 
-Svelte Reveal also exposes several functions you can call to change the [default options](./src/internal/config.ts#L6-L34) and [global configuration](./src/internal/config.ts#L39-L60) of this library. Since these functions operate on a global level across all components using Svelte Reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the default options and global config from multiple points.
+Svelte Reveal also exposes several functions you can call to change the [default options](./src/internal/default/options.ts) and [global configuration](./src/internal/default/config.ts) of this library. Since these functions operate on a global level across all components using Svelte Reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the default options and global config from multiple points.
 
 | Name                    | Args                                           | Return                       | Description                                                  |
 | ----------------------- | ---------------------------------------------- | ---------------------------- | ------------------------------------------------------------ |
