@@ -155,6 +155,6 @@ export const mergeRevealStyles = (prevRevealStyles: string, newRevealStyles: str
 export const getCssEasingFunction = (easing: Easing): string => {
   const createEasingFunction = (weights: EasingWeights) => `cubic-bezier(${weights.join(', ')})`;
 
-  if (easing.type === 'custom') return createEasingFunction(easing.weights);
-  return createEasingFunction(standardEasingWeights[easing.type]);
+  if (typeof easing !== 'string') return createEasingFunction(easing);
+  return createEasingFunction(standardEasingWeights[easing]);
 };

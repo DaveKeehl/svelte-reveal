@@ -69,9 +69,7 @@ export const defaultScaleRevealTransition: ScaleRevealTransition = {
   scale: 0
 };
 
-export const defaultRevealEasing: Easing = {
-  type: 'easeInOutCubic'
-};
+export const defaultRevealEasing: Easing = 'easeInOutCubic';
 
 export const defaultRevealEvents: RevealEvents = {
   onRevealStart: () => null,

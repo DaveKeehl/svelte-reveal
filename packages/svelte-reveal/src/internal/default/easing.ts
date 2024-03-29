@@ -27,5 +27,3 @@ export const standardEasingWeights: Record<StandardEasingFunction, EasingWeights
   easeOutBack: [0.34, 1.56, 0.64, 1],
   easeInOutBack: [0.68, -0.6, 0.32, 1.6]
 };
-
-export const customEasingWeights: EasingWeights = [0.25, 0.1, 0.25, 0.1];
