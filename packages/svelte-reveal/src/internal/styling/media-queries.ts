@@ -1,7 +1,7 @@
 import { cleanString } from '@/utils.ts';
 import { config } from '@/default/config.ts';
 import { hasValidBreakpoints } from '@/validations.ts';
-import type { Device, DeviceConfig, Devices, Responsive } from '@/types/devices.ts';
+import type { Device, DeviceConfig, Devices } from '@/types/devices.ts';
 
 /**
  * Creates the query for a set of devices whose breakpoints are within the range defined by the `start` and `end` breakpoints.
@@ -68,10 +68,11 @@ const getOptimalQueries = (devices: Devices): string[] => {
  * @param responsive Object containing all the info on how to create the media queries.
  * @returns The CSS ruleset decorated with the media queries generated from the analysis of the `responsive` object.
  */
-export const addMediaQueries = (styles: string, responsive: Responsive = config.responsive): string => {
-  if (!hasValidBreakpoints(responsive)) throw new Error('Cannot create media queries due to invalid breakpoints');
+export const addMediaQueries = (styles: string): string => {
+  if (!hasValidBreakpoints(config.responsive))
+    throw new Error('Cannot create media queries due to invalid breakpoints');
 
-  const devices = Object.entries(responsive) as Devices;
+  const devices = Object.entries(config.responsive) as Devices;
   const allDevicesEnabled = devices.every(([, settings]) => settings.enabled);
   const allDevicesDisabled = devices.every(([, settings]) => !settings.enabled);
 
