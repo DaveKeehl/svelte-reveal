@@ -1,4 +1,3 @@
-import type { DebugOptions } from '../types/debug.ts';
 import type { Easing } from '../types/easing.ts';
 import type { RevealEvents } from '../types/events.ts';
 import type { IntersectionObserverConfig } from '../types/intersection-observer.ts';
@@ -12,13 +11,6 @@ import type {
   ScaleRevealTransition,
   FadeRevealTransition
 } from '../types/transitions.ts';
-
-export const defaultDebugOptions: DebugOptions = {
-  debug: false,
-  ref: '',
-  highlightLogs: false,
-  highlightColor: 'color'
-};
 
 export const defaultIntersectionObserverConfig: IntersectionObserverConfig = {
   root: null,
@@ -82,7 +74,6 @@ export const defaultRevealEvents: RevealEvents = {
 };
 
 export const defaultOptions = {
-  ...defaultDebugOptions,
   ...defaultIntersectionObserverConfig,
   ...defaultFadeRevealTransition,
   ...defaultRevealEvents,
