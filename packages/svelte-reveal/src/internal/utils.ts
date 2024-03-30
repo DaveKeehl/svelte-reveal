@@ -1,13 +1,5 @@
 import { config } from '@/default/config.ts';
-import {
-  defaultIntersectionObserverConfig,
-  defaultOptions,
-  defaultFlyRevealTransition,
-  defaultSlideRevealTransition,
-  defaultBlurRevealTransition,
-  defaultScaleRevealTransition,
-  defaultSpinRevealTransition
-} from '@/default/options.ts';
+import { defaultIntersectionObserverConfig, defaultOptions, presets } from '@/default/options.ts';
 import { validateOptions } from '@/validations.ts';
 import type { IntersectionObserverConfig } from '@/types/intersection-observer.ts';
 import type { RevealConfig } from '@/types/config.ts';
@@ -51,48 +43,9 @@ export const createIntersectionObserverConfig = (observerConfig?: Partial<Inters
 export const mergeOptions = (userOptions: Partial<RevealOptions>): RevealOptions => {
   const cleanUserOptions = Object.fromEntries(Object.entries(userOptions).filter(([, value]) => value !== undefined));
 
-  switch (userOptions.transition) {
-    case 'fly': {
-      return validateOptions({
-        ...defaultOptions,
-        ...defaultFlyRevealTransition,
-        ...cleanUserOptions
-      });
-    }
-    case 'slide': {
-      return validateOptions({
-        ...defaultOptions,
-        ...defaultSlideRevealTransition,
-        ...cleanUserOptions
-      });
-    }
-    case 'blur': {
-      return validateOptions({
-        ...defaultOptions,
-        ...defaultBlurRevealTransition,
-        ...cleanUserOptions
-      });
-    }
-    case 'spin': {
-      return validateOptions({
-        ...defaultOptions,
-        ...defaultSpinRevealTransition,
-        ...cleanUserOptions
-      });
-    }
-    case 'scale': {
-      return validateOptions({
-        ...defaultOptions,
-        ...defaultScaleRevealTransition,
-        ...cleanUserOptions
-      });
-    }
-    case 'fade':
-    case undefined: {
-      return validateOptions({
-        ...defaultOptions,
-        ...cleanUserOptions
-      });
-    }
-  }
+  return validateOptions({
+    ...defaultOptions,
+    ...presets[userOptions?.preset ?? defaultOptions.preset],
+    ...cleanUserOptions
+  });
 };

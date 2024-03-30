@@ -1,4 +1,4 @@
-export type BaseRevealTransition = {
+export type RevealTransition = {
   /**
    * When set to false, the transition is disabled for the target element.
    */
@@ -18,85 +18,31 @@ export type BaseRevealTransition = {
    */
   delay: number;
   /**
-   * The starting opacity value in percentage of any transition. It can be a number between `0.0` and `1.0`.
+   * The starting opacity value. It can be a number between `0.0` and `1.0`.
    */
   opacity: number;
-};
-
-export type FadeRevealTransition = BaseRevealTransition & {
   /**
-   * The type of transition that is triggered when the target node becomes visible.
+   * The transition preset that should be applied.
    */
-  transition: 'fade';
-};
-
-export type SlideRevealTransition = BaseRevealTransition & {
+  preset: 'fade' | 'slide' | 'fly' | 'spin' | 'blur' | 'scale';
   /**
-   * The type of transition that is triggered when the target node becomes visible.
-   */
-  transition: 'slide';
-  /**
-   * The starting offset position in pixels on the x-axis of the `"slide"` transition.
-   * If `x` is negative, the element will transition from the left, else from the right.
+   * The starting offset position in pixels on the x-axis.
    */
   x: number;
-};
-
-export type FlyRevealTransition = BaseRevealTransition & {
   /**
-   * The type of transition that is triggered when the target node becomes visible.
-   */
-  transition: 'fly';
-  /**
-   * The starting offset position in pixels on the y-axis of the `"fly"` transition.
-   * If `y` is negative, the element will transition from the top, else from the bottom.
+   * The starting offset position in pixels on the y-axis.
    */
   y: number;
-};
-
-export type SpinRevealTransition = BaseRevealTransition & {
   /**
-   * The type of transition that is triggered when the target node becomes visible.
-   */
-  transition: 'spin';
-  /**
-   * The starting rotation offset in degrees of the `"spin"` transition.
-   * If `rotate` is positive, the element will spin clockwise, else counter-clockwise.
+   * The starting rotation offset in degrees.
    */
   rotate: number;
-};
-
-export type BlurRevealTransition = BaseRevealTransition & {
   /**
-   * The type of transition that is triggered when the target node becomes visible.
-   */
-  transition: 'blur';
-  /**
-   * The starting blur value in pixels of the `"blur"` transition.
+   * The starting blur value in pixels.
    */
   blur: number;
-};
-
-export type ScaleRevealTransition = BaseRevealTransition & {
   /**
-   * The type of transition that is triggered when the target node becomes visible.
-   */
-  transition: 'scale';
-  /**
-   * The starting scale value in percentage of the `"scale"` transition.
+   * The starting scale value in percentage.
    */
   scale: number;
 };
-
-export type RevealTransition =
-  | FadeRevealTransition
-  | SlideRevealTransition
-  | FlyRevealTransition
-  | SpinRevealTransition
-  | BlurRevealTransition
-  | ScaleRevealTransition;
-
-/**
- * The type of transition to use.
- */
-export type Transition = RevealTransition['transition'];

@@ -2,15 +2,7 @@ import type { Easing } from '@/types/easing.ts';
 import type { RevealEvents } from '@/types/events.ts';
 import type { IntersectionObserverConfig } from '@/types/intersection-observer.ts';
 import type { RevealOptions } from '@/types/options.ts';
-import type {
-  BaseRevealTransition,
-  SlideRevealTransition,
-  FlyRevealTransition,
-  SpinRevealTransition,
-  BlurRevealTransition,
-  ScaleRevealTransition,
-  FadeRevealTransition
-} from '@/types/transitions.ts';
+import type { RevealTransition } from '@/types/transitions.ts';
 
 export const defaultIntersectionObserverConfig: IntersectionObserverConfig = {
   root: null,
@@ -18,47 +10,49 @@ export const defaultIntersectionObserverConfig: IntersectionObserverConfig = {
   threshold: 0.6
 };
 
-export const defaultBaseRevealTransition: BaseRevealTransition = {
+export const presets = {
+  fade: {
+    preset: 'fade',
+    opacity: 0
+  },
+  slide: {
+    preset: 'slide',
+    opacity: 0,
+    x: -20
+  },
+  fly: {
+    preset: 'fly',
+    opacity: 0,
+    y: -20
+  },
+  spin: {
+    preset: 'spin',
+    opacity: 0,
+    rotate: -10
+  },
+  blur: {
+    preset: 'blur',
+    opacity: 0,
+    blur: 2
+  },
+  scale: {
+    preset: 'scale',
+    opacity: 0,
+    scale: 0.8
+  }
+} as const;
+
+export const defaultRevealTransition: RevealTransition = {
   disable: false,
   reset: false,
   duration: 800,
   delay: 0,
-  opacity: 0
-};
-
-export const defaultFadeRevealTransition: FadeRevealTransition = {
-  ...defaultBaseRevealTransition,
-  transition: 'fade'
-};
-
-export const defaultSlideRevealTransition: SlideRevealTransition = {
-  ...defaultBaseRevealTransition,
-  transition: 'slide',
-  x: -20
-};
-
-export const defaultFlyRevealTransition: FlyRevealTransition = {
-  ...defaultBaseRevealTransition,
-  transition: 'fly',
-  y: -20
-};
-
-export const defaultSpinRevealTransition: SpinRevealTransition = {
-  ...defaultBaseRevealTransition,
-  transition: 'spin',
-  rotate: -10
-};
-
-export const defaultBlurRevealTransition: BlurRevealTransition = {
-  ...defaultBaseRevealTransition,
-  transition: 'blur',
-  blur: 2
-};
-
-export const defaultScaleRevealTransition: ScaleRevealTransition = {
-  ...defaultBaseRevealTransition,
-  transition: 'scale',
-  scale: 0.8
+  x: 0,
+  y: 0,
+  rotate: 0,
+  blur: 0,
+  scale: 1,
+  ...presets['fade']
 };
 
 export const defaultRevealEasing: Easing = 'easeInOutCubic';
@@ -78,7 +72,7 @@ export const defaultRevealEvents: RevealEvents = {
  */
 export const defaultOptions = {
   ...defaultIntersectionObserverConfig,
-  ...defaultFadeRevealTransition,
+  ...defaultRevealTransition,
   ...defaultRevealEvents,
   easing: defaultRevealEasing
 } satisfies RevealOptions;

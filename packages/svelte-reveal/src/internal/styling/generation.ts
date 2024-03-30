@@ -3,7 +3,6 @@ import seedrandom from 'seedrandom';
 import { markRevealNode } from '@/DOM.ts';
 import { standardEasingWeights } from '@/default/easing.ts';
 import { addMediaQueries } from '@/styling/media-queries.ts';
-import type { Transition } from '@/types/transitions.ts';
 import type { Easing, EasingWeights } from '@/types/easing.ts';
 import type { RevealOptions } from '@/types/options.ts';
 
@@ -20,9 +19,8 @@ export const createStylesheet = (): void => {
   if (head !== null) head.appendChild(style);
 };
 
-const createRevealClassName = (type: 'transition' | 'properties', transition: Transition, uid: string) => {
-  const tokens = [type, transition].map((token) => token.replace(/\s/g, '-')).join('__');
-  return `sr__${tokens}__${uid}`;
+const createRevealClassName = (type: 'transition' | 'properties', uid: string) => {
+  return `sr__${uid}__${type}`;
 };
 
 /**
@@ -31,12 +29,12 @@ const createRevealClassName = (type: 'transition' | 'properties', transition: Tr
  * @param transition The transition name to be prefixed in the class name.
  * @returns A tuple with the final CSS classes in the form of: [transitionDeclaration, transitionProperties]. The transition declaration class is used to declare a transition css rule to the target element. The transition properties class is used to create the actual transition.
  */
-export const getRevealClassNames = (transition: Transition): [string, string] => {
+export const getRevealClassNames = (): [string, string] => {
   const seed = document.querySelectorAll('[data-action="reveal"]').length.toString();
   const uid = seedrandom(seed)().toString().slice(2);
 
-  const transitionDeclaration = createRevealClassName('transition', transition, uid);
-  const transitionProperties = createRevealClassName('properties', transition, uid);
+  const transitionDeclaration = createRevealClassName('transition', uid);
+  const transitionProperties = createRevealClassName('properties', uid);
 
   return [transitionDeclaration, transitionProperties];
 };
@@ -47,40 +45,12 @@ export const getRevealClassNames = (transition: Transition): [string, string] =>
  * @param options The options used by the transition.
  * @returns The CSS rules to be used to create the given transition.
  */
-export const createTransitionPropertyRules = (options: RevealOptions): string => {
-  const { opacity } = options;
-
-  switch (options.transition) {
-    case 'fade':
-      return `
-				opacity: ${opacity};
-			`;
-    case 'slide':
-      return `
-				opacity: ${opacity};
-				transform: translateX(${options.x}px);
-			`;
-    case 'fly':
-      return `
-				opacity: ${opacity};
-				transform: translateY(${options.y}px);
-			`;
-    case 'spin':
-      return `
-				opacity: ${opacity};
-				transform: rotate(${options.rotate}deg);
-			`;
-    case 'blur':
-      return `
-				opacity: ${opacity};
-				filter: blur(${options.blur}px);
-			`;
-    case 'scale':
-      return `
-				opacity: ${opacity};
-				transform: scale(${options.scale});
-			`;
-  }
+export const createTransitionPropertyRules = ({ opacity, x, y, rotate, scale, blur }: RevealOptions): string => {
+  return `
+    opacity: ${opacity};
+    transform: translateX(${x}px) translateY(${y}px) rotate(${rotate}deg) scale(${scale});
+    filter: blur(${blur}px);
+  `;
 };
 
 /**
