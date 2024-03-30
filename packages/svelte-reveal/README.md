@@ -132,7 +132,7 @@ If you wrap the elements to be revealed inside an `{#if}` block which is evaluat
 </script>
 
 {#if show}
-	<MyComponent />
+  <MyComponent />
 {/if}
 ```
 
@@ -152,7 +152,7 @@ Similarly to the previous workaround, we only want our client-only component to 
 </script>
 
 {#await MyComponent then { default: MyComponent }}
-	<MyComponent />
+  <MyComponent />
 {/await}
 ```
 
@@ -192,21 +192,21 @@ Keep in mind that these options are applied to the single DOM element you add Sv
 
 | Name       | Type                        | Default             | Description                                                  |
 | ---------- | --------------------------- | ------------------- | ------------------------------------------------------------ |
-| disable    | `boolean`                   | `false`             | When set to false, the transition is disabled for the target element. |
-| root       | `Element | Document | null` | `null`              | The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer. |
-| rootMargin | `string`                    | `"0px 0px 0px 0px"` | The [root margin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer. |
-| threshold  | `number`                    | `0.6`               | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/thresholds) (in percentage from `0.0` to `1.0`) property used by the Intersection Observer to know when its target element is considered visible. |
-| transition | `Transition`                | `"fade"`            | The type of transition that is triggered when the target node becomes visible.<br />Read more [in this subsection](#transitions) for a comprehensive explanation of the full list of available transitions. |
-| reset      | `boolean`                   | `false`             | When set to `true`, the node transitions out when out of view, and is revealed again when back in view.<br /><br />⚠️ Be careful not to overuse this option, as it prevents the Intersection Observer to stop observing the target node. Performance is therefore not guaranteed when many elements have `reset` set to `true`. |
-| duration   | `number`                    | `800`               | How long the transition lasts (in ms).                       |
-| delay      | `number`                    | `0`                 | How long the transition is delayed (in ms) before being triggered. |
-| easing     | `Easing`                    | `"easeInOutCubic"`  | The easing function to use. [Check out](./src/internal/types/easing.ts) the full list of available easing functions and [this other website](https://cubic-bezier.com/) to preview timing functions. |
-| x          | `number`                    | `-20`               | The starting offset position in pixels on the x-axis of the `"slide"` transition.<br />If `x` is negative, the element will transition from the left, else from the right. |
-| y          | `number`                    | `-20`               | The starting offset position in pixels on the y-axis of the `"fly"` transition.<br />If `y` is negative, the element will transition from the top, else from the bottom. |
-| rotate     | `number`                    | `-360`              | The starting rotation offset in degrees of the `"spin"` transition.<br />If `rotate` is positive, the element will spin clockwise, else counter-clockwise. |
-| opacity    | `number`                    | `0`                 | The starting opacity value in percentage of any transition. It can be a number between `0.0` and `1.0`. |
-| blur       | `number`                    | `16`                | The starting blur value in pixels of the `"blur"` transition. |
-| scale      | `number`                    | `0`                 | The starting scale value in percentage of the `"scale"` transition. |
+| `disable`    | `boolean`                   | `false`             | When set to false, the transition is disabled for the target element. |
+| `root`       | `Element \| Document \| null` | `null`              | The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer. |
+| `rootMargin` | `string`                    | `"0px 0px 0px 0px"` | The [root margin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer. |
+| `threshold`  | `number`                    | `0.6`               | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/thresholds) (in percentage from `0.0` to `1.0`) property used by the Intersection Observer to know when its target element is considered visible. |
+| `transition` | `Transition`                | `"fade"`            | The type of transition that is triggered when the target node becomes visible.<br />Read more [in this subsection](#transitions) for a comprehensive explanation of the full list of available transitions. |
+| `reset`      | `boolean`                   | `false`             | When set to `true`, the node transitions out when out of view, and is revealed again when back in view.<br /><br />⚠️ Be careful not to overuse this option, as it prevents the Intersection Observer to stop observing the target node. Performance is therefore not guaranteed when many elements have `reset` set to `true`. |
+| `duration`   | `number`                    | `800`               | How long the transition lasts (in ms).                       |
+| `delay`      | `number`                    | `0`                 | How long the transition is delayed (in ms) before being triggered. |
+| `easing`     | `Easing`                    | `"easeInOutCubic"`  | The easing function to use. [Check out](./src/internal/types/easing.ts) the full list of available easing functions and [this other website](https://cubic-bezier.com/) to preview timing functions. |
+| `x`          | `number`                    | `-20`               | The starting offset position in pixels on the x-axis of the `"slide"` transition.<br />If `x` is negative, the element will transition from the left, else from the right. |
+| `y`          | `number`                    | `-20`               | The starting offset position in pixels on the y-axis of the `"fly"` transition.<br />If `y` is negative, the element will transition from the top, else from the bottom. |
+| `rotate`     | `number`                    | `-360`              | The starting rotation offset in degrees of the `"spin"` transition.<br />If `rotate` is positive, the element will spin clockwise, else counter-clockwise. |
+| `opacity`    | `number`                    | `0`                 | The starting opacity value in percentage of any transition. It can be a number between `0.0` and `1.0`. |
+| `blur`       | `number`                    | `16`                | The starting blur value in pixels of the `"blur"` transition. |
+| `scale`      | `number`                    | `0`                 | The starting scale value in percentage of the `"scale"` transition. |
 
 ### Transitions
 
