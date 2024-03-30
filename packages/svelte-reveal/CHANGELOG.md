@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved documentation in README
 - Updated JSDoc comments
 - Restructured and simplified the core code a ton
-- Reworked TypeScript types to provide a better DX (e.g. with discriminated unions)
+- Reworked TypeScript types
 - Custom easing (array of four numbers) can now be defined directly using the `easing` option
 - `"fade"` is now the default transition
 - `"easeInOutCubic"` is now the default easing function
