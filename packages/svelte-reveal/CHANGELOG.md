@@ -10,16 +10,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Repository is now a monorepo containing both the published package and some example projects
-- Open Graph image and README cover do not contain version number anymore
+- Open Graph image and README cover do not contain the version number anymore
 - Updated dependencies
 - Using tsup instead of raw esbuild
-- Dropped support for Gitpod
-- Dropped support for Docker
 - Improved documentation in README
 - Updated JSDoc comments
 - Restructured and simplified the core code a ton
-- Improved and modified some TypeScript types
+- Improved and modified some TypeScript types to provide a better DX
 - Massively simplified CI/CD pipeline
+
+### Removed
+
+- Dropped support for Gitpod
+- Dropped support for Docker
 - Removed testing suite (temporarily, but without rush to be re-introduced)
 
 ### Fixed
