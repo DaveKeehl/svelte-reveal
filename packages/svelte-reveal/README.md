@@ -92,7 +92,7 @@ Svelte Reveal is a library created with the purpose of helping [Svelte](https://
 
 ## Demo
 
-In this [Svelte REPL](https://svelte.dev/repl/1cf37b0947ac46b8ae9cc791abda7159?version=3.44.1) I created you can see Svelte Reveal in action.
+You can see Svelte Reveal in action [in this StackBlitz project](https://stackblitz.com/edit/svelte-reveal?file=src%2FApp.svelte).
 
 ## Why Svelte Reveal
 
