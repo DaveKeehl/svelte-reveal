@@ -1,15 +1,60 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { reveal } from 'svelte-reveal';
+  import { reveal, type RevealOptions } from 'svelte-reveal';
 
-  let show = false;
-
-  onMount(() => {
-    show = true;
-  });
+  const config: Partial<RevealOptions>[] = [
+    { transition: 'fade', duration: 2000 },
+    { transition: 'fly', y: -80, easing: 'easeOutBack' },
+    { transition: 'slide', x: -80, easing: 'easeOutBack' },
+    { transition: 'blur', blur: 2, duration: 1000 },
+    { transition: 'spin', rotate: 10, duration: 600, easing: 'easeOutCubic' },
+    { transition: 'scale', scale: 2 }
+  ];
 </script>
 
-{#if show}
-  <h1 use:reveal>Welcome to SvelteKit</h1>
-  <p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-{/if}
+<main>
+  {#each config as element}
+    <section>
+      <div use:reveal={{ ...element }} class="wrapper">
+        <h1>{element.transition} transition</h1>
+      </div>
+    </section>
+  {/each}
+</main>
+
+<style>
+  :root {
+    --white: #ffffff;
+    --dark: #0f172a;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :global(body) {
+    background: var(--dark);
+  }
+
+  :global(*) {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  section {
+    display: grid;
+    place-items: center;
+    color: var(--white);
+    border-bottom: 1px solid color-mix(in srgb, var(--white) 20%, var(--dark) 80%);
+    height: 40rem;
+    text-transform: capitalize;
+    font-size: 2rem;
+  }
+
+  .wrapper {
+    height: 100%;
+    display: grid;
+    place-items: center;
+  }
+</style>
