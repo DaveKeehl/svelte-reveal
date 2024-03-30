@@ -14,7 +14,7 @@
 <main>
   {#each config as element}
     <section>
-      <div use:reveal={{ ...element }} class="box">
+      <div use:reveal={{ ...element }} class="wrapper">
         <h1>{element.transition} transition</h1>
       </div>
     </section>
@@ -22,13 +22,24 @@
 </main>
 
 <style>
+  :root {
+    --white: #ffffff;
+    --dark: #0f172a;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   :global(body) {
     background: var(--dark);
   }
 
-  :root {
-    --white: #ffffff;
-    --dark: #0f172a;
+  :global(*) {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
   }
 
   section {
@@ -41,7 +52,7 @@
     font-size: 2rem;
   }
 
-  .box {
+  .wrapper {
     height: 100%;
     display: grid;
     place-items: center;
