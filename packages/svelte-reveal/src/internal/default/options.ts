@@ -46,19 +46,19 @@ export const defaultFlyRevealTransition: FlyRevealTransition = {
 export const defaultSpinRevealTransition: SpinRevealTransition = {
   ...defaultBaseRevealTransition,
   transition: 'spin',
-  rotate: -360
+  rotate: -10
 };
 
 export const defaultBlurRevealTransition: BlurRevealTransition = {
   ...defaultBaseRevealTransition,
   transition: 'blur',
-  blur: 16
+  blur: 2
 };
 
 export const defaultScaleRevealTransition: ScaleRevealTransition = {
   ...defaultBaseRevealTransition,
   transition: 'scale',
-  scale: 0
+  scale: 0.8
 };
 
 export const defaultRevealEasing: Easing = 'easeInOutCubic';

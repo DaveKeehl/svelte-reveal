@@ -16,14 +16,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved documentation in README
 - Updated JSDoc comments
 - Restructured and simplified the core code a ton
-- Improved and modified some TypeScript types to provide a better DX
+- Reworked TypeScript types to provide a better DX (e.g. with discriminated unions)
+- Options `x`, `y`, `rotate`, `blur` and `scale` can only be specified if their corresponding transition is being used
+- Custom easing (array of four numbers) can now be defined directly using the `easing` option
+- `"fade"` is now the default transition
+- `"easeInOutCubic"` is now the default easing function
 - Massively simplified CI/CD pipeline
+- `"blur"` option now has a default value of `2`
+- `"scale"` option now has a default value of `0.8`
+- `"rotate"` option now has a default value of `-10`
 
 ### Removed
 
 - Dropped support for Gitpod
 - Dropped support for Docker
-- Removed testing suite (temporarily, but without rush to be re-introduced)
+- Removed testing suite
+- Dropped `debug`, `ref`, `highlightLogs`, `highlightColor` and `customEasing` from the available options
+- Dropped `dev` from the global config
+- Dropped `setDev` from the API
+- No longer adding vendor prefixes to the generated styles
 
 ### Fixed
 
