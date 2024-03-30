@@ -104,11 +104,23 @@ Instead, I decided to use Svelte [actions](https://svelte.dev/docs#template-synt
 
 ## SvelteKit
 
-The way Svelte Reveal operates does not work well with [SSR](https://kit.svelte.dev/docs/page-options#ssr), which is enabled by default on SvelteKit. One way to get around this issue, is to wrap your top-most element or component in your app inside an if-block that is evaluated to `true` only when its context has been updated, as in the following example. I'm aware it isn't the most ideal thing in the world, but  I'm yet to find an easier way to make it work. 
+> ⚠️ This is an active area of research
 
-> ⚠️ Please [create a new issue](https://github.com/DaveKeehl/svelte-reveal/issues/new/choose) and submit a bug report in case of problems.
+> 📅 Last update: April 2024
+
+Since Svelte actions require client-only components (components that only work in the browser), they don't work well with [SSR](https://kit.svelte.dev/docs/page-options#ssr). However, if you import Svelte Reveal in a SvelteKit page you'll notice that it actually... works! With a few caveats though. For example, elements do get revealed on scroll (even on page refresh), except for the one that is currently in view. If you disabled JavaScript you can also see all the elements, which is nice. **If you're ok with the default behavior you can stop reading here, otherwise please continue reading to check out the workarounds I've found.**
+
+### Workarounds
+
+These workarounds do work, but bear in mind that they each come with some downsides, which should be thoughtfully evaluated based on your own requirements.
+
+#### 1. Wait for the browser to be available using lifecycle methods
+
+If you wrap the elements to be revealed inside an `{#if}` block which is evaluated to `true` when the browser is available, the action will work fine. It works both with `onMount` and `afterUpdate`.
 
 ```svelte
+// +page.svelte
+
 <script>
   import { afterUpdate } from 'svelte';
 
@@ -120,9 +132,57 @@ The way Svelte Reveal operates does not work well with [SSR](https://kit.svelte.
 </script>
 
 {#if show}
-<your-element-or-component />
+	<MyComponent />
 {/if}
 ```
+
+Cons: 
+
+- Not very SEO friendly, as the elements inside the `{#if}` blocks will not be rendered on the server, leaving the page with missing pieces. If the entire page content is rendered this way, the initial page will be empty
+
+#### 2. Await the client component to be ready before being rendered
+
+Similarly to the previous workaround, we only want our client-only component to be rendered when the DOM is accessible to get the work done. You can also achieve this result by using the `{#await}` block as follows.
+
+```svelte
+// +page.svelte
+
+<script>
+  const MyComponent = import('MyComponent.svelte')
+</script>
+
+{#await MyComponent then { default: MyComponent }}
+	<MyComponent />
+{/await}
+```
+
+```svelte
+// MyComponent.svelte
+
+<script>
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal>Hello world</h1>
+```
+
+Cons:
+
+- You need to put your client-only components in separate files
+- Also not very SEO friendly
+
+#### 3. Disable SSR for the whole page
+
+This is probably the last thing you want to do, but if you're ok turning SSR off for the whole page you do as follows. By doing so the page will always have the DOM available and the action will work fine.
+
+```typescript
+// +page.ts
+export const ssr = false
+```
+
+Cons:
+
+- The page only runs client-side
 
 ## Options
 
