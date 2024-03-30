@@ -114,7 +114,7 @@ Since Svelte actions require client-only components (components that only work i
 
 These workarounds do work, but bear in mind that they each come with some downsides, which should be thoughtfully evaluated based on your own requirements.
 
-#### 1. Wait for the browser to be available using lifecycle methods
+#### Wait for the browser to be available using lifecycle methods
 
 If you wrap the elements to be revealed inside an `{#if}` block which is evaluated to `true` when the browser is available, the action will work fine. It works both with `onMount` and `afterUpdate`.
 
@@ -140,7 +140,7 @@ Cons:
 
 - Not very SEO friendly, as the elements inside the `{#if}` blocks will not be rendered on the server, leaving the page with missing pieces when crawled by bots and when JS is disabled. If the entire page content is rendered this way, the initial page will be empty
 
-#### 2. Await the client component to be ready before being rendered
+#### Await the client component to be ready before being rendered
 
 Similarly to the previous workaround, we only want our client-only component to be rendered when the DOM is accessible to get the work done. You can also achieve this result by using the `{#await}` block as follows.
 
@@ -171,7 +171,7 @@ Cons:
 - You need to put your client-only components in separate files
 - Same SEO consideration as before
 
-#### 3. Disable SSR for the whole page
+#### Disable SSR for the whole page
 
 This is probably the last thing you want to do, but if you're ok turning SSR off for the whole page you do as follows. By doing so the page will always have the DOM available and the action will work fine.
 
