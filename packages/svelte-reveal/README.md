@@ -108,7 +108,7 @@ Instead, I decided to use Svelte [actions](https://svelte.dev/docs#template-synt
 
 > 📅 Last update: April 2024
 
-Since Svelte actions require client-only components (components that only work in the browser), they don't work well with [SSR](https://kit.svelte.dev/docs/page-options#ssr). However, if you import Svelte Reveal in a SvelteKit page you'll notice that it actually... works! With a few caveats though. For example, elements do get revealed on scroll (even on page refresh), except for the one that is currently in view. If you disabled JavaScript you can also see all the elements, which is nice. **If you're ok with the default behavior you can stop reading here, otherwise please continue reading to check out the workarounds I've found.**
+Since Svelte actions require client-only components (components that only work in the browser), they don't work well with [SSR](https://kit.svelte.dev/docs/page-options#ssr). However, if you import Svelte Reveal in a SvelteKit page you'll notice that it actually... works! With a few caveats though. For example, elements do get revealed on scroll (even on page refresh), except for the ones currently in view. If you disable JavaScript you can also see all the elements, which is nice. **If you're ok with this default behavior you can stop reading here, otherwise please continue and check out the workarounds I've found.**
 
 ### Workarounds
 
