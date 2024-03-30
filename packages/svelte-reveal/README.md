@@ -138,7 +138,7 @@ If you wrap the elements to be revealed inside an `{#if}` block which is evaluat
 
 Cons: 
 
-- Not very SEO friendly, as the elements inside the `{#if}` blocks will not be rendered on the server, leaving the page with missing pieces. If the entire page content is rendered this way, the initial page will be empty
+- Not very SEO friendly, as the elements inside the `{#if}` blocks will not be rendered on the server, leaving the page with missing pieces when crawled by bots and when JS is disabled. If the entire page content is rendered this way, the initial page will be empty
 
 #### 2. Await the client component to be ready before being rendered
 
@@ -169,7 +169,7 @@ Similarly to the previous workaround, we only want our client-only component to 
 Cons:
 
 - You need to put your client-only components in separate files
-- Also not very SEO friendly
+- Same SEO consideration as before
 
 #### 3. Disable SSR for the whole page
 
