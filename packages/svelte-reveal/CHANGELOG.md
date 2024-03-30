@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Support for multiple transitions on a single element
+
 ### Changed
 
 - Repository is now a monorepo containing both the published package and some example projects
@@ -17,7 +21,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated JSDoc comments
 - Restructured and simplified the core code a ton
 - Reworked TypeScript types to provide a better DX (e.g. with discriminated unions)
-- Options `x`, `y`, `rotate`, `blur` and `scale` can only be specified if their corresponding transition is being used
 - Custom easing (array of four numbers) can now be defined directly using the `easing` option
 - `"fade"` is now the default transition
 - `"easeInOutCubic"` is now the default easing function
@@ -25,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `"blur"` option now has a default value of `2`
 - `"scale"` option now has a default value of `0.8`
 - `"rotate"` option now has a default value of `-10`
+- `transition` option has been renamed to `preset`
 
 ### Removed
 
