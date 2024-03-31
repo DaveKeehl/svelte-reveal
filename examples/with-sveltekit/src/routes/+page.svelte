@@ -1,7 +1,7 @@
 <script lang="ts">
   import { reveal, type RevealOptions } from 'svelte-reveal';
 
-  const config: Partial<RevealOptions>[] = [
+  const config: RevealOptions[] = [
     { preset: 'fade', duration: 2000 },
     { preset: 'fly', y: -80, easing: 'easeOutBack' },
     { preset: 'slide', x: -80, easing: 'easeOutBack' },

@@ -75,4 +75,4 @@ export const defaultOptions = {
   ...defaultRevealTransition,
   ...defaultRevealEvents,
   easing: defaultRevealEasing
-} satisfies RevealOptions;
+} satisfies Required<RevealOptions>;

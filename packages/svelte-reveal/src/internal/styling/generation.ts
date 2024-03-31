@@ -45,7 +45,14 @@ export const getRevealClassNames = (): [string, string] => {
  * @param options The options used by the transition.
  * @returns The CSS rules to be used to create the given transition.
  */
-export const createTransitionPropertyRules = ({ opacity, x, y, rotate, scale, blur }: RevealOptions): string => {
+export const createTransitionPropertyRules = ({
+  opacity,
+  x,
+  y,
+  rotate,
+  scale,
+  blur
+}: Required<RevealOptions>): string => {
   return `
     opacity: ${opacity};
     transform: translateX(${x}px) translateY(${y}px) rotate(${rotate}deg) scale(${scale});
@@ -66,8 +73,8 @@ export const createCssTransitionDeclaration = ({
   easing
 }: {
   className: string;
-  duration: RevealOptions['duration'];
-  delay: RevealOptions['delay'];
+  duration: Required<RevealOptions>['duration'];
+  delay: Required<RevealOptions>['delay'];
   easing: Easing;
 }) => {
   return `
@@ -88,7 +95,7 @@ export const createCssTransitionProperties = ({
   options
 }: {
   className: string;
-  options: RevealOptions;
+  options: Required<RevealOptions>;
 }) => {
   const transitionPropertiesRules = createTransitionPropertyRules(options);
 

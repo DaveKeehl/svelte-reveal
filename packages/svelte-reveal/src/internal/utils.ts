@@ -40,7 +40,7 @@ export const createIntersectionObserverConfig = (observerConfig?: Partial<Inters
  * @param userOptions The options provided by the user.
  * @returns The final merged options that can be used by the rest of the library.
  */
-export const mergeOptions = (userOptions: Partial<RevealOptions>): RevealOptions => {
+export const mergeOptions = (userOptions: RevealOptions): Required<RevealOptions> => {
   const cleanUserOptions = Object.fromEntries(Object.entries(userOptions).filter(([, value]) => value !== undefined));
 
   return validateOptions({
