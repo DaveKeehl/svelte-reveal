@@ -151,6 +151,6 @@ export const setConfig = (userConfig: RevealConfig): RevealConfig => {
  * @param userOptions The new default options.
  * @returns The updated default options.
  */
-export const setDefaultOptions = (userOptions: Partial<RevealOptions>): RevealOptions => {
+export const setDefaultOptions = (userOptions: RevealOptions): Required<RevealOptions> => {
   return mergeOptions(userOptions);
 };

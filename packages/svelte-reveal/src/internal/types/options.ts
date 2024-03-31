@@ -6,4 +6,4 @@ import type { RevealTransition } from './transitions.ts';
 /**
  * Specifies how a single reveal instance behaves.
  */
-export type RevealOptions = IntersectionObserverConfig & RevealTransition & { easing: Easing } & RevealEvents;
+export type RevealOptions = Partial<IntersectionObserverConfig & RevealTransition & { easing: Easing } & RevealEvents>;

@@ -63,7 +63,7 @@ export const hasValidBreakpoints = (responsive: Responsive): boolean => {
  * @param options The options to be checked.
  * @returns Whether the provided options are valid.
  */
-export const validateOptions = (options: RevealOptions) => {
+export const validateOptions = (options: Required<RevealOptions>) => {
   const isRootMarginValid = ROOT_MARGIN_REGEX.test(options.rootMargin);
   const isThresholdValid = inRange(options.threshold, 0, 1);
   const isOpacityValid = inRange(options.opacity, 0, 1);

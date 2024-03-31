@@ -13,10 +13,7 @@ import type { RevealOptions } from '@/types/options.ts';
  * @param userOptions User-provided options to tweak the scroll animation behavior for `node`.
  * @returns The action object containing the update and destroy functions for `node`.
  */
-export const reveal = (
-  node: HTMLElement,
-  userOptions: Partial<RevealOptions> = defaultOptions
-): Partial<ActionReturn> => {
+export const reveal = (node: HTMLElement, userOptions: RevealOptions = defaultOptions): Partial<ActionReturn> => {
   const options = mergeOptions(userOptions);
   const { transition, disable, onRevealStart, onMount, onUpdate, onDestroy } = options;
 

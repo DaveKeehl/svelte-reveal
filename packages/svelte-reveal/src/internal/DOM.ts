@@ -28,7 +28,7 @@ export const revealNode = (
   nodeToReveal: HTMLElement,
   transitionPropertiesClassName: string,
   transitionDeclarationClassName: string,
-  options: RevealOptions
+  options: Required<RevealOptions>
 ): HTMLElement => {
   markRevealNode(nodeToReveal);
 
