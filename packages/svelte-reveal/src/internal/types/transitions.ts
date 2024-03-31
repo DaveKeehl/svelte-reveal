@@ -18,7 +18,7 @@ export type RevealTransition = {
    */
   delay: number;
   /**
-   * The starting opacity value. It can be a number between `0.0` and `1.0`.
+   * The starting opacity value.
    */
   opacity: number;
   /**
@@ -42,7 +42,7 @@ export type RevealTransition = {
    */
   blur: number;
   /**
-   * The starting scale value in percentage.
+   * The starting scale value in percentage. `1` corresponds to `100%`.
    */
   scale: number;
 };

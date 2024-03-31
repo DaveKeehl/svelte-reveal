@@ -194,30 +194,32 @@ Keep in mind that these options are applied to the single DOM element you add Sv
 | `root`       | `Element \| Document \| null` | `null`              | The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer. |
 | `rootMargin` | `string`                    | `"0px 0px 0px 0px"` | The [root margin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer. |
 | `threshold`  | `number`                    | `0.6`               | The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/thresholds) (in percentage from `0.0` to `1.0`) property used by the Intersection Observer to know when its target element is considered visible. |
-| `preset` | `"fade" \| "slide" \| "fly" \| "spin" \| "blur" \| "scale"`       | `"fade"`            | The transition preset that should be applied.<br />Read more [in this subsection](#transitions) for a comprehensive explanation of the full list of available transitions. |
+| `preset` | `"fade" \| "slide" \| "fly" \| "spin" \| "blur" \| "scale"`       | `"fade"`            | The transition preset that should be applied. Check out the ["presets"](#presets) subsection for more info. |
 | `reset`      | `boolean`                   | `false`             | When set to `true`, the node transitions out when out of view, and is revealed again when back in view.<br /><br />⚠️ Be careful not to overuse this option, as it prevents the Intersection Observer to stop observing the target node. Performance is therefore not guaranteed when many elements have `reset` set to `true`. |
 | `duration`   | `number`                    | `800`               | How long the transition lasts (in ms).                       |
 | `delay`      | `number`                    | `0`                 | How long the transition is delayed (in ms) before being triggered. |
 | `easing`     | `Easing`                    | `"easeInOutCubic"`  | The easing function to use. [Check out](./src/internal/types/easing.ts) the full list of available easing functions and [this other website](https://cubic-bezier.com/) to preview timing functions. |
-| `x`          | `number`                    | `-20`               | The starting offset position in pixels on the x-axis. |
-| `y`          | `number`                    | `-20`               | The starting offset position in pixels on the y-axis. |
-| `rotate`     | `number`                    | `-360`              | The starting rotation offset in degrees. |
-| `opacity`    | `number`                    | `0`                 | The starting opacity value. It can be a number between `0.0` and `1.0`. |
-| `blur`       | `number`                    | `16`                | The starting blur value in pixels. |
-| `scale`      | `number`                    | `0`                 | The starting scale value in percentage. |
+| `x`          | `number`                    | `0`              | The starting offset position in pixels on the x-axis. |
+| `y`          | `number`                    | `0`               | The starting offset position in pixels on the y-axis. |
+| `rotate`     | `number`                    | `0`              | The starting rotation offset in degrees. |
+| `opacity`    | `number`                    | `0`                 | The starting opacity value. |
+| `blur`       | `number`                    | `0`              | The starting blur value in pixels. |
+| `scale`      | `number`                    | `1`                | The starting scale value in percentage. `1` corresponds to `100%`. |
 
 ### Presets
 
 > ⚠️ All presets have the `"fade"` preset backed in
 
-| Name      | Description                                                  |
-| --------- | ------------------------------------------------------------ |
-| `"fade"`  | The element fades in gracefully.<br />In practice: `opacity: 0 -> 1` |
-| `"fly"`   | The element fades in and performs a translation on the y-axis (vertical).<br />In practice: `opacity: 0 -> 1` + `transform: translateY(-20px -> 0px) ` |
-| `"slide"` | The element fades in and performs a translation on the x-axis (horizontal).<br />In practice: `opacity: 0 -> 1` + `transform: translateX(-20px -> 0px)` |
-| `"blur"`  | The element fades in and becomes unblurred.<br />In practice: `opacity: 0 -> 1` + `filter: blur(8px -> 0px)` |
-| `"scale"` | The element fades in and gets to the original size.<br />In practice: `opacity: 0 -> 1` + `transform: scale(0 -> 1)`<br /><br />⚠️ In order to use this transition it is required to use the `width` CSS property on the element to reveal. If you are not already using this property for other things, you can set it to `width: fit-content` . |
-| `"spin"`  | The element fades in and gets to the original rotation degree.<br />In practice: `opacity: 0 -> 1` + `transform: rotate(-360 -> 0)`<br /><br />⚠️ In order to use this transition it is required to use the `width` CSS property on the element to reveal. If you are not already using this property for other things, you can use set it to `width: fit-content` . |
+Presets are sets of options with predefined values, packaged under a name to achieve a certain transition effect. The following table shows the presets that come bundled with Svelte Reveal and which options they map to.
+
+| Name      | Options                       | Description                                                  |
+| --------- | ----------------------------- | ------------------------------------------------------------ |
+| `"fade"`  | `{ opacity: 0 }`              | The element fades in gracefully.<br />In practice: `opacity: 0 -> 1` |
+| `"fly"`   | `{ opacity: 0, y: -20 }`      | The element fades in and moves along a translation on the y-axis.<br />In practice: `opacity: 0 -> 1` + `transform: translateY(-20px -> 0px) ` |
+| `"slide"` | `{ opacity: 0, x: -20 }`      | The element fades in and performs a translation on the x-axis.<br />In practice: `opacity: 0 -> 1` + `transform: translateX(-20px -> 0px)` |
+| `"blur"`  | `{ opacity: 0, blur: 2 }`     | The element fades in and becomes unblurred.<br />In practice: `opacity: 0 -> 1` + `filter: blur(2px -> 0px)` |
+| `"scale"` | `{ opacity: 0, scale: 0.8 }`  | The element fades in and gets to the original size.<br />In practice: `opacity: 0 -> 1` + `transform: scale(0.8 -> 1)`<br /><br />⚠️ In order to use this transition it is required to use the `width` CSS property on the element to reveal. If you are not already using this property for other things, you can set it to `width: fit-content` . |
+| `"spin"`  | `{ opacity: 0, rotate: -10 }` | The element fades in and gets to the original rotation degree.<br />In practice: `opacity: 0 -> 1` + `transform: rotate(-10 -> 0)`<br /><br />⚠️ In order to use this transition it is required to use the `width` CSS property on the element to reveal. If you are not already using this property for other things, you can use set it to `width: fit-content` . |
 
 ### Callbacks
 
