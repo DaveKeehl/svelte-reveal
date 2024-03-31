@@ -4,14 +4,12 @@
 
 ![npm](https://img.shields.io/npm/v/svelte-reveal) ![npm](https://img.shields.io/npm/dw/svelte-reveal) ![GitHub](https://img.shields.io/github/license/davekeehl/svelte-reveal)
 
-> ⚠️&nbsp;&nbsp;Svelte Reveal is currently in beta. Do you want to [contribute](https://github.com/DaveKeehl/svelte-reveal/issues)? Do you want to [report a bug](https://github.com/DaveKeehl/svelte-reveal/issues/new?assignees=&labels=bug&template=bug_report.yml&title=%5BBug%5D%3A+)?
-
 Svelte Reveal is a library created with the purpose of helping [Svelte](https://svelte.dev/) users add reveal on scroll animations to their web applications in the easiest way possible. This library leverages the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) in order to know when to trigger the animations.
 
 ## Features
 
 - ⚡️ Near zero config
-- 👀 Intersection Observer API
+- 👀 Intersection Observer
 - 🧩 Customizable transitions
 - 🔌 Extensive API
 - 📚 Exhaustive documentation
@@ -19,8 +17,8 @@ Svelte Reveal is a library created with the purpose of helping [Svelte](https://
 
 ## Table of Contents
 
-1. [Usage](#usage)
 1. [Demo](#demo)
+1. [Usage](#usage)
 1. [Why Svelte Reveal](#why-svelte-reveal)
 1. [SvelteKit](#sveltekit)
 1. [Options](#options)
@@ -32,6 +30,10 @@ Svelte Reveal is a library created with the purpose of helping [Svelte](https://
 1. [Versioning](#versioning)
 1. [Changelog](#changelog)
 1. [License](#license)
+
+## Demo
+
+You can see Svelte Reveal in action [in this StackBlitz project](https://stackblitz.com/edit/svelte-reveal?file=src%2FApp.svelte).
 
 ## Usage
 
@@ -59,8 +61,8 @@ Svelte Reveal is a library created with the purpose of helping [Svelte](https://
 3. Add the imported `reveal` action to the DOM element you want to transition:
 
    ```svelte
-   <h1 use:reveal>Your title</h1>
-   <p use:reveal={{ transition: "fade" }}>A paragraph</p>
+   <h1 use:reveal>Hello world</h1>
+   <p use:reveal={{ transition: "slide" }}>A paragraph</p>
    ```
 
    If you want to use the action on a Svelte component, you need to pass the reveal options via props:
@@ -72,7 +74,7 @@ Svelte Reveal is a library created with the purpose of helping [Svelte](https://
      import Heading from './Heading.svelte';
    </script>
    
-   <Heading useReveal={{ transition: "fade" }}>Hello world</Heading>
+   <Heading useReveal={{ transition: "slide" }}>Hello world</Heading>
    ```
    
    ```svelte
@@ -90,17 +92,13 @@ Svelte Reveal is a library created with the purpose of helping [Svelte](https://
    
    Using [SvelteKit](https://kit.svelte.dev/)? Please refer to the ["SvelteKit"](#sveltekit) section.
 
-## Demo
-
-You can see Svelte Reveal in action [in this StackBlitz project](https://stackblitz.com/edit/svelte-reveal?file=src%2FApp.svelte).
-
 ## Why Svelte Reveal
 
 If you happened to scout the internet for other similar libraries, you might have noticed that other authors have decided to create their own library using Svelte [slots](https://svelte.dev/docs#template-syntax-slot) (similar to [React children](https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children)). There is nothing wrong with that approach, but in my opinion it goes a bit against one of Svelte's core purpose: writing more concise code. Having to wrap every to-be-transitioned component adds at least 2 extra lines of code each time, making your files unnecessarily bloated for such a simple add-on.
 
 You might have also noticed people adding event listeners to the window object in order to transition elements, but in terms of performance it [doesn't scale very well](https://itnext.io/1v1-scroll-listener-vs-intersection-observers-469a26ab9eb6).
 
-Instead, I decided to use Svelte [actions](https://svelte.dev/docs#template-syntax-element-directives-use-action), which are functions you can attach to a DOM element and that allow you to get access to that particular element and hook into its lifecycle. They take up considerably fewer lines of code, and so far I haven't encountered any obstacle or performance drawback. Morever, this library is backed by the Intersection Observer API, which is great for performance.
+Instead, I decided to use Svelte [actions](https://svelte.dev/docs#template-syntax-element-directives-use-action), which are functions you can attach to a DOM element and that allow you to get access to that particular element and hook into its lifecycle. They take up considerably fewer lines of code, and so far I haven't encountered any big obstacle or performance drawback. Morever, this library is backed by the Intersection Observer API, which is great for performance.
 
 ## SvelteKit
 
@@ -173,7 +171,7 @@ Cons:
 
 #### Disable SSR for the whole page
 
-This is probably the last thing you want to do, but if you're ok turning SSR off for the whole page you do as follows. By doing so the page will always have the DOM available and the action will work fine.
+This is probably the last thing you want to do, but if you're ok turning SSR off for the whole page you can do as follows. By doing so the page will always have the DOM available and the action will work fine.
 
 ```typescript
 // +page.ts
@@ -186,7 +184,7 @@ Cons:
 
 ## Options
 
-Depending on the use case, you can either use this library as-is (which applies some [default styles](./src/internal/default/options.ts)), or customize it to your liking. If you choose to do so, you can pass an object to this action containing your own options to be applied.
+Depending on the use case, you can either use this library as-is (which applies some [default options](./src/internal/default/options.ts)), or customize it to your liking. If you choose to do so, you can pass an object to this action containing your own options to be applied.
 
 Keep in mind that these options are applied to the single DOM element you add Svelte Reveal to. For global and more in-depth settings, refer to the [API](#api) section.
 
@@ -279,7 +277,7 @@ Svelte Reveal also exposes several functions you can call to change the [default
 
 ## Suggestions
 
-If you need/want to considerably customize the behavior of this library, I suggest creating a dedicated file and to import it from the top-most component in the components tree of your project. Within that file you can then call the API functions to set global settings or shared transition properties.
+If you need to considerably customize the behavior of this library, I suggest creating a dedicated file and to import it from the top-most component in the components tree of your project. Within that file you can then call the API functions to set global settings or shared transition properties.
 
 ```typescript
 // reveal.config.ts
