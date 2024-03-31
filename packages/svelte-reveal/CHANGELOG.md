@@ -7,31 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Support for multiple transitions on a single element
+- New `preset` option, which works similarly to the now removed `transition` option
+
 ### Changed
 
 - Repository is now a monorepo containing both the published package and some example projects
 - Open Graph image and README cover do not contain the version number anymore
 - Updated dependencies
 - Using tsup instead of raw esbuild
+- Massively simplified CI/CD pipeline
 - Improved documentation in README
 - Updated JSDoc comments
 - Restructured and simplified the core code a ton
-- Reworked TypeScript types to provide a better DX (e.g. with discriminated unions)
-- Options `x`, `y`, `rotate`, `blur` and `scale` can only be specified if their corresponding transition is being used
+- Reworked TypeScript types
 - Custom easing (array of four numbers) can now be defined directly using the `easing` option
-- `"fade"` is now the default transition
 - `"easeInOutCubic"` is now the default easing function
-- Massively simplified CI/CD pipeline
-- `"blur"` option now has a default value of `2`
-- `"scale"` option now has a default value of `0.8`
-- `"rotate"` option now has a default value of `-10`
+- `"blur"` option now has a default value of `0`
+- `"scale"` option now has a default value of `0`
+- `"rotate"` option now has a default value of `0`
 
 ### Removed
 
 - Dropped support for Gitpod
 - Dropped support for Docker
 - Removed testing suite
-- Dropped `debug`, `ref`, `highlightLogs`, `highlightColor` and `customEasing` from the available options
+- Dropped `debug`, `ref`, `highlightLogs`, `highlightColor`, `transition` and `customEasing` from the options
 - Dropped `dev` from the global config
 - Dropped `setDev` from the API
 - No longer adding vendor prefixes to the generated styles

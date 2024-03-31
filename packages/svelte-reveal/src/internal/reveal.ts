@@ -15,10 +15,10 @@ import type { RevealOptions } from '@/types/options.ts';
  */
 export const reveal = (node: HTMLElement, userOptions: RevealOptions = defaultOptions): Partial<ActionReturn> => {
   const options = mergeOptions(userOptions);
-  const { transition, disable, onRevealStart, onMount, onUpdate, onDestroy } = options;
+  const { disable, onRevealStart, onMount, onUpdate, onDestroy } = options;
 
   const nodeToReveal = getNodeToReveal(node);
-  const [transitionDeclaration, transitionProperties] = getRevealClassNames(transition);
+  const [transitionDeclaration, transitionProperties] = getRevealClassNames();
 
   onMount(nodeToReveal);
 
