@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Massively simplified CI/CD pipeline
 - Improved documentation in README
 - Updated JSDoc comments
-- Restructured and simplified the core code a ton
+- Restructured and simplified the core code
 - Reworked TypeScript types
 - Custom easing (array of four numbers) can now be defined directly using the `easing` option
 - `"easeInOutCubic"` is now the default easing function
@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Avoiding creating nested media queries when generating the styles
+- Inline styles applied to Svelte Reveal targeted elements (elements with `use:reveal`) no longer break the library ([#182](https://github.com/DaveKeehl/svelte-reveal/issues/182))
 
 ## [0.7.0] - 2022-11-04
 
