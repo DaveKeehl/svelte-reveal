@@ -21,8 +21,8 @@
     "predev": "npm run clean:build",
     "pack": "npm pack",
     "lint": "eslint .",
-    "clean:build": "rm -rf dist && rm -f svelte-reveal-*.tgz",
-    "clean:deps": "rm -rf .turbo && rm -rf node_modules && rm -f package-lock.json",
+    "clean:build": "rimraf dist svelte-reveal-*.tgz",
+    "clean:deps": "rimraf .turbo node_modules package-lock.json",
     "clean": "run-p clean:*"
   },
   "repository": {
@@ -61,6 +61,7 @@
     "eslint-config-turbo": "^1.13.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.2.5",
+    "rimraf": "^5.0.5",
     "seedrandom": "^3.0.5",
     "svelte": "^4.2.12",
     "tsup": "^8.0.2",
