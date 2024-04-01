@@ -64,9 +64,14 @@ export const revealNode = (
  * @returns The HTML element to be revealed.
  */
 export const getNodeToReveal = (node: HTMLElement): HTMLElement => {
-  if (node.style.length === 0) return node;
+  const parent = node.parentElement;
+  const style = node.style.cssText;
+
+  if (!parent || !style) return node;
+
   const wrapper = document.createElement('div');
   wrapper.appendChild(node);
+  parent.appendChild(wrapper);
   return wrapper;
 };
 
