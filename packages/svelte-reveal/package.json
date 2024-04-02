@@ -10,13 +10,14 @@
     ".": {
       "require": "./dist/index.cjs",
       "import": "./dist/index.js"
-    }
+    },
+    "./styles.css": "./dist/styles.css"
   },
   "files": [
     "dist/"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --clean --minify --dts --format esm,cjs && cp src/svelte-reveal.css dist/svelte-reveal.css",
+    "build": "tsup src/index.ts --clean --minify --dts --format esm,cjs && cp src/styles.css dist/styles.css",
     "dev": "npm run build -- --watch",
     "predev": "npm run clean:build",
     "pack": "npm pack",
