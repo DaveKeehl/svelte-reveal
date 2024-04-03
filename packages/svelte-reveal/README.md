@@ -102,85 +102,47 @@ Instead, I decided to use Svelte [actions](https://svelte.dev/docs#template-synt
 
 ## SvelteKit
 
-> ⚠️ This is an active area of research
+> ⚠️ This is an active area of research. Please [submit a bug report](https://github.com/DaveKeehl/svelte-reveal/issues/new) in case of issues.
 
 > 📅 Last update: April 2024
 
-Since Svelte actions require client-only components (components that only work in the browser), they don't work well with [SSR](https://kit.svelte.dev/docs/page-options#ssr). However, if you import Svelte Reveal in a SvelteKit page you'll notice that it actually... works! With a few caveats though. For example, elements do get revealed on scroll (even on page refresh), except for the ones currently in view. If you disable JavaScript you can also see all the elements, which is nice. **If you're ok with this default behavior you can stop reading here, otherwise please continue and check out the workarounds I've found.**
+Since Svelte actions were conceived to operate in a client-side environment, they don't always work 100% in SvelteKit and SSR (server-side rendering) out of the box. Svelte Reveal is no exception, as it needs DOM access, and in order not to incur in weird animation behaviors some small setup is required by the end-users. Out of the following two methods, pick the one that most suit your project requirements.
 
-### Workarounds
+### Without SSR
 
-These workarounds do work, but bear in mind that they each come with some downsides, which should be thoughtfully evaluated based on your own requirements.
-
-#### Wait for the browser to be available using lifecycle methods
-
-If you wrap the elements to be revealed inside an `{#if}` block which is evaluated to `true` when the browser is available, the action will work fine. It works both with `onMount` and `afterUpdate`.
-
-```svelte
-// +page.svelte
-
-<script>
-  import { afterUpdate } from 'svelte';
-
-  let show = false;
-
-  afterUpdate(() => {
-    show = true;
-  });
-</script>
-
-{#if show}
-  <MyComponent />
-{/if}
-```
-
-Cons: 
-
-- Not very SEO friendly, as the elements inside the `{#if}` blocks will not be rendered on the server, leaving the page with missing pieces when crawled by bots and when JS is disabled. If the entire page content is rendered this way, the initial page will be empty
-
-#### Await the client component to be ready before being rendered
-
-Similarly to the previous workaround, we only want our client-only component to be rendered when the DOM is accessible to get the work done. You can also achieve this result by using the `{#await}` block as follows.
-
-```svelte
-// +page.svelte
-
-<script>
-  const MyComponent = import('MyComponent.svelte')
-</script>
-
-{#await MyComponent then { default: MyComponent }}
-  <MyComponent />
-{/await}
-```
-
-```svelte
-// MyComponent.svelte
-
-<script>
-  import { reveal } from 'svelte-reveal';
-</script>
-
-<h1 use:reveal>Hello world</h1>
-```
-
-Cons:
-
-- You need to put your client-only components in separate files
-- Same SEO consideration as before
-
-#### Disable SSR for the whole page
-
-This is probably the last thing you want to do, but if you're ok turning SSR off for the whole page you can do as follows. By doing so the page will always have the DOM available and the action will work fine.
+If your page doesn't need to be server-side rendered then the fix is very trivial. Turn off `ssr` in your `+page.ts` file as follows.
 
 ```typescript
 // +page.ts
 export const ssr = false
 ```
 
-Cons:
+### With SSR
 
-- The page only runs client-side
+If your page does need to leverage server-side rendering, the setup remains easy but it requires a few more steps.
+
+1. Import the bundled stylesheet in your page or layout
+   ```svelte
+   // +layout.svelte
+   
+   <script lang="ts">
+     import "svelte-reveal/styles.css"
+     ...
+   </script>
+   
+   ...
+   ```
+
+2. Add the `sr__hide` css class to every element targeted by Svelte Reveal with `use:reveal`. This will prevent the elements to flicker as soon as the page is hydrated and the DOM is accessible to the library.
+   ```svelte
+   // +page.svelte
+   
+   <script lang="ts">
+     import { reveal } from 'svelte-reveal';
+   </script>
+   
+   <h1 use:reveal class="sr__hide">Hello world</h1>
+   ```
 
 ## Options
 
