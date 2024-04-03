@@ -117,7 +117,7 @@ If your page doesn't need to be server-side rendered then the fix is very trivia
 
 ```typescript
 // +page.ts
-export const ssr = false
+export const ssr = false;
 ```
 
 ### With SSR
@@ -129,7 +129,7 @@ If your page does need to leverage server-side rendering, the setup remains easy
    // +layout.svelte
    
    <script lang="ts">
-     import "svelte-reveal/styles.css"
+     import "svelte-reveal/styles.css";
      ...
    </script>
    
