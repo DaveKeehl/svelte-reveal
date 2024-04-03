@@ -48,6 +48,9 @@ You can see Svelte Reveal in action [in this StackBlitz project](https://stackbl
    
    # pnpm
    pnpm add -D svelte-reveal
+
+   # bun
+   bun add -D svelte-reveal
    ```
 
 2. Import the library in your Svelte component:
