@@ -235,7 +235,7 @@ Svelte Reveal also exposes several functions you can call to change the [default
 | `setDeviceBreakpoint`   | `(device: Device, breakpoint: number)`         | `RevealConfig`               | Sets the breakpoint of a device.                             |
 | `setDevice`             | `(device: Device, settings: IDevice)`          | `RevealConfig`               | Sets the settings of a device.                               |
 | `setResponsive`         | `(responsive: Responsive)`                     | `RevealConfig`               | Updates how responsiveness is handled by the library.        |
-| `setObserverRoot`       | `(root: Element | Document | null)`            | `IntersectionObserverConfig` | Sets the Intersection Observer `root` element.               |
+| `setObserverRoot`       | `(root: Element \| Document \| null)`            | `IntersectionObserverConfig` | Sets the Intersection Observer `root` element.               |
 | `setObserverRootMargin` | `(rootMargin: string)`                         | `IntersectionObserverConfig` | Sets the Intersection Observer `rootMargin` property.        |
 | `setObserverThreshold`  | `(threshold: number)`                          | `IntersectionObserverConfig` | Sets the Intersection Observer `threshold` property.         |
 | `setObserverConfig`     | `(observerConfig: IntersectionObserverConfig)` | `IntersectionObserverConfig` | Sets the Intersection Observer configuration.                |
