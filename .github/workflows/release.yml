@@ -50,6 +50,8 @@ jobs:
       - name: Extract release notes
         id: extract-release-notes
         uses: ffurrer2/extract-release-notes@v1
+        with:
+          changelog_file: ./packages/svelte-reveal/CHANGELOG.md
 
       - name: Create new release
         id: create-release
