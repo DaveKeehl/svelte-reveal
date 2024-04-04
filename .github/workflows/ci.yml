@@ -29,6 +29,8 @@ jobs:
         with:
           changelog_file: ./packages/svelte-reveal/CHANGELOG.md
 
+      - run: ${{ steps.extract-release-notes.outputs.release_notes }}
+
       # - name: Testing
       #   run: npm run test
 
