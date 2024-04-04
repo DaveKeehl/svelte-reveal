@@ -44,9 +44,6 @@ jobs:
         with:
           path: 'packages/svelte-reveal'
 
-      - name: Change directory
-        run: cd packages/svelte-reveal
-
       - name: Extract release notes
         id: extract-release-notes
         uses: ffurrer2/extract-release-notes@v1

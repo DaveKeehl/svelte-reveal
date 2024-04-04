@@ -23,14 +23,6 @@ jobs:
       - name: Build
         run: npm run build -- --filter=svelte-reveal
 
-      - name: Extract release notes
-        id: extract-release-notes
-        uses: ffurrer2/extract-release-notes@v1
-        with:
-          changelog_file: ./packages/svelte-reveal/CHANGELOG.md
-
-      - run: ${{ steps.extract-release-notes.outputs.release_notes }}
-
       # - name: Testing
       #   run: npm run test
 
