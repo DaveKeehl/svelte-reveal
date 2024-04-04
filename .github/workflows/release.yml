@@ -44,6 +44,9 @@ jobs:
         with:
           path: 'packages/svelte-reveal'
 
+      - name: Change directory
+        run: cd packages/svelte-reveal
+
       - name: Extract release notes
         id: extract-release-notes
         uses: ffurrer2/extract-release-notes@v1
@@ -67,6 +70,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create-release.outputs.upload_url }}
-          asset_path: ./packages/svelte-reveal/svelte-reveal-${{ steps.publish.outputs.id}}.tgz
+          asset_path: ./svelte-reveal-${{ steps.publish.outputs.id}}.tgz
           asset_name: svelte-reveal-${{ steps.publish.outputs.id}}.tgz
           asset_content_type: application/gzip
