@@ -1,6 +1,6 @@
 {
   "name": "svelte-reveal",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Svelte action that leverages the Intersection Observer API to trigger reveal on scroll transitions",
   "type": "module",
   "main": "dist/index.cjs",
