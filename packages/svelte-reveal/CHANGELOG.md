@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.0.0] - 2024-04-04
 
 ### Added
 
@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Massively simplified CI/CD pipeline
 - Improved documentation in README
 - Updated JSDoc comments
+- Better support for SvelteKit and SSR
 - Restructured and simplified the core code
 - Reworked TypeScript types
 - Custom easing (array of four numbers) can now be defined directly using the `easing` option
@@ -171,3 +172,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.5.0]: https://github.com/DaveKeehl/svelte-reveal/compare/0.4.0...0.5.0
 [0.6.0]: https://github.com/DaveKeehl/svelte-reveal/compare/0.5.0...0.6.0
 [0.7.0]: https://github.com/DaveKeehl/svelte-reveal/compare/0.6.0...0.7.0
+[1.0.0]: https://github.com/DaveKeehl/svelte-reveal/compare/0.7.0...1.0.0
