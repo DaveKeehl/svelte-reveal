@@ -21,7 +21,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Massively simplified CI/CD pipeline
 - Improved documentation in README
 - Updated JSDoc comments
-- Better support for SvelteKit and SSR
 - Restructured and simplified the core code
 - Reworked TypeScript types
 - Custom easing (array of four numbers) can now be defined directly using the `easing` option
