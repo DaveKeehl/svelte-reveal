@@ -1,0 +1,28 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "pipeline": {
+    "clean": {
+      "cache": false
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "pack": {
+      "outputs": ["svelte-reveal-*.tgz"]
+    },
+    "format": {
+      "outputs": []
+    },
+    "format:staged": {
+      "outputs": []
+    },
+    "lint": {
+      "outputs": []
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "with-svelte-vite",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "clean": "rimraf dist .turbo node_modules package-lock.json"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^3.0.2",
+    "@tsconfig/svelte": "^5.0.2",
+    "rimraf": "^5.0.5",
+    "svelte": "^4.2.11",
+    "svelte-check": "^3.6.4",
+    "svelte-reveal": "*",
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2",
+    "vite": "^5.1.4"
+  }
+}

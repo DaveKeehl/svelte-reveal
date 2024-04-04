@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    /* Base Options */
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "es2022",
+    "lib": ["es2022", "DOM", "DOM.Iterable"],
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+
+    /* Transpiling with TypeScript */
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
+    "outDir": "dist",
+    // "declarationDir": "dist/types",
+    "sourceMap": true,
+    "allowImportingTsExtensions": true,
+    "emitDeclarationOnly": true,
+    "declaration": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/internal/*"],
+      "@/types/*": ["./src/internal/types/*"],
+      "@/styling/*": ["./src/internal/styling/*"],
+      "@/default/*": ["./src/internal/default/*"]
+    }
+  },
+  "include": ["./src"]
+}
