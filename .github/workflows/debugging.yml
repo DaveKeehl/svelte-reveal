@@ -22,12 +22,13 @@ jobs:
 
       - run: pwd
       - run: ls -l
+      - run: cd packages/svelte-reveal
 
       - name: Building package
-        run: npm run pack
+        run: npm pack
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: my-artifact
-          path: ./packages/svelte-reveal/svelte-reveal-*.tgz
+          path: svelte-reveal-*.tgz
