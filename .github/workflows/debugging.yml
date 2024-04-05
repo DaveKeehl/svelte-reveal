@@ -3,7 +3,7 @@ name: Debugging
 on: [push]
 
 jobs:
-  CI:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -20,16 +20,21 @@ jobs:
       - name: Installing dependencies
         run: npm ci
 
-      - run: pwd
-      - run: ls -l
-      - run: cd ./packages/svelte-reveal && ls -l
-      - run: pwd && ls -l
+      - name: Build package
+        run: npm run build -- --filter=svelte-reveal
 
-      - name: Building package
-        run: npm pack
+      - name: Pack build artifacts
+        run: npm run pack -- --filter=svelte-reveal
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: my-artifact
-          path: svelte-reveal-*.tgz
+          path: ./packages/svelte-reveal/svelte-reveal-*.tgz
+
+      - name: Publish to NPM
+        id: publish
+        uses: JS-DevTools/npm-publish@v3
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          package: ./packages/svelte-reveal/package.json
+          dry-run: true
