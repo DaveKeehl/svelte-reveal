@@ -22,8 +22,8 @@ jobs:
 
       - run: pwd
       - run: ls -l
-      - run: cd packages/svelte-reveal
-      - run: ls -l
+      - run: cd ./packages/svelte-reveal && ls -l
+      - run: pwd && ls -l
 
       - name: Building package
         run: npm pack
