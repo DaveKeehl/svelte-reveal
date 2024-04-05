@@ -22,12 +22,14 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-          cache-dependency-path: 'package-lock.json'
 
       - name: Installing dependencies
         run: npm ci
 
-      - name: Building package
+      - name: Build package
+        run: npm run build -- --filter=svelte-reveal
+
+      - name: Pack build artifacts
         run: npm run pack -- --filter=svelte-reveal
 
       - name: Publish to NPM
