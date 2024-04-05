@@ -23,22 +23,6 @@ jobs:
       - name: Build package
         run: npm run build -- --filter=svelte-reveal
 
-      - name: Pack build artifacts
-        run: npm run pack -- --filter=svelte-reveal
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: my-artifact
-          path: ./packages/svelte-reveal/svelte-reveal-*.tgz
-
-      - name: Publish to NPM
-        id: publish
-        uses: JS-DevTools/npm-publish@v3
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          package: ./packages/svelte-reveal/package.json
-          dry-run: true
-
       # - name: Testing
       #   run: npm run test
 
