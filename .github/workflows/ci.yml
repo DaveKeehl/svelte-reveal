@@ -20,7 +20,7 @@ jobs:
       - name: Installing dependencies
         run: npm ci
 
-      - name: Build
+      - name: Build package
         run: npm run build -- --filter=svelte-reveal
 
       # - name: Testing
