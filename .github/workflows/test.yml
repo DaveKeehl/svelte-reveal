@@ -4,7 +4,7 @@ on: [push]
 
 env:
   OLD_VERSION: 1.0.4
-  NEW_VERSION: 2.0.0
+  NEW_VERSION: 2.1.0
 
 jobs:
   check-version:
