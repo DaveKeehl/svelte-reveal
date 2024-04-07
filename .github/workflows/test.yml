@@ -4,7 +4,7 @@ on: [push]
 
 env:
   OLD_VERSION: 1.0.4
-  NEW_VERSION: 1.0.4
+  NEW_VERSION: 1.0.6
 
 jobs:
   check-version:
@@ -44,7 +44,7 @@ jobs:
         uses: actions/github-script@v3
         with:
           script: |
-            core.setFailed('Invalid semver upgrade')
+            core.setFailed('Invalid semver upgrade (${{ env.OLD_VERSION }} -> ${{ env.NEW_VERSION }})')
 
   release:
     runs-on: ubuntu-latest
