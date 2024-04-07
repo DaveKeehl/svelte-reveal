@@ -37,10 +37,10 @@ jobs:
           echo "Release: ${{ steps.version.outputs.release }}"
           echo "inc-major: ${{ steps.version.outputs.inc-major }}"
           echo "inc-minor: ${{ steps.version.outputs.inc-minor }}"
-          echo "inc-patch: ${{ steps.version.outputs.inc-minor }}"
+          echo "inc-patch: ${{ steps.version.outputs.inc-patch }}"
 
       - name: Check for new version
-        if: ${{ env.NEW_VERSION == steps.version.outputs.inc-major || env.NEW_VERSION == steps.version.outputs.inc-minor || env.NEW_VERSION == steps.version.outputs.inc-patch }}
+        if: ${{ env.NEW_VERSION != steps.version.outputs.inc-major && env.NEW_VERSION != steps.version.outputs.inc-minor && env.NEW_VERSION != steps.version.outputs.inc-patch }}
         uses: actions/github-script@v3
         with:
           script: |
