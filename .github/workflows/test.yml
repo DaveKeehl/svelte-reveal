@@ -4,7 +4,7 @@ on: [push]
 
 env:
   OLD_VERSION: 1.0.4
-  NEW_VERSION: 1.0.5
+  NEW_VERSION: 1.0.4
 
 jobs:
   check-version:
@@ -39,7 +39,7 @@ jobs:
           echo "inc-minor: ${{ steps.version.outputs.inc-minor }}"
           echo "inc-patch: ${{ steps.version.outputs.inc-patch }}"
 
-      - name: Check for new version
+      - name: Verify valid semver upgrade
         if: ${{ env.NEW_VERSION != steps.version.outputs.inc-major && env.NEW_VERSION != steps.version.outputs.inc-minor && env.NEW_VERSION != steps.version.outputs.inc-patch }}
         uses: actions/github-script@v3
         with:
