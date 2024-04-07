@@ -2,6 +2,10 @@ name: Release
 
 on: [push]
 
+env:
+  OLD_VERSION: 1.0.4
+  NEW_VERSION: 1.0.5
+
 jobs:
   check-version:
     runs-on: ubuntu-latest
@@ -27,15 +31,15 @@ jobs:
         uses: madhead/semver-utils@latest
         id: version
         with:
-          version: ${{ steps.latest-version.outputs.tag }}
-          compare-to: ${{ steps.package-version.outputs.current-version }}
+          version: ${{ env.OLD_VERSION }}
+          compare-to: ${{ env.NEW_VERSION }}
 
       - name: Check for new version
         if: ${{ steps.version.outputs.comparison-result != '>' }}
         uses: actions/github-script@v3
         with:
           script: |
-            core.setFailed('The last version (${{ steps.package-version.outputs.current-version }}) and the current version (${{ steps.latest-version.outputs.tag }}) are the same')
+            core.setFailed('The last version (${{ env.OLD_VERSION }}) and the current version (${{ env.NEW_VERSION }}) are the same')
 
   release:
     runs-on: ubuntu-latest
