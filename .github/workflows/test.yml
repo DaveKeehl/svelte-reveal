@@ -28,7 +28,7 @@ jobs:
         uses: 'WyriHaximus/github-action-get-previous-tag@v1'
 
       - name: Check for new version
-        if: ${{ env.OLD_VERSION }} == ${{ env.NEW_VERSION }}
+        if: ${{ env.OLD_VERSION == env.NEW_VERSION }}
         uses: actions/github-script@v3
         with:
           script: |
