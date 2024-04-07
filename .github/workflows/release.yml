@@ -1,4 +1,4 @@
-name: 'Publish to NPM'
+name: 'Release'
 
 on:
   pull_request:
@@ -23,7 +23,7 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      - name: Installing dependencies
+      - name: Instal dependencies
         run: npm ci
 
       - name: Build package
@@ -40,7 +40,7 @@ jobs:
           package: ./packages/svelte-reveal/package.json
           strategy: upgrade
 
-      - name: Get Package Version
+      - name: Get package version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
         with:
