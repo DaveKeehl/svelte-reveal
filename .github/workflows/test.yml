@@ -34,8 +34,12 @@ jobs:
           version: ${{ env.OLD_VERSION }}
           compare-to: ${{ env.NEW_VERSION }}
 
+      - run: |
+          echo "${{ steps.version.outputs.release }}"
+          echo "${{ steps.version.outputs.comparison-result }}"
+
       - name: Check for new version
-        if: ${{ steps.version.outputs.comparison-result != '>' }}
+        if: ${{ steps.version.outputs.comparison-result != '<' }}
         uses: actions/github-script@v3
         with:
           script: |
