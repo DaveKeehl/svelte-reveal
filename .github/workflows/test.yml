@@ -31,15 +31,14 @@ jobs:
         uses: madhead/semver-utils@latest
         id: version
         with:
-          version: ${{ env.OLD_VERSION }}
-          compare-to: ${{ env.NEW_VERSION }}
+          version: ${{ env.NEW_VERSION }}
+          compare-to: ${{ env.OLD_VERSION }}
 
       - run: |
-          echo "${{ steps.version.outputs.release }}"
           echo "${{ steps.version.outputs.comparison-result }}"
 
       - name: Check for new version
-        if: ${{ steps.version.outputs.comparison-result != '<' }}
+        if: ${{ steps.version.outputs.comparison-result != '>' }}
         uses: actions/github-script@v3
         with:
           script: |
