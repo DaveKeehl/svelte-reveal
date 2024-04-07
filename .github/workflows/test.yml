@@ -1,10 +1,11 @@
-name: Release
+name: Release (test)
 
-on: [push]
-
-env:
-  OLD_VERSION: 1.0.4
-  NEW_VERSION: 2.1.0
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - closed
 
 jobs:
   check-version:
@@ -23,32 +24,27 @@ jobs:
         with:
           path: 'packages/svelte-reveal'
 
-      - name: Get latest version
-        id: latest-version
+      - name: Get latest tag
+        id: latest-tag
         uses: 'WyriHaximus/github-action-get-previous-tag@v1'
 
       - name: Compare versions
         uses: madhead/semver-utils@latest
         id: version
         with:
-          version: ${{ env.OLD_VERSION }}
-
-      - run: |
-          echo "Release: ${{ steps.version.outputs.release }}"
-          echo "inc-major: ${{ steps.version.outputs.inc-major }}"
-          echo "inc-minor: ${{ steps.version.outputs.inc-minor }}"
-          echo "inc-patch: ${{ steps.version.outputs.inc-patch }}"
+          version: ${{ steps.latest-tag.outputs.tag }}
 
       - name: Detected invalid semver upgrade
-        if: ${{ env.NEW_VERSION != steps.version.outputs.inc-major && env.NEW_VERSION != steps.version.outputs.inc-minor && env.NEW_VERSION != steps.version.outputs.inc-patch }}
+        if: ${{ steps.package-version.outputs.current-version != steps.version.outputs.inc-major && steps.package-version.outputs.current-version != steps.version.outputs.inc-minor && steps.package-version.outputs.current-version != steps.version.outputs.inc-patch }}
         uses: actions/github-script@v3
         with:
           script: |
-            core.setFailed('Invalid semver upgrade (${{ env.OLD_VERSION }} -> ${{ env.NEW_VERSION }})')
+            core.setFailed('Invalid semver upgrade (${{ steps.latest-tag.outputs.tag }} -> ${{ steps.package-version.outputs.current-version }})')
 
   release:
     runs-on: ubuntu-latest
     needs: check-version
+    if: github.event.pull_request.merged == true
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -66,3 +62,43 @@ jobs:
 
       - name: Build package
         run: npm run build -- --filter=svelte-reveal
+
+      - name: Pack build artifacts
+        run: npm run pack -- --filter=svelte-reveal
+
+      - name: Publish to NPM
+        id: publish
+        uses: JS-DevTools/npm-publish@v3
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          package: ./packages/svelte-reveal/package.json
+          strategy: upgrade
+
+      - name: Extract release notes
+        id: extract-release-notes
+        uses: ffurrer2/extract-release-notes@v1
+        with:
+          changelog_file: ./packages/svelte-reveal/CHANGELOG.md
+
+      - name: Create new release
+        id: create-release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ needs.check-version.outputs.version }}
+          release_name: ${{ needs.check-version.outputs.version }}
+          draft: false
+          prerelease: false
+          body: ${{ steps.extract-release-notes.outputs.release_notes }}
+
+      - name: Upload release asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          asset_path: ./packages/svelte-reveal/svelte-reveal-${{ needs.check-version.outputs.version }}.tgz
+          asset_name: svelte-reveal-${{ needs.check-version.outputs.version }}.tgz
+          asset_content_type: application/gzip
