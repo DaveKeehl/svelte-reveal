@@ -33,6 +33,12 @@ jobs:
         with:
           version: ${{ env.OLD_VERSION }}
 
+      - run: |
+          echo "${{ steps.version.outputs.release }}"
+          echo "${{ steps.version.outputs.inc-major }}"
+          echo "${{ steps.version.outputs.inc-premajor }}"
+          echo "${{ steps.version.outputs.inc-minor }}"
+
       - name: Check for new version
         if: ${{ env.NEW_VERSION == steps.version.outputs.inc-major || env.NEW_VERSION == steps.version.outputs.inc-minor || env.NEW_VERSION == steps.version.outputs.inc-patch }}
         uses: actions/github-script@v3
