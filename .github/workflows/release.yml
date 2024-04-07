@@ -18,12 +18,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-
       - name: Get current version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
@@ -35,11 +29,11 @@ jobs:
         uses: 'WyriHaximus/github-action-get-previous-tag@v1'
 
       - name: Check for new version
-        if: ${{ steps.package-version.outputs.current-version }} != ${{ steps.latest-version.outputs.tag }}
+        if: ${{ steps.package-version.outputs.current-version == steps.latest-version.outputs.tag }}
         uses: actions/github-script@v3
         with:
           script: |
-            core.setFailed('The last version and the current version are the same')
+            core.setFailed('The last version (${{ steps.package-version.outputs.current-version }}) and the current version (${{ steps.latest-version.outputs.tag }}) are the same')
 
   release:
     runs-on: ubuntu-latest
