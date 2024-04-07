@@ -32,7 +32,7 @@ jobs:
         uses: actions/github-script@v3
         with:
           script: |
-            core.setFailed('The last version and the current version are the same')
+            core.setFailed('The last version (${{ steps.package-version.outputs.current-version }}) and the current version (${{ steps.latest-version.outputs.tag }}) are the same')
 
   release:
     runs-on: ubuntu-latest
