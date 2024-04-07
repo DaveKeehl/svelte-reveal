@@ -4,7 +4,7 @@ on: [push]
 
 env:
   OLD_VERSION: 1.0.4
-  NEW_VERSION: 1.0.6
+  NEW_VERSION: 1.0.5
 
 jobs:
   check-version:
@@ -31,14 +31,10 @@ jobs:
         uses: madhead/semver-utils@latest
         id: version
         with:
-          version: ${{ env.NEW_VERSION }}
-          compare-to: ${{ env.OLD_VERSION }}
-
-      - run: |
-          echo "${{ steps.version.outputs.comparison-result }}"
+          version: ${{ env.OLD_VERSION }}
 
       - name: Check for new version
-        if: ${{ steps.version.outputs.comparison-result != '>' }}
+        if: ${{ env.NEW_VERSION == steps.version.outputs.inc-major || env.NEW_VERSION == steps.version.outputs.inc-minor || env.NEW_VERSION == steps.version.outputs.inc-patch }}
         uses: actions/github-script@v3
         with:
           script: |
