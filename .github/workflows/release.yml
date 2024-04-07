@@ -35,7 +35,11 @@ jobs:
         uses: 'WyriHaximus/github-action-get-previous-tag@v1'
 
       - name: Check for new version
-        run: ${{ toJSON(steps.package-version.outputs.current-version != steps.latest-version.outputs.tag) }}
+        if: ${{ steps.package-version.outputs.current-version }} != ${{ steps.latest-version.outputs.tag }}
+        uses: actions/github-script@v3
+        with:
+          script: |
+            core.setFailed('The last version and the current version are the same')
 
   release:
     runs-on: ubuntu-latest
