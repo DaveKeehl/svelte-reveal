@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Improved GitHub actions workflows ([#208](https://github.com/DaveKeehl/svelte-reveal/issues/208))
+- Improved bundled stylesheet ([#210](https://github.com/DaveKeehl/svelte-reveal/issues/210))
 
 ## [1.0.4] - 2024-04-05
 
