@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved GitHub actions workflows ([#208](https://github.com/DaveKeehl/svelte-reveal/issues/208))
 - Improved bundled stylesheet ([#210](https://github.com/DaveKeehl/svelte-reveal/issues/210))
 
+### Fixed
+
+- Elements targeted by Svelte Reveal inside a parent node no longer appear on the bottom ([#214](https://github.com/DaveKeehl/svelte-reveal/issues/214))
+
 ## [1.0.4] - 2024-04-05
 
 ### Fixed
