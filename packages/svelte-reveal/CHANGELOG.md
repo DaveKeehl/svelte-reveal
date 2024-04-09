@@ -9,13 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Improved GitHub actions workflows ([#208](https://github.com/DaveKeehl/svelte-reveal/issues/208))
-- Improved bundled stylesheet ([#210](https://github.com/DaveKeehl/svelte-reveal/issues/210))
-- Improve bug report template ([#216](https://github.com/DaveKeehl/svelte-reveal/issues/216))
+- Improved GitHub actions workflows ([#212](https://github.com/DaveKeehl/svelte-reveal/pull/212))
+- Improved bundled stylesheet ([#213](https://github.com/DaveKeehl/svelte-reveal/pull/213))
+- Improve bug report template ([#217](https://github.com/DaveKeehl/svelte-reveal/pull/217))
 
 ### Fixed
 
-- Elements targeted by Svelte Reveal inside a parent node no longer appear on the bottom ([#214](https://github.com/DaveKeehl/svelte-reveal/issues/214))
+- Elements targeted by Svelte Reveal inside a parent node no longer appear on the bottom ([#215](https://github.com/DaveKeehl/svelte-reveal/pull/215))
 
 ## [1.0.4] - 2024-04-05
 
