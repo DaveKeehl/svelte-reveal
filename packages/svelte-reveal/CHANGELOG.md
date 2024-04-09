@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Improved GitHub actions workflows ([#208](https://github.com/DaveKeehl/svelte-reveal/issues/208))
 - Improved bundled stylesheet ([#210](https://github.com/DaveKeehl/svelte-reveal/issues/210))
+- Improve bug report template ([#216](https://github.com/DaveKeehl/svelte-reveal/issues/216))
 
 ### Fixed
 
