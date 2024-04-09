@@ -7,6 +7,17 @@ body:
     attributes:
       value: |
         Thanks for taking the time to fill out this bug report!
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Type of Svelte app
+      options:
+        - Svelte Vite template
+        - SvelteKit
+        - Astro + Svelte
+        - Other (please describe later)
+    validations:
+      required: true
   - type: textarea
     id: bug-description
     attributes:
@@ -26,9 +37,9 @@ body:
     id: system-info
     attributes:
       label: System Info
-      description: Output of `npx envinfo --system --binaries --browsers --npmPackages "{svelte-reveal}"`
+      description: Output of `npx envinfo --system --binaries --browsers --npmPackages` in your repository.
       render: Shell
-      placeholder: System, Binaries, Browsers
+      placeholder: System, Binaries, Browsers, NPM Packages
     validations:
       required: true
   - type: dropdown
