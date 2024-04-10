@@ -66,7 +66,8 @@ export const revealNode = (
  */
 export const getNodeToReveal = (node: HTMLElement): HTMLElement => {
   const wrapper = document.createElement('div');
-  node.parentElement?.appendChild(wrapper);
+  const parentElement = node.parentElement;
+  parentElement?.insertBefore(wrapper, node);
   wrapper.appendChild(node);
   return wrapper;
 };
