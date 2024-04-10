@@ -1,0 +1,91 @@
+---
+title: Usage
+---
+
+import { Steps, Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+
+<Steps>
+
+1.  Install the library:
+
+    <Tabs>
+
+    <TabItem label="npm">
+
+    ```sh
+    npm i -D svelte-reveal
+    ```
+
+    </TabItem>
+
+    <TabItem label="pnpm">
+
+    ```sh
+    pnpm i -D svelte-reveal
+    ```
+
+    </TabItem>
+
+    <TabItem label="Yarn">
+
+    ```sh
+    yarn add -D svelte-reveal
+    ```
+
+    </TabItem>
+
+    <TabItem label="Bun">
+
+    ```sh
+    bun add -D svelte-reveal
+    ```
+
+    </TabItem>
+
+    </Tabs>
+
+2.  Import the library in your Svelte component:
+
+    ```svelte
+    <script>
+      // App.svelte
+      import { reveal } from 'svelte-reveal';
+    </script>
+    ```
+
+3.  Add the imported `reveal` action to the DOM element you want to transition:
+
+    ```svelte
+    // App.svelte
+    <h1 use:reveal>Hello world</h1>
+    <p use:reveal={{ transition: 'slide' }}>A paragraph</p>
+    ```
+
+    If you want to use the action on a Svelte component, you need to pass the reveal options via props:
+
+    ```svelte
+    <script>
+      // App.svelte
+      import Heading from './Heading.svelte';
+    </script>
+
+    <Heading useReveal={{ transition: 'slide' }}>Hello world</Heading>
+    ```
+
+    ```svelte
+    <script lang="ts">
+      // Heading.svelte
+      import { reveal, type RevealOptions } from 'svelte-reveal';
+      export let useReveal: RevealOptions;
+    </script>
+
+    <h1 use:reveal={useReveal}>
+      <slot />
+    </h1>
+    ```
+
+    <Aside type="caution" title="Watch out!">
+      Using [SvelteKit](https://kit.svelte.dev/)? Please refer to the ["SvelteKit"](#sveltekit) section.
+    </Aside>
+
+</Steps>
