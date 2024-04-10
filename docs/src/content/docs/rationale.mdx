@@ -1,0 +1,60 @@
+---
+title: Rationale
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+
+If you happened to scout the internet for other similar libraries, you might have noticed that other authors have decided to create their own library using Svelte [slots](https://svelte.dev/docs#template-syntax-slot) (similar to [React children](https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children)). There is nothing wrong with that approach, but in my opinion it goes a bit against one of Svelte's core purpose: writing more concise code. Having to wrap every to-be-transitioned component adds at least 2 extra lines of code each time, making your files unnecessarily bloated for such a simple add-on.
+
+You might have also noticed people adding event listeners to the window object in order to transition elements, but in terms of performance it [doesn't scale very well](https://itnext.io/1v1-scroll-listener-vs-intersection-observers-469a26ab9eb6).
+
+Instead, I decided to use Svelte [actions](https://svelte.dev/docs#template-syntax-element-directives-use-action), which are functions you can attach to a DOM element and that allow you to get access to that particular element and hook into its lifecycle. They take up considerably fewer lines of code, and so far I haven't encountered any big obstacle or performance drawback. Morever, this library is backed by the Intersection Observer API, which is great for performance.
+
+## SvelteKit
+
+<Aside type="caution" title="Last update: April 2024">
+  This is an active area of research. Please [submit a bug
+  report](https://github.com/DaveKeehl/svelte-reveal/issues/new) in case of issues.
+</Aside>
+
+Since Svelte actions were conceived to operate in a client-side environment, they don't always work 100% in SvelteKit and SSR (server-side rendering) out of the box. Svelte Reveal is no exception, as it needs DOM access, and in order not to incur in weird animation behaviors some small setup is required by the end-users. Out of the following two methods, pick the one that most suit your project requirements.
+
+### Without SSR
+
+If your page doesn't need to be server-side rendered then the fix is very trivial. Turn off `ssr` in your `+page.ts` file as follows.
+
+```typescript
+// page.ts
+export const ssr = false;
+```
+
+### With SSR
+
+If your page does need to leverage server-side rendering, the setup remains easy but it requires a few more steps.
+
+<Steps>
+
+1. Import the bundled stylesheet in your page or layout
+
+   ```svelte
+   <script lang="ts">
+    // layout.svelte
+     import "svelte-reveal/styles.css";
+     ...
+   </script>
+
+   ...
+   ```
+
+2. Add the `sr__hide` css class to every element targeted by Svelte Reveal with `use:reveal`. This will prevent the elements to flicker as soon as the page is hydrated and the DOM is accessible to the library.
+
+   ```svelte
+   <script lang="ts">
+     // page.svelte
+     import { reveal } from 'svelte-reveal';
+   </script>
+
+   <h1 use:reveal class="sr__hide">Hello world</h1>
+   ```
+
+</Steps>
