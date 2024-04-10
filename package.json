@@ -4,7 +4,7 @@
   "workspaces": [
     "examples/*",
     "packages/*",
-    "www"
+    "docs"
   ],
   "scripts": {
     "dev": "turbo run dev",
