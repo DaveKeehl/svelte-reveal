@@ -8,7 +8,17 @@ export default defineConfig({
       title: 'Svelte Reveal',
       social: {
         github: 'https://github.com/davekeehl/svelte-reveal'
-      }
+      },
+      sidebar: [
+        {
+          label: 'Get Started',
+          autogenerate: { directory: 'get-started' }
+        },
+        {
+          label: 'Reference',
+          autogenerate: { directory: 'reference' }
+        }
+      ]
     })
   ]
 });

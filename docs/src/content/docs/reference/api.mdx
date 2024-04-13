@@ -1,0 +1,28 @@
+---
+title: API
+sidebar:
+  order: 3
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+
+<Aside type="caution" title="Heads up!">
+  If you want to customise the behavior of a single DOM node, you are supposed to use [options](/reference/options).
+</Aside>
+
+Svelte Reveal also exposes several functions you can call to change the [default options](./src/internal/default/options.ts) and [global configuration](./src/internal/default/config.ts) of this library. Since these functions operate on a global level across all components using Svelte Reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the default options and global config from multiple points.
+
+| Name                    | Args                                           | Return                       | Description                                                   |
+| ----------------------- | ---------------------------------------------- | ---------------------------- | ------------------------------------------------------------- |
+| `setOnce`               | `(once: boolean)`                              | `RevealConfig`               | Sets the reveal animations activation status on page reload.  |
+| `setDeviceStatus`       | `(device: Device, status: boolean)`            | `RevealConfig`               | Sets the status of a device.                                  |
+| `setDevicesStatus`      | `(devices: Device[], status: boolean)`         | `RevealConfig`               | Sets the status of multiple devices.                          |
+| `setDeviceBreakpoint`   | `(device: Device, breakpoint: number)`         | `RevealConfig`               | Sets the breakpoint of a device.                              |
+| `setDevice`             | `(device: Device, settings: IDevice)`          | `RevealConfig`               | Sets the settings of a device.                                |
+| `setResponsive`         | `(responsive: Responsive)`                     | `RevealConfig`               | Updates how responsiveness is handled by the library.         |
+| `setObserverRoot`       | `(root: Element \| Document \| null)`          | `IntersectionObserverConfig` | Sets the Intersection Observer `root` element.                |
+| `setObserverRootMargin` | `(rootMargin: string)`                         | `IntersectionObserverConfig` | Sets the Intersection Observer `rootMargin` property.         |
+| `setObserverThreshold`  | `(threshold: number)`                          | `IntersectionObserverConfig` | Sets the Intersection Observer `threshold` property.          |
+| `setObserverConfig`     | `(observerConfig: IntersectionObserverConfig)` | `IntersectionObserverConfig` | Sets the Intersection Observer configuration.                 |
+| `setConfig`             | `(userConfig: RevealConfig)`                   | `RevealConfig`               | Updates the library global configuration.                     |
+| `setDefaultOptions`     | `(options: RevealOptions)`                     | `RevealOptions`              | Updates the default options to be used for the reveal effect. |
