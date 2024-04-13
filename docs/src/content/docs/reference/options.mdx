@@ -10,9 +10,11 @@ import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 Depending on the use case, you can either use this library as-is (which applies some [default options](./src/internal/default/options.ts)), or customize it to your liking. If you choose to do so, you can pass an object to this action containing your own options to be applied.
 
-Keep in mind that these options are applied to the single DOM element you add Svelte Reveal to. For global and more in-depth settings, refer to the [API](#api) section.
+Keep in mind that these options are applied to the single DOM element you add Svelte Reveal to. For global and more in-depth settings, refer to the [API](/reference/api) section.
 
-## Options fields
+## Fields
+
+TODO
 
 ### `disable`
 
@@ -47,21 +49,7 @@ The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObs
 **type**: `"fade" | "slide" | "fly" | "spin" | "blur" | "scale"`<br/>
 **default**: `"fade"`
 
-<Aside type="caution">All presets have the `"fade"` preset backed in</Aside>
-
 The transition preset that should be applied. Check out the ["presets"](#presets) subsection for more info.
-
-#### `fade`
-
-The element fades in gracefully.
-
-Mapped options:
-
-```typescript
-{
-  opacity: 0;
-}
-```
 
 ### `reset`
 
@@ -144,7 +132,7 @@ The starting scale value in percentage. `1` corresponds to `100%`.
 
 Presets are sets of options with predefined values, packaged under a name to achieve a certain transition effect. The following table shows the presets that come bundled with Svelte Reveal and which options they map to.
 
-#### `"fade"`
+#### `fade`
 
 The element fades in gracefully.
 
@@ -175,7 +163,7 @@ opacity: 1;
 </TabItem>
 </Tabs>
 
-#### `"fly"`
+#### `fly`
 
 The element fades in and moves along a translation on the y-axis.
 
@@ -209,7 +197,7 @@ transform: translateY(0px)
 </TabItem>
 </Tabs>
 
-#### `"slide"`
+#### `slide`
 
 The element fades in and performs a translation on the x-axis.
 
@@ -243,7 +231,7 @@ transform: translateX(0px)
 </TabItem>
 </Tabs>
 
-#### `"blur"`
+#### `blur`
 
 The element fades in and becomes unblurred.
 
@@ -277,7 +265,7 @@ filter: blur(0px)
 </TabItem>
 </Tabs>
 
-#### `"scale"`
+#### `scale`
 
 The element fades in and gets to the original size.
 
@@ -311,7 +299,7 @@ transform: scale(1);
 </TabItem>
 </Tabs>
 
-#### `"spin"`
+#### `spin`
 
 <Aside type="caution" title="Be careful">
   In order to use this transition it is required to use the `width` CSS property on the element to reveal. If you are
