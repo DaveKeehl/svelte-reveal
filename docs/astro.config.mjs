@@ -9,6 +9,9 @@ export default defineConfig({
       social: {
         github: 'https://github.com/davekeehl/svelte-reveal'
       },
+      editLink: {
+        baseUrl: 'https://github.com/davekeehl/svelte-reveal/edit/main/docs/'
+      },
       sidebar: [
         {
           label: 'Start Here',
