@@ -1,24 +1,106 @@
 ---
 title: Global Config
+tableOfContents:
+  maxHeadingLevel: 5
 sidebar:
   order: 2
 ---
 
 The following table shows how this library is globally configured right of out the box.
 
-| Parameter    | (children) | (children)   | Type           | Default | Description                                                                                                           |
-| ------------ | ---------- | ------------ | -------------- | ------- | --------------------------------------------------------------------------------------------------------------------- |
-| `once`       |            |              | `boolean`      | `false` | Whether the reveal effect runs only once (i.e. it doesn't re-run on page reload).                                     |
-| `responsive` |            |              | `Responsive`   |         | Specifies how the library handles responsiveness. It can be used to enable/disable the reveal effect on some devices. |
-|              | `mobile`   |              | `DeviceConfig` |         | Configuration of mobile devices.                                                                                      |
-|              |            | `enabled`    | `boolean`      | `true`  | Whether the reveal effect is performed on mobile devices.                                                             |
-|              |            | `breakpoint` | `number`       | `425`   | The max viewport width of mobile devices.                                                                             |
-|              | `tablet`   |              | `DeviceConfig` |         | Configuration of tablet devices.                                                                                      |
-|              |            | `enabled`    | `boolean`      | `true`  | Whether the reveal effect is performed on tablet devices.                                                             |
-|              |            | `breakpoint` | `number`       | `768`   | The max viewport width of tablet devices.                                                                             |
-|              | `laptop`   |              | `DeviceConfig` |         | Configuration of laptop devices.                                                                                      |
-|              |            | `enabled`    | `boolean`      | `true`  | Whether the reveal effect is performed on laptop devices.                                                             |
-|              |            | `breakpoint` | `number`       | `1440`  | The max viewport width of laptop devices.                                                                             |
-|              | `desktop`  |              | `DeviceConfig` |         | Configuration of desktop devices.                                                                                     |
-|              |            | `enabled`    | `boolean`      | `true`  | Whether the reveal effect is performed on desktop devices.                                                            |
-|              |            | `breakpoint` | `number`       | `2560`  | The max viewport width of desktop devices.                                                                            |
+## List
+
+TODO
+
+### `once`
+
+**type**: `boolean`<br/>
+**default**: `false`
+
+Whether the reveal effect runs only once (i.e. it doesn't re-run on page reload).
+
+### `responsive`
+
+**type**: `Responsive`<br/>
+
+Specifies how the library handles responsiveness. It can be used to enable/disable the reveal effect on some devices.
+
+#### `mobile`
+
+**type**: `DeviceConfig`
+
+Configuration of mobile devices.
+
+##### `enabled`
+
+**type**: `boolean`<br/>
+**default**: `true`
+
+Whether the reveal effect is performed on mobile devices.
+
+##### `breakpoint`
+
+**type**: `number`<br/>
+**default**: `425`
+
+The max viewport width of mobile devices.
+
+#### `tablet`
+
+**type**: `DeviceConfig`
+
+Configuration of tablet devices.
+
+##### `enabled`
+
+**type**: `boolean`<br/>
+**default**: `true`
+
+Whether the reveal effect is performed on tablet devices.
+
+##### `breakpoint`
+
+**type**: `number`<br/>
+**default**: `768`
+
+The max viewport width of tablet devices.
+
+#### `laptop`
+
+**type**: `DeviceConfig`
+
+Configuration of laptop devices.
+
+##### `enabled`
+
+**type**: `boolean`<br/>
+**default**: `true`
+
+Whether the reveal effect is performed on laptop devices.
+
+##### `breakpoint`
+
+**type**: `number`<br/>
+**default**: `1440`
+
+The max viewport width of laptop devices.
+
+#### `desktop`
+
+**type**: `DeviceConfig`
+
+Configuration of desktop devices.
+
+##### `enabled`
+
+**type**: `boolean`<br/>
+**default**: `true`
+
+Whether the reveal effect is performed on desktop devices.
+
+##### `breakpoint`
+
+**type**: `number`<br/>
+**default**: `2560`
+
+The max viewport width of desktop devices.
