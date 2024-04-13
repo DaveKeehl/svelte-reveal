@@ -338,16 +338,44 @@ transform: rotate(0);
 </TabItem>
 </Tabs>
 
-### Callbacks
+### `onRevealStart`
 
-The following table shows all the callback functions we provide to you.
+**signature**: `(node: HTMLElement) => void`
 
-| Name            | Args                  | Return | Description                                                                                                |
-| --------------- | --------------------- | ------ | ---------------------------------------------------------------------------------------------------------- |
-| `onRevealStart` | `(node: HTMLElement)` | `void` | Function that gets fired when the node starts being revealed.                                              |
-| `onRevealEnd`   | `(node: HTMLElement)` | `void` | Function that gets fired when the node is fully revealed.                                                  |
-| `onResetStart`  | `(node: HTMLElement)` | `void` | Function that gets fired when the` reset` option is set to `true` and the node starts transitioning out.   |
-| `onResetEnd`    | `(node: HTMLElement)` | `void` | Function that gets fired when the `reset` option is set to `true` and the node has fully transitioned out. |
-| `onMount`       | `(node: HTMLElement)` | `void` | Function that gets fired when the node is mounted on the DOM.                                              |
-| `onUpdate`      | `(node: HTMLElement)` | `void` | Function that gets fired when the action options are updated.                                              |
-| `onDestroy`     | `(node: HTMLElement)` | `void` | Function that gets fired when the node is unmounted from the DOM.                                          |
+Function that gets fired when the node starts being revealed.
+
+### `onRevealEnd`
+
+**signature**: `(node: HTMLElement) => void`
+
+Function that gets fired when the node is fully revealed.
+
+### `onResetStart`
+
+**signature**: `(node: HTMLElement) => void`
+
+Function that gets fired when the` reset` option is set to `true` and the node starts transitioning out.
+
+### `onResetEnd`
+
+**signature**: `(node: HTMLElement) => void`
+
+Function that gets fired when the `reset` option is set to `true` and the node has fully transitioned out.
+
+### `onMount`
+
+**signature**: `(node: HTMLElement) => void`
+
+Function that gets fired when the node is mounted on the DOM.
+
+### `onUpdate`
+
+**signature**: `(node: HTMLElement) => void`
+
+Function that gets fired when the action options are updated.
+
+### `onDestroy`
+
+**signature**: `(node: HTMLElement) => void`
+
+Function that gets fired when the node is unmounted from the DOM.
