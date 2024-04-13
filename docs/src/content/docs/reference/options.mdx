@@ -68,7 +68,7 @@ Corresponding options:
 **type**: `boolean`<br/>
 **default**: `false`
 
-<Aside type="caution" title="Be careful!">
+<Aside type="caution" title="Be careful">
   Overusing this option prevents the Intersection Observer to stop observing the target node. Performance is therefore
   not guaranteed when many elements have `reset` set to `true`.
 </Aside>
@@ -148,60 +148,207 @@ Presets are sets of options with predefined values, packaged under a name to ach
 
 The element fades in gracefully.
 
+##### Mapped options
+
+```typescript
+{
+  opacity: 0;
+}
+```
+
+##### Mapped CSS
+
 <Tabs>
-  <TabItem label="Start">
-    ```typescript
-    {
-      opacity: 0;
-    }
-    ```
-  </TabItem>
-  <TabItem label="End">
-    ```typescript
-    {
-      opacity: 1;
-    }
-    ```
-  </TabItem>
+<TabItem label="Start">
+
+```css
+opacity: 0;
+```
+
+</TabItem>
+<TabItem label="End">
+  
+```css 
+opacity: 1;
+```
+
+</TabItem>
 </Tabs>
 
 #### `"fly"`
 
 The element fades in and moves along a translation on the y-axis.
 
+##### Corresponding options
+
+```typescript
+{
+  opacity: 0;
+  y: -20;
+}
+```
+
+##### Mapped CSS
+
 <Tabs>
-  <TabItem label="Start">
-    ```css
-    {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    ```
-  </TabItem>
-  <TabItem label="End">
-    ```css
-    {
-      opacity: 1;
-      transform: translateY(0px);
-    }
-    ```
-  </TabItem>
+<TabItem label="Start">
+
+```css
+opacity: 0;
+transform: translateY(-20px);
+```
+
+</TabItem>
+<TabItem label="End">
+  
+```css
+opacity: 1;  
+transform: translateY(0px)
+```
+
+</TabItem>
 </Tabs>
 
-#### fly
+#### `"slide"`
 
-| Options                  | Description                                                                                                                               |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `{ opacity: 0, y: -20 }` | The element fades in and moves along a translation on the y-axis. In practice: `opacity: 0 -> 1` + `transform: translateY(-20px -> 0px) ` |
+The element fades in and performs a translation on the x-axis.
 
-| Name      | Options                       | Description                                                                                                                                                                                                                                                                                                                                                         |
-| --------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `"fade"`  | `{ opacity: 0 }`              | The element fades in gracefully.<br />In practice: `opacity: 0 -> 1`                                                                                                                                                                                                                                                                                                |
-| `"fly"`   | `{opacity: 0, y: -20 }`       | The element fades in and moves along a translation on the y-axis.<br />In practice: `opacity: 0 -> 1` + `transform: translateY(-20px -> 0px) `                                                                                                                                                                                                                      |
-| `"slide"` | `{ opacity: 0, x: -20 }`      | The element fades in and performs a translation on the x-axis.<br />In practice: `opacity: 0 -> 1` + `transform: translateX(-20px -> 0px)`                                                                                                                                                                                                                          |
-| `"blur"`  | `{ opacity: 0, blur: 2 }`     | The element fades in and becomes unblurred.<br />In practice: `opacity: 0 -> 1` + `filter: blur(2px -> 0px)`                                                                                                                                                                                                                                                        |
-| `"scale"` | `{ opacity: 0, scale: 0.8 }`  | The element fades in and gets to the original size.<br />In practice: `opacity: 0 -> 1` + `transform: scale(0.8 -> 1)`<br /><br />⚠️ In order to use this transition it is required to use the `width` CSS property on the element to reveal. If you are not already using this property for other things, you can set it to `width: fit-content` .                 |
-| `"spin"`  | `{ opacity: 0, rotate: -10 }` | The element fades in and gets to the original rotation degree.<br />In practice: `opacity: 0 -> 1` + `transform: rotate(-10 -> 0)`<br /><br />⚠️ In order to use this transition it is required to use the `width` CSS property on the element to reveal. If you are not already using this property for other things, you can use set it to `width: fit-content` . |
+##### Mapped options
+
+```typescript
+{
+  opacity: 0;
+  x: -20;
+}
+```
+
+##### Mapped CSS
+
+<Tabs>
+<TabItem label="Start">
+
+```css
+opacity: 0;
+transform: translateX(-20px);
+```
+
+</TabItem>
+<TabItem label="End">
+  
+```css
+opacity: 1;  
+transform: translateX(0px)
+```
+
+</TabItem>
+</Tabs>
+
+#### `"blur"`
+
+The element fades in and becomes unblurred.
+
+##### Mapped options
+
+```typescript
+{
+  opacity: 0;
+  blur: 2;
+}
+```
+
+##### Mapped CSS
+
+<Tabs>
+<TabItem label="Start">
+
+```css
+opacity: 0;
+filter: blur(2px);
+```
+
+</TabItem>
+<TabItem label="End">
+  
+```css
+opacity: 1;  
+filter: blur(0px)
+```
+
+</TabItem>
+</Tabs>
+
+#### `"scale"`
+
+The element fades in and gets to the original size.
+
+##### Mapped options
+
+```typescript
+{
+  opacity: 0;
+  scale: 0.8;
+}
+```
+
+##### Mapped CSS
+
+<Tabs>
+<TabItem label="Start">
+
+```css
+opacity: 0;
+transform: scale(0.8);
+```
+
+</TabItem>
+<TabItem label="End">
+  
+```css
+opacity: 1;  
+transform: scale(1);
+```
+
+</TabItem>
+</Tabs>
+
+#### `"spin"`
+
+<Aside type="caution" title="Be careful">
+  In order to use this transition it is required to use the `width` CSS property on the element to reveal. If you are
+  not already using this property for other things, you can use set it to `width: fit-content`.
+</Aside>
+
+The element fades in and gets to the original rotation degree.
+
+##### Mapped options
+
+```typescript
+{
+  opacity: 0;
+  rotate: -10;
+}
+```
+
+##### Mapped CSS
+
+<Tabs>
+<TabItem label="Start">
+
+```css
+opacity: 0;
+transform: rotate(-10);
+```
+
+</TabItem>
+<TabItem label="End">
+  
+```css
+opacity: 1;  
+transform: rotate(0);
+```
+
+</TabItem>
+</Tabs>
 
 ### Callbacks
 
