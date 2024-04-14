@@ -1,7 +1,7 @@
 ---
 title: Options
 tableOfContents:
-  maxHeadingLevel: 4
+  maxHeadingLevel: 3
 sidebar:
   order: 1
 ---
@@ -46,10 +46,10 @@ The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObs
 
 ### `preset`
 
-**type**: `"fade" | "slide" | "fly" | "spin" | "blur" | "scale"`<br/>
+**type:** <code>["fade"](#fade) | ["slide"](#slide) | ["fly"](#fly) | ["spin"](#spin) | ["blur"](#blur) | ["scale"](#scale)</code><br/>
 **default**: `"fade"`
 
-The transition preset that should be applied. Check out the ["presets"](#presets) subsection for more info.
+The transition preset that should be applied. Check out [presets](#presets) for more info.
 
 ### `reset`
 
@@ -79,10 +79,10 @@ How long the transition is delayed (in ms) before being triggered.
 
 ### `easing`
 
-**type**: `Easing`<br/>
+**type**: [`Easing`](https://github.com/DaveKeehl/svelte-reveal/blob/main/packages/svelte-reveal/src/internal/types/easing.ts)<br/>
 **default**: `"easeInOutCubic"`
 
-The easing function to use. [Check out](./src/internal/types/easing.ts) the full list of available easing functions and [this other website](https://cubic-bezier.com/) to preview timing functions.
+The easing function to use. Check out the full list of available [easing functions](https://github.com/DaveKeehl/svelte-reveal/blob/main/packages/svelte-reveal/src/internal/default/easing.ts) and [this other website](https://cubic-bezier.com/) to preview timing functions.
 
 ### `x`
 
@@ -126,218 +126,6 @@ The starting blur value in pixels.
 
 The starting scale value in percentage. `1` corresponds to `100%`.
 
-### Presets
-
-<Aside type="caution">All presets have the `"fade"` preset backed in</Aside>
-
-Presets are sets of options with predefined values, packaged under a name to achieve a certain transition effect. The following table shows the presets that come bundled with Svelte Reveal and which options they map to.
-
-#### `fade`
-
-The element fades in gracefully.
-
-##### Mapped options
-
-```typescript
-{
-  opacity: 0;
-}
-```
-
-##### Mapped CSS
-
-<Tabs>
-<TabItem label="Start">
-
-```css
-opacity: 0;
-```
-
-</TabItem>
-<TabItem label="End">
-  
-```css 
-opacity: 1;
-```
-
-</TabItem>
-</Tabs>
-
-#### `fly`
-
-The element fades in and moves along a translation on the y-axis.
-
-##### Mapped options
-
-```typescript
-{
-  opacity: 0;
-  y: -20;
-}
-```
-
-##### Mapped CSS
-
-<Tabs>
-<TabItem label="Start">
-
-```css
-opacity: 0;
-transform: translateY(-20px);
-```
-
-</TabItem>
-<TabItem label="End">
-  
-```css
-opacity: 1;  
-transform: translateY(0px)
-```
-
-</TabItem>
-</Tabs>
-
-#### `slide`
-
-The element fades in and performs a translation on the x-axis.
-
-##### Mapped options
-
-```typescript
-{
-  opacity: 0;
-  x: -20;
-}
-```
-
-##### Mapped CSS
-
-<Tabs>
-<TabItem label="Start">
-
-```css
-opacity: 0;
-transform: translateX(-20px);
-```
-
-</TabItem>
-<TabItem label="End">
-  
-```css
-opacity: 1;  
-transform: translateX(0px)
-```
-
-</TabItem>
-</Tabs>
-
-#### `blur`
-
-The element fades in and becomes unblurred.
-
-##### Mapped options
-
-```typescript
-{
-  opacity: 0;
-  blur: 2;
-}
-```
-
-##### Mapped CSS
-
-<Tabs>
-<TabItem label="Start">
-
-```css
-opacity: 0;
-filter: blur(2px);
-```
-
-</TabItem>
-<TabItem label="End">
-  
-```css
-opacity: 1;  
-filter: blur(0px)
-```
-
-</TabItem>
-</Tabs>
-
-#### `scale`
-
-The element fades in and gets to the original size.
-
-##### Mapped options
-
-```typescript
-{
-  opacity: 0;
-  scale: 0.8;
-}
-```
-
-##### Mapped CSS
-
-<Tabs>
-<TabItem label="Start">
-
-```css
-opacity: 0;
-transform: scale(0.8);
-```
-
-</TabItem>
-<TabItem label="End">
-  
-```css
-opacity: 1;  
-transform: scale(1);
-```
-
-</TabItem>
-</Tabs>
-
-#### `spin`
-
-<Aside type="caution" title="Be careful">
-  In order to use this transition it is required to use the `width` CSS property on the element to reveal. If you are
-  not already using this property for other things, you can use set it to `width: fit-content`.
-</Aside>
-
-The element fades in and gets to the original rotation degree.
-
-##### Mapped options
-
-```typescript
-{
-  opacity: 0;
-  rotate: -10;
-}
-```
-
-##### Mapped CSS
-
-<Tabs>
-<TabItem label="Start">
-
-```css
-opacity: 0;
-transform: rotate(-10);
-```
-
-</TabItem>
-<TabItem label="End">
-  
-```css
-opacity: 1;  
-transform: rotate(0);
-```
-
-</TabItem>
-</Tabs>
-
 ### `onRevealStart`
 
 **signature**: `(node: HTMLElement) => void`
@@ -379,3 +167,215 @@ Function that gets fired when the action options are updated.
 **signature**: `(node: HTMLElement) => void`
 
 Function that gets fired when the node is unmounted from the DOM.
+
+## Presets
+
+<Aside type="caution">All presets have the `"fade"` preset backed in</Aside>
+
+Presets are sets of options with predefined values, packaged under a name to achieve a certain transition effect. The following table shows the presets that come bundled with Svelte Reveal and which options they map to.
+
+### `fade`
+
+The element fades in gracefully.
+
+#### Mapped options
+
+```typescript
+{
+  opacity: 0;
+}
+```
+
+#### Resulting CSS
+
+<Tabs>
+<TabItem label="Start">
+
+```css
+opacity: 0;
+```
+
+</TabItem>
+<TabItem label="End">
+  
+```css 
+opacity: 1;
+```
+
+</TabItem>
+</Tabs>
+
+### `fly`
+
+The element fades in and moves along a translation on the y-axis.
+
+#### Mapped options
+
+```typescript
+{
+  opacity: 0;
+  y: -20;
+}
+```
+
+#### Resulting CSS
+
+<Tabs>
+<TabItem label="Start">
+
+```css
+opacity: 0;
+transform: translateY(-20px);
+```
+
+</TabItem>
+<TabItem label="End">
+  
+```css
+opacity: 1;  
+transform: translateY(0px)
+```
+
+</TabItem>
+</Tabs>
+
+### `slide`
+
+The element fades in and performs a translation on the x-axis.
+
+#### Mapped options
+
+```typescript
+{
+  opacity: 0;
+  x: -20;
+}
+```
+
+#### Resulting CSS
+
+<Tabs>
+<TabItem label="Start">
+
+```css
+opacity: 0;
+transform: translateX(-20px);
+```
+
+</TabItem>
+<TabItem label="End">
+  
+```css
+opacity: 1;  
+transform: translateX(0px)
+```
+
+</TabItem>
+</Tabs>
+
+### `blur`
+
+The element fades in and becomes unblurred.
+
+#### Mapped options
+
+```typescript
+{
+  opacity: 0;
+  blur: 2;
+}
+```
+
+#### Resulting CSS
+
+<Tabs>
+<TabItem label="Start">
+
+```css
+opacity: 0;
+filter: blur(2px);
+```
+
+</TabItem>
+<TabItem label="End">
+  
+```css
+opacity: 1;  
+filter: blur(0px)
+```
+
+</TabItem>
+</Tabs>
+
+### `scale`
+
+The element fades in and gets to the original size.
+
+#### Mapped options
+
+```typescript
+{
+  opacity: 0;
+  scale: 0.8;
+}
+```
+
+#### Resulting CSS
+
+<Tabs>
+<TabItem label="Start">
+
+```css
+opacity: 0;
+transform: scale(0.8);
+```
+
+</TabItem>
+<TabItem label="End">
+  
+```css
+opacity: 1;  
+transform: scale(1);
+```
+
+</TabItem>
+</Tabs>
+
+### `spin`
+
+<Aside type="caution" title="Be careful">
+  In order to use this transition it is required to use the `width` CSS property on the element to reveal. If you are
+  not already using this property for other things, you can use set it to `width: fit-content`.
+</Aside>
+
+The element fades in and gets to the original rotation degree.
+
+#### Mapped options
+
+```typescript
+{
+  opacity: 0;
+  rotate: -10;
+}
+```
+
+#### Resulting CSS
+
+<Tabs>
+<TabItem label="Start">
+
+```css
+opacity: 0;
+transform: rotate(-10);
+```
+
+</TabItem>
+<TabItem label="End">
+  
+```css
+opacity: 1;  
+transform: rotate(0);
+```
+
+</TabItem>
+</Tabs>
