@@ -10,13 +10,9 @@ import { Steps, Aside } from '@astrojs/starlight/components';
   If you want to customise the behavior of a single DOM node, you are supposed to use [options](/reference/options).
 </Aside>
 
-Svelte Reveal also exposes several functions you can call to change the [default options](./src/internal/default/options.ts) and [global configuration](./src/internal/default/config.ts) of this library. Since these functions operate on a global level across all components using Svelte Reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the default options and global config from multiple points.
+Svelte Reveal also exposes several functions you can call to change the [default options](https://github.com/DaveKeehl/svelte-reveal/blob/main/packages/svelte-reveal/src/internal/default/options.ts) and [global configuration](https://github.com/DaveKeehl/svelte-reveal/blob/main/packages/svelte-reveal/src/internal/default/config.ts) of this library. Since these functions operate on a global level across all components using Svelte Reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the default options and global config from multiple points.
 
-## Functions
-
-TODO
-
-### `setOnce`
+## `setOnce`
 
 **signature**: `(once: boolean) => RevealConfig`
 
@@ -32,7 +28,7 @@ Sets the reveal animations activation status on page reload.
 <h1 use:reveal>Hello world</h1>
 ```
 
-### `setDeviceStatus`
+## `setDeviceStatus`
 
 **signature**: `(device: Device, status: boolean) => RevealConfig`
 
@@ -48,7 +44,7 @@ Sets the status of a device.
 <h1 use:reveal>Hello world</h1>
 ```
 
-### `setDevicesStatus`
+## `setDevicesStatus`
 
 **signature**: `(devices: Device[], status: boolean) => RevealConfig`
 
@@ -64,7 +60,7 @@ Sets the status of multiple devices.
 <h1 use:reveal>Hello world</h1>
 ```
 
-### `setDeviceBreakpoint`
+## `setDeviceBreakpoint`
 
 **signature**: `(device: Device, breakpoint: number) => RevealConfig`
 
@@ -80,7 +76,7 @@ Sets the breakpoint of a device.
 <h1 use:reveal>Hello world</h1>
 ```
 
-### `setDevice`
+## `setDevice`
 
 **signature**: `(device: Device, settings: DeviceConfig) => RevealConfig`
 
@@ -99,7 +95,7 @@ Sets the settings of a device.
 <h1 use:reveal>Hello world</h1>
 ```
 
-### `setResponsive`
+## `setResponsive`
 
 **signature**: `(responsive: Responsive) => RevealConfig`
 
@@ -132,7 +128,7 @@ Updates how responsiveness is handled by the library.
 <h1 use:reveal>Hello world</h1>
 ```
 
-### `setObserverRoot`
+## `setObserverRoot`
 
 **signature**: `(root: Element | Document | null) => IntersectionObserverConfig`
 
@@ -148,7 +144,7 @@ Sets the Intersection Observer `root` element.
 <h1 use:reveal>Hello world</h1>
 ```
 
-### `setObserverRootMargin`
+## `setObserverRootMargin`
 
 **signature**: `(rootMargin: string) => IntersectionObserverConfig`
 
@@ -164,7 +160,7 @@ Sets the Intersection Observer `rootMargin` property.
 <h1 use:reveal>Hello world</h1>
 ```
 
-### `setObserverThreshold`
+## `setObserverThreshold`
 
 **signature**: `(threshold: number) => IntersectionObserverConfig`
 
@@ -180,7 +176,7 @@ Sets the Intersection Observer `threshold` property.
 <h1 use:reveal>Hello world</h1>
 ```
 
-### `setObserverConfig`
+## `setObserverConfig`
 
 **signature**: `(observerConfig: IntersectionObserverConfig) => IntersectionObserverConfig`
 
@@ -200,7 +196,7 @@ Sets the Intersection Observer configuration.
 <h1 use:reveal>Hello world</h1>
 ```
 
-### `setConfig`
+## `setConfig`
 
 **signature**: `(userConfig: RevealConfig) => RevealConfig`
 
@@ -236,7 +232,7 @@ Updates the library global configuration.
 <h1 use:reveal>Hello world</h1>
 ```
 
-### `setDefaultOptions`
+## `setDefaultOptions`
 
 **signature**: `(options: RevealOptions) => RevealOptions`
 

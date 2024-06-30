@@ -1,107 +1,103 @@
 ---
 title: Global Config
 tableOfContents:
-  maxHeadingLevel: 4
+  maxHeadingLevel: 5
 sidebar:
   order: 2
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-The following table shows how this library is globally configured right of out the box.
+Some options only make sense at a global level, rather than at a single reveal instance, such as responsiveness handling. Here, you can learn about global configuration options and how to leverage them to fine-tune the reveal experience to your liking.
 
-## Fields
+## `once`
 
-TODO
-
-### `once`
+**type**: `boolean`<br/>
+**default**: `false`<br/>
+**API**: [`setOnce`](/reference/api#setonce)
 
 Whether the reveal effect runs only once (i.e. it doesn't re-run on page reload).
 
-| Type      | Default | API                                 |
-| --------- | ------- | ----------------------------------- |
-| `boolean` | `false` | [`setOnce`](/reference/api#setonce) |
+## `responsive`
 
-### `responsive`
-
-**type**: `Responsive`<br/>
+**type**: [`Responsive`](https://github.com/DaveKeehl/svelte-reveal/blob/main/packages/svelte-reveal/src/internal/types/devices.ts#L28)<br/>
 
 Specifies how the library handles responsiveness. It can be used to enable/disable the reveal effect on some devices.
 
-#### `mobile`
+### `mobile`
 
-**type**: `DeviceConfig`
+**type**: [`DeviceConfig`](https://github.com/DaveKeehl/svelte-reveal/blob/main/packages/svelte-reveal/src/internal/types/devices.ts#L9)
 
 Configuration of mobile devices.
 
-##### `enabled`
+#### `enabled`
 
 **type**: `boolean`<br/>
 **default**: `true`
 
 Whether the reveal effect is performed on mobile devices.
 
-##### `breakpoint`
+#### `breakpoint`
 
 **type**: `number`<br/>
 **default**: `425`
 
 The max viewport width of mobile devices.
 
-#### `tablet`
+### `tablet`
 
-**type**: `DeviceConfig`
+**type**: [`DeviceConfig`](https://github.com/DaveKeehl/svelte-reveal/blob/main/packages/svelte-reveal/src/internal/types/devices.ts#L9)
 
 Configuration of tablet devices.
 
-##### `enabled`
+#### `enabled`
 
 **type**: `boolean`<br/>
 **default**: `true`
 
 Whether the reveal effect is performed on tablet devices.
 
-##### `breakpoint`
+#### `breakpoint`
 
 **type**: `number`<br/>
 **default**: `768`
 
 The max viewport width of tablet devices.
 
-#### `laptop`
+### `laptop`
 
-**type**: `DeviceConfig`
+**type**: [`DeviceConfig`](https://github.com/DaveKeehl/svelte-reveal/blob/main/packages/svelte-reveal/src/internal/types/devices.ts#L9)
 
 Configuration of laptop devices.
 
-##### `enabled`
+#### `enabled`
 
 **type**: `boolean`<br/>
 **default**: `true`
 
 Whether the reveal effect is performed on laptop devices.
 
-##### `breakpoint`
+#### `breakpoint`
 
 **type**: `number`<br/>
 **default**: `1440`
 
 The max viewport width of laptop devices.
 
-#### `desktop`
+### `desktop`
 
-**type**: `DeviceConfig`
+**type**: [`DeviceConfig`](https://github.com/DaveKeehl/svelte-reveal/blob/main/packages/svelte-reveal/src/internal/types/devices.ts#L9)
 
 Configuration of desktop devices.
 
-##### `enabled`
+#### `enabled`
 
 **type**: `boolean`<br/>
 **default**: `true`
 
 Whether the reveal effect is performed on desktop devices.
 
-##### `breakpoint`
+#### `breakpoint`
 
 **type**: `number`<br/>
 **default**: `2560`
