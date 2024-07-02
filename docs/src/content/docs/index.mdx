@@ -1,0 +1,41 @@
+---
+title: Simple scroll based animations for Svelte
+description: Svelte Reveal is your go-to library for adding simple scroll based animations to your Svelte apps.
+template: splash
+hero:
+  tagline: Svelte Reveal is your go-to library for adding simple scroll based animations to your Svelte apps.
+  image:
+    dark: ../../assets/hero_img_dark.svg
+    light: ../../assets/hero_img_light.svg
+  actions:
+    - text: Get started
+      link: /start-here/getting-started/
+      icon: right-arrow
+      variant: primary
+    - text: View on GitHub
+      link: https://github.com/davekeehl/svelte-reveal
+      icon: external
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid>
+  <Card title="Near zero config" icon="rocket">
+    Get started really fast with just a few lines of code.
+  </Card>
+  <Card title="Highly customizable" icon="puzzle">
+    Creating custom transitions with Svelte Reveal is a <em>breeze</em>.
+  </Card>
+  <Card title="100% TypeScript" icon="seti:typescript">
+    Built from the ground up for maximum type safety.
+  </Card>
+  <Card title="Exhaustive documentation" icon="open-book">
+    We spent a lot of time documenting every bit possible.
+  </Card>
+  <Card title="Intersection Observer" icon="seti:svg">
+    Built-in support for the Intersection Observer API.
+  </Card>
+  <Card title="Extensive API" icon="seti:json">
+    Need full control? We got you covered.
+  </Card>
+</CardGrid>

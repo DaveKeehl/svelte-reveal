@@ -1,0 +1,561 @@
+---
+title: Options
+tableOfContents:
+  maxHeadingLevel: 3
+sidebar:
+  order: 1
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+
+Depending on the use case, you can either use this library as-is (which applies some [default options](./src/internal/default/options.ts)), or customize it to your liking. If you choose to do so, you can pass an object to this action containing your own options to be applied.
+
+Keep in mind that these options are applied to the single DOM element you add Svelte Reveal to. For global and more in-depth settings, refer to the [API](/reference/api) section.
+
+## Fields
+
+Fields are simple flags and values you can set on a specific element to change its Svelte Reveal behavior. Here you can find the list of all available fields.
+
+### `disable`
+
+**type**: `boolean` <br/>
+**default**: `false`
+
+When set to false, the transition is disabled for the target element.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ disable: false }}>Hello world</h1>
+```
+
+### `root`
+
+**type**: `Element | Document | null` <br/>
+**default**: `null`
+
+The [root](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root) element used by the Intersection Observer.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ root: null }}>Hello world</h1>
+```
+
+### `rootMargin`
+
+**type**: `string`<br/>
+**default**: `"0px 0px 0px 0px"`
+
+The [root margin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin) property of the Intersection Observer.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ rootMargin: '0px 0px 0px 0px' }}>Hello world</h1>
+```
+
+### `threshold`
+
+**type**: `number`<br/>
+**default**: `0.6`
+
+The [threshold](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/thresholds) (in percentage from `0.0` to `1.0`) property used by the Intersection Observer to know when its target element is considered visible.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ threshold: 0.6 }}>Hello world</h1>
+```
+
+### `preset`
+
+**type:** <code>["fade"](#fade) | ["slide"](#slide) | ["fly"](#fly) | ["spin"](#spin) | ["blur"](#blur) | ["scale"](#scale)</code><br/>
+**default**: `"fade"`
+
+The transition preset that should be applied. Check out [presets](#presets) for more info.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ preset: 'fade' }}>Hello world</h1>
+```
+
+### `reset`
+
+**type**: `boolean`<br/>
+**default**: `false`
+
+<Aside type="caution" title="Be careful">
+  Overusing this option prevents the Intersection Observer to stop observing the target node. Performance is therefore
+  not guaranteed when many elements have `reset` set to `true`.
+</Aside>
+
+When set to `true`, the node transitions out when out of view, and is revealed again when back in view.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ reset: false }}>Hello world</h1>
+```
+
+### `duration`
+
+**type**: `number`<br/>
+**default**: `800`
+
+How long the transition lasts (in ms).
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ duration: 800 }}>Hello world</h1>
+```
+
+### `delay`
+
+**type**: `number`<br/>
+**default**: `0`
+
+How long the transition is delayed (in ms) before being triggered.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ delay: 0 }}>Hello world</h1>
+```
+
+### `easing`
+
+**type**: [`Easing`](https://github.com/DaveKeehl/svelte-reveal/blob/main/packages/svelte-reveal/src/internal/types/easing.ts)<br/>
+**default**: `"easeInOutCubic"`
+
+The easing function to use. Check out the full list of available [easing functions](https://github.com/DaveKeehl/svelte-reveal/blob/main/packages/svelte-reveal/src/internal/default/easing.ts) and [this other website](https://cubic-bezier.com/) to preview timing functions.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ easing: 'easeInOutCubic' }}>Hello world</h1>
+```
+
+### `x`
+
+**type**: `number`<br/>
+**default**: `0`
+
+The starting offset position in pixels on the x-axis.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ x: 0 }}>Hello world</h1>
+```
+
+### `y`
+
+**type**: `number`<br/>
+**default**: `0`
+
+The starting offset position in pixels on the y-axis.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ y: 0 }}>Hello world</h1>
+```
+
+### `rotate`
+
+**type**: `number`<br/>
+**default**: `0`
+
+The starting rotation offset in degrees.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ rotate: 0 }}>Hello world</h1>
+```
+
+### `opacity`
+
+**type**: `number`<br/>
+**default**: `0`
+
+The starting opacity value.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ opacity: 0 }}>Hello world</h1>
+```
+
+### `blur`
+
+**type**: `number`<br/>
+**default**: `0`
+
+The starting blur value in pixels.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ blur: 0 }}>Hello world</h1>
+```
+
+### `scale`
+
+**type**: `number`<br/>
+**default**: `1`
+
+The starting scale value in percentage. `1` corresponds to `100%`.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ scale: 1 }}>Hello world</h1>
+```
+
+## Callbacks
+
+Here is a list of all the event callbacks we expose that you can hook into.
+
+### `onRevealStart`
+
+**signature**: `(node: HTMLElement) => void`
+
+Function that gets fired when the node starts being revealed.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ onRevealStart: () => alert('Reveal: start') }}>Hello world</h1>
+```
+
+### `onRevealEnd`
+
+**signature**: `(node: HTMLElement) => void`
+
+Function that gets fired when the node is fully revealed.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ onRevealEnd: () => alert('Reveal: end') }}>Hello world</h1>
+```
+
+### `onResetStart`
+
+**signature**: `(node: HTMLElement) => void`
+
+Function that gets fired when the` reset` option is set to `true` and the node starts transitioning out.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ onResetStart: () => alert('Reset: start') }}>Hello world</h1>
+```
+
+### `onResetEnd`
+
+**signature**: `(node: HTMLElement) => void`
+
+Function that gets fired when the `reset` option is set to `true` and the node has fully transitioned out.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ onResetEnd: () => alert('Reset: end') }}>Hello world</h1>
+```
+
+### `onMount`
+
+**signature**: `(node: HTMLElement) => void`
+
+Function that gets fired when the node is mounted on the DOM.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ onMount: () => alert('Mounting') }}>Hello world</h1>
+```
+
+### `onUpdate`
+
+**signature**: `(node: HTMLElement) => void`
+
+Function that gets fired when the action options are updated.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ onUpdate: () => alert('Updating') }}>Hello world</h1>
+```
+
+### `onDestroy`
+
+**signature**: `(node: HTMLElement) => void`
+
+Function that gets fired when the node is unmounted from the DOM.
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<h1 use:reveal={{ onDestroy: () => alert('Destroying') }}>Hello world</h1>
+```
+
+## Presets
+
+<Aside type="caution">All presets have the `"fade"` preset backed in</Aside>
+
+Presets are sets of options with predefined values, packaged under a name to achieve a certain transition effect. The following table shows the presets that come bundled with Svelte Reveal and which options they map to.
+
+### `fade`
+
+The element fades in gracefully.
+
+#### Mapped options
+
+```typescript
+{
+  opacity: 0;
+}
+```
+
+#### Resulting CSS
+
+<Tabs>
+<TabItem label="Start">
+
+```css
+opacity: 0;
+```
+
+</TabItem>
+<TabItem label="End">
+  
+```css 
+opacity: 1;
+```
+
+</TabItem>
+</Tabs>
+
+### `fly`
+
+The element fades in and moves along a translation on the y-axis.
+
+#### Mapped options
+
+```typescript
+{
+  opacity: 0;
+  y: -20;
+}
+```
+
+#### Resulting CSS
+
+<Tabs>
+<TabItem label="Start">
+
+```css
+opacity: 0;
+transform: translateY(-20px);
+```
+
+</TabItem>
+<TabItem label="End">
+  
+```css
+opacity: 1;  
+transform: translateY(0px)
+```
+
+</TabItem>
+</Tabs>
+
+### `slide`
+
+The element fades in and performs a translation on the x-axis.
+
+#### Mapped options
+
+```typescript
+{
+  opacity: 0;
+  x: -20;
+}
+```
+
+#### Resulting CSS
+
+<Tabs>
+<TabItem label="Start">
+
+```css
+opacity: 0;
+transform: translateX(-20px);
+```
+
+</TabItem>
+<TabItem label="End">
+  
+```css
+opacity: 1;  
+transform: translateX(0px)
+```
+
+</TabItem>
+</Tabs>
+
+### `blur`
+
+The element fades in and becomes unblurred.
+
+#### Mapped options
+
+```typescript
+{
+  opacity: 0;
+  blur: 2;
+}
+```
+
+#### Resulting CSS
+
+<Tabs>
+<TabItem label="Start">
+
+```css
+opacity: 0;
+filter: blur(2px);
+```
+
+</TabItem>
+<TabItem label="End">
+  
+```css
+opacity: 1;  
+filter: blur(0px)
+```
+
+</TabItem>
+</Tabs>
+
+### `scale`
+
+The element fades in and gets to the original size.
+
+#### Mapped options
+
+```typescript
+{
+  opacity: 0;
+  scale: 0.8;
+}
+```
+
+#### Resulting CSS
+
+<Tabs>
+<TabItem label="Start">
+
+```css
+opacity: 0;
+transform: scale(0.8);
+```
+
+</TabItem>
+<TabItem label="End">
+  
+```css
+opacity: 1;  
+transform: scale(1);
+```
+
+</TabItem>
+</Tabs>
+
+### `spin`
+
+<Aside type="caution" title="Be careful">
+  In order to use this transition it is required to use the `width` CSS property on the element to reveal. If you are
+  not already using this property for other things, you can use set it to `width: fit-content`.
+</Aside>
+
+The element fades in and gets to the original rotation degree.
+
+#### Mapped options
+
+```typescript
+{
+  opacity: 0;
+  rotate: -10;
+}
+```
+
+#### Resulting CSS
+
+<Tabs>
+<TabItem label="Start">
+
+```css
+opacity: 0;
+transform: rotate(-10);
+```
+
+</TabItem>
+<TabItem label="End">
+  
+```css
+opacity: 1;  
+transform: rotate(0);
+```
+
+</TabItem>
+</Tabs>

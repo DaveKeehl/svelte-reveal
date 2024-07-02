@@ -1,0 +1,261 @@
+---
+title: API
+sidebar:
+  order: 3
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+
+<Aside type="caution" title="Heads up!">
+  If you want to customise the behavior of a single DOM node, you are supposed to use [options](/reference/options).
+</Aside>
+
+Svelte Reveal also exposes several functions you can call to change the [default options](https://github.com/DaveKeehl/svelte-reveal/blob/main/packages/svelte-reveal/src/internal/default/options.ts) and [global configuration](https://github.com/DaveKeehl/svelte-reveal/blob/main/packages/svelte-reveal/src/internal/default/config.ts) of this library. Since these functions operate on a global level across all components using Svelte Reveal, you are supposed to only call them from a single file, otherwise you'll keep overriding the default options and global config from multiple points.
+
+## `setOnce`
+
+**signature**: `(once: boolean) => RevealConfig`
+
+Sets the reveal animations activation status on page reload.
+
+```svelte
+<script lang="ts">
+  // App.svelte
+  import { reveal, setOnce } from 'svelte-reveal';
+  setOnce(true);
+</script>
+
+<h1 use:reveal>Hello world</h1>
+```
+
+## `setDeviceStatus`
+
+**signature**: `(device: Device, status: boolean) => RevealConfig`
+
+Sets the status of a device.
+
+```svelte
+<script lang="ts">
+  // App.svelte
+  import { reveal, setDeviceStatus } from 'svelte-reveal';
+  setDeviceStatus('mobile', false);
+</script>
+
+<h1 use:reveal>Hello world</h1>
+```
+
+## `setDevicesStatus`
+
+**signature**: `(devices: Device[], status: boolean) => RevealConfig`
+
+Sets the status of multiple devices.
+
+```svelte
+<script lang="ts">
+  // App.svelte
+  import { reveal, setDevicesStatus } from 'svelte-reveal';
+  setDevicesStatus(['mobile', 'tablet'], false);
+</script>
+
+<h1 use:reveal>Hello world</h1>
+```
+
+## `setDeviceBreakpoint`
+
+**signature**: `(device: Device, breakpoint: number) => RevealConfig`
+
+Sets the breakpoint of a device.
+
+```svelte
+<script lang="ts">
+  // App.svelte
+  import { reveal, setDeviceBreakpoint } from 'svelte-reveal';
+  setDeviceBreakpoint('mobile', 500);
+</script>
+
+<h1 use:reveal>Hello world</h1>
+```
+
+## `setDevice`
+
+**signature**: `(device: Device, settings: DeviceConfig) => RevealConfig`
+
+Sets the settings of a device.
+
+```svelte
+<script lang="ts">
+  // App.svelte
+  import { reveal, setDevice } from 'svelte-reveal';
+  setDevice('mobile', {
+    enabled: true,
+    breakpoint: 500
+  });
+</script>
+
+<h1 use:reveal>Hello world</h1>
+```
+
+## `setResponsive`
+
+**signature**: `(responsive: Responsive) => RevealConfig`
+
+Updates how responsiveness is handled by the library.
+
+```svelte
+<script lang="ts">
+  // App.svelte
+  import { reveal, setResponsive } from 'svelte-reveal';
+  setResponsive({
+    mobile: {
+      enabled: true,
+      breakpoint: 425
+    },
+    tablet: {
+      enabled: true,
+      breakpoint: 768
+    },
+    laptop: {
+      enabled: true,
+      breakpoint: 1440
+    },
+    desktop: {
+      enabled: true,
+      breakpoint: 2560
+    }
+  });
+</script>
+
+<h1 use:reveal>Hello world</h1>
+```
+
+## `setObserverRoot`
+
+**signature**: `(root: Element | Document | null) => IntersectionObserverConfig`
+
+Sets the Intersection Observer `root` element.
+
+```svelte
+<script lang="ts">
+  // App.svelte
+  import { reveal, setObserverRoot } from 'svelte-reveal';
+  setObserverRoot(null);
+</script>
+
+<h1 use:reveal>Hello world</h1>
+```
+
+## `setObserverRootMargin`
+
+**signature**: `(rootMargin: string) => IntersectionObserverConfig`
+
+Sets the Intersection Observer `rootMargin` property.
+
+```svelte
+<script lang="ts">
+  // App.svelte
+  import { reveal, setObserverRootMargin } from 'svelte-reveal';
+  setObserverRootMargin('0px 0px 0px 0px');
+</script>
+
+<h1 use:reveal>Hello world</h1>
+```
+
+## `setObserverThreshold`
+
+**signature**: `(threshold: number) => IntersectionObserverConfig`
+
+Sets the Intersection Observer `threshold` property.
+
+```svelte
+<script lang="ts">
+  // App.svelte
+  import { reveal, setObserverThreshold } from 'svelte-reveal';
+  setObserverThreshold(0.6);
+</script>
+
+<h1 use:reveal>Hello world</h1>
+```
+
+## `setObserverConfig`
+
+**signature**: `(observerConfig: IntersectionObserverConfig) => IntersectionObserverConfig`
+
+Sets the Intersection Observer configuration.
+
+```svelte
+<script lang="ts">
+  // App.svelte
+  import { reveal, setObserverConfig } from 'svelte-reveal';
+  setObserverConfig({
+    root: null,
+    rootMargin: '0px 0px 0px 0px',
+    threshold: 0.6
+  });
+</script>
+
+<h1 use:reveal>Hello world</h1>
+```
+
+## `setConfig`
+
+**signature**: `(userConfig: RevealConfig) => RevealConfig`
+
+Updates the library global configuration.
+
+```svelte
+<script lang="ts">
+  // App.svelte
+  import { reveal, setConfig } from 'svelte-reveal';
+  setConfig({
+    once: false,
+    responsive: {
+      mobile: {
+        enabled: true,
+        breakpoint: 425
+      },
+      tablet: {
+        enabled: true,
+        breakpoint: 768
+      },
+      laptop: {
+        enabled: true,
+        breakpoint: 1440
+      },
+      desktop: {
+        enabled: true,
+        breakpoint: 2560
+      }
+    }
+  });
+</script>
+
+<h1 use:reveal>Hello world</h1>
+```
+
+## `setDefaultOptions`
+
+**signature**: `(options: RevealOptions) => RevealOptions`
+
+Updates the default options to be used for the reveal effect.
+
+```svelte
+<script lang="ts">
+  // App.svelte
+  import { reveal, setDefaultOptions } from 'svelte-reveal';
+  setDefaultOptions({
+  disable: false,
+  reset: false,
+  duration: 800,
+  delay: 0,
+  x: 0,
+  y: 0,
+  rotate: 0,
+  blur: 0,
+  scale: 1,
+  opacity: 0,
+  ...
+});
+</script>
+
+<h1 use:reveal>Hello world</h1>
+```
