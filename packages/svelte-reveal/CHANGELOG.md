@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- New docs website
+- New docs website ([#211](https://github.com/DaveKeehl/svelte-reveal/issues/211))
 
 ### Changed
 
