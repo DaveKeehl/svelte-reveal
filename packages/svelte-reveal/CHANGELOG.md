@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.0] - 2024-04-10
 
+### Added
+
+- New docs website ([#211](https://github.com/DaveKeehl/svelte-reveal/issues/211))
+
 ### Changed
 
 - Improved GitHub actions workflows ([#212](https://github.com/DaveKeehl/svelte-reveal/pull/212))

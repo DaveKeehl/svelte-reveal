@@ -1,0 +1,105 @@
+---
+title: Getting Started
+sidebar:
+  order: 1
+---
+
+import { Steps, Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+
+Svelte Reveal is a library created with the purpose of helping [Svelte](https://svelte.dev/) users add reveal on scroll animations to their web applications in the easiest way possible. This library leverages the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) in order to know when to trigger the animations.
+
+## Installation
+
+<Tabs>
+
+<TabItem label="npm">
+
+```sh
+npm i -D svelte-reveal
+```
+
+</TabItem>
+
+<TabItem label="pnpm">
+
+```sh
+pnpm i -D svelte-reveal
+```
+
+</TabItem>
+
+<TabItem label="Yarn">
+
+```sh
+yarn add -D svelte-reveal
+```
+
+</TabItem>
+
+<TabItem label="Bun">
+
+```sh
+bun add -D svelte-reveal
+```
+
+</TabItem>
+
+</Tabs>
+
+## Usage
+
+<Aside type="caution" title="Watch out!">
+  Using [SvelteKit](https://kit.svelte.dev/)? Please refer to the ["SvelteKit"](/start-here/sveltekit) section.
+</Aside>
+
+<Steps>
+
+1.  Import the library in your Svelte component:
+
+    ```svelte
+    <script>
+      // App.svelte
+      import { reveal } from 'svelte-reveal';
+    </script>
+    ```
+
+2.  Add the imported `reveal` action to the DOM element you want to transition:
+
+    ```svelte
+    // App.svelte
+    <h1 use:reveal>Hello world</h1>
+    <p use:reveal={{ transition: 'slide' }}>A paragraph</p>
+    ```
+
+    If you want to use the action on a Svelte component, you need to pass the reveal options via props:
+
+    ```svelte
+    <script>
+      // App.svelte
+      import Heading from './Heading.svelte';
+    </script>
+
+    <Heading useReveal={{ transition: 'slide' }}>Hello world</Heading>
+    ```
+
+    ```svelte
+    <script lang="ts">
+      // Heading.svelte
+      import { reveal, type RevealOptions } from 'svelte-reveal';
+      export let useReveal: RevealOptions;
+    </script>
+
+    <h1 use:reveal={useReveal}>
+      <slot />
+    </h1>
+    ```
+
+</Steps>
+
+## Rationale
+
+If you happened to scout the internet for other similar libraries, you might have noticed that other authors have decided to create their own library using Svelte [slots](https://svelte.dev/docs#template-syntax-slot) (similar to [React children](https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children)). There is nothing wrong with that approach, but in my opinion it goes a bit against one of Svelte's core purpose: writing more concise code. Having to wrap every to-be-transitioned component adds at least 2 extra lines of code each time, making your files unnecessarily bloated for such a simple add-on.
+
+You might have also noticed people adding event listeners to the window object in order to transition elements, but in terms of performance it [doesn't scale very well](https://itnext.io/1v1-scroll-listener-vs-intersection-observers-469a26ab9eb6).
+
+Instead, I decided to use Svelte [actions](https://svelte.dev/docs#template-syntax-element-directives-use-action), which are functions you can attach to a DOM element and that allow you to get access to that particular element and hook into its lifecycle. They take up considerably fewer lines of code, and so far I haven't encountered any big obstacle or performance drawback. Morever, this library is backed by the Intersection Observer API, which is great for performance.

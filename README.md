@@ -17,7 +17,7 @@ Svelte Reveal is a library created with the purpose of helping [Svelte](https://
 
 ## Documentation
 
-The documentation is available [here](./packages/svelte-reveal/README.md).
+You can find full documentation on [svelte-reveal.dev](https://svelte-reveal.dev).
 
 ## Monorepo
 
