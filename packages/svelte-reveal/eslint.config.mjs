@@ -1,6 +1,5 @@
-import tseslint from '@typescript-eslint/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
-import eslint from '@eslint/js';
+import js from '@eslint/js';
+import ts from 'typescript-eslint';
 import turbo from 'eslint-config-turbo';
 import prettier from 'eslint-config-prettier';
 
@@ -33,14 +32,14 @@ export default [
       '**/next-env.d.ts'
     ]
   },
-  eslint.configs.recommended,
-  ...tseslint.configs.recommended,
+  js.configs.recommended,
+  ...ts.configs.recommended,
   turbo,
   prettier,
   {
-    plugins: { '@typescript-eslint': typescriptEslint },
+    plugins: { '@typescript-eslint': ts.plugin },
     languageOptions: {
-      parser: tsParser,
+      parser: ts.parser,
       ecmaVersion: 'latest',
       sourceType: 'module'
     }
