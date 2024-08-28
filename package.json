@@ -18,12 +18,12 @@
     "postclean": "rimraf .turbo node_modules package-lock.json"
   },
   "devDependencies": {
-    "husky": "^9.0.11",
-    "prettier": "^3.2.5",
-    "prettier-plugin-svelte": "^3.2.2",
+    "husky": "^9.1.5",
+    "prettier": "^3.3.3",
+    "prettier-plugin-svelte": "^3.2.6",
     "pretty-quick": "^4.0.0",
-    "rimraf": "^5.0.5",
-    "turbo": "^1.13.0"
+    "rimraf": "^6.0.1",
+    "turbo": "^2.0.14"
   },
   "engines": {
     "npm": ">=7.0.0",
