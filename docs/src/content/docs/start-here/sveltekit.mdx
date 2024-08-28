@@ -6,7 +6,7 @@ sidebar:
 
 import { Steps, Aside } from '@astrojs/starlight/components';
 
-<Aside type="caution" title="Last update: April 2024">
+<Aside type="caution" title="Last update: August 2024">
   This is an active area of research. Please [submit a bug
   report](https://github.com/DaveKeehl/svelte-reveal/issues/new) in case of issues.
 </Aside>
@@ -24,31 +24,15 @@ export const ssr = false;
 
 ## With SSR
 
-If your page does need to leverage server-side rendering, the setup remains easy but it requires a few more steps.
+If your page does need to leverage server-side rendering, you need to instruct the Svelte Reveal preprocessor to go in ssr mode as follows. Doing as such will prevent the elements to flicker as soon as the page is hydrated and the DOM is accessible to the library.
 
-<Steps>
+```js
+// svelte.config.js
+import { svelteRevealPreprocess } from 'svelte-reveal';
 
-1. Import the bundled stylesheet in your page or layout
-
-   ```svelte
-   <script lang="ts">
-    // layout.svelte
-     import "svelte-reveal/styles.css";
-     ...
-   </script>
-
-   ...
-   ```
-
-2. Add the `sr__hide` css class to every element targeted by Svelte Reveal with `use:reveal`. This will prevent the elements to flicker as soon as the page is hydrated and the DOM is accessible to the library.
-
-   ```svelte
-   <script lang="ts">
-     // page.svelte
-     import { reveal } from 'svelte-reveal';
-   </script>
-
-   <h1 use:reveal class="sr__hide">Hello world</h1>
-   ```
-
-</Steps>
+const config = {
+  ...
+  preprocess: [..., svelteRevealPreprocess({ ssr: true})],
+  ...
+};
+```

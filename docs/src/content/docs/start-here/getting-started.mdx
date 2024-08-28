@@ -63,7 +63,20 @@ bun add -D svelte-reveal
     </script>
     ```
 
-2.  Add the imported `reveal` action to the DOM element you want to transition:
+2.  Add the custom preprocessor to your `svelte.config.js`
+
+    ```js
+    // svelte.config.js
+    import { svelteRevealPreprocess } from 'svelte-reveal';
+
+    const config = {
+      ...
+      preprocess: [..., svelteRevealPreprocess()],
+      ...
+    };
+    ```
+
+3.  Add the imported `reveal` action to the DOM element you want to transition:
 
     ```svelte
     // App.svelte
