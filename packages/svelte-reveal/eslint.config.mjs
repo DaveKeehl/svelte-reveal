@@ -1,6 +1,6 @@
 import js from '@eslint/js';
 import ts from 'typescript-eslint';
-import turbo from 'eslint-config-turbo';
+import turbo from 'eslint-config-turbo/flat';
 import prettier from 'eslint-config-prettier';
 
 export default [
@@ -34,7 +34,7 @@ export default [
   },
   js.configs.recommended,
   ...ts.configs.recommended,
-  turbo,
+  ...turbo,
   prettier,
   {
     plugins: { '@typescript-eslint': ts.plugin },

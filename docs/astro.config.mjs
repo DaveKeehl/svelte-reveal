@@ -6,9 +6,13 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'Svelte Reveal',
-      social: {
-        github: 'https://github.com/davekeehl/svelte-reveal'
-      },
+      social: [
+        {
+          icon: 'github',
+          label: 'GitHub',
+          href: 'https://github.com/davekeehl/svelte-reveal'
+        }
+      ],
       editLink: {
         baseUrl: 'https://github.com/davekeehl/svelte-reveal/edit/main/docs/'
       },
