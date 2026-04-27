@@ -25,6 +25,14 @@
     "rimraf": "^6.1.3",
     "turbo": "^2.9.6"
   },
+  "overrides": {
+    "@sveltejs/kit": {
+      "cookie": "^0.7.2"
+    },
+    "yaml-language-server": {
+      "yaml": "^2.8.3"
+    }
+  },
   "engines": {
     "npm": ">=10.0.0",
     "node": ">=20.0.0"
