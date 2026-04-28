@@ -13,6 +13,5 @@ export {
   setConfig,
   setDefaultOptions
 } from './internal/API.ts';
-export { svelteRevealPreprocess } from '@/preprocessor.ts';
 export type { RevealConfig } from '@/types/config.ts';
 export type { RevealOptions } from '@/types/options.ts';
