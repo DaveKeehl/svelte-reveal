@@ -22,6 +22,8 @@
     "predev": "npm run clean:build",
     "pack": "npm pack",
     "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "clean:build": "rimraf dist svelte-reveal-*.tgz",
     "clean:deps": "rimraf .turbo node_modules package-lock.json",
     "clean": "run-p clean:*"
@@ -69,6 +71,7 @@
     "svelte": "5.55.5",
     "tsup": "8.5.1",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.59.0"
+    "typescript-eslint": "8.59.0",
+    "vitest": "2.1.9"
   }
 }
