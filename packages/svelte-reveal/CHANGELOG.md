@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updated dependencies ([#223](https://github.com/DaveKeehl/svelte-reveal/pull/223))
+- Bumped the whole stack for 2026 — Svelte 5.55, TypeScript 6.0, ESLint 10, Vite 8, SvelteKit 2.58, vite-plugin-svelte 7, Astro 6, Starlight 0.38; pinned every dependency to an exact version ([#225](https://github.com/DaveKeehl/svelte-reveal/pull/225))
+- Raised minimum Node.js to 22.12 (required by Astro 6) ([#225](https://github.com/DaveKeehl/svelte-reveal/pull/225))
+- Migrated the Vite example from `new App({ target })` to Svelte 5's `mount(App, { target })` ([#225](https://github.com/DaveKeehl/svelte-reveal/pull/225))
 
 ## [1.1.0] - 2024-04-10
 
