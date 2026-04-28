@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Updated dependencies ([#223](https://github.com/DaveKeehl/svelte-reveal/pull/223))
+- Added support for Svelte 5 and modernized dependencies ([#223](https://github.com/DaveKeehl/svelte-reveal/pull/223), [#225](https://github.com/DaveKeehl/svelte-reveal/pull/225))
 
 ## [1.1.0] - 2024-04-10
 

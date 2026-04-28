@@ -12,7 +12,7 @@
 </script>
 
 <main>
-  {#each config as element}
+  {#each config as element (element.preset)}
     <section>
       <div use:reveal={{ ...element }} class="wrapper">
         <h1>{element.preset} transition</h1>
