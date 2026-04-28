@@ -10,8 +10,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - New docs website ([#211](https://github.com/DaveKeehl/svelte-reveal/issues/211))
-- Custom preprocessor to reduce boilerplate when using SvelteKit ([#222](https://github.com/DaveKeehl/svelte-reveal/pull/222))
-
 
 ### Changed
 
