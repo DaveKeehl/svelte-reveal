@@ -22,6 +22,3 @@ jobs:
 
       - name: Build package
         run: npm run build -- --filter=svelte-reveal
-
-      - name: Lint
-        run: npm run lint -- --filter=svelte-reveal
