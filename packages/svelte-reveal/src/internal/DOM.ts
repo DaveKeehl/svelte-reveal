@@ -30,6 +30,7 @@ export const revealNode = (
   transitionDeclarationClassName: string,
   options: Required<RevealOptions>
 ): HTMLElement => {
+  nodeToReveal.firstElementChild?.classList.remove('sr__hide');
   markRevealNode(nodeToReveal);
 
   const cssTransitionProperties = createCssTransitionProperties({ className: transitionPropertiesClassName, options });
