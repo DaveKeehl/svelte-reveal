@@ -16,11 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Modernized the whole stack for 2026 — Svelte 5.55, TypeScript 6.0, ESLint 10, Vite 8, SvelteKit 2.58, vite-plugin-svelte 7, Astro 6, Starlight 0.38 — and pinned every dependency to an exact version ([#223](https://github.com/DaveKeehl/svelte-reveal/pull/223), [#225](https://github.com/DaveKeehl/svelte-reveal/pull/225))
+- Declared `svelte` as a peer dependency at `>=4.2.0 <6` ([#225](https://github.com/DaveKeehl/svelte-reveal/pull/225))
 - Migrated the Vite example to Svelte 5's `mount()` API ([#225](https://github.com/DaveKeehl/svelte-reveal/pull/225))
-
-### BREAKING CHANGES
-
-- Minimum Node.js raised to 22.12, required by Astro 6 ([#225](https://github.com/DaveKeehl/svelte-reveal/pull/225))
+- Building the monorepo (docs) now requires Node.js 22.12+, due to Astro 6. The published library itself imposes no Node engine constraint ([#225](https://github.com/DaveKeehl/svelte-reveal/pull/225))
 
 ## [1.1.0] - 2024-04-10
 
