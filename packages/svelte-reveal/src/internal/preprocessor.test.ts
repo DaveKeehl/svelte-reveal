@@ -1,67 +1,55 @@
 import { describe, expect, it } from 'vitest';
+import { VERSION } from 'svelte/compiler';
 import { svelteRevealPreprocess } from './preprocessor.ts';
 
+const isSvelte5 = Number.parseInt(String(VERSION ?? ''), 10) >= 5;
+
 type MarkupFn = NonNullable<ReturnType<typeof svelteRevealPreprocess>['markup']>;
-type ScriptFn = NonNullable<ReturnType<typeof svelteRevealPreprocess>['script']>;
 
 const runMarkup = (pp: ReturnType<typeof svelteRevealPreprocess>, content: string, filename = 'Test.svelte') => {
   const result = (pp.markup as MarkupFn)({ content, filename, attributes: {} });
-  return result instanceof Promise ? null : result;
-};
-
-const runScript = (
-  pp: ReturnType<typeof svelteRevealPreprocess>,
-  content: string,
-  filename = 'Test.svelte',
-  attributes: Record<string, string | boolean> = {}
-) => {
-  const result = (pp.script as ScriptFn)({ content, filename, attributes, markup: '' });
-  return result instanceof Promise ? null : result;
+  if (result instanceof Promise) throw new Error('preprocessor returned a Promise');
+  return result;
 };
 
 describe('svelteRevealPreprocess', () => {
   describe('when ssr is disabled', () => {
     it('leaves markup untouched', () => {
       const pp = svelteRevealPreprocess();
-      const result = runMarkup(pp, '<div use:reveal>x</div>');
-      expect(result).toBeUndefined();
+      expect(runMarkup(pp, '<div use:reveal>x</div>')).toBeUndefined();
     });
 
-    it('leaves scripts untouched', () => {
+    it('does not register a script hook', () => {
       const pp = svelteRevealPreprocess();
-      const result = runScript(pp, 'let x = 1;');
-      expect(result).toBeUndefined();
+      expect(pp.script).toBeUndefined();
     });
   });
 
-  describe('markup', () => {
+  describe('class injection', () => {
     it('skips files that do not use the reveal action', () => {
       const pp = svelteRevealPreprocess({ ssr: true });
-      const result = runMarkup(pp, '<div class="plain">hello</div>');
-      expect(result).toBeUndefined();
+      expect(runMarkup(pp, '<div class="plain">hello</div>')).toBeUndefined();
     });
 
     it('injects sr__hide on an element with no other attributes', () => {
       const pp = svelteRevealPreprocess({ ssr: true });
       const result = runMarkup(pp, '<div use:reveal>x</div>');
-      expect(result?.code).toContain('class="sr__hide"');
-      expect(result?.code).toContain('use:reveal');
+      expect(result?.code).toContain('<div class="sr__hide" use:reveal>x</div>');
     });
 
     it('injects sr__hide on an element that already has other attributes', () => {
       const pp = svelteRevealPreprocess({ ssr: true });
       const result = runMarkup(pp, '<div data-foo="bar" use:reveal>x</div>');
-      expect(result?.code).toContain('class="sr__hide"');
-      expect(result?.code).toContain('data-foo="bar"');
+      expect(result?.code).toContain('<div class="sr__hide" data-foo="bar" use:reveal>x</div>');
     });
 
-    it('appends sr__hide to an existing double-quoted class attribute', () => {
+    it('appends sr__hide to a double-quoted class attribute', () => {
       const pp = svelteRevealPreprocess({ ssr: true });
       const result = runMarkup(pp, '<div class="foo bar" use:reveal />');
       expect(result?.code).toContain('class="foo bar sr__hide"');
     });
 
-    it('appends sr__hide to an existing single-quoted class attribute', () => {
+    it('appends sr__hide to a single-quoted class attribute', () => {
       const pp = svelteRevealPreprocess({ ssr: true });
       const result = runMarkup(pp, "<div class='foo bar' use:reveal />");
       expect(result?.code).toContain("class='foo bar sr__hide'");
@@ -78,14 +66,12 @@ describe('svelteRevealPreprocess', () => {
       const pp = svelteRevealPreprocess({ ssr: true });
       const input = '<div class="foo sr__hide" use:reveal />';
       const result = runMarkup(pp, input);
-      expect(result?.code ?? input).toBe(input);
-      expect((result?.code ?? input).match(/sr__hide/g)?.length).toBe(1);
+      expect(result).toBeUndefined();
     });
 
     it('ignores use:reveal occurrences inside HTML comments', () => {
       const pp = svelteRevealPreprocess({ ssr: true });
-      const result = runMarkup(pp, '<!-- <div use:reveal /> --><p>noop</p>');
-      expect(result).toBeUndefined();
+      expect(runMarkup(pp, '<!-- <div use:reveal /> --><p>noop</p>')).toBeUndefined();
     });
 
     it('handles multi-line opening tags', () => {
@@ -101,69 +87,59 @@ describe('svelteRevealPreprocess', () => {
       expect(result?.code).toContain('<span class="x sr__hide" use:reveal>b</span>');
     });
 
-    it('injects a <script> block with the styles import when none exists', () => {
-      const pp = svelteRevealPreprocess({ ssr: true });
-      const result = runMarkup(pp, '<main><div use:reveal /></main>');
-      expect(result?.code).toMatch(/<script>[\s\S]*svelte-reveal\/styles\.css[\s\S]*<\/script>/);
-    });
-
-    it('does not inject a <script> block when one already exists', () => {
-      const pp = svelteRevealPreprocess({ ssr: true });
-      const result = runMarkup(pp, '<script>let x = 1;</script>\n<div use:reveal />');
-      const scriptOpens = result?.code.match(/<script(\s|>)/g)?.length ?? 0;
-      expect(scriptOpens).toBe(1);
-      expect(result?.code).not.toContain(`import 'svelte-reveal/styles.css';`);
-    });
-
     it('returns invalid Svelte source unchanged', () => {
       const pp = svelteRevealPreprocess({ ssr: true });
-      const result = runMarkup(pp, '<div use:reveal');
-      expect(result).toBeUndefined();
+      expect(runMarkup(pp, '<div use:reveal')).toBeUndefined();
     });
   });
 
-  describe('script', () => {
-    it('injects the styles import for files flagged by markup', () => {
+  describe('styles import injection', () => {
+    it('synthesizes a <script> block when none exists', () => {
       const pp = svelteRevealPreprocess({ ssr: true });
-      runMarkup(pp, '<script>let x = 1;</script>\n<div use:reveal />', 'A.svelte');
-      const result = runScript(pp, 'let x = 1;', 'A.svelte');
-      expect(result?.code).toBe(`import 'svelte-reveal/styles.css';\nlet x = 1;`);
+      const result = runMarkup(pp, '<main><div use:reveal /></main>');
+      expect(result?.code).toMatch(/^<script>\s*import 'svelte-reveal\/styles\.css';\s*<\/script>/);
     });
 
-    it('does not inject when markup did not flag the file', () => {
+    it('injects the import inside an existing instance script', () => {
       const pp = svelteRevealPreprocess({ ssr: true });
-      const result = runScript(pp, 'let x = 1;', 'A.svelte');
-      expect(result).toBeUndefined();
+      const result = runMarkup(pp, '<script>let x = 1;</script>\n<div use:reveal />');
+      expect(result?.code).toMatch(/<script>\s*import 'svelte-reveal\/styles\.css';\s*let x = 1;\s*<\/script>/);
+      expect(result?.code.match(/<script(\s|>)/g)?.length).toBe(1);
     });
 
-    it('does not inject twice when the import already exists', () => {
+    it('does not duplicate the import when it is already present in the script', () => {
       const pp = svelteRevealPreprocess({ ssr: true });
-      runMarkup(pp, `<script>import 'svelte-reveal/styles.css';</script>\n<div use:reveal />`, 'B.svelte');
-      const existing = `import 'svelte-reveal/styles.css';`;
-      const result = runScript(pp, existing, 'B.svelte');
-      expect(result).toBeUndefined();
+      const input = `<script>import 'svelte-reveal/styles.css';\nlet x = 1;</script>\n<div use:reveal />`;
+      const result = runMarkup(pp, input);
+      expect(result?.code.match(/svelte-reveal\/styles\.css/g)?.length).toBe(1);
     });
 
-    it('skips module-context scripts', () => {
+    it('injects into the instance script, not <script context="module">', () => {
       const pp = svelteRevealPreprocess({ ssr: true });
-      runMarkup(
-        pp,
-        `<script context="module">export const x = 1;</script>\n<script>let y = 2;</script>\n<div use:reveal />`,
-        'C.svelte'
-      );
-      const moduleResult = runScript(pp, 'export const x = 1;', 'C.svelte', { context: 'module' });
-      expect(moduleResult).toBeUndefined();
-      const instanceResult = runScript(pp, 'let y = 2;', 'C.svelte');
-      expect(instanceResult?.code).toContain(`import 'svelte-reveal/styles.css';`);
+      const input =
+        '<script context="module">export const x = 1;</script>\n' +
+        '<script>let y = 2;</script>\n' +
+        '<div use:reveal />';
+      const result = runMarkup(pp, input);
+      expect(result?.code).toMatch(/<script>\s*import 'svelte-reveal\/styles\.css';\s*let y = 2;\s*<\/script>/);
+      expect(result?.code).not.toMatch(/<script context="module">[^<]*svelte-reveal\/styles\.css/);
     });
 
-    it('only injects once per file', () => {
+    it.skipIf(!isSvelte5)('injects into the instance script, not the Svelte 5 <script module> shorthand', () => {
       const pp = svelteRevealPreprocess({ ssr: true });
-      runMarkup(pp, '<script>let x = 1;</script>\n<div use:reveal />', 'D.svelte');
-      const first = runScript(pp, 'let x = 1;', 'D.svelte');
-      const second = runScript(pp, 'let x = 1;', 'D.svelte');
-      expect(first?.code).toContain(`import 'svelte-reveal/styles.css';`);
-      expect(second).toBeUndefined();
+      const input =
+        '<script module>export const x = 1;</script>\n' + '<script>let y = 2;</script>\n' + '<div use:reveal />';
+      const result = runMarkup(pp, input);
+      expect(result?.code).toMatch(/<script>\s*import 'svelte-reveal\/styles\.css';\s*let y = 2;\s*<\/script>/);
+      expect(result?.code).not.toMatch(/<script module>[^<]*svelte-reveal\/styles\.css/);
+    });
+
+    it('synthesizes a <script> block when only a module script exists', () => {
+      const pp = svelteRevealPreprocess({ ssr: true });
+      const input = '<script context="module">export const x = 1;</script>\n<div use:reveal />';
+      const result = runMarkup(pp, input);
+      expect(result?.code).toMatch(/^<script>\s*import 'svelte-reveal\/styles\.css';\s*<\/script>/);
+      expect(result?.code).toContain('<script context="module">export const x = 1;</script>');
     });
   });
 });

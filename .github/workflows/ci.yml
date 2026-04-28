@@ -22,3 +22,31 @@ jobs:
 
       - name: Build package
         run: npm run build -- --filter=svelte-reveal
+
+      - name: Lint
+        run: npm run lint -- --filter=svelte-reveal
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        svelte: ['4', '5']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Pin Svelte ${{ matrix.svelte }}
+        run: npm install --no-save svelte@${{ matrix.svelte }} --workspace=svelte-reveal
+
+      - name: Test
+        run: npm run test -- --filter=svelte-reveal

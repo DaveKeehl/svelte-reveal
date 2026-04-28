@@ -7,23 +7,38 @@ const HIDE_CLASS_RE = new RegExp(`(?:^|\\s)${HIDE_CLASS}(?:\\s|$)`);
 
 type Edit = { start: number; end: number; replacement: string };
 
+type AstNode = {
+  type?: string;
+  start?: number;
+  end?: number;
+  name?: string;
+  attributes?: AstNode[];
+  content?: { start?: number; end?: number };
+  [key: string]: unknown;
+};
+
+type Ast = {
+  fragment?: AstNode;
+  html?: AstNode;
+  instance?: AstNode;
+};
+
 export function svelteRevealPreprocess(options?: { ssr?: boolean }): PreprocessorGroup {
   const ssr = options?.ssr ?? false;
-  const filesNeedingImport = new Set<string>();
 
   return {
-    markup({ content, filename }) {
+    markup({ content }) {
       if (!ssr) return;
       if (!content.includes('use:reveal')) return;
 
-      let ast: ReturnType<typeof parse>;
+      let ast: Ast;
       try {
-        ast = isSvelte5() ? parse(content, { modern: true }) : parse(content);
+        ast = (isSvelte5() ? parse(content, { modern: true }) : parse(content)) as Ast;
       } catch {
         return;
       }
 
-      const root = (ast as { fragment?: unknown; html?: unknown }).fragment ?? (ast as { html?: unknown }).html;
+      const root = ast.fragment ?? ast.html;
       const edits: Edit[] = [];
 
       walk(root, (node) => {
@@ -49,29 +64,33 @@ export function svelteRevealPreprocess(options?: { ssr?: boolean }): Preprocesso
 
       if (edits.length === 0) return;
 
+      const instance = ast.instance;
+      const instanceBody = instance?.content;
+      const hasInstanceImport =
+        instanceBody &&
+        typeof instanceBody.start === 'number' &&
+        typeof instanceBody.end === 'number' &&
+        STYLES_IMPORT_RE.test(content.slice(instanceBody.start, instanceBody.end));
+
+      if (instanceBody && !hasInstanceImport && typeof instanceBody.start === 'number') {
+        edits.push({
+          start: instanceBody.start,
+          end: instanceBody.start,
+          replacement: `\n${STYLES_IMPORT}\n`
+        });
+      }
+
       edits.sort((a, b) => b.start - a.start);
       let out = content;
       for (const { start, end, replacement } of edits) {
         out = out.slice(0, start) + replacement + out.slice(end);
       }
 
-      if (STYLES_IMPORT_RE.test(out)) return { code: out };
-
-      if (!/<script(\s|>)/.test(out)) {
-        return { code: `<script>\n${STYLES_IMPORT}\n</script>\n${out}` };
+      if (!instance) {
+        out = `<script>\n${STYLES_IMPORT}\n</script>\n${out}`;
       }
 
-      if (filename) filesNeedingImport.add(filename);
       return { code: out };
-    },
-
-    script({ content, filename, attributes }) {
-      if (!ssr) return;
-      if (attributes?.context === 'module') return;
-      if (!filename || !filesNeedingImport.has(filename)) return;
-      filesNeedingImport.delete(filename);
-      if (STYLES_IMPORT_RE.test(content)) return;
-      return { code: `${STYLES_IMPORT}\n${content}` };
     }
   };
 }
@@ -80,18 +99,6 @@ function isSvelte5(): boolean {
   const major = Number.parseInt(String(VERSION ?? ''), 10);
   return Number.isFinite(major) && major >= 5;
 }
-
-type AstNode = {
-  type?: string;
-  start?: number;
-  end?: number;
-  name?: string;
-  attributes?: AstNode[];
-  value?: unknown;
-  data?: string;
-  raw?: string;
-  [key: string]: unknown;
-};
 
 function walk(node: unknown, visit: (node: AstNode & { start: number; end: number }) => void): void {
   if (!node || typeof node !== 'object') return;
@@ -114,10 +121,7 @@ function computeClassEdit(content: string, classAttr: AstNode): Edit | null {
   if (typeof classAttr.start !== 'number' || typeof classAttr.end !== 'number') return null;
 
   const eqIdx = content.indexOf('=', classAttr.start);
-  if (eqIdx === -1 || eqIdx > classAttr.end) {
-    const insertAt = classAttr.end;
-    return { start: insertAt, end: insertAt, replacement: '' };
-  }
+  if (eqIdx === -1 || eqIdx > classAttr.end) return null;
 
   const valueStart = eqIdx + 1;
   const quoteChar = content[valueStart];
