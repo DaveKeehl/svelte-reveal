@@ -63,42 +63,60 @@ bun add -D svelte-reveal
     </script>
     ```
 
-2.  Add the custom preprocessor to your `svelte.config.js`
-
-    ```js
-    // svelte.config.js
-    import { svelteRevealPreprocess } from 'svelte-reveal';
-
-    const config = {
-      ...
-      preprocess: [..., svelteRevealPreprocess()],
-      ...
-    };
-    ```
-
-3.  Add the imported `reveal` action to the DOM element you want to transition:
+2.  Add the imported `reveal` action to the DOM element you want to transition:
 
     ```svelte
-    // App.svelte
+    <!-- App.svelte -->
     <h1 use:reveal>Hello world</h1>
-    <p use:reveal={{ transition: 'slide' }}>A paragraph</p>
+    <p use:reveal={{ preset: 'slide' }}>A paragraph</p>
     ```
 
     If you want to use the action on a Svelte component, you need to pass the reveal options via props:
 
+    <Tabs>
+
+    <TabItem label="Svelte 5">
+
     ```svelte
-    <script>
-      // App.svelte
+    <!-- App.svelte -->
+    <script lang="ts">
       import Heading from './Heading.svelte';
     </script>
 
-    <Heading useReveal={{ transition: 'slide' }}>Hello world</Heading>
+    <Heading useReveal={{ preset: 'slide' }}>Hello world</Heading>
     ```
 
     ```svelte
+    <!-- Heading.svelte -->
     <script lang="ts">
-      // Heading.svelte
       import { reveal, type RevealOptions } from 'svelte-reveal';
+
+      let { useReveal, children }: { useReveal: RevealOptions; children: any } = $props();
+    </script>
+
+    <h1 use:reveal={useReveal}>
+      {@render children()}
+    </h1>
+    ```
+
+    </TabItem>
+
+    <TabItem label="Svelte 4">
+
+    ```svelte
+    <!-- App.svelte -->
+    <script>
+      import Heading from './Heading.svelte';
+    </script>
+
+    <Heading useReveal={{ preset: 'slide' }}>Hello world</Heading>
+    ```
+
+    ```svelte
+    <!-- Heading.svelte -->
+    <script lang="ts">
+      import { reveal, type RevealOptions } from 'svelte-reveal';
+
       export let useReveal: RevealOptions;
     </script>
 
@@ -106,6 +124,10 @@ bun add -D svelte-reveal
       <slot />
     </h1>
     ```
+
+    </TabItem>
+
+    </Tabs>
 
 </Steps>
 

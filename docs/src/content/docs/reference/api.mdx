@@ -243,18 +243,11 @@ Updates the default options to be used for the reveal effect.
   // App.svelte
   import { reveal, setDefaultOptions } from 'svelte-reveal';
   setDefaultOptions({
-  disable: false,
-  reset: false,
-  duration: 800,
-  delay: 0,
-  x: 0,
-  y: 0,
-  rotate: 0,
-  blur: 0,
-  scale: 1,
-  opacity: 0,
-  ...
-});
+    preset: 'fly',
+    duration: 1200,
+    delay: 100,
+    easing: 'easeOutExpo'
+  });
 </script>
 
 <h1 use:reveal>Hello world</h1>
