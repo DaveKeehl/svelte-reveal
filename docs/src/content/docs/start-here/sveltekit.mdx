@@ -6,7 +6,7 @@ sidebar:
 
 import { Steps, Aside } from '@astrojs/starlight/components';
 
-<Aside type="caution" title="Last update: August 2024">
+<Aside type="caution" title="Last update: April 2026">
   This is an active area of research. Please [submit a bug
   report](https://github.com/DaveKeehl/svelte-reveal/issues/new) in case of issues.
 </Aside>
@@ -36,3 +36,7 @@ If your page does need to leverage server-side rendering, guard the reveal actio
   <h1 use:reveal>Hello world</h1>
 {/if}
 ```
+
+<Aside type="caution">
+  Elements wrapped in `{#if browser}` are absent from the server-rendered HTML. If the element contains content that needs to be indexed by search engines or must be visible before JavaScript loads, disable SSR for the page instead.
+</Aside>

@@ -57,8 +57,8 @@ bun add -D svelte-reveal
 1.  Import the library in your Svelte component:
 
     ```svelte
+    <!-- App.svelte -->
     <script>
-      // App.svelte
       import { reveal } from 'svelte-reveal';
     </script>
     ```
@@ -89,9 +89,10 @@ bun add -D svelte-reveal
     ```svelte
     <!-- Heading.svelte -->
     <script lang="ts">
+      import type { Snippet } from 'svelte';
       import { reveal, type RevealOptions } from 'svelte-reveal';
 
-      let { useReveal, children }: { useReveal: RevealOptions; children: any } = $props();
+      let { useReveal, children }: { useReveal: RevealOptions; children: Snippet } = $props();
     </script>
 
     <h1 use:reveal={useReveal}>
