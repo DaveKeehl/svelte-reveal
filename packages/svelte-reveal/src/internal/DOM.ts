@@ -88,7 +88,11 @@ export const createIntersectionObserver = (
 ): IntersectionObserver => {
   const { reset, duration, delay, threshold, onResetStart, onResetEnd, onRevealEnd } = options;
 
-  const observerConfig = createIntersectionObserverConfig();
+  const observerConfig = createIntersectionObserverConfig({
+    root: options.root,
+    rootMargin: options.rootMargin,
+    threshold
+  });
   const sleep = duration + delay;
 
   return new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
