@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - New docs website ([#211](https://github.com/DaveKeehl/svelte-reveal/issues/211))
+- `wrapperClass` option to attach a CSS class to the wrapper element Svelte Reveal creates around the target node, so flex/grid/masonry layouts can no longer be broken by the bare `<div>` wrapper ([#224](https://github.com/DaveKeehl/svelte-reveal/issues/224))
 
 ### Changed
 
