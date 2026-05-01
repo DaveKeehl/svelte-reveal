@@ -8,7 +8,7 @@ sidebar:
 
 import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
-Depending on the use case, you can either use this library as-is (which applies some [default options](./src/internal/default/options.ts)), or customize it to your liking. If you choose to do so, you can pass an object to this action containing your own options to be applied.
+Depending on the use case, you can either use this library as-is (which applies some [default options](https://github.com/DaveKeehl/svelte-reveal/blob/main/packages/svelte-reveal/src/internal/default/options.ts)), or customize it to your liking. If you choose to do so, you can pass an object to this action containing your own options to be applied.
 
 Keep in mind that these options are applied to the single DOM element you add Svelte Reveal to. For global and more in-depth settings, refer to the [API](/reference/api) section.
 
@@ -21,14 +21,14 @@ Fields are simple flags and values you can set on a specific element to change i
 **type**: `boolean` <br/>
 **default**: `false`
 
-When set to false, the transition is disabled for the target element.
+When set to `true`, the transition is disabled for the target element.
 
 ```svelte
 <script lang="ts">
   import { reveal } from 'svelte-reveal';
 </script>
 
-<h1 use:reveal={{ disable: false }}>Hello world</h1>
+<h1 use:reveal={{ disable: true }}>Hello world</h1>
 ```
 
 ### `root`
@@ -143,17 +143,35 @@ How long the transition is delayed (in ms) before being triggered.
 
 ### `easing`
 
-**type**: [`Easing`](https://github.com/DaveKeehl/svelte-reveal/blob/main/packages/svelte-reveal/src/internal/types/easing.ts)<br/>
+**type**: `string | [number, number, number, number]`<br/>
 **default**: `"easeInOutCubic"`
 
-The easing function to use. Check out the full list of available [easing functions](https://github.com/DaveKeehl/svelte-reveal/blob/main/packages/svelte-reveal/src/internal/default/easing.ts) and [this other website](https://cubic-bezier.com/) to preview timing functions.
+The easing function to use. You can either pass one of the built-in named functions listed below, or a custom cubic bezier curve as an array of four numbers `[x1, y1, x2, y2]`. Use [cubic-bezier.com](https://cubic-bezier.com/) to preview timing functions visually.
+
+**Named easing functions:**
+
+| Family | Variants |
+|--------|----------|
+| Linear | `linear` |
+| Sine | `easeInSine`, `easeOutSine`, `easeInOutSine` |
+| Quad | `easeInQuad`, `easeOutQuad`, `easeInOutQuad` |
+| Cubic | `easeInCubic`, `easeOutCubic`, `easeInOutCubic` |
+| Quart | `easeInQuart`, `easeOutQuart`, `easeInOutQuart` |
+| Quint | `easeInQuint`, `easeOutQuint`, `easeInOutQuint` |
+| Expo | `easeInExpo`, `easeOutExpo`, `easeInOutExpo` |
+| Circ | `easeInCirc`, `easeOutCirc`, `easeInOutCirc` |
+| Back | `easeInBack`, `easeOutBack`, `easeInOutBack` |
 
 ```svelte
 <script lang="ts">
   import { reveal } from 'svelte-reveal';
 </script>
 
+<!-- named function -->
 <h1 use:reveal={{ easing: 'easeInOutCubic' }}>Hello world</h1>
+
+<!-- custom cubic bezier -->
+<h1 use:reveal={{ easing: [0.65, 0, 0.35, 1] }}>Hello world</h1>
 ```
 
 ### `x`
@@ -546,7 +564,7 @@ The element fades in and gets to the original rotation degree.
 
 ```css
 opacity: 0;
-transform: rotate(-10);
+transform: rotate(-10deg);
 ```
 
 </TabItem>
@@ -554,7 +572,7 @@ transform: rotate(-10);
   
 ```css
 opacity: 1;  
-transform: rotate(0);
+transform: rotate(0deg);
 ```
 
 </TabItem>

@@ -6,7 +6,7 @@ sidebar:
 
 import { Steps, Aside } from '@astrojs/starlight/components';
 
-<Aside type="caution" title="Last update: August 2024">
+<Aside type="caution" title="Last update: April 2026">
   This is an active area of research. Please [submit a bug
   report](https://github.com/DaveKeehl/svelte-reveal/issues/new) in case of issues.
 </Aside>
@@ -24,15 +24,19 @@ export const ssr = false;
 
 ## With SSR
 
-If your page does need to leverage server-side rendering, you need to instruct the Svelte Reveal preprocessor to go in ssr mode as follows. Doing as such will prevent the elements to flicker as soon as the page is hydrated and the DOM is accessible to the library.
+If your page does need to leverage server-side rendering, guard the reveal action behind a browser environment check. This prevents elements from flickering when the page is hydrated and the DOM becomes accessible to the library.
 
-```js
-// svelte.config.js
-import { svelteRevealPreprocess } from 'svelte-reveal';
+```svelte
+<script lang="ts">
+  import { browser } from '$app/environment';
+  import { reveal } from 'svelte-reveal';
+</script>
 
-const config = {
-  ...
-  preprocess: [..., svelteRevealPreprocess({ ssr: true})],
-  ...
-};
+{#if browser}
+  <h1 use:reveal>Hello world</h1>
+{/if}
 ```
+
+<Aside type="caution">
+  Elements wrapped in `{#if browser}` are absent from the server-rendered HTML. If the element contains content that needs to be indexed by search engines or must be visible before JavaScript loads, disable SSR for the page instead.
+</Aside>
