@@ -1,9 +1,6 @@
 <script lang="ts">
   import { reveal, type RevealOptions } from 'svelte-reveal';
 
-  const params = typeof window === 'undefined' ? null : new URLSearchParams(window.location.search);
-  const fixture = params?.get('test') ?? null;
-
   const config: RevealOptions[] = [
     { preset: 'fade', duration: 2000 },
     { preset: 'fly', y: -80, easing: 'easeOutBack' },
@@ -14,26 +11,15 @@
   ];
 </script>
 
-{#if fixture === 'wrapper'}
-  <div class="row" data-testid="parent-bare">
-    <div class="child" data-testid="bare-child" use:reveal={{ duration: 0 }}>A</div>
-  </div>
-  <div class="row" data-testid="parent-fixed">
-    <div class="child" data-testid="fixed-child" use:reveal={{ duration: 0, wrapperClass: 'fill' }}>B</div>
-  </div>
-{:else if fixture === 'threshold'}
-  <div data-testid="threshold-target" use:reveal={{ threshold: 0.1, duration: 0 }}>target</div>
-{:else}
-  <main>
-    {#each config as element}
-      <section>
-        <div use:reveal={{ ...element }} class="wrapper">
-          <h1>{element.preset} transition</h1>
-        </div>
-      </section>
-    {/each}
-  </main>
-{/if}
+<main>
+  {#each config as element}
+    <section>
+      <div use:reveal={{ ...element }} class="wrapper">
+        <h1>{element.preset} transition</h1>
+      </div>
+    </section>
+  {/each}
+</main>
 
 <style>
   :root {
@@ -70,23 +56,5 @@
     height: 100%;
     display: grid;
     place-items: center;
-  }
-
-  .row {
-    display: flex;
-    flex-direction: row;
-    width: 400px;
-    height: 100px;
-    color: var(--white);
-  }
-
-  .child {
-    flex: 1;
-    background: crimson;
-  }
-
-  :global(.fill) {
-    flex: 1;
-    display: flex;
   }
 </style>
