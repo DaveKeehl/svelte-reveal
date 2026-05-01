@@ -74,5 +74,6 @@ export const defaultOptions = {
   ...defaultIntersectionObserverConfig,
   ...defaultRevealTransition,
   ...defaultRevealEvents,
-  easing: defaultRevealEasing
+  easing: defaultRevealEasing,
+  wrapperClass: ''
 } satisfies Required<RevealOptions>;

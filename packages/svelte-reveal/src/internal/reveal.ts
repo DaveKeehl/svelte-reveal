@@ -17,7 +17,7 @@ export const reveal = (node: HTMLElement, userOptions: RevealOptions = defaultOp
   const options = mergeOptions(userOptions);
   const { disable, onRevealStart, onMount, onUpdate, onDestroy } = options;
 
-  const nodeToReveal = getNodeToReveal(node);
+  const nodeToReveal = getNodeToReveal(node, options);
   const [transitionDeclaration, transitionProperties] = getRevealClassNames();
 
   onMount(nodeToReveal);
