@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Per-action `threshold`, `root`, and `rootMargin` options were silently dropped when constructing the Intersection Observer; they are now respected ([#224](https://github.com/DaveKeehl/svelte-reveal/issues/224))
+- `setDefaultOptions` now persists overrides into the global defaults instead of discarding the merged result.
 
 ## [1.1.0] - 2024-04-10
 

@@ -152,5 +152,6 @@ export const setConfig = (userConfig: RevealConfig): RevealConfig => {
  * @returns The updated default options.
  */
 export const setDefaultOptions = (userOptions: RevealOptions): Required<RevealOptions> => {
-  return mergeOptions(userOptions);
+  Object.assign(defaultOptions, mergeOptions(userOptions));
+  return { ...defaultOptions };
 };
