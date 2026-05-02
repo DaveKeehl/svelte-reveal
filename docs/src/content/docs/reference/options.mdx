@@ -150,17 +150,17 @@ The easing function to use. You can either pass one of the built-in named functi
 
 **Named easing functions:**
 
-| Family | Variants |
-|--------|----------|
-| Linear | `linear` |
-| Sine | `easeInSine`, `easeOutSine`, `easeInOutSine` |
-| Quad | `easeInQuad`, `easeOutQuad`, `easeInOutQuad` |
-| Cubic | `easeInCubic`, `easeOutCubic`, `easeInOutCubic` |
-| Quart | `easeInQuart`, `easeOutQuart`, `easeInOutQuart` |
-| Quint | `easeInQuint`, `easeOutQuint`, `easeInOutQuint` |
-| Expo | `easeInExpo`, `easeOutExpo`, `easeInOutExpo` |
-| Circ | `easeInCirc`, `easeOutCirc`, `easeInOutCirc` |
-| Back | `easeInBack`, `easeOutBack`, `easeInOutBack` |
+| Family | Variants                                        |
+| ------ | ----------------------------------------------- |
+| Linear | `linear`                                        |
+| Sine   | `easeInSine`, `easeOutSine`, `easeInOutSine`    |
+| Quad   | `easeInQuad`, `easeOutQuad`, `easeInOutQuad`    |
+| Cubic  | `easeInCubic`, `easeOutCubic`, `easeInOutCubic` |
+| Quart  | `easeInQuart`, `easeOutQuart`, `easeInOutQuart` |
+| Quint  | `easeInQuint`, `easeOutQuint`, `easeInOutQuint` |
+| Expo   | `easeInExpo`, `easeOutExpo`, `easeInOutExpo`    |
+| Circ   | `easeInCirc`, `easeOutCirc`, `easeInOutCirc`    |
+| Back   | `easeInBack`, `easeOutBack`, `easeInOutBack`    |
 
 ```svelte
 <script lang="ts">
@@ -262,6 +262,42 @@ The starting scale value in percentage. `1` corresponds to `100%`.
 </script>
 
 <h1 use:reveal={{ scale: 1 }}>Hello world</h1>
+```
+
+### `wrapperClass`
+
+**type**: `string`<br/>
+**default**: `""`
+
+A CSS class (or space-separated list of classes) to add to the wrapper element Svelte Reveal creates around the target node. Use it to size or position the wrapper so it does not interfere with the parent's layout (e.g. flex, grid, masonry).
+
+<Aside type="note">
+  Svelte Reveal wraps the target element in a `<div>` so it can apply transforms without polluting the target's own
+  styles. That wrapper is a block-level element by default, which can break layouts that expect the target to participate
+  directly in a flex or grid container. `wrapperClass` is the escape hatch for those cases — common values are `display: contents`
+  to make the wrapper layout-transparent, or `height: 100%` to let it stretch with its parent.
+</Aside>
+
+<Aside type="caution">
+  `display: contents` removes the wrapper from the box tree, which historically caused some browsers (notably older
+  Safari) to also drop it from the accessibility tree. Modern browsers handle this correctly for most elements, but if
+  the wrapper sits around landmarks or interactive content, verify with a screen reader before shipping.
+</Aside>
+
+```svelte
+<script lang="ts">
+  import { reveal } from 'svelte-reveal';
+</script>
+
+<div class="flex">
+  <h1 use:reveal={{ wrapperClass: 'reveal-wrapper' }}>Hello world</h1>
+</div>
+
+<style>
+  :global(.reveal-wrapper) {
+    display: contents;
+  }
+</style>
 ```
 
 ## Callbacks
