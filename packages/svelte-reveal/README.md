@@ -8,7 +8,7 @@ Svelte Reveal is a library created with the purpose of helping [Svelte](https://
 
 ## Documentation
 
-You can find full documentation on [svelte-reveal.dev](https://svelte-reveal.dev).
+You can find full documentation on [svelte-reveal.vercel.app](https://svelte-reveal.vercel.app/).
 
 ## Troubleshooting
 
