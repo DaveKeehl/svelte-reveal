@@ -3,6 +3,7 @@ import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://svelte-reveal.vercel.app',
   integrations: [
     starlight({
       title: 'Svelte Reveal',
