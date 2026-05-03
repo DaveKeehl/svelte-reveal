@@ -31,7 +31,7 @@ export default defineConfig({
         './src/styles/custom.css'
       ],
       components: {
-        Banner: './src/components/Banner.astro'
+        PageFrame: './src/components/PageFrame.astro'
       }
     })
   ]
