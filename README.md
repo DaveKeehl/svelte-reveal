@@ -1,4 +1,7 @@
-![](https://cdn.sanity.io/images/mbh58i22/production/1f71d5306d82ec00b28d884a1d5482b92205988a-2560x1280.png)
+![Svelte Reveal](./assets/hero.png)
+
+> ⚠️ **This package has been sunset**
+> Svelte Reveal is no longer actively maintained. The final release is version **1.2.0**. Please see the [package README](./packages/svelte-reveal/README.md) for context and recommended alternatives.
 
 # Svelte Reveal
 
@@ -17,7 +20,7 @@ Svelte Reveal is a library created with the purpose of helping [Svelte](https://
 
 ## Documentation
 
-The documentation is available [here](./packages/svelte-reveal/README.md).
+You can find full documentation on [svelte-reveal.vercel.app](https://svelte-reveal.vercel.app/).
 
 ## Monorepo
 

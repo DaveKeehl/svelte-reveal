@@ -1,6 +1,6 @@
 {
   "name": "svelte-reveal",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Svelte action that leverages the Intersection Observer API to trigger reveal on scroll transitions",
   "type": "module",
   "main": "dist/index.cjs",
@@ -22,6 +22,7 @@
     "predev": "npm run clean:build",
     "pack": "npm pack",
     "lint": "eslint .",
+    "test": "vitest run",
     "clean:build": "rimraf dist svelte-reveal-*.tgz",
     "clean:deps": "rimraf .turbo node_modules package-lock.json",
     "clean": "run-p clean:*"
@@ -53,19 +54,23 @@
     "type": "ko-fi",
     "url": "https://ko-fi.com/davekeehl"
   },
+  "peerDependencies": {
+    "svelte": ">=4.2.0 <6"
+  },
   "devDependencies": {
-    "@types/seedrandom": "^3.0.8",
-    "@typescript-eslint/eslint-plugin": "^7.4.0",
-    "@typescript-eslint/parser": "^7.4.0",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-config-turbo": "^1.13.0",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^3.2.5",
-    "rimraf": "^5.0.5",
-    "seedrandom": "^3.0.5",
-    "svelte": "^4.2.12",
-    "tsup": "^8.0.2",
-    "typescript": "^5.4.3"
+    "@eslint/js": "10.0.1",
+    "@types/seedrandom": "3.0.8",
+    "eslint": "10.2.1",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-config-turbo": "2.9.6",
+    "npm-run-all": "4.1.5",
+    "prettier": "3.8.3",
+    "rimraf": "6.1.3",
+    "seedrandom": "3.0.5",
+    "svelte": "5.55.5",
+    "tsup": "8.5.1",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.59.0",
+    "vitest": "3.2.4"
   }
 }

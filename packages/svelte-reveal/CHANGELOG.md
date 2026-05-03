@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-05-03
+
+### Added
+
+- New docs website ([#211](https://github.com/DaveKeehl/svelte-reveal/issues/211))
+- `wrapperClass` option to attach a CSS class to the wrapper element Svelte Reveal creates around the target node, so flex/grid/masonry layouts can no longer be broken by the bare `<div>` wrapper ([#224](https://github.com/DaveKeehl/svelte-reveal/issues/224))
+
+### Changed
+
+- Added support for Svelte 5 and modernized dependencies ([#223](https://github.com/DaveKeehl/svelte-reveal/pull/223), [#225](https://github.com/DaveKeehl/svelte-reveal/pull/225))
+
+### Fixed
+
+- Per-action `threshold`, `root`, and `rootMargin` options were silently dropped when constructing the Intersection Observer; they are now respected ([#224](https://github.com/DaveKeehl/svelte-reveal/issues/224))
+- `setDefaultOptions` now persists overrides into the global defaults instead of discarding the merged result.
+
 ## [1.1.0] - 2024-04-10
 
 ### Changed
@@ -214,3 +230,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.0.3]: https://github.com/DaveKeehl/svelte-reveal/compare/1.0.2...1.0.3
 [1.0.4]: https://github.com/DaveKeehl/svelte-reveal/compare/1.0.3...1.0.4
 [1.1.0]: https://github.com/DaveKeehl/svelte-reveal/compare/1.0.4...1.1.0
+[1.2.0]: https://github.com/DaveKeehl/svelte-reveal/compare/1.1.0...1.2.0

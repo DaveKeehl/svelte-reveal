@@ -62,12 +62,14 @@ export const revealNode = (
 /**
  * Get the HTML element to be revealed.
  * @param node The HTML element passed by the Svelte action.
+ * @param options The merged reveal options. `wrapperClass` is applied here so
+ * callers can style the wrapper to blend into the surrounding layout.
  * @returns The HTML element to be revealed.
  */
-export const getNodeToReveal = (node: HTMLElement): HTMLElement => {
+export const getNodeToReveal = (node: HTMLElement, options: Required<RevealOptions>): HTMLElement => {
   const wrapper = document.createElement('div');
-  const parentElement = node.parentElement;
-  parentElement?.insertBefore(wrapper, node);
+  if (options.wrapperClass) wrapper.className = options.wrapperClass;
+  node.parentElement?.insertBefore(wrapper, node);
   wrapper.appendChild(node);
   return wrapper;
 };
@@ -86,7 +88,11 @@ export const createIntersectionObserver = (
 ): IntersectionObserver => {
   const { reset, duration, delay, threshold, onResetStart, onResetEnd, onRevealEnd } = options;
 
-  const observerConfig = createIntersectionObserverConfig();
+  const observerConfig = createIntersectionObserverConfig({
+    root: options.root,
+    rootMargin: options.rootMargin,
+    threshold
+  });
   const sleep = duration + delay;
 
   return new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {

@@ -1,0 +1,69 @@
+---
+import Default from '@astrojs/starlight/components/PageFrame.astro';
+---
+
+<aside class="sunset-banner" aria-label="Sunset notice">
+  <strong>⚠️ This package has been sunset.</strong>
+  Svelte Reveal is no longer actively maintained. The final release is version
+  <strong>1.2.0</strong>. See the
+  <a
+    href="https://github.com/DaveKeehl/svelte-reveal/blob/main/packages/svelte-reveal/README.md#sunset-notice"
+    >sunset notice</a
+  > for context and recommended alternatives.
+</aside>
+
+<Default>
+  <slot name="header" slot="header" />
+  <slot name="sidebar" slot="sidebar" />
+  <slot />
+</Default>
+
+<style is:global>
+  :root {
+    --sunset-banner-height: 3rem;
+  }
+
+  .sunset-banner {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline: 0;
+    z-index: calc(var(--sl-z-index-navbar) + 1);
+    min-height: var(--sunset-banner-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    background: var(--sl-color-orange-low, #3a2a00);
+    color: var(--sl-color-orange-high, #ffd49a);
+    border-bottom: 1px solid var(--sl-color-orange, #c98a2c);
+    padding: 0.5rem 1rem;
+    font-size: var(--sl-text-sm);
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  .sunset-banner a {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  .sunset-banner a:hover {
+    text-decoration: none;
+  }
+
+  /* Push Starlight's fixed header and sidebar below the banner. */
+  .page > .header {
+    inset-block-start: var(--sunset-banner-height);
+  }
+
+  .page > nav .sidebar-pane {
+    inset-block-start: calc(var(--sl-nav-height) + var(--sunset-banner-height));
+  }
+
+  .page > .main-frame {
+    padding-top: calc(
+      var(--sl-nav-height) + var(--sl-mobile-toc-height) + var(--sunset-banner-height)
+    );
+  }
+</style>

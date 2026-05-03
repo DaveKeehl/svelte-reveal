@@ -1,6 +1,5 @@
 <script lang="ts">
   import { reveal, type RevealOptions } from 'svelte-reveal';
-  import 'svelte-reveal/styles.css';
 
   const config: RevealOptions[] = [
     { preset: 'fade', duration: 2000 },
@@ -13,9 +12,9 @@
 </script>
 
 <main>
-  {#each config as element}
+  {#each config as element (element.preset)}
     <section>
-      <div use:reveal={{ ...element }} class="wrapper sr__hide">
+      <div use:reveal={{ ...element }} class="wrapper">
         <h1>{element.preset} transition</h1>
       </div>
     </section>

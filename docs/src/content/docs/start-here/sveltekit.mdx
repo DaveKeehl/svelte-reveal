@@ -1,0 +1,42 @@
+---
+title: SvelteKit
+sidebar:
+  order: 4
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+
+<Aside type="caution">
+  Svelte actions in SvelteKit/SSR have always been a fiddly area. The patterns below were validated against
+  svelte-reveal 1.2.0 (the final release) and SvelteKit as of April 2026 — adapt as needed for your setup.
+</Aside>
+
+Since Svelte actions were conceived to operate in a client-side environment, they don't always work 100% in SvelteKit and SSR (server-side rendering) out of the box. Svelte Reveal is no exception, as it needs DOM access, and in order not to incur in weird animation behaviors some small setup is required by the end-users. Out of the following two methods, pick the one that most suit your project requirements.
+
+## Without SSR
+
+If your page doesn't need to be server-side rendered then the fix is very trivial. Turn off `ssr` in your `+page.ts` file as follows.
+
+```typescript
+// page.ts
+export const ssr = false;
+```
+
+## With SSR
+
+If your page does need to leverage server-side rendering, guard the reveal action behind a browser environment check. This prevents elements from flickering when the page is hydrated and the DOM becomes accessible to the library.
+
+```svelte
+<script lang="ts">
+  import { browser } from '$app/environment';
+  import { reveal } from 'svelte-reveal';
+</script>
+
+{#if browser}
+  <h1 use:reveal>Hello world</h1>
+{/if}
+```
+
+<Aside type="caution">
+  Elements wrapped in `{#if browser}` are absent from the server-rendered HTML. If the element contains content that needs to be indexed by search engines or must be visible before JavaScript loads, disable SSR for the page instead.
+</Aside>
