@@ -1,5 +1,8 @@
 ![Svelte Reveal](./assets/hero.png)
 
+> ⚠️ **This package has been sunset**
+> Svelte Reveal is no longer actively maintained. The final release is version **1.2.0**. Please see the [package README](./packages/svelte-reveal/README.md) for context and recommended alternatives.
+
 # Svelte Reveal
 
 ![npm](https://img.shields.io/npm/v/svelte-reveal) ![npm](https://img.shields.io/npm/dw/svelte-reveal) ![GitHub](https://img.shields.io/github/license/davekeehl/svelte-reveal)
