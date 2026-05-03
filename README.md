@@ -1,4 +1,4 @@
-![](https://cdn.sanity.io/images/mbh58i22/production/1f71d5306d82ec00b28d884a1d5482b92205988a-2560x1280.png)
+![Svelte Reveal](./assets/hero.png)
 
 # Svelte Reveal
 
